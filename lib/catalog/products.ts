@@ -9,6 +9,7 @@ export type CatalogVariant = {
   title: string;
   sku: string | null;
   retail_price_cents: number;
+  wholesale_price_cents: number | null;
   inventory_quantity: number;
 };
 
@@ -27,7 +28,7 @@ export async function getCatalogProducts(): Promise<CatalogProduct[]> {
   const { data, error } = await supabase
     .from("products")
     .select(
-      "id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,sku,retail_price_cents,inventory_quantity)"
+      "id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,sku,retail_price_cents,wholesale_price_cents,inventory_quantity)"
     )
     .eq("status", "active")
     .order("title", { ascending: true });
@@ -101,6 +102,7 @@ function getLocalShopifyProducts(): CatalogProduct[] {
       title: variant.title,
       sku: variant.sku || null,
       retail_price_cents: Math.round(Number(variant.price) * 100),
+      wholesale_price_cents: null,
       inventory_quantity: Number(variant.inventory_quantity || 0)
     }))
   }));

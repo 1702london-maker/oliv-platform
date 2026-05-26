@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { notFound } from "next/navigation";
 import { AddToCart } from "@/components/cart/AddToCart";
+import { getCurrentProfile } from "@/lib/auth/session";
 import { formatEuro, getCatalogProductBySlug } from "@/lib/catalog/products";
 
 type PageProps = {
@@ -12,8 +13,9 @@ export const dynamic = "force-dynamic";
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = await getCatalogProductBySlug(slug);
+  const [product, profile] = await Promise.all([getCatalogProductBySlug(slug), getCurrentProfile()]);
   if (!product) notFound();
+  const isWholesale = Boolean(profile?.roles.includes("wholesale"));
 
   const shell = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
   const marker = '<main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">';
@@ -33,7 +35,13 @@ export default async function ProductPage({ params }: PageProps) {
         <div className="ohs-product-detail-copy">
           <p>BiziLux Collection</p>
           <h1>{product.title}</h1>
-          {firstVariant ? <strong>{formatEuro(firstVariant.retail_price_cents)}</strong> : null}
+          {firstVariant ? (
+            <strong>
+              {isWholesale
+                ? `Wholesale ${formatEuro(firstVariant.wholesale_price_cents || firstVariant.retail_price_cents)}`
+                : formatEuro(firstVariant.retail_price_cents)}
+            </strong>
+          ) : null}
           {product.description ? (
             <div dangerouslySetInnerHTML={{ __html: product.description }} />
           ) : (
@@ -47,6 +55,7 @@ export default async function ProductPage({ params }: PageProps) {
               image_url: product.image_url
             }}
             variants={product.variants}
+            priceMode={isWholesale ? "wholesale" : "retail"}
           />
         </div>
       </section>

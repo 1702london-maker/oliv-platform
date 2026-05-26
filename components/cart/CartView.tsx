@@ -9,6 +9,7 @@ type CartItem = {
   title: string;
   variantTitle: string;
   priceCents: number;
+  priceMode?: "retail" | "wholesale";
   imageUrl: string | null;
   quantity: number;
 };
@@ -81,6 +82,7 @@ export function CartView() {
             <div>
               <h2>{item.title}</h2>
               <p>{item.variantTitle}</p>
+              {item.priceMode === "wholesale" ? <p>Wholesale price</p> : null}
               <strong>{formatEuro(item.priceCents)}</strong>
             </div>
             <input

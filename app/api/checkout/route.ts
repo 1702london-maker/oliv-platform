@@ -13,6 +13,7 @@ const checkoutSchema = z.object({
         title: z.string(),
         variantTitle: z.string(),
         priceCents: z.number().int().nonnegative(),
+        priceMode: z.enum(["retail", "wholesale"]).optional(),
         quantity: z.number().int().positive()
       })
     )
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
   const variantIds = parsed.data.items.map((item) => item.variantId);
   const { data: variants, error: variantsError } = await supabase
     .from("product_variants")
-    .select("id,title,sku,retail_price_cents,product_id,products(id,title)")
+    .select("id,title,sku,retail_price_cents,wholesale_price_cents,product_id,products(id,title)")
     .in("id", variantIds);
 
   if (variantsError || !variants?.length) {
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
   }
 
   const affiliateCode = parsed.data.affiliateCode?.toUpperCase();
+  const isWholesale = Boolean(profile?.roles.includes("wholesale"));
   const { data: affiliate } = affiliateCode
     ? await supabase
         .from("affiliates")
@@ -65,8 +67,8 @@ export async function POST(request: Request) {
       title: product?.title || item.title,
       variantTitle: variant.title,
       sku: variant.sku,
-      priceCents: variant.retail_price_cents,
-      totalCents: variant.retail_price_cents * item.quantity
+      priceCents: isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents,
+      totalCents: (isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents) * item.quantity
     };
   });
 

@@ -7,6 +7,7 @@ type Variant = {
   id: string;
   title: string;
   retail_price_cents: number;
+  wholesale_price_cents: number | null;
 };
 
 type AddToCartProps = {
@@ -17,6 +18,7 @@ type AddToCartProps = {
     image_url: string | null;
   };
   variants: Variant[];
+  priceMode?: "retail" | "wholesale";
 };
 
 type CartItem = {
@@ -25,17 +27,23 @@ type CartItem = {
   title: string;
   variantTitle: string;
   priceCents: number;
+  priceMode: "retail" | "wholesale";
   imageUrl: string | null;
   quantity: number;
 };
 
 const CART_KEY = "ohs-cart";
 
-export function AddToCart({ product, variants }: AddToCartProps) {
+export function AddToCart({ product, variants, priceMode = "retail" }: AddToCartProps) {
   const [variantId, setVariantId] = useState(variants[0]?.id || "");
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const selected = variants.find((variant) => variant.id === variantId) || variants[0];
+  const selectedPrice = selected
+    ? priceMode === "wholesale"
+      ? selected.wholesale_price_cents || selected.retail_price_cents
+      : selected.retail_price_cents
+    : 0;
 
   function addToCart() {
     if (!selected) return;
@@ -50,7 +58,8 @@ export function AddToCart({ product, variants }: AddToCartProps) {
         productId: product.id,
         title: product.title,
         variantTitle: selected.title,
-        priceCents: selected.retail_price_cents,
+        priceCents: selectedPrice,
+        priceMode,
         imageUrl: product.image_url,
         quantity
       });
@@ -69,10 +78,17 @@ export function AddToCart({ product, variants }: AddToCartProps) {
           {variants.map((variant) => (
             <option key={variant.id} value={variant.id}>
               {variant.title} - {formatEuro(variant.retail_price_cents)}
+              {priceMode === "wholesale" && variant.wholesale_price_cents
+                ? ` / Wholesale ${formatEuro(variant.wholesale_price_cents)}`
+                : ""}
             </option>
           ))}
         </select>
       </label>
+
+      {priceMode === "wholesale" ? (
+        <p className="ohs-buy-note">Wholesale pricing is active for this account.</p>
+      ) : null}
 
       <label>
         <span>Quantity</span>

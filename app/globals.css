@@ -273,6 +273,16 @@ a {
   text-transform: uppercase;
 }
 
+.ohs-buy-note {
+  margin: 0;
+  color: #b68a45 !important;
+  font-family: Montserrat, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
 .ohs-buy-box a,
 .ohs-cart-link,
 .ohs-checkout-status a {
