@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AffiliateTracker } from "@/components/affiliate/AffiliateTracker";
 import "./globals.css";
 import "./shopify-clone.css";
 
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AffiliateTracker />
+        {children}
+      </body>
     </html>
   );
 }
