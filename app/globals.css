@@ -365,3 +365,166 @@ a {
     height: 104px;
   }
 }
+
+.ohs-portal {
+  min-height: 100vh;
+  background: #f7f1e8;
+  padding: 46px 5vw 70px;
+}
+
+.ohs-portal-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.ohs-portal-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid #e3d6c5;
+  padding-bottom: 24px;
+}
+
+.ohs-portal-top p,
+.ohs-portal-card p {
+  margin: 0 0 10px;
+  color: #b68a45;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.ohs-portal-top h1 {
+  margin: 0;
+  color: #2b2620;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 300;
+  line-height: 0.95;
+}
+
+.ohs-portal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.ohs-portal-actions a,
+.ohs-portal-actions button,
+.ohs-portal-card a {
+  min-height: 44px;
+  border: 1px solid #d7c5ad;
+  background: #fffaf4;
+  color: #2b2620;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 0 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ohs-portal-actions button {
+  cursor: pointer;
+}
+
+.ohs-portal-note {
+  border: 1px solid #eadcc8;
+  background: #fff4e4;
+  color: #b17d34;
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+  margin: 28px 0;
+  padding: 16px 20px;
+}
+
+.ohs-portal-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid #e3d6c5;
+  background: #efe5d6;
+}
+
+.ohs-portal-stats div {
+  min-height: 132px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+  border-right: 1px solid #fffaf4;
+  border-bottom: 1px solid #fffaf4;
+  padding: 18px;
+  text-align: center;
+}
+
+.ohs-portal-stats span {
+  color: #7a6a5a;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ohs-portal-stats strong,
+.ohs-portal-card strong {
+  color: #2b2620;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 300;
+  overflow-wrap: anywhere;
+}
+
+.ohs-portal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.ohs-portal-card {
+  border: 1px solid #e3d6c5;
+  background: #fffaf4;
+  padding: 26px;
+}
+
+.ohs-portal-card span {
+  display: block;
+  color: #756758;
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 12px;
+}
+
+.ohs-portal-card a {
+  margin-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .ohs-portal {
+    padding: 28px 18px 48px;
+  }
+
+  .ohs-portal-top,
+  .ohs-portal-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ohs-portal-stats,
+  .ohs-portal-grid {
+    grid-template-columns: 1fr;
+  }
+}

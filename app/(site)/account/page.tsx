@@ -1,5 +1,6 @@
 import { logoutAction } from "@/app/(site)/login/actions";
 import { requireProfile } from "@/lib/auth/session";
+import Link from "next/link";
 
 export default async function AccountPage() {
   const profile = await requireProfile();
@@ -15,6 +16,17 @@ export default async function AccountPage() {
           <p className="mt-4 text-sm uppercase tracking-[0.18em] text-cocoa">
             Roles: {profile.roles.join(", ")}
           </p>
+        </div>
+        <div className="mt-6 grid gap-3 border border-[#e3d6c5] bg-white p-6 md:grid-cols-3">
+          <Link className="border border-[#d8c7ad] px-5 py-3 text-center text-xs font-bold uppercase tracking-[0.22em]" href="/shop">
+            Shop
+          </Link>
+          <Link className="border border-[#d8c7ad] px-5 py-3 text-center text-xs font-bold uppercase tracking-[0.22em]" href="/affiliate">
+            Affiliate Portal
+          </Link>
+          <Link className="border border-[#d8c7ad] px-5 py-3 text-center text-xs font-bold uppercase tracking-[0.22em]" href="/wholesale">
+            Wholesale Portal
+          </Link>
         </div>
         <form action={logoutAction} className="mt-6">
           <button className="border border-[#d8c7ad] bg-white px-5 py-3 text-xs font-bold uppercase tracking-[0.22em]">
