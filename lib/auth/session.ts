@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { env } from "@/lib/env";
 import type { Profile, UserRole } from "@/lib/auth/types";
 
 export const getCurrentUser = cache(async () => {
@@ -39,6 +40,15 @@ export async function requireProfile() {
 
 export async function requireRole(role: UserRole) {
   const profile = await requireProfile();
+  const adminEmails = (env.ADMIN_EMAILS || "")
+    .split(",")
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean);
+
+  if (role === "admin" && adminEmails.includes(profile.email.toLowerCase())) {
+    return profile;
+  }
+
   if (!profile.roles.includes(role)) redirect("/account");
 
   return profile;

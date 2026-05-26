@@ -12,6 +12,7 @@ export async function POST(request: Request) {
 
   const supabase = createSupabaseAdminClient();
   await supabase.from("wholesale_accounts").insert({
+    email,
     business_name: businessName,
     status: "pending",
     tier: "Verified",

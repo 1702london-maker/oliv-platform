@@ -22,6 +22,12 @@ export async function WholesalePortal({ profile }: WholesalePortalProps) {
     .select("business_name,status,tier,lifetime_spend_cents")
     .eq("profile_id", profile.id)
     .maybeSingle<WholesaleAccount>();
+  const { data: orders } = await supabase
+    .from("orders")
+    .select("id,status,total_cents,created_at")
+    .eq("customer_id", profile.id)
+    .order("created_at", { ascending: false })
+    .limit(10);
 
   const account = data || {
     business_name: "Wholesale Partner",
@@ -51,9 +57,9 @@ export async function WholesalePortal({ profile }: WholesalePortalProps) {
         </div>
 
         <section className="ohs-portal-stats">
-          <Stat label="Total Orders" value="0" />
+          <Stat label="Total Orders" value={String(orders?.length || 0)} />
           <Stat label="Total Spent" value={formatEuro(account.lifetime_spend_cents)} />
-          <Stat label="Last Order" value="None" />
+          <Stat label="Last Order" value={orders?.[0] ? formatEuro(Number(orders[0].total_cents || 0)) : "None"} />
           <Stat label="Tier" value={getWholesaleTier(account.lifetime_spend_cents)} />
         </section>
 
@@ -66,6 +72,23 @@ export async function WholesalePortal({ profile }: WholesalePortalProps) {
             The account portal is now session-based. The next step is connecting wholesale prices and order history to Supabase orders.
           </span>
           <Link href="/shop">Browse Products</Link>
+        </section>
+
+        <section className="ohs-portal-card">
+          <p>Order History</p>
+          {orders?.length ? (
+            <div className="ohs-portal-orders">
+              {orders.map((order) => (
+                <div key={order.id}>
+                  <span>{new Date(order.created_at).toLocaleDateString("en-GB")}</span>
+                  <span>{order.status}</span>
+                  <strong>{formatEuro(Number(order.total_cents || 0))}</strong>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <span>No wholesale orders yet.</span>
+          )}
         </section>
       </div>
     </main>

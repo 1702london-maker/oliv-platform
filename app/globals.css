@@ -534,6 +534,29 @@ a {
   margin-top: 20px;
 }
 
+.ohs-portal-orders {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.ohs-portal-orders div {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid #eadcc8;
+  padding: 12px;
+}
+
+.ohs-portal-orders span {
+  margin: 0;
+}
+
+.ohs-portal-orders strong {
+  font-size: 22px;
+}
+
 @media (max-width: 760px) {
   .ohs-portal {
     padding: 28px 18px 48px;
