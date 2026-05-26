@@ -7,7 +7,42 @@ type ShopifyClonePageProps = {
 
 export function ShopifyClonePage({ page }: ShopifyClonePageProps) {
   const filePath = path.join(process.cwd(), "shopify-clone", `${page}.html`);
-  const html = fs.readFileSync(fs.existsSync(filePath) ? filePath : path.join(process.cwd(), "shopify-clone", "home.html"), "utf8");
+  const rawHtml = fs.readFileSync(fs.existsSync(filePath) ? filePath : path.join(process.cwd(), "shopify-clone", "home.html"), "utf8");
+  const html = normalizeShopifyHtml(rawHtml, page);
 
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+function normalizeShopifyHtml(rawHtml: string, page: string) {
+  let html = rawHtml
+    .replaceAll('href="/collections"', 'href="/shop"')
+    .replaceAll('href="/collections/all"', 'href="/shop"')
+    .replaceAll('action="/localization"', 'action="/localization"')
+    .replaceAll("EUR â‚¬", "EUR &euro;")
+    .replaceAll("âœ“", "✓")
+    .replaceAll("â€”", "&mdash;")
+    .replaceAll("â€˜", "&lsquo;")
+    .replaceAll("â€™", "&rsquo;")
+    .replaceAll("â€œ", "&ldquo;")
+    .replaceAll("â€", "&rdquo;");
+
+  html = html.replace(
+    /<select([\s\S]*?name="country_code"[\s\S]*?)>[\s\S]*?<\/select>/g,
+    '<select$1><option value="DE" selected>EUR &euro;</option><option value="GB">GBP &pound;</option><option value="US">USD $</option></select>'
+  );
+
+  if (page === "affiliate") {
+    html = html
+      .replaceAll('onclick="openDash()"', 'onclick="window.location.href=\'/login?next=/affiliate\'"')
+      .replaceAll("Log in to Dashboard", "Log in to Affiliate Portal");
+  }
+
+  if (page === "wholesale") {
+    html = html
+      .replaceAll('onclick="owhlOpenLogin()"', 'onclick="window.location.href=\'/login?next=/wholesale\'"')
+      .replaceAll('onclick="owhlTryLogin()"', 'onclick="window.location.href=\'/login?next=/wholesale\'"')
+      .replaceAll("Access Wholesale Shop", "Log in to Wholesale Portal");
+  }
+
+  return html;
 }

@@ -1,5 +1,10 @@
-import { ShopifyClonePage } from "@/components/ShopifyClonePage";
+import { redirect } from "next/navigation";
 
-export default function CollectionPage() {
-  return <ShopifyClonePage page="shop" />;
+export default async function CollectionPage({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  redirect(`/shop?category=${slug}`);
 }

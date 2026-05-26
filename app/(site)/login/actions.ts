@@ -6,6 +6,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 export async function loginAction(formData: FormData) {
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
+  const next = String(formData.get("next") || "/account");
 
   if (!email || !password) {
     redirect("/login?error=missing");
@@ -18,7 +19,7 @@ export async function loginAction(formData: FormData) {
     redirect("/login?error=invalid");
   }
 
-  redirect("/account");
+  redirect(next.startsWith("/") && !next.startsWith("//") ? next : "/account");
 }
 
 export async function registerAction(formData: FormData) {

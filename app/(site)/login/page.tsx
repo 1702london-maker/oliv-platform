@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { loginAction } from "@/app/(site)/login/actions";
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; next?: string }>;
 }) {
+  const params = await searchParams;
+  const next = params.next?.startsWith("/") ? params.next : "/account";
+
   return (
     <main className="min-h-screen bg-linen px-6 py-12">
       <div className="mx-auto max-w-md border border-[#e3d6c5] bg-white p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">Account</p>
         <h1 className="mt-3 font-serif text-4xl">Log in</h1>
         <form action={loginAction} className="mt-8 grid gap-4">
+          <input name="next" type="hidden" value={next} />
           <label className="grid gap-2 text-sm font-semibold text-cocoa">
             Email
             <input className="border border-[#d8c7ad] px-4 py-3" name="email" type="email" required />
