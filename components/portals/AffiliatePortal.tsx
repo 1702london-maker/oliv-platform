@@ -9,6 +9,7 @@ type AffiliatePortalProps = {
 };
 
 type AffiliateAccount = {
+  id?: string;
   code: string;
   status: string;
   tier: string;
@@ -25,12 +26,28 @@ export async function AffiliatePortal({ profile }: AffiliatePortalProps) {
   const { data } = await supabase
     .from("affiliates")
     .select(
-      "code,status,tier,total_sales_cents,total_commission_cents,pending_payout_cents,click_count,conversion_count,discount_rate"
+      "id,code,status,tier,total_sales_cents,total_commission_cents,pending_payout_cents,click_count,conversion_count,discount_rate"
     )
     .or(`profile_id.eq.${profile.id},email.eq.${profile.email}`)
     .maybeSingle<AffiliateAccount>();
 
   const account = data || buildPendingAffiliate(profile);
+  const [{ data: commissions }, { data: payouts }] = account.id
+    ? await Promise.all([
+        supabase
+          .from("affiliate_commissions")
+          .select("id,order_total_cents,commission_cents,status,created_at")
+          .eq("affiliate_id", account.id)
+          .order("created_at", { ascending: false })
+          .limit(10),
+        supabase
+          .from("affiliate_payouts")
+          .select("id,amount_cents,status,paid_at,created_at")
+          .eq("affiliate_id", account.id)
+          .order("created_at", { ascending: false })
+          .limit(10)
+      ])
+    : [{ data: [] }, { data: [] }];
   const affiliateLink = `${process.env.NEXT_PUBLIC_SITE_URL || ""}/shop?ref=${account.code}`;
   const tier = getAffiliateTier(account.total_sales_cents);
   const nextTier = getNextTierMessage(account.total_sales_cents, "affiliate sales");
@@ -81,6 +98,41 @@ export async function AffiliatePortal({ profile }: AffiliatePortalProps) {
         </section>
 
         <div className="ohs-portal-note">{nextTier}</div>
+
+        <section className="ohs-portal-grid">
+          <div className="ohs-portal-card">
+            <p>Recent Commissions</p>
+            {commissions?.length ? (
+              <div className="ohs-portal-orders">
+                {commissions.map((commission) => (
+                  <div key={commission.id}>
+                    <span>{new Date(commission.created_at).toLocaleDateString("en-GB")}</span>
+                    <span>{commission.status}</span>
+                    <strong>{formatEuro(Number(commission.commission_cents || 0))}</strong>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span>No commission orders yet.</span>
+            )}
+          </div>
+          <div className="ohs-portal-card">
+            <p>Payout History</p>
+            {payouts?.length ? (
+              <div className="ohs-portal-orders">
+                {payouts.map((payout) => (
+                  <div key={payout.id}>
+                    <span>{new Date(payout.paid_at || payout.created_at).toLocaleDateString("en-GB")}</span>
+                    <span>{payout.status}</span>
+                    <strong>{formatEuro(Number(payout.amount_cents || 0))}</strong>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span>No payouts recorded yet.</span>
+            )}
+          </div>
+        </section>
       </div>
     </main>
   );
@@ -97,6 +149,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function buildPendingAffiliate(profile: Profile): AffiliateAccount {
   return {
+    id: undefined,
     code: generateAffiliateCode(profile),
     status: "pending",
     tier: "Tier 1 Affiliate",

@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import { cookies } from "next/headers";
 import { getShopCategories } from "@/lib/catalog/categories";
-import { formatEuro, getCatalogProducts } from "@/lib/catalog/products";
+import { formatMoney, getCatalogProducts } from "@/lib/catalog/products";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,8 @@ export default async function ShopPage() {
   const before = start > -1 ? html.slice(0, start) : html;
   const after = start > -1 ? html.slice(end) : "";
   const [products, categories] = await Promise.all([getCatalogProducts(), getShopCategories()]);
+  const country = (await cookies()).get("ohs_country")?.value;
+  const currency = country === "GB" ? "GBP" : country === "US" ? "USD" : "EUR";
 
   return (
     <>
@@ -47,7 +50,7 @@ export default async function ShopPage() {
                   <h2>{product.title}</h2>
                   <p>
                     {firstVariant
-                      ? `From ${formatEuro(firstVariant.retail_price_cents)}`
+                      ? `From ${formatMoney(firstVariant.retail_price_cents, currency)}`
                       : "Price available soon"}
                   </p>
                   <a href={`/products/${product.slug}`}>Shop Now</a>

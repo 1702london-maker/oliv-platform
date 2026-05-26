@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { z } from "zod";
 import { env } from "@/lib/env";
 import { getCurrentProfile } from "@/lib/auth/session";
@@ -37,6 +38,8 @@ export async function POST(request: Request) {
   const stripe = getStripe();
   const supabase = createSupabaseAdminClient();
   const profile = await getCurrentProfile();
+  const country = (await cookies()).get("ohs_country")?.value;
+  const checkoutCurrency = country === "GB" ? "gbp" : country === "US" ? "usd" : "eur";
   const variantIds = parsed.data.items.map((item) => item.variantId);
   const { data: variants, error: variantsError } = await supabase
     .from("product_variants")
@@ -67,8 +70,15 @@ export async function POST(request: Request) {
       title: product?.title || item.title,
       variantTitle: variant.title,
       sku: variant.sku,
-      priceCents: isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents,
-      totalCents: (isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents) * item.quantity
+      priceCents: convertCurrencyCents(
+        isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents,
+        checkoutCurrency
+      ),
+      totalCents:
+        convertCurrencyCents(
+          isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents,
+          checkoutCurrency
+        ) * item.quantity
     };
   });
 
@@ -87,7 +97,7 @@ export async function POST(request: Request) {
       subtotal_cents: subtotalCents,
       discount_cents: discountCents,
       total_cents: totalCents,
-      currency: "eur",
+      currency: checkoutCurrency,
       affiliate_code: affiliate?.code || null
     })
     .select("id")
@@ -131,7 +141,7 @@ export async function POST(request: Request) {
     line_items: items.map((item) => ({
       quantity: item.quantity,
       price_data: {
-        currency: "eur",
+        currency: checkoutCurrency,
         unit_amount: item.priceCents,
         product_data: {
           name: item.title,
@@ -152,4 +162,14 @@ export async function POST(request: Request) {
     .eq("id", order.id);
 
   return NextResponse.json({ url: session.url });
+}
+
+function convertCurrencyCents(eurCents: number, currency: string) {
+  const rates: Record<string, number> = {
+    eur: 1,
+    gbp: 0.86,
+    usd: 1.08
+  };
+
+  return Math.max(0, Math.round(eurCents * (rates[currency] || 1)));
 }

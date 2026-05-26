@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { AffiliateTracker } from "@/components/affiliate/AffiliateTracker";
 import "./globals.css";
 import "./shopify-clone.css";
@@ -8,9 +9,10 @@ export const metadata: Metadata = {
   description: "Luxury Hair. Premium Quality. Designed for You."
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = (await cookies()).get("ohs_locale")?.value || "en";
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         <AffiliateTracker />
         {children}

@@ -1,9 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { AddToCart } from "@/components/cart/AddToCart";
 import { getCurrentProfile } from "@/lib/auth/session";
-import { formatEuro, getCatalogProductBySlug } from "@/lib/catalog/products";
+import { formatMoney, getCatalogProductBySlug } from "@/lib/catalog/products";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -16,6 +17,8 @@ export default async function ProductPage({ params }: PageProps) {
   const [product, profile] = await Promise.all([getCatalogProductBySlug(slug), getCurrentProfile()]);
   if (!product) notFound();
   const isWholesale = Boolean(profile?.roles.includes("wholesale"));
+  const country = (await cookies()).get("ohs_country")?.value;
+  const currency = country === "GB" ? "GBP" : country === "US" ? "USD" : "EUR";
 
   const shell = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
   const marker = '<main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">';
@@ -38,8 +41,8 @@ export default async function ProductPage({ params }: PageProps) {
           {firstVariant ? (
             <strong>
               {isWholesale
-                ? `Wholesale ${formatEuro(firstVariant.wholesale_price_cents || firstVariant.retail_price_cents)}`
-                : formatEuro(firstVariant.retail_price_cents)}
+                ? `Wholesale ${formatMoney(firstVariant.wholesale_price_cents || firstVariant.retail_price_cents, currency)}`
+                : formatMoney(firstVariant.retail_price_cents, currency)}
             </strong>
           ) : null}
           {product.description ? (
@@ -56,6 +59,7 @@ export default async function ProductPage({ params }: PageProps) {
             }}
             variants={product.variants}
             priceMode={isWholesale ? "wholesale" : "retail"}
+            currency={currency}
           />
         </div>
       </section>

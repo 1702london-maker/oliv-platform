@@ -46,5 +46,11 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
       .replaceAll("Access Wholesale Shop", "Log in to Wholesale Portal");
   }
 
+  if (page === "appointments") {
+    html = html.replaceAll('action="/contact#oappt-hidden-form"', 'action="/api/appointments"');
+  }
+
+  html = html.replace(/action="\/contact#[^"]*"/g, 'action="/api/contact"');
+
   return html;
 }

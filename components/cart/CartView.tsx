@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { formatEuro } from "@/lib/catalog/money";
+import { formatMoney } from "@/lib/catalog/money";
 
 type CartItem = {
   variantId: string;
@@ -20,11 +20,14 @@ export function CartView() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [message, setMessage] = useState("");
   const [affiliateCode, setAffiliateCode] = useState("");
+  const [currency, setCurrency] = useState("EUR");
 
   useEffect(() => {
     setItems(JSON.parse(window.localStorage.getItem(CART_KEY) || "[]"));
     const params = new URLSearchParams(window.location.search);
     const ref = params.get("ref") || window.localStorage.getItem("ohs-affiliate-code") || "";
+    const country = document.cookie.match(/(?:^|; )ohs_country=([^;]+)/)?.[1];
+    setCurrency(country === "GB" ? "GBP" : country === "US" ? "USD" : "EUR");
     if (ref) {
       const code = ref.toUpperCase();
       window.localStorage.setItem("ohs-affiliate-code", code);
@@ -83,7 +86,7 @@ export function CartView() {
               <h2>{item.title}</h2>
               <p>{item.variantTitle}</p>
               {item.priceMode === "wholesale" ? <p>Wholesale price</p> : null}
-              <strong>{formatEuro(item.priceCents)}</strong>
+              <strong>{formatMoney(item.priceCents, currency)}</strong>
             </div>
             <input
               min={1}
@@ -110,7 +113,7 @@ export function CartView() {
       </div>
       <aside className="ohs-cart-summary">
         <span>Subtotal</span>
-        <strong>{formatEuro(subtotal)}</strong>
+        <strong>{formatMoney(subtotal, currency)}</strong>
         <label>
           Affiliate / discount code
           <input

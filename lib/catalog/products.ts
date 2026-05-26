@@ -1,7 +1,7 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import fs from "node:fs";
 import path from "node:path";
-export { formatEuro } from "@/lib/catalog/money";
+export { formatEuro, formatMoney } from "@/lib/catalog/money";
 
 export type CatalogVariant = {
   id: string;

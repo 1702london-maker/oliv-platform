@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { formatEuro } from "@/lib/catalog/money";
+import { formatMoney } from "@/lib/catalog/money";
 
 type Variant = {
   id: string;
@@ -19,6 +19,7 @@ type AddToCartProps = {
   };
   variants: Variant[];
   priceMode?: "retail" | "wholesale";
+  currency?: string;
 };
 
 type CartItem = {
@@ -34,7 +35,7 @@ type CartItem = {
 
 const CART_KEY = "ohs-cart";
 
-export function AddToCart({ product, variants, priceMode = "retail" }: AddToCartProps) {
+export function AddToCart({ product, variants, priceMode = "retail", currency = "EUR" }: AddToCartProps) {
   const [variantId, setVariantId] = useState(variants[0]?.id || "");
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
@@ -77,9 +78,9 @@ export function AddToCart({ product, variants, priceMode = "retail" }: AddToCart
         <select value={variantId} onChange={(event) => setVariantId(event.target.value)}>
           {variants.map((variant) => (
             <option key={variant.id} value={variant.id}>
-              {variant.title} - {formatEuro(variant.retail_price_cents)}
+              {variant.title} - {formatMoney(variant.retail_price_cents, currency)}
               {priceMode === "wholesale" && variant.wholesale_price_cents
-                ? ` / Wholesale ${formatEuro(variant.wholesale_price_cents)}`
+                ? ` / Wholesale ${formatMoney(variant.wholesale_price_cents, currency)}`
                 : ""}
             </option>
           ))}
