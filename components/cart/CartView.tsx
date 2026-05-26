@@ -18,9 +18,17 @@ const CART_KEY = "ohs-cart";
 export function CartView() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [message, setMessage] = useState("");
+  const [affiliateCode, setAffiliateCode] = useState("");
 
   useEffect(() => {
     setItems(JSON.parse(window.localStorage.getItem(CART_KEY) || "[]"));
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref") || window.localStorage.getItem("ohs-affiliate-code") || "";
+    if (ref) {
+      const code = ref.toUpperCase();
+      window.localStorage.setItem("ohs-affiliate-code", code);
+      setAffiliateCode(code);
+    }
   }, []);
 
   const subtotal = useMemo(
@@ -39,7 +47,7 @@ export function CartView() {
     const response = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items })
+      body: JSON.stringify({ items, affiliateCode })
     });
     const data = await response.json();
 
@@ -101,6 +109,14 @@ export function CartView() {
       <aside className="ohs-cart-summary">
         <span>Subtotal</span>
         <strong>{formatEuro(subtotal)}</strong>
+        <label>
+          Affiliate / discount code
+          <input
+            value={affiliateCode}
+            onChange={(event) => setAffiliateCode(event.target.value.toUpperCase())}
+            placeholder="e.g. MAROHS1234"
+          />
+        </label>
         <button type="button" onClick={checkout}>
           Checkout
         </button>

@@ -338,6 +338,28 @@ a {
   font-family: Montserrat, sans-serif;
 }
 
+.ohs-cart-summary label {
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+  color: #756758;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.ohs-cart-summary input {
+  min-height: 44px;
+  width: min(280px, 78vw);
+  border: 1px solid #dfceb5;
+  background: #fffaf4;
+  color: #2a211b;
+  font-family: Montserrat, sans-serif;
+  padding: 0 14px;
+  text-transform: uppercase;
+}
+
 .ohs-checkout-status {
   min-height: 70vh;
   display: grid;
