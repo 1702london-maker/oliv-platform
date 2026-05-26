@@ -1,0 +1,367 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #251f19;
+  background: #fbf7f1;
+}
+
+body {
+  margin: 0;
+  background: #fbf7f1;
+  color: #251f19;
+}
+
+a {
+  color: inherit;
+}
+
+.ohs-catalog {
+  padding-top: 70px;
+  padding-bottom: 90px;
+}
+
+.ohs-catalog-head {
+  margin-bottom: 42px;
+  text-align: center;
+}
+
+.ohs-catalog-head p {
+  margin: 0 0 12px;
+  color: #b68a45;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.ohs-catalog-head h1 {
+  margin: 0;
+  color: #2a211b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(42px, 6vw, 74px);
+  font-weight: 300;
+  line-height: 0.95;
+}
+
+.ohs-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.ohs-category-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: -18px auto 42px;
+}
+
+.ohs-category-nav a {
+  min-height: 40px;
+  border: 1px solid #dfceb5;
+  background: #fffaf4;
+  color: #2a211b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  padding: 0 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ohs-category-nav a:hover {
+  border-color: #b68a45;
+  color: #b68a45;
+}
+
+.ohs-product-card {
+  border: 1px solid #e7d9c5;
+  background: #fffaf4;
+}
+
+.ohs-product-media {
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #eee4d5;
+}
+
+.ohs-product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.ohs-product-card:hover .ohs-product-media img {
+  transform: scale(1.04);
+}
+
+.ohs-product-copy {
+  padding: 22px;
+  text-align: center;
+}
+
+.ohs-product-copy h2 {
+  margin: 0 0 8px;
+  color: #2a211b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  font-weight: 300;
+}
+
+.ohs-product-copy p {
+  margin: 0 0 18px;
+  color: #7b6b5b;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.ohs-product-copy a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2a211b;
+  background: #2a211b;
+  color: #fffaf4;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  padding: 0 22px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .ohs-catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .ohs-catalog {
+    padding-top: 46px;
+  }
+
+  .ohs-catalog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ohs-product-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 58px;
+  padding-top: 72px;
+  padding-bottom: 92px;
+}
+
+.ohs-product-detail-media {
+  aspect-ratio: 4 / 5;
+  background: #eee4d5;
+  overflow: hidden;
+}
+
+.ohs-product-detail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ohs-product-detail-copy > p {
+  margin: 0 0 12px;
+  color: #b68a45;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.ohs-product-detail-copy h1,
+.ohs-cart h1,
+.ohs-checkout-status h1 {
+  margin: 0 0 16px;
+  color: #2a211b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(42px, 5vw, 68px);
+  font-weight: 300;
+  line-height: 0.98;
+}
+
+.ohs-product-detail-copy strong {
+  display: block;
+  margin-bottom: 24px;
+  color: #2a211b;
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ohs-product-detail-copy div,
+.ohs-product-detail-copy span,
+.ohs-cart p,
+.ohs-checkout-status p {
+  color: #756758;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.ohs-buy-box {
+  display: grid;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.ohs-buy-box label {
+  display: grid;
+  gap: 8px;
+}
+
+.ohs-buy-box label span {
+  color: #5f5045;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ohs-buy-box select,
+.ohs-buy-box input,
+.ohs-cart-line input {
+  min-height: 48px;
+  border: 1px solid #dfceb5;
+  background: #fffaf4;
+  color: #2a211b;
+  font-family: Montserrat, sans-serif;
+  padding: 0 14px;
+}
+
+.ohs-buy-box button,
+.ohs-buy-box a,
+.ohs-cart-summary button,
+.ohs-cart-link,
+.ohs-checkout-status a {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2a211b;
+  background: #2a211b;
+  color: #fffaf4;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  padding: 0 24px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ohs-buy-box a,
+.ohs-cart-link,
+.ohs-checkout-status a {
+  width: fit-content;
+  background: transparent;
+  color: #2a211b;
+}
+
+.ohs-cart {
+  padding-top: 72px;
+  padding-bottom: 92px;
+}
+
+.ohs-cart-lines {
+  display: grid;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.ohs-cart-line {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr) 90px auto;
+  gap: 18px;
+  align-items: center;
+  border: 1px solid #e7d9c5;
+  background: #fffaf4;
+  padding: 16px;
+}
+
+.ohs-cart-line img,
+.ohs-cart-line > span {
+  width: 108px;
+  height: 132px;
+  object-fit: cover;
+  background: #eee4d5;
+}
+
+.ohs-cart-line h2 {
+  margin: 0 0 4px;
+  color: #2a211b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.ohs-cart-line button {
+  border: 0;
+  background: transparent;
+  color: #7b6b5b;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ohs-cart-summary {
+  display: grid;
+  justify-items: end;
+  gap: 14px;
+  margin-top: 28px;
+  color: #2a211b;
+  font-family: Montserrat, sans-serif;
+}
+
+.ohs-checkout-status {
+  min-height: 70vh;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 16px;
+  background: #fbf7f1;
+  padding: 40px;
+  text-align: center;
+}
+
+@media (max-width: 820px) {
+  .ohs-product-detail {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ohs-cart-line {
+    grid-template-columns: 84px 1fr;
+  }
+
+  .ohs-cart-line img,
+  .ohs-cart-line > span {
+    width: 84px;
+    height: 104px;
+  }
+}
