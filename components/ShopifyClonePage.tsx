@@ -33,12 +33,14 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
 
   if (page === "affiliate") {
     html = html
+      .replaceAll('action="/contact#contact_form"', 'action="/api/applications/affiliate"')
       .replaceAll('onclick="openDash()"', 'onclick="window.location.href=\'/login?next=/affiliate\'"')
       .replaceAll("Log in to Dashboard", "Log in to Affiliate Portal");
   }
 
   if (page === "wholesale") {
     html = html
+      .replaceAll('action="/contact#contact_form"', 'action="/api/applications/wholesale"')
       .replaceAll('onclick="owhlOpenLogin()"', 'onclick="window.location.href=\'/login?next=/wholesale\'"')
       .replaceAll('onclick="owhlTryLogin()"', 'onclick="window.location.href=\'/login?next=/wholesale\'"')
       .replaceAll("Access Wholesale Shop", "Log in to Wholesale Portal");
