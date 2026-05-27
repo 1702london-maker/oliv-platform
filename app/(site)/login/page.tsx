@@ -172,8 +172,15 @@ export default async function LoginPage({
           <p className="ohs-auth-eyebrow">Account</p>
 
           {/* SIGN IN PANEL */}
-          <div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
-            <h1 className="ohs-auth-title">Sign In</h1>
+         <p className="ohs-auth-eyebrow">
+  {next === "/affiliate" ? "Affiliate Programme" : next === "/wholesale" ? "Wholesale Portal" : "Account"}
+</p>
+
+{/* SIGN IN PANEL */}
+<div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
+  <h1 className="ohs-auth-title">
+    {next === "/affiliate" ? "Affiliate Dashboard" : next === "/wholesale" ? "Wholesale Portal" : "Sign In"}
+  </h1>
             {error === "invalid" && <div className="ohs-auth-alert-error">Incorrect email or password. Please try again.</div>}
             {error === "missing" && <div className="ohs-auth-alert-error">Please enter your email and password.</div>}
             <form action={loginAction}>
