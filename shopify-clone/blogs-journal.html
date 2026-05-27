@@ -2721,18 +2721,10 @@ first.parentNode.insertBefore(script, first);
           Follow on Instagram
         </a>
       </div>
-      <div id="instafeed">
-        
+      <div id="instafeed" style="width:100%">
+        <behold-widget feed-id="gaTEDtU3KmgCK5fpgMCR"></behold-widget>
+        <script type="module" src="https://w.behold.so/widget.js"></script>
       </div>
-      
-        <div class="ojnl-ig-grid">
-          <div class="ojnl-ig-placeholder"><span>Instagram</span></div>
-          <div class="ojnl-ig-placeholder"><span>Instagram</span></div>
-          <div class="ojnl-ig-placeholder"><span>Instagram</span></div>
-          <div class="ojnl-ig-placeholder"><span>Instagram</span></div>
-          <div class="ojnl-ig-placeholder"><span>Instagram</span></div>
-          <div class="ojnl-ig-placeholder"><span>Instagram</span></div>
-        </div>
       
     </div>
   </div>
@@ -2957,6 +2949,32 @@ first.parentNode.insertBefore(script, first);
       <span class="ohs-trust-icon">✦</span>
       <span class="ohs-trust-text">Worldwide Delivery</span>
     </div>
+  </div>
+</div>
+
+<div id="ojnl-reviews-section" style="background:#F8F5EF;padding:72px 24px">
+  <div style="max-width:1100px;margin:0 auto">
+    <p style="font-family:Montserrat,sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#B68A45;text-align:center;margin:0 0 14px">Happy Clients</p>
+    <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:#2B2620;text-align:center;margin:0 0 48px;line-height:1.2">What Our Clients Say</h2>
+    <!-- ELFSIGHT GOOGLE REVIEWS — replace data-elfsight-app-id with your widget ID -->
+    <div id="ojnl-elfsight-placeholder" data-elfsight-app-id="PENDING">
+      <!-- Elfsight widget will appear here once app ID is configured -->
+    </div>
+    <script>
+      (function() {
+        var appId = document.getElementById('ojnl-elfsight-placeholder').getAttribute('data-elfsight-app-id');
+        if (appId && appId !== 'PENDING') {
+          var script = document.createElement('script');
+          script.src = 'https://static.elfsight.com/platform/platform.js';
+          script.async = true;
+          document.head.appendChild(script);
+          var widget = document.createElement('div');
+          widget.className = 'elfsight-app-' + appId;
+          widget.setAttribute('data-elfsight-app-lazy', '');
+          document.getElementById('ojnl-elfsight-placeholder').appendChild(widget);
+        }
+      })();
+    </script>
   </div>
 </div>
 
