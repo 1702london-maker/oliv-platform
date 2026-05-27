@@ -126,48 +126,6 @@ export default async function AccountPage() {
             color: #B68A45;
             margin: 0;
           }
-          .ohs-acct-links {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-          }
-          .ohs-acct-link-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            background: #fff;
-            border: 1px solid #e0d2bc;
-            padding: 24px 16px;
-            text-decoration: none;
-            transition: border-color 0.2s, background 0.2s;
-          }
-          .ohs-acct-link-btn:hover { border-color: #B68A45; background: #fdf9f4; }
-          .ohs-acct-link-icon {
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            background: #F8F5EF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          .ohs-acct-link-icon svg {
-            width: 18px; height: 18px;
-            fill: none; stroke: #2B2620;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-          }
-          .ohs-acct-link-label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #2B2620;
-            text-align: center;
-          }
           .ohs-acct-orders {
             background: #fff;
             border: 1px solid #e0d2bc;
@@ -253,29 +211,8 @@ export default async function AccountPage() {
             </div>
             <div>
               <p className="ohs-acct-email">{profile.email}</p>
-              <p className="ohs-acct-roles">{profile.roles.join(" · ")}</p>
+              <p className="ohs-acct-roles">{profile.first_name ? `${profile.first_name} ${profile.last_name ?? ""}`.trim() : profile.email}</p>
             </div>
-          </div>
-
-          <div className="ohs-acct-links">
-            <a className="ohs-acct-link-btn" href="/shop">
-              <div className="ohs-acct-link-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-              </div>
-              <span className="ohs-acct-link-label">Shop</span>
-            </a>
-            <a className="ohs-acct-link-btn" href="/affiliate">
-              <div className="ohs-acct-link-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              </div>
-              <span className="ohs-acct-link-label">Affiliate Portal</span>
-            </a>
-            <a className="ohs-acct-link-btn" href="/wholesale">
-              <div className="ohs-acct-link-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              </div>
-              <span className="ohs-acct-link-label">Wholesale Portal</span>
-            </a>
           </div>
 
           <div className="ohs-acct-orders">
