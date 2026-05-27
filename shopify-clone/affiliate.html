@@ -3649,6 +3649,49 @@
   </div>
 
 </footer>
+<script>
+/* ── Affiliate page modal & button logic ── */
+function openApply() {
+  var o = document.getElementById('oaff-apply-overlay');
+  if (o) { o.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+function closeApply() {
+  var o = document.getElementById('oaff-apply-overlay');
+  if (o) { o.classList.remove('open'); document.body.style.overflow = ''; }
+}
+function openDash() {
+  window.location.href = '/login?next=/affiliate';
+}
+function closeDash() {
+  var o = document.getElementById('oaff-dash-overlay');
+  if (o) { o.classList.remove('open'); document.body.style.overflow = ''; }
+}
+function ocopy(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent || el.value || '').then(function() {
+    var t = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = t; }, 1800);
+  });
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+  /* Close apply modal via X button */
+  var applyClose = document.getElementById('oaff-apply-close');
+  if (applyClose) applyClose.addEventListener('click', closeApply);
+
+  /* Close apply modal by clicking the dark backdrop */
+  var applyOverlay = document.getElementById('oaff-apply-overlay');
+  if (applyOverlay) applyOverlay.addEventListener('click', function(e) {
+    if (e.target === applyOverlay) closeApply();
+  });
+
+  /* ESC key closes any open modal */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeApply(); closeDash(); }
+  });
+});
+</script>
 </div>
 <!-- END sections: footer-group -->
