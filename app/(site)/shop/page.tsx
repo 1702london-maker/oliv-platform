@@ -307,6 +307,7 @@ function shopLandingOverrides() {
   .oshp-all-cols-grid {
     grid-template-columns: 1fr !important;
   }
+  }
   .oshp-hero-meta {
   display: flex;
   align-items: center;
@@ -340,6 +341,5 @@ function shopLandingOverrides() {
   .oshp-hero-meta { gap: 20px; margin-top: 20px; }
   .oshp-hero-meta-val { font-size: 22px; }
   .oshp-hero-meta-label { font-size: 8px; letter-spacing: 1.5px; white-space: normal; }
-}
 }`;
 }
