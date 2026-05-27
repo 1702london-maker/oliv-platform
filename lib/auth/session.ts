@@ -42,7 +42,7 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
             email: user.email ?? "",
             first_name: (user.user_metadata?.first_name as string) ?? "",
             last_name: (user.user_metadata?.last_name as string) ?? "",
-            roles: ["customer"],
+            // omit roles — DB default (customer) applies for new rows
           },
           { onConflict: "id" }
         )

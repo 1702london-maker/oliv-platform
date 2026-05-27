@@ -30,7 +30,7 @@ export async function loginAction(formData: FormData) {
           email: signInData.user.email ?? email,
           first_name: (signInData.user.user_metadata?.first_name as string) ?? "",
           last_name: (signInData.user.user_metadata?.last_name as string) ?? "",
-          roles: ["customer"],
+          // omit roles — DB default (customer) applies for new rows
         },
         { onConflict: "id" }
       );
