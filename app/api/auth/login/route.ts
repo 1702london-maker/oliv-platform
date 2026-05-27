@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { APP_SESSION_COOKIE, createAppSessionCookie } from "@/lib/auth/app-session";
 import { ensureProfile } from "@/lib/auth/ensure-profile";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -35,5 +36,13 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true, next });
+  const response = NextResponse.json({ ok: true, next });
+  response.cookies.set(APP_SESSION_COOKIE, createAppSessionCookie(data.user.id, data.user.email ?? email), {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 30,
+    path: "/",
+    sameSite: "lax",
+    secure: new URL(request.url).protocol === "https:"
+  });
+  return response;
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { APP_SESSION_COOKIE, createAppSessionCookie } from "@/lib/auth/app-session";
 import { ensureProfile } from "@/lib/auth/ensure-profile";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -26,5 +27,14 @@ export async function POST(request: Request) {
     return NextResponse.redirect(`${origin}/login?error=profile&next=${encodeURIComponent(next)}`, 303);
   }
 
-  return NextResponse.redirect(`${origin}${next}`, 303);
+  const response = NextResponse.redirect(`${origin}${next}`, 303);
+  response.cookies.set(APP_SESSION_COOKIE, createAppSessionCookie(data.user.id, data.user.email ?? email), {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 30,
+    path: "/",
+    sameSite: "lax",
+    secure: origin.startsWith("https://")
+  });
+
+  return response;
 }

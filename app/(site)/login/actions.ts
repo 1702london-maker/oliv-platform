@@ -1,6 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { APP_SESSION_COOKIE } from "@/lib/auth/app-session";
 import { ensureProfile } from "@/lib/auth/ensure-profile";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -87,6 +89,8 @@ export async function registerAction(formData: FormData) {
 export async function logoutAction() {
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
+  const cookieStore = await cookies();
+  cookieStore.delete(APP_SESSION_COOKIE);
   redirect("/");
 }
 

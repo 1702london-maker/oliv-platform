@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
+import { getAppSession } from "@/lib/auth/app-session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { env } from "@/lib/env";
@@ -16,7 +17,24 @@ export const getCurrentUser = cache(async () => {
 
 export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
   const user = await getCurrentUser();
-  if (!user) return null;
+  if (!user) {
+    const appSession = await getAppSession();
+    if (!appSession) return null;
+
+    const admin = createSupabaseAdminClient();
+    const { data, error } = await admin
+      .from("profiles")
+      .select("id,email,first_name,last_name,phone,roles")
+      .eq("id", appSession.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error("[session] app profile lookup error:", error.message);
+      return null;
+    }
+
+    return data as Profile | null;
+  }
 
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
