@@ -21,6 +21,7 @@ function getShell() {
 
 export default async function AccountPage() {
   const profile = await requireProfile();
+
   let orders: Array<{
     id: string;
     status: string;
@@ -38,11 +39,18 @@ export default async function AccountPage() {
       .order("created_at", { ascending: false })
       .limit(10);
     orders = data;
-  } catch (error) {
-    console.error("[account] order lookup unavailable:", error);
+  } catch (err) {
+    console.error("[account] order lookup unavailable:", err);
   }
 
   const { before, after } = getShell();
+
+  const displayName = profile.first_name
+    ? `${profile.first_name}${profile.last_name ? " " + profile.last_name : ""}`
+    : null;
+
+  const isAffiliate = profile.roles.includes("affiliate");
+  const isWholesale = profile.roles.includes("wholesale");
 
   const statusColor: Record<string, string> = {
     paid: "#2a7a4a",
@@ -56,196 +64,477 @@ export default async function AccountPage() {
     <>
       <div dangerouslySetInnerHTML={{ __html: before }} />
 
-      <div id="ohs-account-main">
+      <div id="ohs-acct-page">
         <style>{`
-          #ohs-account-main {
-            background: #F8F5EF;
-            min-height: 60vh;
-            padding: 64px 24px 80px;
+          #ohs-acct-page {
+            background: #F5F0E8;
+            font-family: 'Montserrat', sans-serif;
           }
-          .ohs-acct-wrap {
-            max-width: 900px;
+
+          /* ── Welcome hero ── */
+          .ohs-acct-hero {
+            background: #F5F0E8;
+            border-bottom: 1px solid #E2D5C0;
+            padding: 52px 24px 48px;
+          }
+          .ohs-acct-hero-inner {
+            max-width: 1100px;
             margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
           }
           .ohs-acct-eyebrow {
             font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #B68A45;
+            margin: 0 0 12px;
+          }
+          .ohs-acct-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 56px;
+            font-weight: 300;
+            color: #2B2620;
+            margin: 0 0 16px;
+            line-height: 1.05;
+          }
+          .ohs-acct-meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #6B5C4E;
+            margin: 0;
+          }
+          .ohs-acct-meta strong { color: #2B2620; font-weight: 600; }
+          .ohs-logout-btn {
+            flex-shrink: 0;
+            margin-top: 8px;
+            background: transparent;
+            border: 1px solid #2B2620;
+            color: #2B2620;
+            padding: 11px 28px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
+          }
+          .ohs-logout-btn:hover { background: #2B2620; color: #fff; }
+
+          /* ── Body / cards ── */
+          .ohs-acct-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+          }
+
+          /* 3-column card grid */
+          .ohs-acct-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 56px;
+          }
+
+          .ohs-acct-card {
+            background: #fff;
+            border: 1px solid #E2D5C0;
+            padding: 28px 28px 28px;
+            display: flex;
+            flex-direction: column;
+          }
+
+          .ohs-card-eyebrow {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: #B68A45;
+            margin: 0 0 10px;
+          }
+          .ohs-card-eyebrow--muted { color: #8B7355; }
+
+          .ohs-card-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 28px;
+            font-weight: 300;
+            color: #2B2620;
+            margin: 0 0 12px;
+            line-height: 1.15;
+          }
+
+          .ohs-card-desc {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #6B5C4E;
+            line-height: 1.7;
+            margin: 0 0 24px;
+            flex: 1;
+          }
+
+          /* Buttons inside cards */
+          .ohs-btn {
+            display: inline-block;
+            padding: 11px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+            text-align: center;
+            border: 1px solid transparent;
+            align-self: flex-start;
+          }
+          .ohs-btn--dark {
+            background: #2B2620;
+            color: #fff;
+            border-color: #2B2620;
+          }
+          .ohs-btn--dark:hover { background: #3d3530; border-color: #3d3530; }
+          .ohs-btn--gold {
+            background: #B68A45;
+            color: #fff;
+            border-color: #B68A45;
+          }
+          .ohs-btn--gold:hover { background: #9a7539; border-color: #9a7539; }
+          .ohs-btn--outline {
+            background: transparent;
+            color: #2B2620;
+            border-color: #2B2620;
+          }
+          .ohs-btn--outline:hover { background: #2B2620; color: #fff; }
+
+          /* Multi-button row (Support card) */
+          .ohs-btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-self: flex-start;
+          }
+          .ohs-btn-row .ohs-btn { align-self: auto; }
+
+          /* ── Section headings ── */
+          .ohs-acct-section { margin-bottom: 56px; }
+          .ohs-section-heading {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 38px;
+            font-weight: 300;
+            color: #2B2620;
+            margin: 0 0 28px;
+            line-height: 1.1;
+          }
+          .ohs-section-heading em {
+            font-style: italic;
+            font-weight: 300;
+          }
+
+          /* ── Order table ── */
+          .ohs-order-table {
+            background: #fff;
+            border: 1px solid #E2D5C0;
+            overflow: hidden;
+          }
+          .ohs-order-head {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            padding: 10px 24px;
+            background: #FAF6F0;
+            border-bottom: 1px solid #EDE2D3;
+          }
+          .ohs-order-head span {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #9B8878;
+          }
+          .ohs-order-row {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            padding: 16px 24px;
+            border-bottom: 1px solid #F4EDE4;
+            align-items: center;
+          }
+          .ohs-order-row:last-child { border-bottom: none; }
+          .ohs-order-date { font-family: 'Montserrat', sans-serif; font-size: 12px; color: #2B2620; }
+          .ohs-order-status { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+          .ohs-order-total { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; color: #2B2620; }
+          .ohs-order-ref { font-family: 'Montserrat', sans-serif; font-size: 11px; color: #9B8878; }
+
+          /* ── Empty orders state ── */
+          .ohs-orders-empty {
+            background: #fff;
+            border: 1px solid #E2D5C0;
+            padding: 56px 32px;
+            text-align: center;
+          }
+          .ohs-orders-empty-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 28px;
+            font-weight: 300;
+            font-style: italic;
+            color: #2B2620;
+            margin: 0 0 10px;
+          }
+          .ohs-orders-empty-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #6B5C4E;
+            margin: 0 0 28px;
+          }
+
+          /* ── Account details grid ── */
+          .ohs-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+          }
+          .ohs-details-card {
+            background: #fff;
+            border: 1px solid #E2D5C0;
+            padding: 28px;
+          }
+          .ohs-details-eyebrow {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8.5px;
             font-weight: 700;
             letter-spacing: 0.28em;
             text-transform: uppercase;
             color: #B68A45;
             margin: 0 0 14px;
           }
-          .ohs-acct-title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 48px;
-            font-weight: 300;
-            color: #2B2620;
-            margin: 0 0 40px;
-            line-height: 1.05;
-          }
-          .ohs-acct-profile {
-            background: #fff;
-            border: 1px solid #e0d2bc;
-            padding: 28px 32px;
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            margin-bottom: 24px;
-          }
-          .ohs-acct-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: #2B2620;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-          }
-          .ohs-acct-avatar svg {
-            width: 26px; height: 26px;
-            fill: none; stroke: #fff;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-          }
-          .ohs-acct-email {
+          .ohs-details-value {
             font-family: 'Montserrat', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 13px;
             color: #2B2620;
-            margin: 0 0 6px;
+            font-weight: 500;
+            margin: 0 0 4px;
           }
-          .ohs-acct-roles {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #B68A45;
-            margin: 0;
-          }
-          .ohs-acct-orders {
-            background: #fff;
-            border: 1px solid #e0d2bc;
-            margin-bottom: 24px;
-            overflow: hidden;
-          }
-          .ohs-acct-orders-head {
-            padding: 20px 28px;
-            border-bottom: 1px solid #f0e6d6;
-          }
-          .ohs-acct-orders-head h2 {
+          .ohs-details-empty {
             font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 22px;
-            font-weight: 400;
+            font-weight: 300;
             color: #2B2620;
-            margin: 0;
+            margin: 0 0 8px;
           }
-          .ohs-order-table-head {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr 1fr 1fr;
-            padding: 10px 28px;
-            background: #faf6f0;
-            border-bottom: 1px solid #ede2d3;
+          .ohs-details-hint {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: #6B5C4E;
+            line-height: 1.6;
+            margin: 0 0 20px;
           }
-          .ohs-order-table-head span {
+          .ohs-details-link {
             font-family: 'Montserrat', sans-serif;
             font-size: 9px;
             font-weight: 700;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: #9b8878;
+            color: #2B2620;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            display: inline-block;
+            margin-top: 16px;
           }
-          .ohs-order-row {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr 1fr 1fr;
-            padding: 16px 28px;
-            border-bottom: 1px solid #f4ede4;
-            align-items: center;
+          .ohs-details-link:hover { color: #B68A45; }
+
+          /* ── Responsive ── */
+          @media (max-width: 900px) {
+            .ohs-acct-grid { grid-template-columns: repeat(2, 1fr); }
+            .ohs-details-grid { grid-template-columns: 1fr; }
           }
-          .ohs-order-row:last-child { border-bottom: none; }
-          .ohs-order-date { font-family: 'Montserrat', sans-serif; font-size: 13px; color: #2B2620; }
-          .ohs-order-status { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-          .ohs-order-total { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; color: #2B2620; }
-          .ohs-order-ref { font-family: 'Montserrat', sans-serif; font-size: 11px; color: #9b8878; }
-          .ohs-orders-empty { padding: 40px 28px; font-family: 'Montserrat', sans-serif; font-size: 13px; color: #9b8878; text-align: center; }
-          .ohs-acct-logout-btn {
-            background: transparent;
-            border: 1px solid #dfceb5;
-            color: #6b5c4e;
-            padding: 12px 28px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: border-color 0.2s, color 0.2s;
-          }
-          .ohs-acct-logout-btn:hover { border-color: #2B2620; color: #2B2620; }
-          @media (max-width: 768px) {
-            .ohs-acct-links { grid-template-columns: 1fr; }
-            .ohs-order-table-head, .ohs-order-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+          @media (max-width: 600px) {
+            .ohs-acct-title { font-size: 38px; }
+            .ohs-acct-grid { grid-template-columns: 1fr; }
+            .ohs-order-head,
+            .ohs-order-row { grid-template-columns: 1fr 1fr; }
             .ohs-order-ref { display: none; }
-            .ohs-acct-title { font-size: 36px; }
-          }
-          @media (max-width: 480px) {
-            .ohs-order-table-head, .ohs-order-row { padding: 12px 16px; }
-            .ohs-acct-orders-head { padding: 16px; }
-            .ohs-acct-profile { padding: 20px 16px; }
           }
         `}</style>
 
-        <div className="ohs-acct-wrap">
-          <p className="ohs-acct-eyebrow">My Account</p>
-          <h1 className="ohs-acct-title">Welcome back</h1>
-
-          <div className="ohs-acct-profile">
-            <div className="ohs-acct-avatar">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </div>
+        {/* ── Welcome hero ── */}
+        <div className="ohs-acct-hero">
+          <div className="ohs-acct-hero-inner">
             <div>
-              <p className="ohs-acct-email">{profile.email}</p>
-              <p className="ohs-acct-roles">{profile.first_name ? `${profile.first_name} ${profile.last_name ?? ""}`.trim() : profile.email}</p>
+              <p className="ohs-acct-eyebrow">My Account</p>
+              <h1 className="ohs-acct-title">
+                Welcome back{displayName ? `, ${displayName}` : ","}
+              </h1>
+              <p className="ohs-acct-meta">
+                Signed in as <strong>{profile.email}</strong>
+              </p>
             </div>
+            <form action={logoutAction}>
+              <button className="ohs-logout-btn" type="submit">Log Out</button>
+            </form>
+          </div>
+        </div>
+
+        {/* ── Cards + sections ── */}
+        <div className="ohs-acct-body">
+
+          {/* Card grid */}
+          <div className="ohs-acct-grid">
+
+            {/* Shopping */}
+            <div className="ohs-acct-card">
+              <p className="ohs-card-eyebrow">Shopping</p>
+              <h2 className="ohs-card-title">My Orders</h2>
+              <p className="ohs-card-desc">
+                View and track your purchases. Your full order history and shipping updates in one place.
+              </p>
+              <a href="#order-history" className="ohs-btn ohs-btn--dark">Go to Orders</a>
+            </div>
+
+            {/* Services */}
+            <div className="ohs-acct-card">
+              <p className="ohs-card-eyebrow">Services</p>
+              <h2 className="ohs-card-title">My Appointments</h2>
+              <p className="ohs-card-desc">
+                View and manage your bookings or book a new appointment at either of our Berlin salons.
+              </p>
+              <a href="/appointment" className="ohs-btn ohs-btn--gold">Book Appointment</a>
+            </div>
+
+            {/* Academy */}
+            <div className="ohs-acct-card">
+              <p className="ohs-card-eyebrow">Academy</p>
+              <h2 className="ohs-card-title">My Training</h2>
+              <p className="ohs-card-desc">
+                Access your training sessions, course materials and academy resources from OlivHairSupply.
+              </p>
+              <a href="/training" className="ohs-btn ohs-btn--outline">View Training</a>
+            </div>
+
+            {/* Affiliate */}
+            <div className="ohs-acct-card">
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Requires Approval</p>
+              <h2 className="ohs-card-title">Affiliate Access</h2>
+              <p className="ohs-card-desc">
+                Earn commission by referring clients to OlivHairSupply. Apply to join our affiliate programme.
+              </p>
+              <a href="/affiliate" className="ohs-btn ohs-btn--outline">
+                {isAffiliate ? "Go to Portal" : "Apply Now"}
+              </a>
+            </div>
+
+            {/* Wholesale */}
+            <div className="ohs-acct-card">
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Requires Approval</p>
+              <h2 className="ohs-card-title">Wholesale Access</h2>
+              <p className="ohs-card-desc">
+                Access B2B pricing and ordering for salons, stylists and retailers. Apply for a wholesale account.
+              </p>
+              <a href="/wholesale" className="ohs-btn ohs-btn--outline">
+                {isWholesale ? "Go to Portal" : "Apply for Access"}
+              </a>
+            </div>
+
+            {/* Account Details shortcut */}
+            <div className="ohs-acct-card">
+              <p className="ohs-card-eyebrow">Personal</p>
+              <h2 className="ohs-card-title">Account Details</h2>
+              <p className="ohs-card-desc">
+                Update your name, email address, password and saved delivery addresses.
+              </p>
+              <a href="#account-details" className="ohs-btn ohs-btn--outline">Manage Account</a>
+            </div>
+
+            {/* Support */}
+            <div className="ohs-acct-card">
+              <p className="ohs-card-eyebrow">Help</p>
+              <h2 className="ohs-card-title">Support</h2>
+              <p className="ohs-card-desc">
+                Need help with an order, appointment or account query? Our team is available Monday to Saturday.
+              </p>
+              <div className="ohs-btn-row">
+                <a href="/contact" className="ohs-btn ohs-btn--dark">Contact Us</a>
+                <a href="https://wa.me/4917641552352" className="ohs-btn ohs-btn--outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              </div>
+            </div>
+
           </div>
 
-          <div className="ohs-acct-orders">
-            <div className="ohs-acct-orders-head"><h2>Order History</h2></div>
+          {/* ── Order History ── */}
+          <div id="order-history" className="ohs-acct-section">
+            <h2 className="ohs-section-heading">Order <em>History</em></h2>
             {orders?.length ? (
-              <>
-                <div className="ohs-order-table-head">
-                  <span>Date</span><span>Status</span><span>Total</span><span>Ref</span>
+              <div className="ohs-order-table">
+                <div className="ohs-order-head">
+                  <span>Date</span>
+                  <span>Status</span>
+                  <span>Total</span>
+                  <span>Ref</span>
                 </div>
                 {orders.map((order) => (
                   <div className="ohs-order-row" key={order.id}>
                     <span className="ohs-order-date">
-                      {new Date(order.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+                      {new Date(order.created_at).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
                     </span>
-                    <span className="ohs-order-status" style={{ color: statusColor[order.status?.toLowerCase()] ?? "#2B2620" }}>
+                    <span
+                      className="ohs-order-status"
+                      style={{ color: statusColor[order.status?.toLowerCase()] ?? "#2B2620" }}
+                    >
                       {order.status}
                     </span>
-                    <span className="ohs-order-total">{formatEuro(Number(order.total_cents ?? 0))}</span>
+                    <span className="ohs-order-total">
+                      {formatEuro(Number(order.total_cents ?? 0))}
+                    </span>
                     <span className="ohs-order-ref">{order.affiliate_code || "—"}</span>
                   </div>
                 ))}
-              </>
+              </div>
             ) : (
-              <p className="ohs-orders-empty">
-                You haven&rsquo;t placed any orders yet.{" "}
-                <a href="/shop" style={{ color: "#B68A45", fontWeight: 600 }}>Start shopping →</a>
-              </p>
+              <div className="ohs-orders-empty">
+                <p className="ohs-orders-empty-title">No orders yet</p>
+                <p className="ohs-orders-empty-sub">
+                  Your order history will appear here once you make your first purchase.
+                </p>
+                <a href="/shop" className="ohs-btn ohs-btn--dark">Start Shopping</a>
+              </div>
             )}
           </div>
 
-          <form action={logoutAction}>
-            <button className="ohs-acct-logout-btn" type="submit">Sign Out</button>
-          </form>
+          {/* ── Account Details ── */}
+          <div id="account-details" className="ohs-acct-section">
+            <h2 className="ohs-section-heading">Account <em>Details</em></h2>
+            <div className="ohs-details-grid">
+              <div className="ohs-details-card">
+                <p className="ohs-details-eyebrow">Personal Information</p>
+                <p className="ohs-details-value">{profile.email}</p>
+                {(profile.first_name || profile.last_name) && (
+                  <p className="ohs-details-value">
+                    {[profile.first_name, profile.last_name].filter(Boolean).join(" ")}
+                  </p>
+                )}
+                <a href="/account/details" className="ohs-details-link">Edit Details</a>
+              </div>
+              <div className="ohs-details-card">
+                <p className="ohs-details-eyebrow">Default Address</p>
+                <p className="ohs-details-empty">No Address Saved</p>
+                <p className="ohs-details-hint">
+                  Add a default shipping address for faster checkout.
+                </p>
+                <a href="/account/address" className="ohs-details-link">Add Address</a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
