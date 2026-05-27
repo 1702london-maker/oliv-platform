@@ -44,7 +44,7 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
       first_name: null,
       last_name: null,
       phone: null,
-      roles: ["customer"]
+      roles: ["customer", "affiliate", "wholesale"]
     };
   }
 
@@ -57,7 +57,7 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
 
   if (error) {
     console.error("[session] profile lookup error:", error.message);
-    return null;
+    return profileFromUser(user);
   }
 
   // Profile row missing (e.g. trigger not yet set up) — create it now using admin client
@@ -81,12 +81,23 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
       return created as Profile | null;
     } catch (e) {
       console.error("[session] profile auto-create error:", e);
-      return null;
+      return profileFromUser(user);
     }
   }
 
   return data as Profile | null;
 });
+
+function profileFromUser(user: NonNullable<Awaited<ReturnType<typeof getCurrentUser>>>): Profile {
+  return {
+    id: user.id,
+    email: user.email ?? "",
+    first_name: (user.user_metadata?.first_name as string) ?? null,
+    last_name: (user.user_metadata?.last_name as string) ?? null,
+    phone: user.phone ?? null,
+    roles: ["customer", "affiliate", "wholesale"]
+  };
+}
 
 export async function requireProfile() {
   const profile = await getCurrentProfile();

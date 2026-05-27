@@ -21,13 +21,26 @@ function getShell() {
 
 export default async function AccountPage() {
   const profile = await requireProfile();
-  const supabase = createSupabaseAdminClient();
-  const { data: orders } = await supabase
-    .from("orders")
-    .select("id,status,total_cents,affiliate_code,created_at")
-    .eq("customer_id", profile.id)
-    .order("created_at", { ascending: false })
-    .limit(10);
+  let orders: Array<{
+    id: string;
+    status: string;
+    total_cents: number;
+    affiliate_code: string | null;
+    created_at: string;
+  }> | null = null;
+
+  try {
+    const supabase = createSupabaseAdminClient();
+    const { data } = await supabase
+      .from("orders")
+      .select("id,status,total_cents,affiliate_code,created_at")
+      .eq("customer_id", profile.id)
+      .order("created_at", { ascending: false })
+      .limit(10);
+    orders = data;
+  } catch (error) {
+    console.error("[account] order lookup unavailable:", error);
+  }
 
   const { before, after } = getShell();
 
