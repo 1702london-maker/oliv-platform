@@ -86,15 +86,16 @@ const featuredProducts = [
 export default async function ShopPage({
   searchParams
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; view?: string }>
 }) {
-  const params = await searchParams;
-  const categorySlug = params.category;
+const params = await searchParams;
+const categorySlug = params.category;
+const viewAll = params.view === "all";
 
-  if (!categorySlug) {
-    const landingHtml = buildShopLandingHtml();
-    return <div dangerouslySetInnerHTML={{ __html: landingHtml }} />;
-  }
+if (!categorySlug && !viewAll) {
+  const landingHtml = buildShopLandingHtml();
+  return <div dangerouslySetInnerHTML={{ __html: landingHtml }} />;
+}
 
   const { before, after } = getShopShellHtml();
   const [products, categories] = await Promise.all([getCatalogProducts(categorySlug), getShopCategories()]);
@@ -177,6 +178,7 @@ function buildShopLandingHtml() {
   html = html.replace(/<div class="oshp-all-cols-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-featured">/, `<div class="oshp-all-cols-grid">\n${buildCollectionTiles()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-featured">`);
   html = html.replace(/<div class="oshp-featured">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-story">/, buildFeaturedProducts());
   html = html.replaceAll("/collections/bizilux-hair", "/shop?category=biziluxe-extensions");
+  html = html.replace('href="/collections" class="oshp-collections-all"', 'href="/shop?view=all" class="oshp-collections-all"');
   html = html.replaceAll("/collections", "/shop");
   html = html.replace("</style>", `${shopLandingOverrides()}\n</style>`);
 
