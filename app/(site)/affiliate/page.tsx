@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { AffiliatePortal } from "@/components/portals/AffiliatePortal";
 import { getCurrentProfile } from "@/lib/auth/session";
-import { loginAction, forgotPasswordAction } from "@/app/(site)/login/actions";
-
+import { loginAction } from "@/app/(site)/login/actions";
+import { forgotPasswordAction } from "@/app/(site)/affiliate/actions";
 function getShell() {
   const html = fs.readFileSync(
     path.join(process.cwd(), "shopify-clone", "shop.html"),
