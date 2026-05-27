@@ -30,10 +30,18 @@ export default async function AccountPage() {
     created_at: string;
   };
 
+  type AppointmentRow = {
+    id: string;
+    status: string;
+    starts_at: string;
+  };
+
   let orders: OrderRow[] | null = null;
+  let appointments: AppointmentRow[] | null = null;
+
+  const supabase = createSupabaseAdminClient();
 
   try {
-    const supabase = createSupabaseAdminClient();
     const { data } = await supabase
       .from("orders")
       .select("id,status,total_cents,affiliate_code,created_at")
@@ -44,6 +52,25 @@ export default async function AccountPage() {
   } catch (err) {
     console.error("[account] order lookup unavailable:", err);
   }
+
+  try {
+    const { data } = await supabase
+      .from("appointments")
+      .select("id,status,starts_at")
+      .eq("customer_id", profile.id)
+      .order("starts_at", { ascending: false })
+      .limit(10);
+    appointments = data as AppointmentRow[] | null;
+  } catch (err) {
+    console.error("[account] appointment lookup unavailable:", err);
+  }
+
+  const upcomingAppointments = appointments?.filter(
+    (a) => new Date(a.starts_at) >= new Date() && a.status !== "cancelled"
+  ) ?? [];
+  const pastAppointments = appointments?.filter(
+    (a) => new Date(a.starts_at) < new Date()
+  ) ?? [];
 
   const { before, after } = getShell();
 
@@ -404,9 +431,15 @@ export default async function AccountPage() {
               <p className="ohs-card-eyebrow">Services</p>
               <h2 className="ohs-card-title">My Appointments</h2>
               <p className="ohs-card-desc">
-                View and manage your bookings or book a new appointment at either of our Berlin salons.
+                {upcomingAppointments.length > 0
+                  ? `You have ${upcomingAppointments.length} upcoming appointment${upcomingAppointments.length > 1 ? "s" : ""}. View your bookings or make a new one at our Berlin salons.`
+                  : pastAppointments.length > 0
+                  ? `You have ${pastAppointments.length} past appointment${pastAppointments.length > 1 ? "s" : ""}. Book your next session at either of our Berlin salons.`
+                  : "Book a new appointment at either of our Berlin salons."}
               </p>
-              <a href="/appointment" className="ohs-btn ohs-btn--gold">Book Appointment</a>
+              <a href="/appointments" className="ohs-btn ohs-btn--gold">
+                {upcomingAppointments.length > 0 ? "View Appointments" : "Book Appointment"}
+              </a>
             </div>
 
             {/* Academy */}
@@ -433,14 +466,18 @@ export default async function AccountPage() {
 
             {/* Wholesale */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Requires Approval</p>
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Trade Accounts Only</p>
               <h2 className="ohs-card-title">Wholesale Access</h2>
               <p className="ohs-card-desc">
-                Access B2B pricing and ordering for salons, stylists and retailers. Apply for a wholesale account.
+                {isWholesale
+                  ? "Access your B2B pricing, trade orders and wholesale account details."
+                  : "Wholesale is for salons, stylists and trade buyers only. Each account is individually screened and approved — this is a separate portal from retail."}
               </p>
-              <a href="/wholesale" className="ohs-btn ohs-btn--outline">
-                {isWholesale ? "Go to Portal" : "Apply for Access"}
-              </a>
+              {isWholesale ? (
+                <a href="/wholesale" className="ohs-btn ohs-btn--outline">Go to Portal</a>
+              ) : (
+                <a href="/wholesale" className="ohs-btn ohs-btn--outline">Request Trade Access</a>
+              )}
             </div>
 
             {/* Account Details shortcut */}
@@ -461,8 +498,8 @@ export default async function AccountPage() {
                 Need help with an order, appointment or account query? Our team is available Monday to Saturday.
               </p>
               <div className="ohs-btn-row">
-                <a href="/contact" className="ohs-btn ohs-btn--dark">Contact Us</a>
-                <a href="https://wa.me/4917641552352" className="ohs-btn ohs-btn--outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="/pages/contact" className="ohs-btn ohs-btn--dark">Contact Us</a>
+                <a href="https://wa.me/4915786283439" className="ohs-btn ohs-btn--outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
               </div>
             </div>
 

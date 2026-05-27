@@ -766,7 +766,7 @@ export default async function AffiliatePage({
                 </p>
                 <div className="ohs-aff-help-btns">
                   <a href="mailto:affiliates@olivhairsupply.com" className="ohs-help-btn-gold">Email Us</a>
-                  <a href="https://wa.me/4917641552352" className="ohs-help-btn-outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                  <a href="https://wa.me/4915786283439" className="ohs-help-btn-outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
                 </div>
               </div>
             </>

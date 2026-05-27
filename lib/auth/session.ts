@@ -44,7 +44,7 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
       first_name: null,
       last_name: null,
       phone: null,
-      roles: ["customer", "affiliate", "wholesale"]
+      roles: ["customer"]
     };
   }
 
@@ -95,7 +95,7 @@ function profileFromUser(user: NonNullable<Awaited<ReturnType<typeof getCurrentU
     first_name: (user.user_metadata?.first_name as string) ?? null,
     last_name: (user.user_metadata?.last_name as string) ?? null,
     phone: user.phone ?? null,
-    roles: ["customer", "affiliate", "wholesale"]
+    roles: ["customer"]
   };
 }
 
