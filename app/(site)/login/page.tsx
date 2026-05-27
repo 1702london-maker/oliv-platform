@@ -176,14 +176,7 @@ export default async function LoginPage({
             <h1 className="ohs-auth-title">
               {next === "/affiliate" ? "Affiliate Dashboard" : next === "/wholesale" ? "Wholesale Portal" : "Sign In"}
             </h1>
-            {error === "invalid" && <div className="ohs-auth-alert-error">Incorrect email or password.{detail ? ` (${detail})` : ""}</div>}
-            {error === "missing" && <div className="ohs-auth-alert-error">Please enter your email and password.</div>}
-            {error === "profile" && (
-              <div className="ohs-auth-alert-error">
-                Login worked, but the account profile could not be prepared. Check the Supabase service role key in Vercel.
-              </div>
-            )}
-            <LoginBox next={next} />
+            <LoginBox next={next} error={error} detail={detail} />
             <div className="ohs-auth-row-end">
               <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Forgot password?</button>
             </div>
