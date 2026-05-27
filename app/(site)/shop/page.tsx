@@ -45,6 +45,44 @@ const shopCollections = [
   }
 ];
 
+const featuredProducts = [
+  {
+    title: "Schloss Charlottenburg",
+    tag: "BiziLuxe Extensions",
+    price: "&euro;120,00",
+    href: "/products/schloss-charlottenburg",
+    image: "/products/biziluxe-extensions/schloss-charlottenburg-main.jpg"
+  },
+  {
+    title: "Königsallee",
+    tag: "BiziLuxe Extensions",
+    price: "&euro;135,00",
+    href: "/products/koenigsallee",
+    image: "/products/biziluxe-extensions/koenigsallee-main.jpg"
+  },
+  {
+    title: "Meissen",
+    tag: "BiziLuxe Accessoires",
+    price: "&euro;29,00",
+    href: "/products/meissen",
+    image: "/products/biziluxe-accessoires/meissen-main.jpg"
+  },
+  {
+    title: "Saphir",
+    tag: "BiziLuxe Accessoires",
+    price: "&euro;39,00",
+    href: "/products/saphir",
+    image: "/products/biziluxe-accessoires/saphir-main.jpg"
+  },
+  {
+    title: "Solingen",
+    tag: "Profi Friseurbedarf",
+    price: "&euro;45,00",
+    href: "/products/solingen",
+    image: "/products/profi-friseurbedarf/solingen-main.jpg"
+  }
+];
+
 export default async function ShopPage({
   searchParams
 }: {
@@ -137,6 +175,7 @@ function buildShopLandingHtml() {
   html = html.replace('<span class="oshp-story-stat-val">4</span>\r\n          <span class="oshp-story-stat-label">Collections</span>', '<span class="oshp-story-stat-val">6</span>\r\n          <span class="oshp-story-stat-label">Collections</span>');
   html = html.replace(/<div class="oshp-col-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-all-cols">/, `<div class="oshp-col-grid">\n${buildCollectionCards()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-all-cols">`);
   html = html.replace(/<div class="oshp-all-cols-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-featured">/, `<div class="oshp-all-cols-grid">\n${buildCollectionTiles()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-featured">`);
+  html = html.replace(/<div class="oshp-featured">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-story">/, buildFeaturedProducts());
   html = html.replaceAll("/collections/bizilux-hair", "/shop?category=biziluxe-extensions");
   html = html.replaceAll("/collections", "/shop");
   html = html.replace("</style>", `${shopLandingOverrides()}\n</style>`);
@@ -173,6 +212,35 @@ function buildCollectionTiles() {
         </a>`
     )
     .join("\n\n");
+}
+
+function buildFeaturedProducts() {
+  return `<div class="oshp-featured">
+      <div class="oshp-featured-inner">
+        <div class="oshp-featured-header">
+          <h2 class="oshp-featured-title">Featured <em>Products</em></h2>
+          <a href="/shop?category=biziluxe-extensions" class="oshp-featured-link">View All</a>
+        </div>
+        <div class="oshp-featured-grid">
+${featuredProducts.map((product) => `          <a href="${product.href}" class="oshp-prod-card">
+            <div class="oshp-prod-img">
+              <img src="${product.image}" alt="${product.title}" loading="lazy">
+              <span class="oshp-prod-quick">View Product</span>
+            </div>
+            <div class="oshp-prod-body">
+              <span class="oshp-prod-tag">${product.tag}</span>
+              <div class="oshp-prod-name">${product.title}</div>
+              <div class="oshp-prod-price">
+                <span class="oshp-prod-price-label">From</span>
+                ${product.price}
+              </div>
+            </div>
+          </a>`).join("\n")}
+        </div>
+      </div>
+    </div>
+
+  <div class="oshp-story">`;
 }
 
 function shopLandingOverrides() {
