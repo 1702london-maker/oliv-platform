@@ -1,6 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
-import { env } from "@/lib/env";
 
 export const APP_SESSION_COOKIE = "ohs_app_session";
 
@@ -50,5 +49,5 @@ function verify(value: string, signature: string) {
 }
 
 function getSecret() {
-  return process.env.APP_SESSION_SECRET || env.NEXT_PUBLIC_SUPABASE_ANON_KEY || env.SUPABASE_SERVICE_ROLE_KEY || "oliv-platform-session";
+  return process.env.APP_SESSION_SECRET || "oliv-platform-session-v1";
 }
