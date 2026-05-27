@@ -21,19 +21,31 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
     const appSession = await getAppSession();
     if (!appSession) return null;
 
-    const admin = createSupabaseAdminClient();
-    const { data, error } = await admin
-      .from("profiles")
-      .select("id,email,first_name,last_name,phone,roles")
-      .eq("id", appSession.id)
-      .maybeSingle();
+    try {
+      const admin = createSupabaseAdminClient();
+      const { data, error } = await admin
+        .from("profiles")
+        .select("id,email,first_name,last_name,phone,roles")
+        .eq("id", appSession.id)
+        .maybeSingle();
 
-    if (error) {
-      console.error("[session] app profile lookup error:", error.message);
-      return null;
+      if (error) {
+        console.error("[session] app profile lookup error:", error.message);
+      }
+
+      if (data) return data as Profile;
+    } catch (error) {
+      console.error("[session] app profile fallback error:", error);
     }
 
-    return data as Profile | null;
+    return {
+      id: appSession.id,
+      email: appSession.email,
+      first_name: null,
+      last_name: null,
+      phone: null,
+      roles: ["customer"]
+    };
   }
 
   const supabase = await createSupabaseServerClient();

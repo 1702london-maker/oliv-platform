@@ -50,5 +50,5 @@ function verify(value: string, signature: string) {
 }
 
 function getSecret() {
-  return env.SUPABASE_SERVICE_ROLE_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "oliv-platform-session";
+  return process.env.APP_SESSION_SECRET || env.NEXT_PUBLIC_SUPABASE_ANON_KEY || env.SUPABASE_SERVICE_ROLE_KEY || "oliv-platform-session";
 }
