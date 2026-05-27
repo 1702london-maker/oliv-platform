@@ -1,23 +1,20 @@
 import fs from "node:fs";
 import path from "node:path";
-import { loginAction, forgotPasswordAction } from "@/app/(site)/login/actions";
+import { forgotPasswordAction, loginAction } from "@/app/(site)/login/actions";
 
 function getShell() {
-  const html = fs.readFileSync(
-    path.join(process.cwd(), "shopify-clone", "shop.html"),
-    "utf8"
-  );
+  const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
   const marker = '<div class="template-404 page-width page-margin center">';
   const start = html.indexOf(marker);
   const end = html.indexOf("</div>", start) + "</div>".length;
   return {
     before: start > -1 ? html.slice(0, start) : html,
-    after: start > -1 ? html.slice(end) : "",
+    after: start > -1 ? html.slice(end) : ""
   };
 }
 
 export default async function LoginPage({
-  searchParams,
+  searchParams
 }: {
   searchParams: Promise<{ error?: string; next?: string; message?: string }>;
 }) {
@@ -169,20 +166,21 @@ export default async function LoginPage({
         `}</style>
 
         <div className="ohs-auth-card">
-          <p className="ohs-auth-eyebrow">Account</p>
+          <p className="ohs-auth-eyebrow">
+            {next === "/affiliate" ? "Affiliate Programme" : next === "/wholesale" ? "Wholesale Portal" : "Account"}
+          </p>
 
-          {/* SIGN IN PANEL */}
-         <p className="ohs-auth-eyebrow">
-  {next === "/affiliate" ? "Affiliate Programme" : next === "/wholesale" ? "Wholesale Portal" : "Account"}
-</p>
-
-{/* SIGN IN PANEL */}
-<div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
-  <h1 className="ohs-auth-title">
-    {next === "/affiliate" ? "Affiliate Dashboard" : next === "/wholesale" ? "Wholesale Portal" : "Sign In"}
-  </h1>
+          <div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
+            <h1 className="ohs-auth-title">
+              {next === "/affiliate" ? "Affiliate Dashboard" : next === "/wholesale" ? "Wholesale Portal" : "Sign In"}
+            </h1>
             {error === "invalid" && <div className="ohs-auth-alert-error">Incorrect email or password. Please try again.</div>}
             {error === "missing" && <div className="ohs-auth-alert-error">Please enter your email and password.</div>}
+            {error === "profile" && (
+              <div className="ohs-auth-alert-error">
+                Login worked, but the account profile could not be prepared. Check the Supabase service role key in Vercel.
+              </div>
+            )}
             <form action={loginAction}>
               <input name="next" type="hidden" value={next} />
               <div className="ohs-auth-field">
@@ -204,12 +202,11 @@ export default async function LoginPage({
             </p>
           </div>
 
-          {/* FORGOT PASSWORD PANEL */}
           <div id="ohs-forgot-panel" className={showForgot ? "" : "ohs-hidden"}>
             <h1 className="ohs-auth-title">Reset Password</h1>
-            {message === "reset-sent" && <div className="ohs-auth-alert-info">✓ &nbsp;Reset link sent — please check your inbox.</div>}
+            {message === "reset-sent" && <div className="ohs-auth-alert-info">Reset link sent. Please check your inbox.</div>}
             {error === "reset-missing" && <div className="ohs-auth-alert-error">Please enter your email address.</div>}
-            <p className="ohs-auth-sub">Enter your email and we'll send you a link to reset your password.</p>
+            <p className="ohs-auth-sub">Enter your email and we&apos;ll send you a link to reset your password.</p>
             <form action={forgotPasswordAction}>
               <input type="hidden" name="from" value="/login" />
               <div className="ohs-auth-field">
@@ -220,7 +217,7 @@ export default async function LoginPage({
             </form>
             <hr className="ohs-auth-divider" />
             <p className="ohs-auth-footer-text">
-              <button id="ohs-to-signin" className="ohs-auth-link-sm" type="button" style={{ fontSize: "13px", color: "#2B2620" }}>← Back to sign in</button>
+              <button id="ohs-to-signin" className="ohs-auth-link-sm" type="button" style={{ fontSize: "13px", color: "#2B2620" }}>Back to sign in</button>
             </p>
           </div>
         </div>
