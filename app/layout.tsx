@@ -64,6 +64,47 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
   </a>
 </div>
+        <Script id="cart-init" strategy="afterInteractive">{`
+  (function() {
+    function initCart() {
+      // Fix cart href + inject badge on every page
+      document.querySelectorAll('a[aria-label^="Cart"]').forEach(function(el) {
+        el.setAttribute('href', '/cart');
+        if (!el.querySelector('.ohs-cart-badge')) {
+          var badge = document.createElement('span');
+          badge.className = 'ohs-cart-badge';
+          el.style.position = 'relative';
+          el.appendChild(badge);
+        }
+      });
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      try {
+        var cart = JSON.parse(localStorage.getItem('ohs-cart') || '[]');
+        var count = cart.reduce(function(sum, item) {
+          return sum + (item.quantity || 1);
+        }, 0);
+        document.querySelectorAll('.ohs-cart-badge').forEach(function(el) {
+          el.textContent = count > 0 ? String(count) : '';
+          el.style.display = count > 0 ? 'flex' : 'none';
+        });
+      } catch(e) {}
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCart);
+    } else {
+      initCart();
+    }
+
+    window.addEventListener('ohs-cart-updated', updateCartCount);
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'ohs-cart') updateCartCount();
+    });
+  })();
+`}</Script>
       </body>
     </html>
   );
