@@ -1,75 +1,41 @@
-"use client";
+"use server";
 
-import { useState } from "react";
+import { redirect } from "next/navigation";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { ensureProfile } from "@/lib/auth/ensure-profile";
 
-type LoginBoxProps = {
-  next: string;
-};
+async function loginAction(formData: FormData) {
+  "use server";
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "");
+  const next = String(formData.get("next") || "/account");
+  const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/account";
 
-export function LoginBox({ next }: LoginBoxProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  if (!email || !password) redirect(`/login?error=missing&next=${encodeURIComponent(safeNext)}`);
 
-  async function submit() {
-    setMessage("");
-    setLoading(true);
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, next })
-      });
-      const data = await response.json();
+  if (error) redirect(`/login?error=invalid&next=${encodeURIComponent(safeNext)}`);
 
-      if (!response.ok) {
-        setMessage(data.error || "Login failed. Please try again.");
-        return;
-      }
+  if (data.user) await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
 
-      window.location.href = data.next || "/account";
-    } catch {
-      setMessage("Login could not connect. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  }
+  redirect(safeNext);
+}
 
+export function LoginBox({ next }: { next: string }) {
   return (
-    <div>
-      {message ? <div className="ohs-auth-alert-error">{message}</div> : null}
+    <form action={loginAction}>
+      <input type="hidden" name="next" value={next} />
       <div className="ohs-auth-field">
         <label className="ohs-auth-label" htmlFor="ohs-login-email">Email Address</label>
-        <input
-          className="ohs-auth-input"
-          id="ohs-login-email"
-          type="email"
-          autoComplete="email"
-          required
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
+        <input className="ohs-auth-input" id="ohs-login-email" name="email" type="email" autoComplete="email" required />
       </div>
       <div className="ohs-auth-field">
         <label className="ohs-auth-label" htmlFor="ohs-login-password">Password</label>
-        <input
-          className="ohs-auth-input"
-          id="ohs-login-password"
-          type="password"
-          autoComplete="current-password"
-          required
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") void submit();
-          }}
-        />
+        <input className="ohs-auth-input" id="ohs-login-password" name="password" type="password" autoComplete="current-password" required />
       </div>
-      <button className="ohs-auth-btn" type="button" onClick={submit} disabled={loading}>
-        {loading ? "Signing In..." : "Sign In"}
-      </button>
-    </div>
+      <button className="ohs-auth-btn" type="submit">Sign In</button>
+    </form>
   );
 }
