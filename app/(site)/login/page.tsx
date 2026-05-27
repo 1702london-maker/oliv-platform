@@ -22,6 +22,7 @@ export default async function LoginPage({
   const params = await searchParams;
   const next = params.next?.startsWith("/") ? params.next : "/account";
   const error = params.error;
+  const detail = (params as Record<string, string | undefined>).detail;
   const message = params.message;
   const showForgot = error === "reset-missing" || message === "reset-sent";
   const { before, after } = getShell();
@@ -175,7 +176,7 @@ export default async function LoginPage({
             <h1 className="ohs-auth-title">
               {next === "/affiliate" ? "Affiliate Dashboard" : next === "/wholesale" ? "Wholesale Portal" : "Sign In"}
             </h1>
-            {error === "invalid" && <div className="ohs-auth-alert-error">Incorrect email or password. Please try again.</div>}
+            {error === "invalid" && <div className="ohs-auth-alert-error">Incorrect email or password.{detail ? ` (${detail})` : ""}</div>}
             {error === "missing" && <div className="ohs-auth-alert-error">Please enter your email and password.</div>}
             {error === "profile" && (
               <div className="ohs-auth-alert-error">

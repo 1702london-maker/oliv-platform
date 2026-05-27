@@ -18,14 +18,11 @@ export async function loginAction(formData: FormData) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect(`/login?error=invalid&next=${encodeURIComponent(safeNext)}`);
+    redirect(`/login?error=invalid&detail=${encodeURIComponent(error.message)}&next=${encodeURIComponent(safeNext)}`);
   }
 
   if (data.user) {
-    const profileReady = await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
-    if (!profileReady) {
-      redirect(`/login?error=profile&next=${encodeURIComponent(safeNext)}`);
-    }
+    await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
   }
 
   redirect(safeNext);
