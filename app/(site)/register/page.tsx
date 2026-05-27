@@ -36,7 +36,7 @@ export default async function RegisterPage({
     <>
       <div dangerouslySetInnerHTML={{ __html: before }} />
 
-      <main id="ohs-auth-main">
+      <div id="ohs-auth-main">
         <style>{`
           #ohs-auth-main {
             background: #F8F5EF;
@@ -176,64 +176,24 @@ export default async function RegisterPage({
           <form action={registerAction}>
             <div className="ohs-auth-row">
               <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-reg-fname">
-                  First Name
-                </label>
-                <input
-                  className="ohs-auth-input"
-                  id="ohs-reg-fname"
-                  name="first_name"
-                  type="text"
-                  autoComplete="given-name"
-                />
+                <label className="ohs-auth-label" htmlFor="ohs-reg-fname">First Name</label>
+                <input className="ohs-auth-input" id="ohs-reg-fname" name="first_name" type="text" autoComplete="given-name" />
               </div>
               <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-reg-lname">
-                  Last Name
-                </label>
-                <input
-                  className="ohs-auth-input"
-                  id="ohs-reg-lname"
-                  name="last_name"
-                  type="text"
-                  autoComplete="family-name"
-                />
+                <label className="ohs-auth-label" htmlFor="ohs-reg-lname">Last Name</label>
+                <input className="ohs-auth-input" id="ohs-reg-lname" name="last_name" type="text" autoComplete="family-name" />
               </div>
             </div>
-
             <div className="ohs-auth-field">
-              <label className="ohs-auth-label" htmlFor="ohs-reg-email">
-                Email Address
-              </label>
-              <input
-                className="ohs-auth-input"
-                id="ohs-reg-email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-              />
+              <label className="ohs-auth-label" htmlFor="ohs-reg-email">Email Address</label>
+              <input className="ohs-auth-input" id="ohs-reg-email" name="email" type="email" autoComplete="email" required />
             </div>
-
             <div className="ohs-auth-field">
-              <label className="ohs-auth-label" htmlFor="ohs-reg-password">
-                Password
-              </label>
-              <input
-                className="ohs-auth-input"
-                id="ohs-reg-password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-              />
+              <label className="ohs-auth-label" htmlFor="ohs-reg-password">Password</label>
+              <input className="ohs-auth-input" id="ohs-reg-password" name="password" type="password" autoComplete="new-password" required />
               <p className="ohs-auth-hint">Minimum 8 characters</p>
             </div>
-
-            <button className="ohs-auth-btn" type="submit">
-              Create Account
-            </button>
-
+            <button className="ohs-auth-btn" type="submit">Create Account</button>
             <p className="ohs-auth-terms">
               By creating an account you agree to our{" "}
               <a href="/pages/terms">Terms</a> and{" "}
@@ -242,13 +202,12 @@ export default async function RegisterPage({
           </form>
 
           <hr className="ohs-auth-divider" />
-
           <p className="ohs-auth-footer-text">
             Already have an account?{" "}
             <a href="/login">Sign in</a>
           </p>
         </div>
-      </main>
+      </div>
 
       <div dangerouslySetInnerHTML={{ __html: after }} />
     </>
