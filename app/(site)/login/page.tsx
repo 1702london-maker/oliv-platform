@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { loginAction } from "@/app/(site)/login/actions";
+import { loginAction, forgotPasswordAction } from "@/app/(site)/login/actions";
 
 function getShell() {
   const html = fs.readFileSync(
@@ -19,19 +19,14 @@ function getShell() {
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; next?: string }>;
+  searchParams: Promise<{ error?: string; next?: string; message?: string }>;
 }) {
   const params = await searchParams;
   const next = params.next?.startsWith("/") ? params.next : "/account";
   const error = params.error;
+  const message = params.message;
+  const showForgot = error === "reset-missing" || message === "reset-sent";
   const { before, after } = getShell();
-
-  const errorMsg =
-    error === "invalid"
-      ? "Incorrect email or password. Please try again."
-      : error === "missing"
-      ? "Please enter your email and password."
-      : null;
 
   return (
     <>
@@ -71,11 +66,7 @@ export default async function LoginPage({
             margin: 0 0 36px;
             line-height: 1.1;
           }
-          .ohs-auth-field {
-            display: grid;
-            gap: 8px;
-            margin-bottom: 20px;
-          }
+          .ohs-auth-field { display: grid; gap: 8px; margin-bottom: 20px; }
           .ohs-auth-label {
             font-family: 'Montserrat', sans-serif;
             font-size: 10px;
@@ -113,11 +104,25 @@ export default async function LoginPage({
             transition: background 0.2s;
           }
           .ohs-auth-btn:hover { background: #3d3530; }
-          .ohs-auth-divider {
-            border: none;
-            border-top: 1px solid #e7d9c5;
-            margin: 28px 0;
+          .ohs-auth-row-end {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -8px;
+            margin-bottom: 16px;
           }
+          .ohs-auth-link-sm {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: #B68A45;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+          }
+          .ohs-auth-divider { border: none; border-top: 1px solid #e7d9c5; margin: 28px 0; }
           .ohs-auth-footer-text {
             font-family: 'Montserrat', sans-serif;
             font-size: 13px;
@@ -131,7 +136,7 @@ export default async function LoginPage({
             text-decoration: underline;
             text-underline-offset: 3px;
           }
-          .ohs-auth-error {
+          .ohs-auth-alert-error {
             background: #fdf3f3;
             border: 1px solid #e8c5c5;
             color: #8b3535;
@@ -139,8 +144,24 @@ export default async function LoginPage({
             font-size: 12px;
             padding: 12px 16px;
             margin-bottom: 24px;
-            letter-spacing: 0.04em;
           }
+          .ohs-auth-alert-info {
+            background: #fdf8f0;
+            border: 1px solid #e8d5b0;
+            color: #7a5a20;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+          }
+          .ohs-auth-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: #6b5c4e;
+            line-height: 1.6;
+            margin: 0 0 28px;
+          }
+          .ohs-hidden { display: none !important; }
           @media (max-width: 520px) {
             .ohs-auth-card { padding: 36px 24px; }
             .ohs-auth-title { font-size: 34px; }
@@ -149,29 +170,70 @@ export default async function LoginPage({
 
         <div className="ohs-auth-card">
           <p className="ohs-auth-eyebrow">Account</p>
-          <h1 className="ohs-auth-title">Sign In</h1>
 
-          {errorMsg && <div className="ohs-auth-error">{errorMsg}</div>}
+          {/* SIGN IN PANEL */}
+          <div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
+            <h1 className="ohs-auth-title">Sign In</h1>
+            {error === "invalid" && <div className="ohs-auth-alert-error">Incorrect email or password. Please try again.</div>}
+            {error === "missing" && <div className="ohs-auth-alert-error">Please enter your email and password.</div>}
+            <form action={loginAction}>
+              <input name="next" type="hidden" value={next} />
+              <div className="ohs-auth-field">
+                <label className="ohs-auth-label" htmlFor="ohs-login-email">Email Address</label>
+                <input className="ohs-auth-input" id="ohs-login-email" name="email" type="email" autoComplete="email" required />
+              </div>
+              <div className="ohs-auth-field">
+                <label className="ohs-auth-label" htmlFor="ohs-login-password">Password</label>
+                <input className="ohs-auth-input" id="ohs-login-password" name="password" type="password" autoComplete="current-password" required />
+              </div>
+              <div className="ohs-auth-row-end">
+                <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Forgot password?</button>
+              </div>
+              <button className="ohs-auth-btn" type="submit">Sign In</button>
+            </form>
+            <hr className="ohs-auth-divider" />
+            <p className="ohs-auth-footer-text">
+              New to OlivHairSupply? <a href="/register">Create an account</a>
+            </p>
+          </div>
 
-          <form action={loginAction}>
-            <input name="next" type="hidden" value={next} />
-            <div className="ohs-auth-field">
-              <label className="ohs-auth-label" htmlFor="ohs-login-email">Email Address</label>
-              <input className="ohs-auth-input" id="ohs-login-email" name="email" type="email" autoComplete="email" required />
-            </div>
-            <div className="ohs-auth-field">
-              <label className="ohs-auth-label" htmlFor="ohs-login-password">Password</label>
-              <input className="ohs-auth-input" id="ohs-login-password" name="password" type="password" autoComplete="current-password" required />
-            </div>
-            <button className="ohs-auth-btn" type="submit">Sign In</button>
-          </form>
-
-          <hr className="ohs-auth-divider" />
-          <p className="ohs-auth-footer-text">
-            New to OlivHairSupply?{" "}
-            <a href="/register">Create an account</a>
-          </p>
+          {/* FORGOT PASSWORD PANEL */}
+          <div id="ohs-forgot-panel" className={showForgot ? "" : "ohs-hidden"}>
+            <h1 className="ohs-auth-title">Reset Password</h1>
+            {message === "reset-sent" && <div className="ohs-auth-alert-info">✓ &nbsp;Reset link sent — please check your inbox.</div>}
+            {error === "reset-missing" && <div className="ohs-auth-alert-error">Please enter your email address.</div>}
+            <p className="ohs-auth-sub">Enter your email and we'll send you a link to reset your password.</p>
+            <form action={forgotPasswordAction}>
+              <input type="hidden" name="from" value="/login" />
+              <div className="ohs-auth-field">
+                <label className="ohs-auth-label" htmlFor="ohs-forgot-email">Email Address</label>
+                <input className="ohs-auth-input" id="ohs-forgot-email" name="email" type="email" autoComplete="email" required />
+              </div>
+              <button className="ohs-auth-btn" type="submit">Send Reset Link</button>
+            </form>
+            <hr className="ohs-auth-divider" />
+            <p className="ohs-auth-footer-text">
+              <button id="ohs-to-signin" className="ohs-auth-link-sm" type="button" style={{ fontSize: "13px", color: "#2B2620" }}>← Back to sign in</button>
+            </p>
+          </div>
         </div>
+
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(){
+            var toForgot = document.getElementById('ohs-to-forgot');
+            var toSignin = document.getElementById('ohs-to-signin');
+            var signinPanel = document.getElementById('ohs-signin-panel');
+            var forgotPanel = document.getElementById('ohs-forgot-panel');
+            if(toForgot) toForgot.addEventListener('click', function(){
+              signinPanel.classList.add('ohs-hidden');
+              forgotPanel.classList.remove('ohs-hidden');
+            });
+            if(toSignin) toSignin.addEventListener('click', function(){
+              forgotPanel.classList.add('ohs-hidden');
+              signinPanel.classList.remove('ohs-hidden');
+            });
+          })();
+        `}} />
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: after }} />
