@@ -32,20 +32,35 @@ export async function registerAction(formData: FormData) {
     redirect("/register?error=missing");
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://oliv-platform.vercel.app";
+
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
+      emailRedirectTo: `${siteUrl}/auth/callback`,
       data: {
         first_name: firstName,
-        last_name: lastName
-      }
-    }
+        last_name: lastName,
+      },
+    },
   });
 
   if (error) {
+    const msg = error.message?.toLowerCase() ?? "";
+    if (msg.includes("already") || msg.includes("registered") || msg.includes("exists") || error.status === 422) {
+      redirect("/register?error=taken");
+    }
+    if (msg.includes("password") || msg.includes("characters")) {
+      redirect("/register?error=weak-password");
+    }
     redirect("/register?error=failed");
+  }
+
+  // If email confirmation is required, session will be null — send to check-email page
+  if (!data.session) {
+    redirect("/register?message=check-email");
   }
 
   redirect("/account");

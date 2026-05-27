@@ -19,17 +19,27 @@ function getShell() {
 export default async function RegisterPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; message?: string }>;
 }) {
   const params = await searchParams;
   const error = params.error;
+  const message = params.message;
   const { before, after } = getShell();
 
   const errorMsg =
-    error === "failed"
-      ? "We couldn't create your account. This email may already be in use."
+    error === "taken"
+      ? "An account with this email already exists. Please sign in instead."
+      : error === "weak-password"
+      ? "Your password must be at least 8 characters long."
+      : error === "failed"
+      ? "Something went wrong. Please try again."
       : error === "missing"
       ? "Please fill in all required fields."
+      : null;
+
+  const successMsg =
+    message === "check-email"
+      ? "Account created! Please check your inbox and click the confirmation link before signing in."
       : null;
 
   return (
@@ -151,6 +161,17 @@ export default async function RegisterPage({
             margin-bottom: 24px;
             letter-spacing: 0.04em;
           }
+          .ohs-auth-success {
+            background: #f3faf5;
+            border: 1px solid #b7dcbf;
+            color: #2a6b3a;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            letter-spacing: 0.04em;
+            line-height: 1.6;
+          }
           .ohs-auth-terms {
             font-family: 'Montserrat', sans-serif;
             font-size: 11px;
@@ -172,8 +193,14 @@ export default async function RegisterPage({
           <h1 className="ohs-auth-title">Create Account</h1>
 
           {errorMsg && <div className="ohs-auth-error">{errorMsg}</div>}
+          {successMsg && (
+            <div className="ohs-auth-success">
+              <strong style={{ display: "block", marginBottom: "6px" }}>Check your email</strong>
+              {successMsg}
+            </div>
+          )}
 
-          <form action={registerAction}>
+          {!successMsg && <form action={registerAction}>
             <div className="ohs-auth-row">
               <div className="ohs-auth-field">
                 <label className="ohs-auth-label" htmlFor="ohs-reg-fname">First Name</label>
@@ -199,7 +226,13 @@ export default async function RegisterPage({
               <a href="/pages/terms">Terms</a> and{" "}
               <a href="/pages/privacy-policy">Privacy Policy</a>.
             </p>
-          </form>
+          </form>}
+
+          {successMsg && (
+            <a href="/login" className="ohs-auth-btn" style={{ display: "block", textAlign: "center", textDecoration: "none", marginBottom: "8px" }}>
+              Sign In
+            </a>
+          )}
 
           <hr className="ohs-auth-divider" />
           <p className="ohs-auth-footer-text">
