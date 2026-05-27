@@ -131,6 +131,8 @@ function buildShopLandingHtml() {
   let html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "collections.html"), "utf8");
 
   html = html.replace(/<img class="oshp-hero-img"[\s\S]*?>/, '<div class="oshp-hero-img oshp-hero-img-empty"></div>');
+  html = html.replace("The BiziLux <em>Edit</em>", "The BiziLuxe <em>Edit</em>");
+  html = html.replace("BiziLux by OlivHairSupply", "BiziLuxe by OlivHairSupply");
   html = html.replace('<span class="oshp-hero-meta-val">4</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>', '<span class="oshp-hero-meta-val">6</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>');
   html = html.replace('<span class="oshp-story-stat-val">4</span>\r\n          <span class="oshp-story-stat-label">Collections</span>', '<span class="oshp-story-stat-val">6</span>\r\n          <span class="oshp-story-stat-label">Collections</span>');
   html = html.replace(/<div class="oshp-col-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-all-cols">/, `<div class="oshp-col-grid">\n${buildCollectionCards()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-all-cols">`);
@@ -147,16 +149,13 @@ function buildCollectionCards() {
     .map((collection, index) => {
       const image = collection.image
         ? `<img class="oshp-col-card-img" src="${collection.image}" alt="${collection.title}" loading="lazy">`
-        : `<div class="oshp-col-card-img oshp-col-card-ph"><span>${String(index + 1).padStart(2, "0")}</span></div>`;
+        : `<div class="oshp-col-card-img oshp-col-card-ph"></div>`;
 
       return `        <a href="/shop?category=${collection.slug}" class="oshp-col-card">
           ${image}
           <div class="oshp-col-card-overlay"></div>
           <div class="oshp-col-card-info">
-            <span class="oshp-col-card-eyebrow">Collection ${String(index + 1).padStart(2, "0")}</span>
             <div class="oshp-col-card-name">${collection.title}</div>
-            <p class="oshp-col-card-desc">${collection.desc}</p>
-            <span class="oshp-col-card-cta">Shop Now</span>
           </div>
         </a>`;
     })
