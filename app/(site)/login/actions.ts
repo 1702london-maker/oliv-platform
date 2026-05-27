@@ -1,45 +1,34 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { ensureProfile } from "@/lib/auth/ensure-profile";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export async function loginAction(formData: FormData) {
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
   const next = String(formData.get("next") || "/account");
+  const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/account";
 
   if (!email || !password) {
-    redirect("/login?error=missing");
+    redirect(`/login?error=missing&next=${encodeURIComponent(safeNext)}`);
   }
 
   const supabase = await createSupabaseServerClient();
-  const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect("/login?error=invalid");
+    redirect(`/login?error=invalid&next=${encodeURIComponent(safeNext)}`);
   }
 
-  // Ensure profile row exists — creates it if the DB trigger hasn't run yet
-  if (signInData?.user) {
-    try {
-      const admin = createSupabaseAdminClient();
-      await admin.from("profiles").upsert(
-        {
-          id: signInData.user.id,
-          email: signInData.user.email ?? email,
-          first_name: (signInData.user.user_metadata?.first_name as string) ?? "",
-          last_name: (signInData.user.user_metadata?.last_name as string) ?? "",
-          // omit roles — DB default (customer) applies for new rows
-        },
-        { onConflict: "id" }
-      );
-    } catch {
-      // Admin client not configured — profile creation will be retried on account page
+  if (data.user) {
+    const profileReady = await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
+    if (!profileReady) {
+      redirect(`/login?error=profile&next=${encodeURIComponent(safeNext)}`);
     }
   }
 
-  redirect(next.startsWith("/") && !next.startsWith("//") ? next : "/account");
+  redirect(safeNext);
 }
 
 export async function registerAction(formData: FormData) {
@@ -52,14 +41,13 @@ export async function registerAction(formData: FormData) {
     redirect("/register?error=missing");
   }
 
-  // Never send confirmation emails back to localhost
   const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
   const siteUrl =
     rawUrl && !rawUrl.includes("localhost") && !rawUrl.includes("127.0.0.1")
       ? rawUrl
       : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "https://oliv-platform.vercel.app";
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://oliv-platform.vercel.app";
 
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.signUp({
@@ -69,9 +57,9 @@ export async function registerAction(formData: FormData) {
       emailRedirectTo: `${siteUrl}/auth/callback`,
       data: {
         first_name: firstName,
-        last_name: lastName,
-      },
-    },
+        last_name: lastName
+      }
+    }
   });
 
   if (error) {
@@ -85,7 +73,13 @@ export async function registerAction(formData: FormData) {
     redirect("/register?error=failed");
   }
 
-  // If email confirmation is required, session will be null — send to check-email page
+  if (data.user) {
+    await ensureProfile(data.user.id, email, {
+      first_name: firstName,
+      last_name: lastName
+    });
+  }
+
   if (!data.session) {
     redirect("/register?message=check-email");
   }
@@ -107,17 +101,17 @@ export async function forgotPasswordAction(formData: FormData) {
     redirect(`${from}?error=reset-missing`);
   }
 
-  const rawUrlFP = process.env.NEXT_PUBLIC_SITE_URL ?? "";
-  const siteUrlFP =
-    rawUrlFP && !rawUrlFP.includes("localhost") && !rawUrlFP.includes("127.0.0.1")
-      ? rawUrlFP
+  const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const siteUrl =
+    rawUrl && !rawUrl.includes("localhost") && !rawUrl.includes("127.0.0.1")
+      ? rawUrl
       : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "https://oliv-platform.vercel.app";
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://oliv-platform.vercel.app";
 
   const supabase = await createSupabaseServerClient();
   await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${siteUrlFP}/auth/callback`,
+    redirectTo: `${siteUrl}/auth/callback`
   });
 
   redirect(`${from}?message=reset-sent`);
