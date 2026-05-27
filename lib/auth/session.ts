@@ -25,7 +25,9 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
     .maybeSingle();
 
   if (error) {
-    throw new Error(error.message);
+    // Log the error but don't crash — treat as unauthenticated
+    console.error("[session] profile lookup error:", error.message);
+    return null;
   }
 
   return data as Profile | null;
