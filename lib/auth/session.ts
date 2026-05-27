@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { env } from "@/lib/env";
 import type { Profile, UserRole } from "@/lib/auth/types";
 
@@ -25,9 +26,33 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
     .maybeSingle();
 
   if (error) {
-    // Log the error but don't crash — treat as unauthenticated
     console.error("[session] profile lookup error:", error.message);
     return null;
+  }
+
+  // Profile row missing (e.g. trigger not yet set up) — create it now using admin client
+  if (!data) {
+    try {
+      const admin = createSupabaseAdminClient();
+      const { data: created } = await admin
+        .from("profiles")
+        .upsert(
+          {
+            id: user.id,
+            email: user.email ?? "",
+            first_name: (user.user_metadata?.first_name as string) ?? "",
+            last_name: (user.user_metadata?.last_name as string) ?? "",
+            roles: ["customer"],
+          },
+          { onConflict: "id" }
+        )
+        .select("id,email,first_name,last_name,phone,roles")
+        .single();
+      return created as Profile | null;
+    } catch (e) {
+      console.error("[session] profile auto-create error:", e);
+      return null;
+    }
   }
 
   return data as Profile | null;
