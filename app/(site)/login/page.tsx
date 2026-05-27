@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { forgotPasswordAction, loginAction } from "@/app/(site)/login/actions";
+import { forgotPasswordAction } from "@/app/(site)/login/actions";
+import { LoginBox } from "@/components/auth/LoginBox";
 
 function getShell() {
   const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
@@ -181,21 +182,10 @@ export default async function LoginPage({
                 Login worked, but the account profile could not be prepared. Check the Supabase service role key in Vercel.
               </div>
             )}
-            <form action={loginAction}>
-              <input name="next" type="hidden" value={next} />
-              <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-login-email">Email Address</label>
-                <input className="ohs-auth-input" id="ohs-login-email" name="email" type="email" autoComplete="email" required />
-              </div>
-              <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-login-password">Password</label>
-                <input className="ohs-auth-input" id="ohs-login-password" name="password" type="password" autoComplete="current-password" required />
-              </div>
-              <div className="ohs-auth-row-end">
-                <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Forgot password?</button>
-              </div>
-              <button className="ohs-auth-btn" type="submit">Sign In</button>
-            </form>
+            <LoginBox next={next} />
+            <div className="ohs-auth-row-end">
+              <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Forgot password?</button>
+            </div>
             <hr className="ohs-auth-divider" />
             <p className="ohs-auth-footer-text">
               New to OlivHairSupply? <a href="/register">Create an account</a>
