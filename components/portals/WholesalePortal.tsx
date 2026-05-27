@@ -20,7 +20,7 @@ export async function WholesalePortal({ profile }: WholesalePortalProps) {
   const { data } = await supabase
     .from("wholesale_accounts")
     .select("business_name,status,tier,lifetime_spend_cents")
-    .eq("profile_id", profile.id)
+    .or(`profile_id.eq.${profile.id},email.eq.${profile.email}`)
     .maybeSingle<WholesaleAccount>();
   const { data: orders } = await supabase
     .from("orders")
