@@ -56,3 +56,20 @@ export async function logoutAction() {
   await supabase.auth.signOut();
   redirect("/");
 }
+
+export async function forgotPasswordAction(formData: FormData) {
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const from = String(formData.get("from") || "/login");
+
+  if (!email) {
+    redirect(`${from}?error=reset-missing`);
+  }
+
+  const supabase = await createSupabaseServerClient();
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://oliv-platform.vercel.app"}/auth/callback`,
+  });
+
+  // Always redirect with success — never reveal if email exists
+  redirect(`${from}?message=reset-sent`);
+}
