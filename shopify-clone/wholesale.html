@@ -3427,6 +3427,42 @@
   </div>
 
 </footer>
+<script>
+function owhlOpenApply() {
+  var o = document.getElementById('owhl-apply-overlay');
+  if (o) { o.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+function owhlCloseApply() {
+  var o = document.getElementById('owhl-apply-overlay');
+  if (o) { o.classList.remove('open'); document.body.style.overflow = ''; }
+}
+function owhlOpenLogin() {
+  window.location.href = '/login?next=/wholesale';
+}
+function owhlCloseLogin() {
+  var o = document.getElementById('owhl-login-overlay');
+  if (o) { o.classList.remove('open'); document.body.style.overflow = ''; }
+}
+function owhlTryLogin() {
+  window.location.href = '/login?next=/wholesale';
+}
+function owhlLogout() {
+  window.location.href = '/';
+}
+function owhlSubmitOrder() {
+  var form = document.getElementById('owhl-order-form');
+  if (form) form.submit();
+}
 
+document.getElementById('owhl-apply-close').addEventListener('click', owhlCloseApply);
+
+document.getElementById('owhl-apply-overlay').addEventListener('click', function(e) {
+  if (e.target === this) owhlCloseApply();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { owhlCloseApply(); owhlCloseLogin(); }
+});
+</script>
 </div>
 <!-- END sections: footer-group -->
