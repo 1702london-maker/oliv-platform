@@ -18,8 +18,8 @@ a {
 }
 
 .ohs-catalog {
-  padding-top: 70px;
-  padding-bottom: 90px;
+  padding-top: 48px;
+  padding-bottom: 64px;
 }
 
 .ohs-catalog-head {
@@ -48,8 +48,8 @@ a {
 
 .ohs-catalog-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .ohs-category-nav {
@@ -77,7 +77,8 @@ a {
   text-transform: uppercase;
 }
 
-.ohs-category-nav a:hover {
+.ohs-category-nav a:hover,
+.ohs-category-nav a.active {
   border-color: #b68a45;
   color: #b68a45;
 }
@@ -89,7 +90,7 @@ a {
 
 .ohs-product-media {
   display: block;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #eee4d5;
 }
@@ -106,47 +107,55 @@ a {
 }
 
 .ohs-product-copy {
-  padding: 22px;
+  padding: 12px;
   text-align: center;
 }
 
 .ohs-product-copy h2 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: #2a211b;
   font-family: "Cormorant Garamond", serif;
-  font-size: 28px;
+  font-size: 21px;
   font-weight: 300;
 }
 
 .ohs-product-copy p {
-  margin: 0 0 18px;
+  margin: 0 0 12px;
   color: #7b6b5b;
   font-family: Montserrat, sans-serif;
-  font-size: 12px;
-  letter-spacing: 1.8px;
+  font-size: 10px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
 }
 
 .ohs-product-copy a {
   display: inline-flex;
-  min-height: 42px;
+  min-height: 34px;
   align-items: center;
   justify-content: center;
   border: 1px solid #2a211b;
   background: #2a211b;
   color: #fffaf4;
   font-family: Montserrat, sans-serif;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 2.2px;
-  padding: 0 22px;
+  letter-spacing: 1.6px;
+  padding: 0 14px;
   text-decoration: none;
   text-transform: uppercase;
 }
 
+.ohs-catalog-empty {
+  grid-column: 1 / -1;
+  color: #7b6b5b;
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .ohs-catalog-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -156,7 +165,7 @@ a {
   }
 
   .ohs-catalog-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

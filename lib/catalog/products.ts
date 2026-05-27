@@ -23,15 +23,38 @@ export type CatalogProduct = {
   variants: CatalogVariant[];
 };
 
-export async function getCatalogProducts(): Promise<CatalogProduct[]> {
+export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
   const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase
+  let productIds: string[] | null = null;
+
+  if (categorySlug) {
+    const { data: links, error: linksError } = await supabase
+      .from("product_collections")
+      .select("product_id,collections!inner(slug)")
+      .eq("collections.slug", categorySlug);
+
+    if (linksError) {
+      console.error("Failed to load category products", linksError);
+      return [];
+    }
+
+    productIds = (links || []).map((link) => link.product_id);
+    if (!productIds.length) return [];
+  }
+
+  let query = supabase
     .from("products")
     .select(
       "id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,sku,retail_price_cents,wholesale_price_cents,inventory_quantity)"
     )
     .eq("status", "active")
     .order("title", { ascending: true });
+
+  if (productIds) {
+    query = query.in("id", productIds);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Failed to load catalog products", error);
