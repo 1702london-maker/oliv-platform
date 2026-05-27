@@ -27,16 +27,24 @@ export default async function ProductPage({ params }: PageProps) {
   const before = shell.slice(0, mainStart + marker.length);
   const after = shell.slice(footerStart);
   const firstVariant = product.variants[0];
+  const galleryImages = getProductGalleryImages(product.image_url);
 
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: before }} />
       <section className="ohs-product-detail page-width page-margin">
-        <div className="ohs-product-detail-media">
-          {product.image_url ? <img src={product.image_url} alt={product.title} /> : <span />}
+        <div className="ohs-product-gallery">
+          <div className="ohs-product-detail-media">
+            {galleryImages[0] ? <img src={galleryImages[0]} alt={product.title} /> : <span />}
+          </div>
+          <div className="ohs-product-thumbs">
+            {galleryImages.map((image, index) => (
+              <img key={`${image}-${index}`} src={image} alt={`${product.title} ${index + 1}`} />
+            ))}
+          </div>
         </div>
         <div className="ohs-product-detail-copy">
-          <p>BiziLux Collection</p>
+          <p>OlivHairSupply</p>
           <h1>{product.title}</h1>
           {firstVariant ? (
             <strong>
@@ -66,4 +74,25 @@ export default async function ProductPage({ params }: PageProps) {
       <div dangerouslySetInnerHTML={{ __html: after }} />
     </>
   );
+}
+
+function getProductGalleryImages(imageUrl: string | null) {
+  if (!imageUrl) return [];
+
+  const categoryPath = imageUrl.split("/").slice(0, -1).join("/");
+  const gallery = [imageUrl];
+  const alternates: Record<string, string[]> = {
+    "/products/biziluxe-extensions": ["koenigsallee-main.jpg", "sanssouci-main.jpg", "nymphenburg-main.jpg"],
+    "/products/biziluxe-accessoires": ["saphir-main.jpg", "rotenburg-main.jpg", "schwarzwald-main.jpg"],
+    "/products/profi-friseurbedarf": ["waldenburg-main.jpg", "zeppelin-main.jpg", "glashuette-main.jpg"]
+  };
+
+  for (const file of alternates[categoryPath] || []) {
+    const next = `${categoryPath}/${file}`;
+    if (!gallery.includes(next)) gallery.push(next);
+    if (gallery.length === 3) break;
+  }
+
+  while (gallery.length < 3) gallery.push(imageUrl);
+  return gallery.slice(0, 3);
 }

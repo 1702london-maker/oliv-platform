@@ -85,7 +85,7 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
 
 export async function getCatalogProductBySlug(slug: string): Promise<CatalogProduct | null> {
   const products = await getCatalogProducts();
-  return products.find((product) => product.slug === slug) || null;
+  return products.find((product) => product.slug === slug) || getLocalPublicProductBySlug(slug);
 }
 
 export async function getCatalogVariantsByIds(ids: string[]): Promise<CatalogVariant[]> {
@@ -181,6 +181,10 @@ function getLocalPublicProducts(categorySlug?: string): CatalogProduct[] {
         };
       });
   });
+}
+
+function getLocalPublicProductBySlug(slug: string): CatalogProduct | null {
+  return getLocalPublicProducts().find((product) => product.slug === slug) || null;
 }
 
 function getFallbackPrice(category: string, index: number) {
