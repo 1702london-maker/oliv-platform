@@ -26,6 +26,7 @@ export type CatalogProduct = {
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
   const supabase = await createSupabaseServerClient();
   let productIds: string[] | null = null;
+  let needsPathCategoryFallback = false;
 
   if (categorySlug) {
     const { data: links, error: linksError } = await supabase
@@ -35,11 +36,14 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
 
     if (linksError) {
       console.error("Failed to load category products", linksError);
-      return [];
+      return getLocalPublicProducts(categorySlug);
     }
 
     productIds = (links || []).map((link) => link.product_id);
-    if (!productIds.length) return [];
+    if (!productIds.length) {
+      productIds = null;
+      needsPathCategoryFallback = true;
+    }
   }
 
   let query = supabase
@@ -58,10 +62,10 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
 
   if (error) {
     console.error("Failed to load catalog products", error);
-    return getLocalShopifyProducts();
+    return getLocalShopifyProducts(categorySlug);
   }
 
-  return (data || []).map((product): CatalogProduct => ({
+  const products = (data || []).map((product): CatalogProduct => ({
     id: product.id,
     shopify_id: product.shopify_id,
     title: product.title,
@@ -70,6 +74,13 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
     image_url: product.image_url,
     variants: product.product_variants || []
   }));
+
+  if (categorySlug && needsPathCategoryFallback) {
+    const pathMatches = products.filter((product) => product.image_url?.includes(`/products/${categorySlug}/`));
+    return pathMatches.length ? pathMatches : getLocalPublicProducts(categorySlug);
+  }
+
+  return products.length ? products : getLocalPublicProducts(categorySlug);
 }
 
 export async function getCatalogProductBySlug(slug: string): Promise<CatalogProduct | null> {
@@ -91,9 +102,9 @@ export async function getCatalogVariantsByIds(ids: string[]): Promise<CatalogVar
   return variants.filter((variant) => ids.includes(variant.id));
 }
 
-function getLocalShopifyProducts(): CatalogProduct[] {
+function getLocalShopifyProducts(categorySlug?: string): CatalogProduct[] {
   const filePath = path.join(process.cwd(), "shopify-products.json");
-  if (!fs.existsSync(filePath)) return [];
+  if (!fs.existsSync(filePath)) return getLocalPublicProducts(categorySlug);
 
   const { products } = JSON.parse(fs.readFileSync(filePath, "utf8")) as {
     products: Array<{
@@ -129,4 +140,59 @@ function getLocalShopifyProducts(): CatalogProduct[] {
       inventory_quantity: Number(variant.inventory_quantity || 0)
     }))
   }));
+}
+
+function getLocalPublicProducts(categorySlug?: string): CatalogProduct[] {
+  const productsRoot = path.join(process.cwd(), "public", "products");
+  if (!fs.existsSync(productsRoot)) return [];
+
+  const categoryDirs = categorySlug
+    ? [categorySlug]
+    : fs.readdirSync(productsRoot).filter((entry) => fs.statSync(path.join(productsRoot, entry)).isDirectory());
+
+  return categoryDirs.flatMap((category) => {
+    const categoryPath = path.join(productsRoot, category);
+    if (!fs.existsSync(categoryPath)) return [];
+
+    return fs
+      .readdirSync(categoryPath)
+      .filter((file) => file.endsWith("-main.jpg"))
+      .map((file, index) => {
+        const slug = file.replace("-main.jpg", "");
+        const title = toProductTitle(slug);
+        const priceCents = getFallbackPrice(category, index);
+
+        return {
+          id: `${category}-${slug}`,
+          title,
+          slug,
+          description: `${title} from the ${toProductTitle(category)} collection.`,
+          image_url: `/products/${category}/${file}`,
+          variants: [
+            {
+              id: `${category}-${slug}-standard`,
+              title: "Standard",
+              sku: `${category}-${slug}`.toUpperCase(),
+              retail_price_cents: priceCents,
+              wholesale_price_cents: Math.round(priceCents * 0.7),
+              inventory_quantity: 25
+            }
+          ]
+        };
+      });
+  });
+}
+
+function getFallbackPrice(category: string, index: number) {
+  if (category === "biziluxe-extensions") return 12000 + index * 1500;
+  if (category === "profi-friseurbedarf") return 4500 + index * 700;
+  if (category === "biziluxe-accessoires") return 2900 + index * 500;
+  return 3900 + index * 500;
+}
+
+function toProductTitle(slug: string) {
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
