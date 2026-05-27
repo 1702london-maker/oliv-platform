@@ -32,7 +32,14 @@ export async function registerAction(formData: FormData) {
     redirect("/register?error=missing");
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://oliv-platform.vercel.app";
+  // Never send confirmation emails back to localhost
+  const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const siteUrl =
+    rawUrl && !rawUrl.includes("localhost") && !rawUrl.includes("127.0.0.1")
+      ? rawUrl
+      : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://oliv-platform.vercel.app";
 
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.signUp({
@@ -80,9 +87,17 @@ export async function forgotPasswordAction(formData: FormData) {
     redirect(`${from}?error=reset-missing`);
   }
 
+  const rawUrlFP = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const siteUrlFP =
+    rawUrlFP && !rawUrlFP.includes("localhost") && !rawUrlFP.includes("127.0.0.1")
+      ? rawUrlFP
+      : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://oliv-platform.vercel.app";
+
   const supabase = await createSupabaseServerClient();
   await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://oliv-platform.vercel.app"}/auth/callback`,
+    redirectTo: `${siteUrlFP}/auth/callback`,
   });
 
   redirect(`${from}?message=reset-sent`);
