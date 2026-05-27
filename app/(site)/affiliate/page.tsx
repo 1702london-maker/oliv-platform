@@ -21,6 +21,37 @@ function getShell() {
   };
 }
 
+type AffiliateRow = {
+  id: string;
+  code: string;
+  status: string;
+  tier: string | null;
+  display_name: string | null;
+  commission_rate: number | null;
+  discount_rate: number | null;
+  total_sales_cents: number | null;
+  total_commission_cents: number | null;
+  pending_payout_cents: number | null;
+  click_count: number | null;
+  conversion_count: number | null;
+};
+
+type CommissionRow = {
+  id: string;
+  order_total_cents: number;
+  commission_cents: number;
+  status: string;
+  created_at: string;
+};
+
+type PayoutRow = {
+  id: string;
+  amount_cents: number;
+  status: string;
+  paid_at: string | null;
+  created_at: string;
+};
+
 export default async function AffiliatePage({
   searchParams,
 }: {
@@ -32,7 +63,7 @@ export default async function AffiliatePage({
   const admin = createSupabaseAdminClient();
 
   // Load affiliate record for this user
-  const { data: affiliate } = await admin
+  const { data: affiliateRaw } = await admin
     .from("affiliates")
     .select(
       "id,code,status,tier,display_name,commission_rate,discount_rate," +
@@ -42,21 +73,11 @@ export default async function AffiliatePage({
     .eq("profile_id", profile.id)
     .maybeSingle();
 
+  const affiliate = affiliateRaw as AffiliateRow | null;
+
   // Load recent commissions if approved
-  let commissions: Array<{
-    id: string;
-    order_total_cents: number;
-    commission_cents: number;
-    status: string;
-    created_at: string;
-  }> | null = null;
-  let payouts: Array<{
-    id: string;
-    amount_cents: number;
-    status: string;
-    paid_at: string | null;
-    created_at: string;
-  }> | null = null;
+  let commissions: CommissionRow[] | null = null;
+  let payouts: PayoutRow[] | null = null;
 
   if (affiliate?.status === "approved") {
     const { data: c } = await admin
@@ -65,7 +86,7 @@ export default async function AffiliatePage({
       .eq("affiliate_id", affiliate.id)
       .order("created_at", { ascending: false })
       .limit(10);
-    commissions = c;
+    commissions = (c as CommissionRow[] | null);
 
     const { data: p } = await admin
       .from("affiliate_payouts")
@@ -73,7 +94,7 @@ export default async function AffiliatePage({
       .eq("affiliate_id", affiliate.id)
       .order("created_at", { ascending: false })
       .limit(10);
-    payouts = p;
+    payouts = (p as PayoutRow[] | null);
   }
 
   const { before, after } = getShell();

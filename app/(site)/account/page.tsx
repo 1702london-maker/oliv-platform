@@ -22,13 +22,15 @@ function getShell() {
 export default async function AccountPage() {
   const profile = await requireProfile();
 
-  let orders: Array<{
+  type OrderRow = {
     id: string;
     status: string;
     total_cents: number;
     affiliate_code: string | null;
     created_at: string;
-  }> | null = null;
+  };
+
+  let orders: OrderRow[] | null = null;
 
   try {
     const supabase = createSupabaseAdminClient();
@@ -38,7 +40,7 @@ export default async function AccountPage() {
       .eq("customer_id", profile.id)
       .order("created_at", { ascending: false })
       .limit(10);
-    orders = data;
+    orders = data as OrderRow[] | null;
   } catch (err) {
     console.error("[account] order lookup unavailable:", err);
   }
