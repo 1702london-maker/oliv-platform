@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export async function loginAction(formData: FormData) {
   const email = String(formData.get("email") || "").trim().toLowerCase();
@@ -13,10 +14,29 @@ export async function loginAction(formData: FormData) {
   }
 
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     redirect("/login?error=invalid");
+  }
+
+  // Ensure profile row exists — creates it if the DB trigger hasn't run yet
+  if (signInData?.user) {
+    try {
+      const admin = createSupabaseAdminClient();
+      await admin.from("profiles").upsert(
+        {
+          id: signInData.user.id,
+          email: signInData.user.email ?? email,
+          first_name: (signInData.user.user_metadata?.first_name as string) ?? "",
+          last_name: (signInData.user.user_metadata?.last_name as string) ?? "",
+          roles: ["customer"],
+        },
+        { onConflict: "id" }
+      );
+    } catch {
+      // Admin client not configured — profile creation will be retried on account page
+    }
   }
 
   redirect(next.startsWith("/") && !next.startsWith("//") ? next : "/account");
