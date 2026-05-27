@@ -50,13 +50,14 @@ const HAIR_COLOURS = [
 ];
 const HAIR_LENGTHS = ["40cm", "45cm", "50cm", "55cm", "60cm", "65cm"];
 const HAIR_TEXTURES = ["Glatt", "Wellig"];
-const ACCESSORY_COLOURS = ["Tiefschwarz", "Naturschwarz", "Schokobraun", "Mittelbraun", "Dunkelblond", "Silver", "Gold", "Mint"];
+const NON_HAIR_COLOURS = ["Schwarz", "Braun", "Naturfarbe", "Weiß"];
 
 export function AddToCart({ product, variants, priceMode = "retail", currency = "EUR" }: AddToCartProps) {
   const [variantId, setVariantId] = useState(variants[0]?.id || "");
   const isHair = product.image_url?.includes("/biziluxe-extensions/") || product.image_url?.includes("/bizihair-extensions/");
-  const isAccessory = product.image_url?.includes("/biziluxe-accessoires/");
-  const [colour, setColour] = useState((isHair ? HAIR_COLOURS : ACCESSORY_COLOURS)[0]);
+  const usesSimpleColours =
+    product.image_url?.includes("/biziluxe-accessoires/") || product.image_url?.includes("/profi-friseurbedarf/");
+  const [colour, setColour] = useState((isHair ? HAIR_COLOURS : NON_HAIR_COLOURS)[0]);
   const [length, setLength] = useState(HAIR_LENGTHS[0]);
   const [texture, setTexture] = useState(HAIR_TEXTURES[0]);
   const [quantity, setQuantity] = useState(1);
@@ -72,7 +73,7 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
     if (!selected) return;
 
     const existing = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]") as CartItem[];
-    const optionTitle = isHair ? `${colour} / ${length} / ${texture}` : isAccessory ? colour : selected.title;
+    const optionTitle = isHair ? `${colour} / ${length} / ${texture}` : usesSimpleColours ? colour : selected.title;
     const cartKey = `${selected.id}:${optionTitle}`;
     const index = existing.findIndex((item) => (item.cartKey || item.variantId) === cartKey);
     if (index >= 0) {
@@ -98,9 +99,9 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
 
   return (
     <div className="ohs-buy-box">
-      {isHair || isAccessory ? (
+      {isHair || usesSimpleColours ? (
         <>
-          <OptionGroup label="Colour" options={isHair ? HAIR_COLOURS : ACCESSORY_COLOURS} value={colour} onChange={setColour} />
+          <OptionGroup label="Colour" options={isHair ? HAIR_COLOURS : NON_HAIR_COLOURS} value={colour} onChange={setColour} />
           {isHair ? (
             <>
               <OptionGroup label="Length" options={HAIR_LENGTHS} value={length} onChange={setLength} />

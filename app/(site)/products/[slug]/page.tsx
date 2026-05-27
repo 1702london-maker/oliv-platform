@@ -24,7 +24,7 @@ export default async function ProductPage({ params }: PageProps) {
   const marker = '<main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">';
   const mainStart = shell.indexOf(marker);
   const footerStart = shell.indexOf("<!-- BEGIN sections: footer-group -->", mainStart);
-  const before = shell.slice(0, mainStart + marker.length);
+  const before = fixShellCartLinks(shell.slice(0, mainStart + marker.length));
   const after = shell.slice(footerStart);
   const firstVariant = product.variants[0];
   const galleryImages = getProductGalleryImages(product.image_url);
@@ -74,6 +74,12 @@ export default async function ProductPage({ params }: PageProps) {
       <div dangerouslySetInnerHTML={{ __html: after }} />
     </>
   );
+}
+
+function fixShellCartLinks(html: string) {
+  return html
+    .replace(/href="\/shop"([\s\S]{0,80}?aria-label="Cart(?: \(0\))?")/g, 'href="/cart"$1')
+    .replace(/href="\/shop" class="ohs-icon-btn" style="position:relative;" aria-label="Cart"/g, 'href="/cart" class="ohs-icon-btn" style="position:relative;" aria-label="Cart"');
 }
 
 function getProductGalleryImages(imageUrl: string | null) {
