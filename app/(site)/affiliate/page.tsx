@@ -46,14 +46,12 @@ export default async function AffiliatePage() {
     var codeEl = document.getElementById('dash-code-val');
     if(codeEl) codeEl.value = ${JSON.stringify(code)};
 
-    // Open the overlay and show the dashboard panel
-    var overlay = document.getElementById('oaff-dash-overlay');
-    if(overlay){ overlay.classList.add('open'); document.body.style.overflow='hidden'; }
-    var panel = document.getElementById('oaff-dash-panel');
-    if(panel) panel.classList.add('visible');
-    // Hide login panel — already authenticated
+    // Open the dashboard using the built-in openDash() then switch to dashboard panel
+    if(typeof window.openDash === 'function') window.openDash();
     var loginPanel = document.getElementById('oaff-login-panel');
     if(loginPanel) loginPanel.style.display='none';
+    var panel = document.getElementById('oaff-dash-panel');
+    if(panel) panel.classList.add('visible');
 
     // Logout wired to affiliate session clear
     window.ologout = function(){
