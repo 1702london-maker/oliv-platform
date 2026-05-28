@@ -277,7 +277,8 @@ export default async function WholesalePage() {
       var card = e.target.closest('[data-pid]');
       if(!card) return;
       var pid = card.getAttribute('data-pid');
-      var role = e.target.getAttribute('data-role');
+      var roleEl = e.target.closest('[data-role]');
+      var role = roleEl ? roleEl.getAttribute('data-role') : null;
       if(role==='qdec'){
         var qi=card.querySelector('[data-role="qty"]');
         if(qi) qi.value=Math.max(3,(parseInt(qi.value)||3)-1);
