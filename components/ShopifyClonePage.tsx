@@ -3,12 +3,19 @@ import path from "node:path";
 
 type ShopifyClonePageProps = {
   page: string;
+  injectBeforeClose?: string;
 };
 
-export function ShopifyClonePage({ page }: ShopifyClonePageProps) {
+export function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClonePageProps) {
   const filePath = path.join(process.cwd(), "shopify-clone", `${page}.html`);
   const rawHtml = fs.readFileSync(fs.existsSync(filePath) ? filePath : path.join(process.cwd(), "shopify-clone", "home.html"), "utf8");
-  const html = normalizeShopifyHtml(rawHtml, page);
+  let html = normalizeShopifyHtml(rawHtml, page);
+
+  if (injectBeforeClose) {
+    html = html.includes("</body>")
+      ? html.replace("</body>", injectBeforeClose + "</body>")
+      : html + injectBeforeClose;
+  }
 
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
