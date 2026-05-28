@@ -44,6 +44,9 @@ export async function GET(request: Request) {
     passwordMatch = verifyAffiliatePassword(password, best.password_hash);
   }
 
+  const secretPreview = (process.env.APP_SESSION_SECRET || "oliv-platform-session-v1").slice(0, 6) + "... len=" + (process.env.APP_SESSION_SECRET || "oliv-platform-session-v1").length;
+  const computedHash = password ? hashAffiliatePassword(password) : null;
+
   return NextResponse.json({
     email,
     dbError: dbError?.message ?? null,
@@ -52,10 +55,11 @@ export async function GET(request: Request) {
     bestRow: best ? {
       id: best.id,
       code: best.code,
-      hashPrefix: best.password_hash?.slice(0, 8) + "...",
+      storedHash: best.password_hash,
     } : null,
     passwordProvided: !!password,
     passwordMatch,
-    hashOfProvidedPassword: password ? hashAffiliatePassword(password).slice(0, 8) + "..." : null,
+    computedHash,
+    secretPreview,
   });
 }
