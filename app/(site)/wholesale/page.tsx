@@ -62,6 +62,18 @@ export default async function WholesalePage() {
     '/products/profi-friseurbedarf':  ['waldenburg-main.jpg','zeppelin-main.jpg','glashuette-main.jpg']
   };
 
+  /* ── product options (exact same as retail AddToCart.tsx) ── */
+  var HAIR_COLOURS  = ['1 Tiefschwarz','1A Naturschwarz','2 Schokobraun','4 Mittelbraun','8 Dunkelblond','8/22 Highlights Silver','613','SB Highlights','4/6/8 Highlights','60A','Mint'];
+  var HAIR_LENGTHS  = ['40cm','45cm','50cm','55cm','60cm','65cm'];
+  var HAIR_TEXTURES = ['Glatt','Wellig'];
+  var ACC_COLOURS   = ['Schwarz','Braun','Naturfarbe','Weiß'];
+
+  /* pdp option state */
+  var pdpOptType = ''; /* 'hair' | 'acc' | 'variant' */
+  var pdpColour  = '';
+  var pdpLength  = '';
+  var pdpTexture = '';
+
   function getGallery(imageUrl){
     if(!imageUrl) return [null,null,null];
     var parts = imageUrl.split('/'); parts.pop();
@@ -142,6 +154,13 @@ export default async function WholesalePage() {
       '.owhl-pdp-add:hover{background:#B68A45;}' +
       '.owhl-pdp-add.added{background:#5A8A50;}' +
       '.owhl-pdp-note{font-family:Montserrat,sans-serif;font-size:10px;color:#A0907E;line-height:1.6;margin:0;}' +
+      /* option pills */
+      '.owhl-pdp-opt-group{border:none;padding:0;margin:0 0 10px;}' +
+      '.owhl-pdp-opt-group legend{font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#6B5C4E;display:block;margin-bottom:6px;}' +
+      '.owhl-pdp-opt-pills{display:flex;flex-wrap:wrap;gap:5px;}' +
+      '.owhl-pdp-pill{border:1px solid #E3D6C5;padding:6px 13px;font-size:11px;font-family:Montserrat,sans-serif;cursor:pointer;background:#FFFDFB;color:#2B2620;transition:border-color .15s,background .15s;}' +
+      '.owhl-pdp-pill.active{border-color:#2B2620;background:#2B2620;color:#F6F1E8;}' +
+      '.owhl-pdp-pill:hover:not(.active){border-color:#B68A45;}' +
       '@media(max-width:900px){.owhl-product-grid{grid-template-columns:repeat(2,1fr)!important;}}' +
       '@media(max-width:540px){.owhl-product-grid{grid-template-columns:1fr!important;}}' +
       '@media(max-width:640px){.owhl-pdp-inner{grid-template-columns:1fr;}.owhl-pdp-info{border-left:none;border-top:1px solid #E3D6C5;}}';
@@ -297,12 +316,24 @@ export default async function WholesalePage() {
   function addFromCard(pid, card){
     var prod=ALL_PRODS.find(function(p){ return p.id===pid; });
     if(!prod) return;
-    var sel=card.querySelector('[data-role="vsel"]');
-    var vid=sel?sel.value:prod.variants[0].id;
-    var v=prod.variants.find(function(x){ return x.id===vid; })||prod.variants[0];
+    var v = prod.variants[0];
+    var cat = prod.categorySlug||'';
+    var isHairCat = cat==='biziluxe-extensions'||cat==='bizihair-extensions';
+    var isAccCat  = cat==='biziluxe-accessoires'||cat==='profi-friseurbedarf';
+    var optTitle;
+    if(isHairCat){
+      optTitle = HAIR_COLOURS[0]+' / '+HAIR_LENGTHS[0]+' / '+HAIR_TEXTURES[0];
+    } else if(isAccCat){
+      optTitle = ACC_COLOURS[0];
+    } else {
+      var sel=card.querySelector('[data-role="vsel"]');
+      var vid=sel&&sel.value?sel.value:v.id;
+      v=prod.variants.find(function(x){ return x.id===vid; })||prod.variants[0];
+      optTitle=v.title!=='Standard'?v.title:'';
+    }
     var qEl=card.querySelector('[data-role="qty"]');
     var qty=Math.max(3,parseInt((qEl||{}).value)||3);
-    addToCart(prod,v,qty);
+    addToCart(prod,v,qty,optTitle);
     var btn=card.querySelector('[data-role="add"]');
     if(btn){ btn.textContent='Added ✓'; btn.classList.add('added');
       setTimeout(function(){ btn.textContent='Add to Order'; btn.classList.remove('added'); },1400); }
@@ -327,8 +358,9 @@ export default async function WholesalePage() {
           '<p class="owhl-pdp-eyebrow">OlivHairSupply<\/p>' +
           '<h2 class="owhl-pdp-title" id="owhl-pdp-title"><\/h2>' +
           '<span class="owhl-pdp-sku" id="owhl-pdp-sku"><\/span>' +
+          '<div id="owhl-pdp-opts"><\/div>' +
           '<div class="owhl-pdp-vsel-wrap" id="owhl-pdp-vsel-wrap" style="display:none">' +
-            '<label>Variant<\/label>' +
+            '<div style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6B5C4E;margin-bottom:5px;">Variant<\/div>' +
             '<select class="owhl-pdp-vsel" id="owhl-pdp-vsel"><\/select>' +
           '<\/div>' +
           '<div class="owhl-pdp-prices">' +
@@ -367,11 +399,20 @@ export default async function WholesalePage() {
     /* add to order */
     document.getElementById('owhl-pdp-add').addEventListener('click',function(){
       if(!pdpProd) return;
-      var sel=document.getElementById('owhl-pdp-vsel');
-      var vid=sel?sel.value:(pdpProd.variants[0]&&pdpProd.variants[0].id);
-      var v=pdpProd.variants.find(function(x){ return x.id===vid; })||pdpProd.variants[0];
+      var v = pdpProd.variants[0];
+      var optTitle;
+      if(pdpOptType==='hair'){
+        optTitle = pdpColour+' / '+pdpLength+' / '+pdpTexture;
+      } else if(pdpOptType==='acc'){
+        optTitle = pdpColour;
+      } else {
+        var sel=document.getElementById('owhl-pdp-vsel');
+        var vid=sel&&sel.value?sel.value:v.id;
+        v=pdpProd.variants.find(function(x){ return x.id===vid; })||pdpProd.variants[0];
+        optTitle=v.title!=='Standard'?v.title:'';
+      }
       var qty=Math.max(3,parseInt(document.getElementById('owhl-pdp-qty').value)||3);
-      addToCart(pdpProd,v,qty);
+      addToCart(pdpProd,v,qty,optTitle);
       var btn=document.getElementById('owhl-pdp-add');
       btn.textContent='Added ✓'; btn.classList.add('added');
       setTimeout(function(){ btn.textContent='Add to Order'; btn.classList.remove('added'); },1400);
@@ -386,6 +427,31 @@ export default async function WholesalePage() {
       if(mi && src){ mi.src=src; }
       document.querySelectorAll('.owhl-pdp-thumb').forEach(function(t){ t.classList.remove('active'); });
       th.classList.add('active');
+    });
+  }
+
+  function buildPillGroup(groupId, label, options, activeVal){
+    return '<fieldset class="owhl-pdp-opt-group" id="'+groupId+'">' +
+      '<legend>'+label+'<\/legend>' +
+      '<div class="owhl-pdp-opt-pills">' +
+      options.map(function(o){
+        return '<button type="button" class="owhl-pdp-pill'+(o===activeVal?' active':'')+
+          '" data-opt-group="'+groupId+'" data-opt-val="'+esc(o)+'">'+esc(o)+'<\/button>';
+      }).join('') +
+      '<\/div><\/fieldset>';
+  }
+
+  function wirePills(container){
+    container.addEventListener('click',function(e){
+      var pill = e.target.closest('.owhl-pdp-pill');
+      if(!pill) return;
+      var group = pill.getAttribute('data-opt-group');
+      var val   = pill.getAttribute('data-opt-val');
+      container.querySelectorAll('[data-opt-group="'+group+'"]').forEach(function(p){ p.classList.remove('active'); });
+      pill.classList.add('active');
+      if(group==='owhl-pdp-colour')  pdpColour  = val;
+      else if(group==='owhl-pdp-length')  pdpLength  = val;
+      else if(group==='owhl-pdp-texture') pdpTexture = val;
     });
   }
 
@@ -414,24 +480,50 @@ export default async function WholesalePage() {
     var skuEl=document.getElementById('owhl-pdp-sku');
     if(skuEl) skuEl.textContent=v0.sku||pdpProd.id;
 
-    /* variant select */
-    var vsel=document.getElementById('owhl-pdp-vsel');
-    var vwrap=document.getElementById('owhl-pdp-vsel-wrap');
-    vsel.innerHTML='';
-    var multi = pdpProd.variants.length>1 && v0.title!=='Standard';
-    if(multi){
-      pdpProd.variants.forEach(function(v){
-        var o=document.createElement('option');
-        o.value=v.id;
-        o.dataset.w=v.wholesale_price_cents;
-        o.dataset.r=v.retail_price_cents;
-        o.dataset.s=v.sku||'';
-        o.textContent=v.title;
-        vsel.appendChild(o);
-      });
-      vwrap.style.display='';
+    /* detect product type and build option UI */
+    var cat = pdpProd.categorySlug || '';
+    pdpOptType = (cat==='biziluxe-extensions'||cat==='bizihair-extensions') ? 'hair' :
+                 (cat==='biziluxe-accessoires'||cat==='profi-friseurbedarf')  ? 'acc'  : 'variant';
+
+    var optsEl = document.getElementById('owhl-pdp-opts');
+    var vsel   = document.getElementById('owhl-pdp-vsel');
+    var vwrap  = document.getElementById('owhl-pdp-vsel-wrap');
+    if(optsEl) optsEl.innerHTML = '';
+    if(vsel)   vsel.innerHTML   = '';
+    if(vwrap)  vwrap.style.display = 'none';
+
+    if(pdpOptType==='hair'){
+      pdpColour  = HAIR_COLOURS[0];
+      pdpLength  = HAIR_LENGTHS[0];
+      pdpTexture = HAIR_TEXTURES[0];
+      if(optsEl){
+        optsEl.innerHTML =
+          buildPillGroup('owhl-pdp-colour', 'Farbe',  HAIR_COLOURS,  pdpColour)  +
+          buildPillGroup('owhl-pdp-length', 'Länge',  HAIR_LENGTHS,  pdpLength)  +
+          buildPillGroup('owhl-pdp-texture','Textur', HAIR_TEXTURES, pdpTexture);
+        wirePills(optsEl);
+      }
+    } else if(pdpOptType==='acc'){
+      pdpColour = ACC_COLOURS[0];
+      if(optsEl){
+        optsEl.innerHTML = buildPillGroup('owhl-pdp-colour','Farbe', ACC_COLOURS, pdpColour);
+        wirePills(optsEl);
+      }
     } else {
-      vwrap.style.display='none';
+      /* other product types — fall back to variant select */
+      var multi = pdpProd.variants.length>1 && v0.title!=='Standard';
+      if(multi && vsel && vwrap){
+        pdpProd.variants.forEach(function(v){
+          var o=document.createElement('option');
+          o.value=v.id;
+          o.dataset.w=v.wholesale_price_cents;
+          o.dataset.r=v.retail_price_cents;
+          o.dataset.s=v.sku||'';
+          o.textContent=v.title;
+          vsel.appendChild(o);
+        });
+        vwrap.style.display='';
+      }
     }
 
     /* prices */
@@ -475,11 +567,12 @@ export default async function WholesalePage() {
   }
 
   /* ── shared add-to-cart logic ── */
-  function addToCart(prod, v, qty){
-    var key=prod.id+':'+v.id;
+  function addToCart(prod, v, qty, optTitle){
+    var label = optTitle != null ? optTitle : (v.title==='Standard'?'':v.title);
+    var key   = prod.id+':'+label;
     if(cart[key]) cart[key].qty+=qty;
     else cart[key]={productId:prod.id,variantId:v.id,name:prod.title,
-      variantTitle:(v.title==='Standard'?'':v.title),sku:v.sku||prod.id,
+      variantTitle:label,sku:v.sku||prod.id,
       price:v.wholesale_price_cents,qty:qty};
     renderCart();
   }
