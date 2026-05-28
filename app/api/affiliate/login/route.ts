@@ -26,18 +26,22 @@ export async function POST(request: Request) {
   }
 
   const admin = createSupabaseAdminClient();
-  const { data: affiliate } = await admin
+  const { data: rows } = await admin
     .from("affiliates")
     .select("id,email,code,status,password_hash")
     .eq("email", email)
     .eq("status", "approved")
-    .maybeSingle<{
-      id: string;
-      email: string;
-      code: string;
-      status: string;
-      password_hash: string | null;
-    }>();
+    .not("password_hash", "is", null)
+    .order("approved_at", { ascending: false })
+    .limit(1);
+
+  const affiliate = (rows as {
+    id: string;
+    email: string;
+    code: string;
+    status: string;
+    password_hash: string | null;
+  }[] | null)?.[0] ?? null;
 
   if (!affiliate || !affiliate.password_hash) {
     return NextResponse.json({ error: "invalid" }, { status: 401 });
