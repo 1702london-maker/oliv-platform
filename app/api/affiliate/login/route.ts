@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     .eq("email", email)
     .eq("status", "approved")
     .not("password_hash", "is", null)
-    .order("approved_at", { ascending: false })
+    .order("id", { ascending: false })
     .limit(1);
 
   const affiliate = (rows as {
