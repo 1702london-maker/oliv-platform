@@ -1,6 +1,5 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getWholesaleSession } from "@/lib/auth/wholesale-session";
-import { getCatalogProducts } from "@/lib/catalog/products";
 import { ShopifyClonePage } from "@/components/ShopifyClonePage";
 
 const WHOLESALE_CATEGORIES = [
@@ -12,13 +11,6 @@ const WHOLESALE_CATEGORIES = [
   { slug: "buersten-und-kaemme",    label: "Brushes & Combs" },
 ];
 
-function safeJson(obj: unknown): string {
-  return JSON.stringify(obj)
-    .replace(/</g, "\\u003c")
-    .replace(/>/g, "\\u003e")
-    .replace(/&/g, "\\u0026");
-}
-
 export default async function WholesalePage() {
   const session = await getWholesaleSession();
 
@@ -26,55 +18,22 @@ export default async function WholesalePage() {
     const admin = createSupabaseAdminClient();
     const { data: account } = await admin
       .from("wholesale_accounts")
-      .select("business_name,tier,lifetime_spend_cents")
+      .select("business_name,tier")
       .eq("id", session.id)
       .maybeSingle();
 
-    const businessName = (account?.business_name ?? session.business_name ?? "Wholesale Partner") as string;
-    const tier = (account?.tier ?? "Verified") as string;
-
-    // Fetch all products from the platform catalog (same source as retail shop)
-    const rawProducts = await getCatalogProducts();
-
-    // Tag each product with its category (from image_url path) + apply 15% wholesale pricing
-    const products = rawProducts.map(p => {
-      const match = p.image_url?.match(/\/products\/([^/]+)\//);
-      const categorySlug = match?.[1] ?? "other";
-      return {
-        id: p.id,
-        title: p.title,
-        image_url: p.image_url ?? null,
-        categorySlug,
-        variants: p.variants.map(v => ({
-          id: v.id,
-          title: v.title === "Default Title" ? "Standard" : v.title,
-          sku: v.sku ?? null,
-          retail_price_cents: v.retail_price_cents,
-          wholesale_price_cents: Math.round(v.retail_price_cents * 0.85),
-        })),
-      };
-    });
+    const businessName = account?.business_name ?? session.business_name ?? "Wholesale Partner";
+    const tier = account?.tier ?? "Verified";
 
     const script = `<script>
 (function(){
-  var BIZ     = ${safeJson(businessName)};
-  var TIER    = ${safeJson(tier)};
-  var PRODS   = ${safeJson(products)};
-  var CATS    = ${safeJson(WHOLESALE_CATEGORIES)};
-  var cart    = {};
-  var filter  = 'all';
+  var BIZ  = ${JSON.stringify(businessName)};
+  var TIER = ${JSON.stringify(tier)};
+  var CATS = ${JSON.stringify(WHOLESALE_CATEGORIES)};
+  var cart = {};
 
-  /* ── helpers ── */
-  function fmt(cents){
-    return '€' + (cents/100).toFixed(2).replace('.',',');
-  }
-  function esc(s){
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  /* ── boot ── */
   function boot(){
-    /* dashboard open */
+    /* ── open dashboard overlay ── */
     var overlay = document.getElementById('owhl-login-overlay');
     if(overlay){ overlay.classList.add('open'); document.body.style.overflow='hidden'; }
     var lp = document.getElementById('owhl-login-panel');
@@ -82,36 +41,35 @@ export default async function WholesalePage() {
     var dp = document.getElementById('owhl-dash-panel');
     if(dp) dp.classList.add('visible');
 
-    /* business name + tier */
+    /* ── name + tier ── */
     var nm = document.getElementById('owhl-name-display');
     if(nm) nm.textContent = BIZ;
     var sv = document.querySelectorAll('.owhl-dash-stat-val');
     if(sv[3]) sv[3].textContent = TIER;
 
-    /* logout */
+    /* ── logout ── */
     window.owhlLogout = function(){
       fetch('/api/wholesale/logout',{method:'POST'})
         .then(function(){ window.location.href='/wholesale'; });
     };
 
-    /* CSS overrides — smaller cards, 3-col grid */
+    /* ── compact grid CSS ── */
     var s = document.createElement('style');
     s.textContent =
-      '.owhl-product-grid{grid-template-columns:repeat(3,1fr)!important;gap:8px!important;}' +
+      '.owhl-product-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:8px!important;}' +
       '.owhl-product-card{padding:10px!important;}' +
       '.owhl-product-thumb{margin-bottom:8px!important;overflow:hidden;}' +
       '.owhl-product-thumb img{width:100%;height:100%;object-fit:cover;display:block;}' +
       '.owhl-product-name{font-size:14px!important;margin-bottom:1px!important;}' +
       '.owhl-product-sku{font-size:8px!important;margin-bottom:6px!important;}' +
-      '.owhl-product-prices{margin-bottom:7px!important;}' +
       '.owhl-product-price{font-size:13px!important;}' +
       '.owhl-product-rrp{font-size:11px!important;}' +
       '.owhl-product-saving{font-size:9px!important;}' +
-      '.owhl-qty-btn{width:26px!important;height:30px!important;font-size:14px!important;}' +
+      '.owhl-qty-btn{width:26px!important;height:30px!important;}' +
       '.owhl-qty-input{width:30px!important;height:30px!important;font-size:12px!important;}' +
-      '.owhl-add-btn{font-size:9px!important;height:30px!important;letter-spacing:1px!important;}' +
+      '.owhl-add-btn{font-size:9px!important;height:30px!important;}' +
       '.owhl-variant-select{width:100%;border:1px solid #E3D6C5;background:#FFFDFB;padding:5px 7px;' +
-        'font-family:Montserrat,sans-serif;font-size:10px;color:#2B2620;margin-bottom:7px;outline:none;cursor:pointer;border-radius:0;}' +
+        'font-family:Montserrat,sans-serif;font-size:10px;color:#2B2620;margin-bottom:7px;outline:none;cursor:pointer;}' +
       '.owhl-whl-empty{grid-column:1/-1;padding:36px 20px;text-align:center;border:1px dashed #E3D6C5;' +
         'font-family:Montserrat,sans-serif;font-size:11px;color:#A0907E;letter-spacing:1.5px;text-transform:uppercase;}' +
       '.owhl-success-overlay{position:fixed;inset:0;background:rgba(43,38,32,.88);display:flex;align-items:center;' +
@@ -130,267 +88,232 @@ export default async function WholesalePage() {
       '@media(max-width:540px){.owhl-product-grid{grid-template-columns:1fr!important;}}';
     document.head.appendChild(s);
 
+    /* ── filter buttons ── */
     buildFilters();
-    renderGrid('all');
+
+    /* ── load products from API ── */
+    loadProducts();
   }
 
-  /* ── filter buttons ── */
+  /* ── filters ── */
   function buildFilters(){
     var row = document.querySelector('.owhl-filter-row');
     if(!row) return;
-    var allBtn = '<button class="owhl-filter-btn active" onclick="owhlFilter(\'all\',this)">All</button>';
-    var catBtns = CATS.map(function(c){
-      return '<button class="owhl-filter-btn" onclick="owhlFilter(\''+esc(c.slug)+'\',this)">'+esc(c.label)+'</button>';
-    }).join('');
-    row.innerHTML = allBtn + catBtns;
+    var html = '<button class="owhl-filter-btn active" onclick="owhlFilter(\'all\',this)">All</button>';
+    CATS.forEach(function(c){
+      html += '<button class="owhl-filter-btn" onclick="owhlFilter(\''+c.slug+'\',this)">'+c.label+'</button>';
+    });
+    row.innerHTML = html;
   }
 
   window.owhlFilter = function(slug, btn){
-    filter = slug;
     document.querySelectorAll('.owhl-filter-btn').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
     renderGrid(slug);
   };
 
-  /* ── product grid ── */
+  /* ── load products ── */
+  var ALL_PRODS = [];
+
+  function loadProducts(){
+    var grid = document.getElementById('owhl-product-grid');
+    if(grid) grid.innerHTML = '<div style="padding:32px;text-align:center;font-family:Montserrat,sans-serif;font-size:11px;color:#A0907E;letter-spacing:1px;">Loading products…</div>';
+    fetch('/api/wholesale/products')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        ALL_PRODS = d.products || [];
+        renderGrid('all');
+      })
+      .catch(function(){
+        var grid = document.getElementById('owhl-product-grid');
+        if(grid) grid.innerHTML = '<div style="padding:32px;text-align:center;font-family:Montserrat,sans-serif;font-size:11px;color:#A0907E;">Products are loading. Please refresh.</div>';
+      });
+  }
+
+  /* ── render grid ── */
   function renderGrid(slug){
     var grid = document.getElementById('owhl-product-grid');
     if(!grid) return;
-    var list = slug === 'all' ? PRODS : PRODS.filter(function(p){ return p.categorySlug === slug; });
+    var list = slug === 'all' ? ALL_PRODS : ALL_PRODS.filter(function(p){ return p.categorySlug === slug; });
     if(!list.length){
       grid.innerHTML = '<div class="owhl-whl-empty">Coming Soon — Products for this collection are being added</div>';
       return;
     }
-    grid.innerHTML = list.map(function(p){ return buildCard(p); }).join('');
+    grid.innerHTML = list.map(buildCard).join('');
   }
+
+  function fmt(cents){ return '€'+(cents/100).toFixed(2).replace('.',','); }
+  function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
   function buildCard(p){
     var v0 = p.variants[0];
-    var multi = p.variants.length > 1 && !(p.variants.length===1 && v0.title==='Standard');
-    var savePct = Math.round((1 - v0.wholesale_price_cents/v0.retail_price_cents)*100);
-    var imgHtml = p.image_url
+    var multi = p.variants.length > 1 && p.variants[0].title !== 'Standard';
+    var save  = Math.round((1 - v0.wholesale_price_cents/v0.retail_price_cents)*100);
+    var img   = p.image_url
       ? '<img src="'+esc(p.image_url)+'" alt="'+esc(p.title)+'" loading="lazy">'
-      : '<span style="font-family:Montserrat,sans-serif;font-size:8px;color:#A0907E;letter-spacing:2px;text-transform:uppercase;">'+esc(p.title.substring(0,4))+'</span>';
-
-    var varSel = '';
+      : '<span style="font-size:8px;color:#A0907E;letter-spacing:2px;text-transform:uppercase;font-family:Montserrat,sans-serif;">'+esc(p.title.substring(0,4))+'</span>';
+    var vsel  = '';
     if(multi){
-      varSel = '<select class="owhl-variant-select" id="vsel-'+esc(p.id)+'" onchange="owhlVarChange(\''+esc(p.id)+'\')">';
-      p.variants.forEach(function(v){
-        varSel += '<option value="'+esc(v.id)+'" data-w="'+v.wholesale_price_cents+'" data-r="'+v.retail_price_cents+'" data-sku="'+esc(v.sku||'')+'">';
-        varSel += esc(v.title)+'</option>';
-      });
-      varSel += '</select>';
+      vsel = '<select class="owhl-variant-select" id="vs-'+esc(p.id)+'" onchange="owhlVC(\''+esc(p.id)+'\')"><\/select>';
+      // options injected after render
     }
-
     return '<div class="owhl-product-card" data-pid="'+esc(p.id)+'">' +
-      '<div class="owhl-product-thumb">'+imgHtml+'</div>' +
-      '<div class="owhl-product-name">'+esc(p.title)+'</div>' +
-      '<span class="owhl-product-sku" id="psku-'+esc(p.id)+'">'+esc(v0.sku||p.id)+'</span>' +
-      varSel +
+      '<div class="owhl-product-thumb">'+img+'<\/div>' +
+      '<div class="owhl-product-name">'+esc(p.title)+'<\/div>' +
+      '<span class="owhl-product-sku" id="sk-'+esc(p.id)+'">'+esc(v0.sku||p.id)+'<\/span>' +
+      vsel +
       '<div class="owhl-product-prices">' +
-        '<span class="owhl-product-price" id="pwhl-'+esc(p.id)+'">'+fmt(v0.wholesale_price_cents)+'</span>' +
-        '<span class="owhl-product-rrp" id="prrp-'+esc(p.id)+'">'+fmt(v0.retail_price_cents)+'</span>' +
-        '<span class="owhl-product-saving" id="psav-'+esc(p.id)+'">Save '+savePct+'%</span>' +
-      '</div>' +
+        '<span class="owhl-product-price" id="wp-'+esc(p.id)+'">'+fmt(v0.wholesale_price_cents)+'<\/span>' +
+        '<span class="owhl-product-rrp" id="rp-'+esc(p.id)+'">'+fmt(v0.retail_price_cents)+'<\/span>' +
+        '<span class="owhl-product-saving" id="sv-'+esc(p.id)+'">Save '+save+'%<\/span>' +
+      '<\/div>' +
       '<div class="owhl-product-actions">' +
         '<div class="owhl-qty-wrap">' +
-          '<button class="owhl-qty-btn" onclick="owhlQty(\''+esc(p.id)+'\',-1)">&#8722;</button>' +
-          '<input class="owhl-qty-input" id="pqty-'+esc(p.id)+'" type="number" value="3" min="3" readonly>' +
-          '<button class="owhl-qty-btn" onclick="owhlQty(\''+esc(p.id)+'\',1)">+</button>' +
-        '</div>' +
-        '<button class="owhl-add-btn" id="padd-'+esc(p.id)+'" onclick="owhlAdd(\''+esc(p.id)+'\')">Add to Order</button>' +
-      '</div>' +
-    '</div>';
+          '<button class="owhl-qty-btn" onclick="owhlQ(\''+esc(p.id)+'\',-1)">−<\/button>' +
+          '<input class="owhl-qty-input" id="qt-'+esc(p.id)+'" type="number" value="3" min="3" readonly>' +
+          '<button class="owhl-qty-btn" onclick="owhlQ(\''+esc(p.id)+'\',1)">+<\/button>' +
+        '<\/div>' +
+        '<button class="owhl-add-btn" id="ab-'+esc(p.id)+'" onclick="owhlAdd(\''+esc(p.id)+'\')">Add to Order<\/button>' +
+      '<\/div>' +
+    '<\/div>';
+  }
+
+  // Populate selects after grid renders
+  function populateSelects(){
+    ALL_PRODS.forEach(function(p){
+      var sel = document.getElementById('vs-'+p.id);
+      if(!sel) return;
+      p.variants.forEach(function(v){
+        var o = document.createElement('option');
+        o.value = v.id;
+        o.setAttribute('data-w', v.wholesale_price_cents);
+        o.setAttribute('data-r', v.retail_price_cents);
+        o.setAttribute('data-s', v.sku||'');
+        o.textContent = v.title;
+        sel.appendChild(o);
+      });
+    });
   }
 
   /* ── variant change ── */
-  window.owhlVarChange = function(pid){
-    var sel = document.getElementById('vsel-'+pid);
+  window.owhlVC = function(pid){
+    var sel = document.getElementById('vs-'+pid);
     if(!sel) return;
     var opt = sel.options[sel.selectedIndex];
-    var w = parseInt(opt.getAttribute('data-w'));
-    var r = parseInt(opt.getAttribute('data-r'));
-    var sku = opt.getAttribute('data-sku');
-    var savePct = Math.round((1-w/r)*100);
-    var pw=document.getElementById('pwhl-'+pid), pr=document.getElementById('prrp-'+pid),
-        ps=document.getElementById('psav-'+pid), psk=document.getElementById('psku-'+pid),
-        pq=document.getElementById('pqty-'+pid);
-    if(pw) pw.textContent=fmt(w);
-    if(pr) pr.textContent=fmt(r);
-    if(ps) ps.textContent='Save '+savePct+'%';
-    if(psk && sku) psk.textContent=sku;
-    if(pq) pq.value='3'; /* reset to minimum on variant change */
+    var w=parseInt(opt.getAttribute('data-w')), r=parseInt(opt.getAttribute('data-r'));
+    var wp=document.getElementById('wp-'+pid), rp=document.getElementById('rp-'+pid),
+        sv=document.getElementById('sv-'+pid), sk=document.getElementById('sk-'+pid),
+        qt=document.getElementById('qt-'+pid);
+    if(wp) wp.textContent=fmt(w);
+    if(rp) rp.textContent=fmt(r);
+    if(sv) sv.textContent='Save '+Math.round((1-w/r)*100)+'%';
+    if(sk) sk.textContent=opt.getAttribute('data-s')||'';
+    if(qt) qt.value='3';
   };
 
-  /* ── qty controls ── */
-  window.owhlQty = function(pid, delta){
-    var el = document.getElementById('pqty-'+pid);
-    if(!el) return;
-    el.value = Math.max(3, (parseInt(el.value)||3) + delta);
+  /* ── qty ── */
+  window.owhlQ = function(pid, d){
+    var el=document.getElementById('qt-'+pid);
+    if(el) el.value=Math.max(3,(parseInt(el.value)||3)+d);
   };
 
   /* ── add to cart ── */
   window.owhlAdd = function(pid){
-    var prod = PRODS.find(function(p){ return p.id===pid; });
+    var prod=ALL_PRODS.find(function(p){return p.id===pid;});
     if(!prod) return;
-
-    var sel = document.getElementById('vsel-'+pid);
-    var vid = sel ? sel.value : prod.variants[0].id;
-    var variant = prod.variants.find(function(v){ return v.id===vid; })||prod.variants[0];
-
-    var qtyEl = document.getElementById('pqty-'+pid);
-    var qty = Math.max(3, parseInt(qtyEl ? qtyEl.value : '3')||3);
-    var key = pid+':'+vid;
-
-    if(cart[key]){ cart[key].qty += qty; }
-    else {
-      cart[key] = {
-        productId: pid,
-        variantId: vid,
-        name: prod.title,
-        variantTitle: (variant.title==='Standard'?'':variant.title)||'',
-        sku: variant.sku||pid,
-        price: variant.wholesale_price_cents,
-        qty: qty
-      };
-    }
-
-    /* feedback */
-    var btn = document.getElementById('padd-'+pid);
-    if(btn){ btn.textContent='Added ✓'; btn.classList.add('added');
-      setTimeout(function(){ btn.textContent='Add to Order'; btn.classList.remove('added'); },1400); }
-
+    var sel=document.getElementById('vs-'+pid);
+    var vid=sel?sel.value:prod.variants[0].id;
+    var v=prod.variants.find(function(x){return x.id===vid;})||prod.variants[0];
+    var qty=Math.max(3,parseInt((document.getElementById('qt-'+pid)||{}).value)||3);
+    var key=pid+':'+vid;
+    if(cart[key]) cart[key].qty+=qty;
+    else cart[key]={productId:pid,variantId:vid,name:prod.title,
+      variantTitle:(v.title==='Standard'?'':v.title),sku:v.sku||pid,
+      price:v.wholesale_price_cents,qty:qty};
+    var btn=document.getElementById('ab-'+pid);
+    if(btn){btn.textContent='Added ✓';btn.classList.add('added');
+      setTimeout(function(){btn.textContent='Add to Order';btn.classList.remove('added');},1400);}
     renderCart();
   };
 
-  /* ── cart render ── */
+  /* ── cart ── */
   function renderCart(){
-    var itemsEl  = document.getElementById('owhl-cart-items');
-    var emptyEl  = document.getElementById('owhl-cart-empty');
-    var footEl   = document.getElementById('owhl-cart-foot');
-    var countEl  = document.getElementById('owhl-cart-count');
-    var totalEl  = document.getElementById('owhl-cart-total');
-
-    var entries = Object.keys(cart).map(function(k){ return {k:k,v:cart[k]}; });
-    var totalQty   = entries.reduce(function(s,e){ return s+e.v.qty; },0);
-    var totalCents = entries.reduce(function(s,e){ return s+(e.v.price*e.v.qty); },0);
-
-    if(countEl) countEl.textContent = totalQty+' item'+(totalQty!==1?'s':'');
-    if(totalEl) totalEl.textContent = fmt(totalCents);
-
-    if(!entries.length){
-      if(emptyEl){ emptyEl.style.display=''; }
-      if(itemsEl){ itemsEl.innerHTML=''; }
-      if(footEl){ footEl.style.display='none'; }
-      return;
-    }
-
-    if(emptyEl){ emptyEl.style.display='none'; }
-    if(footEl){ footEl.style.display=''; }
-
-    if(itemsEl){
-      itemsEl.innerHTML = entries.map(function(e){
-        var it=e.v, k=e.k;
-        var label = it.name + (it.variantTitle ? ' — '+it.variantTitle : '');
-        return '<div class="owhl-cart-item">' +
-          '<div class="owhl-cart-item-row1">' +
-            '<div>' +
-              '<div class="owhl-cart-item-name">'+esc(label)+'</div>' +
-              '<span class="owhl-cart-item-sku">'+esc(it.sku)+'</span>' +
-            '</div>' +
-            '<button class="owhl-cart-item-remove" onclick="owhlCartRemove(\''+k+'\')">Remove</button>' +
-          '</div>' +
-          '<div class="owhl-cart-item-row2">' +
-            '<div class="owhl-qty-wrap">' +
-              '<button class="owhl-qty-btn" onclick="owhlCartQty(\''+k+'\',-1)">&#8722;</button>' +
-              '<input class="owhl-qty-input" type="number" value="'+it.qty+'" min="3" readonly style="pointer-events:none;">' +
-              '<button class="owhl-qty-btn" onclick="owhlCartQty(\''+k+'\',1)">+</button>' +
-            '</div>' +
-            '<span class="owhl-cart-item-total">'+fmt(it.price*it.qty)+'</span>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-    }
+    var entries=Object.keys(cart).map(function(k){return{k:k,v:cart[k]};});
+    var tq=entries.reduce(function(s,e){return s+e.v.qty;},0);
+    var tc=entries.reduce(function(s,e){return s+(e.v.price*e.v.qty);},0);
+    var ce=document.getElementById('owhl-cart-count'),te=document.getElementById('owhl-cart-total');
+    if(ce) ce.textContent=tq+' item'+(tq!==1?'s':'');
+    if(te) te.textContent=fmt(tc);
+    var ie=document.getElementById('owhl-cart-items'),ee=document.getElementById('owhl-cart-empty'),fe=document.getElementById('owhl-cart-foot');
+    if(!entries.length){if(ee)ee.style.display='';if(ie)ie.innerHTML='';if(fe)fe.style.display='none';return;}
+    if(ee)ee.style.display='none';if(fe)fe.style.display='';
+    if(ie) ie.innerHTML=entries.map(function(e){
+      var it=e.v,k=e.k,lb=it.name+(it.variantTitle?' — '+it.variantTitle:'');
+      return '<div class="owhl-cart-item">'+
+        '<div class="owhl-cart-item-row1"><div>'+
+          '<div class="owhl-cart-item-name">'+esc(lb)+'<\/div>'+
+          '<span class="owhl-cart-item-sku">'+esc(it.sku)+'<\/span>'+
+        '<\/div><button class="owhl-cart-item-remove" onclick="owhlCR(\''+k+'\')">Remove<\/button><\/div>'+
+        '<div class="owhl-cart-item-row2">'+
+          '<div class="owhl-qty-wrap">'+
+            '<button class="owhl-qty-btn" onclick="owhlCQ(\''+k+'\',-1)">−<\/button>'+
+            '<input class="owhl-qty-input" type="number" value="'+it.qty+'" readonly>'+
+            '<button class="owhl-qty-btn" onclick="owhlCQ(\''+k+'\',1)">+<\/button>'+
+          '<\/div>'+
+          '<span class="owhl-cart-item-total">'+fmt(it.price*it.qty)+'<\/span>'+
+        '<\/div><\/div>';
+    }).join('');
   }
 
-  window.owhlCartRemove = function(k){ delete cart[k]; renderCart(); };
-
-  window.owhlCartQty = function(k, delta){
-    if(!cart[k]) return;
-    cart[k].qty = Math.max(3, cart[k].qty+delta);
-    renderCart();
-  };
+  window.owhlCR=function(k){delete cart[k];renderCart();};
+  window.owhlCQ=function(k,d){if(cart[k]){cart[k].qty=Math.max(3,cart[k].qty+d);renderCart();}};
 
   /* ── submit order ── */
-  window.owhlSubmitOrder = function(){
-    var entries = Object.keys(cart).map(function(k){ return cart[k]; });
-    if(!entries.length){
-      alert('Please add items to your order first.');
-      return;
-    }
-    var note      = (document.getElementById('owhl-order-note')||{}).value||'';
-    var totalCents = entries.reduce(function(s,it){ return s+(it.price*it.qty); },0);
-    var btn = document.querySelector('.owhl-cart-submit-btn');
-    if(btn){ btn.textContent='Submitting…'; btn.disabled=true; }
-
-    fetch('/api/wholesale/submit-order',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ items:entries, notes:note, total_wholesale_cents:totalCents })
-    })
-    .then(function(r){ return r.json(); })
+  window.owhlSubmitOrder=function(){
+    var items=Object.values(cart);
+    if(!items.length){alert('Please add items to your order first.');return;}
+    var note=(document.getElementById('owhl-order-note')||{}).value||'';
+    var total=items.reduce(function(s,it){return s+(it.price*it.qty);},0);
+    var btn=document.querySelector('.owhl-cart-submit-btn');
+    if(btn){btn.textContent='Submitting…';btn.disabled=true;}
+    fetch('/api/wholesale/submit-order',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({items:items,notes:note,total_wholesale_cents:total})})
+    .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){
-        cart={};
-        renderCart();
-        showSuccess();
-      } else {
-        alert('Something went wrong. Please try again.');
-        if(btn){ btn.textContent='Submit Order Request'; btn.disabled=false; }
-      }
+      if(d.ok){cart={};renderCart();showSuccess();}
+      else{alert('Something went wrong. Please try again.');if(btn){btn.textContent='Submit Order Request';btn.disabled=false;}}
     })
-    .catch(function(){
-      alert('Network error. Please try again.');
-      if(btn){ btn.textContent='Submit Order Request'; btn.disabled=false; }
-    });
+    .catch(function(){alert('Network error.');if(btn){btn.textContent='Submit Order Request';btn.disabled=false;}});
   };
 
-  /* ── success modal ── */
   function showSuccess(){
-    var m = document.createElement('div');
-    m.className='owhl-success-overlay';
-    m.innerHTML =
-      '<div class="owhl-success-box">' +
-        '<div class="owhl-success-tick">✓</div>' +
-        '<p class="owhl-success-eye">Order Received</p>' +
-        '<h2 class="owhl-success-ttl">Thank You</h2>' +
-        '<p class="owhl-success-msg">Thank you for your wholesale order request.' +
-          ' Your order is currently being reviewed by our supply team.' +
-          ' An invoice will be sent to your registered email with confirmed' +
-          ' stock availability and payment instructions.' +
-          '<br><br><strong>OlivHairSupply Wholesale Team</strong></p>' +
-        '<button class="owhl-success-cta" onclick="this.closest(\'.owhl-success-overlay\').remove()">Close</button>' +
-      '</div>';
+    var m=document.createElement('div');m.className='owhl-success-overlay';
+    m.innerHTML='<div class="owhl-success-box">'+
+      '<div class="owhl-success-tick">✓<\/div>'+
+      '<p class="owhl-success-eye">Order Received<\/p>'+
+      '<h2 class="owhl-success-ttl">Thank You<\/h2>'+
+      '<p class="owhl-success-msg">Thank you for your wholesale order request. Your order is currently being reviewed by our supply team. An invoice will be sent to your registered email with confirmed stock availability and payment instructions.<br><br><strong>OlivHairSupply Wholesale Team<\/strong><\/p>'+
+      '<button class="owhl-success-cta" onclick="this.closest(\'.owhl-success-overlay\').remove()">Close<\/button>'+
+    '<\/div>';
     document.body.appendChild(m);
   }
 
-  /* ── run ── */
   if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', boot);
+    document.addEventListener('DOMContentLoaded',boot);
   } else { boot(); }
 })();
-</script>`;
+<\/script>`;
 
     return <ShopifyClonePage page="wholesale" injectBeforeClose={script} />;
   }
 
-  /* ── public (not logged in) ── */
+  /* ── public page ── */
   const loginScript = `<script>
 (function(){
   window.owhlOpenLogin = function(){ window.location.href='/wholesale/login'; };
   window.owhlTryLogin  = function(){ window.location.href='/wholesale/login'; };
 })();
-</script>`;
+<\/script>`;
 
   return <ShopifyClonePage page="wholesale" injectBeforeClose={loginScript} />;
 }
