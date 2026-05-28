@@ -3,26 +3,49 @@
 import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import type { UserRole } from "@/lib/auth/types";
+import {
+  generateAffiliatePassword,
+  hashAffiliatePassword,
+} from "@/lib/auth/affiliate-session";
+import { sendAffiliateApprovalEmail } from "@/lib/email/resend";
 
 export async function approveAffiliate(formData: FormData) {
   const id = String(formData.get("id") || "");
   if (!id) return;
 
   const supabase = createSupabaseAdminClient();
-  const { data: affiliate } = await supabase.from("affiliates").select("id,email").eq("id", id).single();
+  const { data: affiliate } = await supabase
+    .from("affiliates")
+    .select("id,email,display_name,code")
+    .eq("id", id)
+    .single<{ id: string; email: string; display_name: string | null; code: string }>();
   if (!affiliate) return;
 
-  const profile = await findProfileByEmail(affiliate.email);
+  // Generate a fresh access password and hash it for storage
+  const plainPassword = generateAffiliatePassword();
+  const passwordHash = hashAffiliatePassword(plainPassword);
+
   await supabase
     .from("affiliates")
     .update({
-      profile_id: profile?.id || null,
       status: "approved",
-      approved_at: new Date().toISOString()
+      password_hash: passwordHash,
+      approved_at: new Date().toISOString(),
     })
     .eq("id", id);
 
-  if (profile) await addRole(profile.id, "affiliate");
+  // Send approval email with login credentials
+  try {
+    await sendAffiliateApprovalEmail({
+      to: affiliate.email,
+      displayName: affiliate.display_name || affiliate.email,
+      code: affiliate.code,
+      password: plainPassword,
+    });
+  } catch (err) {
+    console.error("[admin] affiliate approval email failed:", err);
+  }
+
   revalidatePath("/admin");
 }
 

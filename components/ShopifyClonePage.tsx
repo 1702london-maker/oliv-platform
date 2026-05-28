@@ -40,9 +40,10 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
 
   if (page === "affiliate") {
     html = html
-      .replaceAll('action="/contact#contact_form"', 'action="/api/applications/affiliate"')
-      .replaceAll('onclick="openDash()"', 'onclick="window.location.href=\'/login?next=/affiliate\'"')
-      .replaceAll("Log in to Dashboard", "Log in to Affiliate Portal");
+      .replaceAll('action="/contact#contact_form"', 'action="/api/applications/affiliate"');
+    // openDash() stays intact — it opens the login modal built into the Shopify HTML.
+    // The affiliate/page.tsx injects a script that overrides otryLogin() to use
+    // our API, so the modal works without touching the Shopify design.
   }
 
   if (page === "wholesale") {
