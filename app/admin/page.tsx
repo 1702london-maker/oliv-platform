@@ -1,8 +1,12 @@
+import { redirect } from "next/navigation";
 import { approveAffiliate, approveWholesale } from "@/app/admin/actions";
 import { formatEuro } from "@/lib/catalog/money";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { requireRole } from "@/lib/auth/session";
 
 export default async function AdminPage() {
+  await requireRole("admin");
+
   const supabase = createSupabaseAdminClient();
   const [{ data: affiliates }, { data: wholesaleAccounts }, { data: orders }] = await Promise.all([
     supabase
