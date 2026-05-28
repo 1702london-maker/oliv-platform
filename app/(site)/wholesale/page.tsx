@@ -3,12 +3,12 @@ import { getWholesaleSession } from "@/lib/auth/wholesale-session";
 import { ShopifyClonePage } from "@/components/ShopifyClonePage";
 
 const WHOLESALE_CATEGORIES = [
-  { slug: "biziluxe-extensions",    label: "BiziLuxe Extensions" },
-  { slug: "bizihair-extensions",    label: "Bizihair Extensions" },
-  { slug: "biziluxe-accessoires",   label: "Accessoires" },
-  { slug: "profi-friseurbedarf",    label: "Professional" },
+  { slug: "biziluxe-extensions",     label: "BiziLuxe Extensions" },
+  { slug: "bizihair-extensions",     label: "Bizihair Extensions" },
+  { slug: "biziluxe-accessoires",    label: "Accessoires" },
+  { slug: "profi-friseurbedarf",     label: "Professional" },
   { slug: "biziluxe-stylinggeraete", label: "Styling Tools" },
-  { slug: "buersten-und-kaemme",    label: "Brushes & Combs" },
+  { slug: "buersten-und-kaemme",     label: "Brushes & Combs" },
 ];
 
 export default async function WholesalePage() {
@@ -18,22 +18,21 @@ export default async function WholesalePage() {
     const admin = createSupabaseAdminClient();
     const { data: account } = await admin
       .from("wholesale_accounts")
-      .select("business_name,tier")
+      .select("business_name")
       .eq("id", session.id)
       .maybeSingle();
 
     const businessName = account?.business_name ?? session.business_name ?? "Wholesale Partner";
-    const tier = account?.tier ?? "Verified";
 
-    const script = `<script>
+    // ── Script 1: minimal boot — EXACTLY the affiliate page pattern ──
+    // Opens the overlay, sets the name, wires logout. Nothing else.
+    const bootScript = `<script>
 (function(){
-  var BIZ  = ${JSON.stringify(businessName)};
-  var TIER = ${JSON.stringify(tier)};
-  var CATS = ${JSON.stringify(WHOLESALE_CATEGORIES)};
-  var cart = {};
-
   function boot(){
-    /* ── open dashboard overlay ── */
+    var nm = document.getElementById('owhl-name-display');
+    if(nm) nm.textContent = ${JSON.stringify(businessName)};
+
+    // Open overlay directly — do NOT call owhlOpenLogin() as that redirects
     var overlay = document.getElementById('owhl-login-overlay');
     if(overlay){ overlay.classList.add('open'); document.body.style.overflow='hidden'; }
     var lp = document.getElementById('owhl-login-panel');
@@ -41,19 +40,34 @@ export default async function WholesalePage() {
     var dp = document.getElementById('owhl-dash-panel');
     if(dp) dp.classList.add('visible');
 
-    /* ── name + tier ── */
-    var nm = document.getElementById('owhl-name-display');
-    if(nm) nm.textContent = BIZ;
-    var sv = document.querySelectorAll('.owhl-dash-stat-val');
-    if(sv[3]) sv[3].textContent = TIER;
-
-    /* ── logout ── */
+    // Logout wired to wholesale session clear
     window.owhlLogout = function(){
       fetch('/api/wholesale/logout',{method:'POST'})
         .then(function(){ window.location.href='/wholesale'; });
     };
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',boot);
+  } else { boot(); }
+})();
+<\/script>`;
 
-    /* ── compact grid CSS ── */
+    // ── Script 2: products, filters, cart — runs independently ──
+    // Separated so any error here cannot affect the overlay opening above.
+    const shopScript = `<script>
+(function(){
+  var CATS = ${JSON.stringify(WHOLESALE_CATEGORIES)};
+  var cart = {};
+  var ALL_PRODS = [];
+
+  function initShop(){
+    injectCSS();
+    buildFilters();
+    loadProducts();
+  }
+
+  /* ── CSS ── */
+  function injectCSS(){
     var s = document.createElement('style');
     s.textContent =
       '.owhl-product-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:8px!important;}' +
@@ -87,21 +101,15 @@ export default async function WholesalePage() {
       '@media(max-width:900px){.owhl-product-grid{grid-template-columns:repeat(2,1fr)!important;}}' +
       '@media(max-width:540px){.owhl-product-grid{grid-template-columns:1fr!important;}}';
     document.head.appendChild(s);
-
-    /* ── filter buttons ── */
-    buildFilters();
-
-    /* ── load products from API ── */
-    loadProducts();
   }
 
   /* ── filters ── */
   function buildFilters(){
     var row = document.querySelector('.owhl-filter-row');
     if(!row) return;
-    var html = '<button class="owhl-filter-btn active" onclick="owhlFilter(\'all\',this)">All</button>';
+    var html = '<button class="owhl-filter-btn active" onclick="owhlFilter(\'all\',this)">All<\/button>';
     CATS.forEach(function(c){
-      html += '<button class="owhl-filter-btn" onclick="owhlFilter(\''+c.slug+'\',this)">'+c.label+'</button>';
+      html += '<button class="owhl-filter-btn" onclick="owhlFilter(\''+c.slug+'\',this)">'+c.label+'<\/button>';
     });
     row.innerHTML = html;
   }
@@ -113,20 +121,19 @@ export default async function WholesalePage() {
   };
 
   /* ── load products ── */
-  var ALL_PRODS = [];
-
   function loadProducts(){
     var grid = document.getElementById('owhl-product-grid');
-    if(grid) grid.innerHTML = '<div style="padding:32px;text-align:center;font-family:Montserrat,sans-serif;font-size:11px;color:#A0907E;letter-spacing:1px;">Loading products…</div>';
+    if(grid) grid.innerHTML = '<div style="padding:32px;text-align:center;font-family:Montserrat,sans-serif;font-size:11px;color:#A0907E;letter-spacing:1px;">Loading products…<\/div>';
     fetch('/api/wholesale/products')
       .then(function(r){ return r.json(); })
       .then(function(d){
         ALL_PRODS = d.products || [];
         renderGrid('all');
+        populateSelects();
       })
       .catch(function(){
-        var grid = document.getElementById('owhl-product-grid');
-        if(grid) grid.innerHTML = '<div style="padding:32px;text-align:center;font-family:Montserrat,sans-serif;font-size:11px;color:#A0907E;">Products are loading. Please refresh.</div>';
+        var g = document.getElementById('owhl-product-grid');
+        if(g) g.innerHTML = '<div style="padding:32px;text-align:center;font-family:Montserrat,sans-serif;font-size:11px;color:#A0907E;">Products are loading. Please refresh.<\/div>';
       });
   }
 
@@ -136,7 +143,7 @@ export default async function WholesalePage() {
     if(!grid) return;
     var list = slug === 'all' ? ALL_PRODS : ALL_PRODS.filter(function(p){ return p.categorySlug === slug; });
     if(!list.length){
-      grid.innerHTML = '<div class="owhl-whl-empty">Coming Soon — Products for this collection are being added</div>';
+      grid.innerHTML = '<div class="owhl-whl-empty">Coming Soon — Products for this collection are being added<\/div>';
       return;
     }
     grid.innerHTML = list.map(buildCard).join('');
@@ -151,12 +158,10 @@ export default async function WholesalePage() {
     var save  = Math.round((1 - v0.wholesale_price_cents/v0.retail_price_cents)*100);
     var img   = p.image_url
       ? '<img src="'+esc(p.image_url)+'" alt="'+esc(p.title)+'" loading="lazy">'
-      : '<span style="font-size:8px;color:#A0907E;letter-spacing:2px;text-transform:uppercase;font-family:Montserrat,sans-serif;">'+esc(p.title.substring(0,4))+'</span>';
-    var vsel  = '';
-    if(multi){
-      vsel = '<select class="owhl-variant-select" id="vs-'+esc(p.id)+'" onchange="owhlVC(\''+esc(p.id)+'\')"><\/select>';
-      // options injected after render
-    }
+      : '<span style="font-size:8px;color:#A0907E;letter-spacing:2px;text-transform:uppercase;font-family:Montserrat,sans-serif;">'+esc(p.title.substring(0,4))+'<\/span>';
+    var vsel  = multi
+      ? '<select class="owhl-variant-select" id="vs-'+esc(p.id)+'" onchange="owhlVC(\''+esc(p.id)+'\')"><\/select>'
+      : '';
     return '<div class="owhl-product-card" data-pid="'+esc(p.id)+'">' +
       '<div class="owhl-product-thumb">'+img+'<\/div>' +
       '<div class="owhl-product-name">'+esc(p.title)+'<\/div>' +
@@ -178,7 +183,6 @@ export default async function WholesalePage() {
     '<\/div>';
   }
 
-  // Populate selects after grid renders
   function populateSelects(){
     ALL_PRODS.forEach(function(p){
       var sel = document.getElementById('vs-'+p.id);
@@ -299,15 +303,15 @@ export default async function WholesalePage() {
   }
 
   if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',boot);
-  } else { boot(); }
+    document.addEventListener('DOMContentLoaded',initShop);
+  } else { initShop(); }
 })();
 <\/script>`;
 
-    return <ShopifyClonePage page="wholesale" injectBeforeClose={script} />;
+    return <ShopifyClonePage page="wholesale" injectBeforeClose={bootScript + shopScript} />;
   }
 
-  /* ── public page ── */
+  /* ── public page (not logged in) ── */
   const loginScript = `<script>
 (function(){
   window.owhlOpenLogin = function(){ window.location.href='/wholesale/login'; };
