@@ -78,9 +78,6 @@ export default async function AccountPage() {
     ? `${profile.first_name}${profile.last_name ? " " + profile.last_name : ""}`
     : null;
 
-  const isAffiliate = profile.roles.includes("affiliate");
-  const isWholesale = profile.roles.includes("wholesale");
-
   const statusColor: Record<string, string> = {
     paid: "#2a7a4a",
     fulfilled: "#2a7a4a",
@@ -454,30 +451,22 @@ export default async function AccountPage() {
 
             {/* Affiliate */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Requires Approval</p>
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Programme</p>
               <h2 className="ohs-card-title">Affiliate Access</h2>
               <p className="ohs-card-desc">
-                Earn commission by referring clients to OlivHairSupply. Apply to join our affiliate programme.
+                Earn commission by referring clients to OlivHairSupply. Apply to join our affiliate programme or log in to your dashboard.
               </p>
-              <a href="/affiliate" className="ohs-btn ohs-btn--outline">
-                {isAffiliate ? "Go to Portal" : "Apply Now"}
-              </a>
+              <a href="/affiliate" className="ohs-btn ohs-btn--outline">Affiliate Programme</a>
             </div>
 
             {/* Wholesale */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Trade Accounts Only</p>
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Trade Accounts</p>
               <h2 className="ohs-card-title">Wholesale Access</h2>
               <p className="ohs-card-desc">
-                {isWholesale
-                  ? "Access your B2B pricing, trade orders and wholesale account details."
-                  : "Wholesale is for salons, stylists and trade buyers only. Each account is individually screened and approved — this is a separate portal from retail."}
+                B2B pricing for salons, stylists and trade buyers. Apply for a wholesale account or log in to your wholesale portal.
               </p>
-              {isWholesale ? (
-                <a href="/wholesale" className="ohs-btn ohs-btn--outline">Go to Portal</a>
-              ) : (
-                <a href="/wholesale" className="ohs-btn ohs-btn--outline">Request Trade Access</a>
-              )}
+              <a href="/wholesale" className="ohs-btn ohs-btn--outline">Wholesale Portal</a>
             </div>
 
             {/* Account Details shortcut */}
