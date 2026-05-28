@@ -16,9 +16,11 @@ export async function GET(request: Request) {
   const resend = new Resend(apiKey);
   const from = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
 
+  const to = searchParams.get("to") || "1702london@gmail.com";
+
   const { data, error } = await resend.emails.send({
     from,
-    to: "1702london@gmail.com",
+    to,
     subject: "OlivHairSupply email test",
     html: "<p>Test email. If you see this, Resend is working correctly.</p>",
   });

@@ -19,7 +19,7 @@ export async function sendAffiliateApprovalEmail({
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
     "https://oliv-platform.vercel.app";
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: FROM,
     to,
     subject: "Your OlivHairSupply Affiliate Account is Approved",
@@ -83,4 +83,6 @@ export async function sendAffiliateApprovalEmail({
 </body>
 </html>`,
   });
+
+  if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
 }
