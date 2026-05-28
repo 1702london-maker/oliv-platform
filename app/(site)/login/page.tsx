@@ -168,14 +168,10 @@ export default async function LoginPage({
         `}</style>
 
         <div className="ohs-auth-card">
-          <p className="ohs-auth-eyebrow">
-            {next === "/affiliate" ? "Affiliate Programme" : next === "/wholesale" ? "Wholesale Portal" : "Account"}
-          </p>
+          <p className="ohs-auth-eyebrow">Account</p>
 
           <div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
-            <h1 className="ohs-auth-title">
-              {next === "/affiliate" ? "Affiliate Dashboard" : next === "/wholesale" ? "Wholesale Portal" : "Sign In"}
-            </h1>
+            <h1 className="ohs-auth-title">Sign In</h1>
             <LoginBox next={next} error={error} detail={detail} />
             <div className="ohs-auth-row-end">
               <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Forgot password?</button>
