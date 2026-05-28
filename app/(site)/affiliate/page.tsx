@@ -72,24 +72,8 @@ export default async function AffiliatePage() {
   // Inject script that wires the login modal to our affiliate auth API.
   const loginScript = `<script>
 (function(){
-  window.otryLogin = function(){
-    var email = (document.getElementById('dash-email') || {}).value || '';
-    var password = (document.getElementById('dash-code') || {}).value || '';
-    var errEl = document.getElementById('oaff-login-error');
-
-    fetch('/api/affiliate/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.trim(), password: password.trim() })
-    }).then(function(r){
-      if(r.ok){
-        window.location.reload();
-      } else {
-        if(errEl) errEl.classList.add('visible');
-      }
-    }).catch(function(){
-      if(errEl) errEl.classList.add('visible');
-    });
+  window.openDash = function(){
+    window.location.href = '/affiliate/login';
   };
 })();
 </script>`;
