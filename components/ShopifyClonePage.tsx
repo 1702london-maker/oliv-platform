@@ -47,9 +47,7 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   if (page === "wholesale") {
     html = html
       .replaceAll('action="/contact#contact_form"', 'action="/api/applications/wholesale"')
-      .replaceAll('onclick="owhlOpenLogin()"', 'onclick="window.location.href=\'/login?next=/wholesale\'"')
-      .replaceAll('onclick="owhlTryLogin()"', 'onclick="window.location.href=\'/login?next=/wholesale\'"')
-      .replaceAll("Access Wholesale Shop", "Log in to Wholesale Portal");
+      .replaceAll("window.location.href = '/login?next=/wholesale'", "window.location.href = '/wholesale/login'");
   }
 
   if (page === "appointments") {
