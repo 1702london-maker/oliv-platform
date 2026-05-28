@@ -3,7 +3,7 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
-const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "1702london@gmail.com";
+const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsupply.de";
 
 export async function sendAffiliateApprovalEmail({
   to,
