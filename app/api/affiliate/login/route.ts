@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   }
 
   const admin = createSupabaseAdminClient();
-  const { data: rows } = await admin
+  const { data: rows, error: dbErr } = await admin
     .from("affiliates")
     .select("id,email,code,status,password_hash")
     .eq("email", email)
@@ -34,6 +34,10 @@ export async function POST(request: Request) {
     .not("password_hash", "is", null)
     .order("id", { ascending: false })
     .limit(1);
+
+  if (dbErr) {
+    return NextResponse.json({ error: "db_error", detail: dbErr.message }, { status: 500 });
+  }
 
   const affiliate = (rows as {
     id: string;
@@ -43,12 +47,16 @@ export async function POST(request: Request) {
     password_hash: string | null;
   }[] | null)?.[0] ?? null;
 
-  if (!affiliate || !affiliate.password_hash) {
-    return NextResponse.json({ error: "invalid" }, { status: 401 });
+  if (!affiliate) {
+    return NextResponse.json({ error: "not_found" }, { status: 401 });
+  }
+
+  if (!affiliate.password_hash) {
+    return NextResponse.json({ error: "no_hash" }, { status: 401 });
   }
 
   if (!verifyAffiliatePassword(password, affiliate.password_hash)) {
-    return NextResponse.json({ error: "invalid" }, { status: 401 });
+    return NextResponse.json({ error: "wrong_password" }, { status: 401 });
   }
 
   const response = NextResponse.json({ ok: true });
