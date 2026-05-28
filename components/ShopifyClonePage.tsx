@@ -17,7 +17,7 @@ export function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClonePagePr
       : html + injectBeforeClose;
   }
 
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 function normalizeShopifyHtml(rawHtml: string, page: string) {
