@@ -1,4 +1,37 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function AffiliateLoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleLogin() {
+    setError(false);
+    if (!email || !code) { setError(true); return; }
+    setLoading(true);
+    try {
+      const r = await fetch("/api/affiliate/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), password: code.trim() }),
+      });
+      if (r.ok) {
+        router.push("/affiliate");
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="min-h-screen bg-linen flex items-center justify-center px-4">
       <div className="w-full max-w-md border border-[#e3d6c5] bg-white">
@@ -10,37 +43,48 @@ export default function AffiliateLoginPage() {
           <p className="mb-6 text-sm text-cocoa">
             Enter the email and access code from your approval email.
           </p>
-          <div id="aff-error" className="mb-4 hidden rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            Incorrect email or access code. Please try again.
-          </div>
+
+          {error && (
+            <div className="mb-4 rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
+              Incorrect email or access code. Please try again.
+            </div>
+          )}
+
           <div className="mb-4">
             <label className="mb-1 block text-xs font-bold uppercase tracking-[0.18em] text-cocoa">
               Email Address
             </label>
             <input
-              id="aff-email"
               type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               className="w-full border border-[#d6c9b6] bg-white px-4 py-3 text-sm focus:border-[#2b2620] focus:outline-none"
               placeholder="your@email.com"
             />
           </div>
+
           <div className="mb-6">
             <label className="mb-1 block text-xs font-bold uppercase tracking-[0.18em] text-cocoa">
               Access Code
             </label>
             <input
-              id="aff-code"
               type="text"
+              value={code}
+              onChange={e => setCode(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleLogin()}
               className="w-full border border-[#d6c9b6] bg-white px-4 py-3 text-sm focus:border-[#2b2620] focus:outline-none"
               placeholder="Xxxx-Xxxx-Xxxx"
             />
           </div>
+
           <button
-            id="aff-submit"
-            className="w-full bg-[#2b2620] px-6 py-3 text-xs font-bold uppercase tracking-[0.22em] text-white hover:bg-[#3d352d]"
+            onClick={handleLogin}
+            disabled={loading}
+            className="w-full bg-[#2b2620] px-6 py-3 text-xs font-bold uppercase tracking-[0.22em] text-white hover:bg-[#3d352d] disabled:opacity-60"
           >
-            Access Dashboard
+            {loading ? "Checking..." : "Access Dashboard"}
           </button>
+
           <p className="mt-6 text-center text-xs text-cocoa">
             Not yet an affiliate?{" "}
             <a href="/affiliate" className="underline hover:text-[#2b2620]">
@@ -49,38 +93,6 @@ export default function AffiliateLoginPage() {
           </p>
         </div>
       </div>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-(function(){
-  document.getElementById('aff-submit').addEventListener('click', function(){
-    var email = document.getElementById('aff-email').value.trim();
-    var code = document.getElementById('aff-code').value.trim();
-    var errEl = document.getElementById('aff-error');
-    errEl.classList.add('hidden');
-    if(!email || !code) { errEl.classList.remove('hidden'); return; }
-    fetch('/api/affiliate/login', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ email: email, password: code })
-    }).then(function(r){
-      if(r.ok){
-        window.location.href = '/affiliate';
-      } else {
-        r.json().then(function(d){ console.log('login error:', d); });
-        errEl.classList.remove('hidden');
-      }
-    }).catch(function(){
-      errEl.classList.remove('hidden');
-    });
-  });
-  document.getElementById('aff-code').addEventListener('keydown', function(e){
-    if(e.key === 'Enter') document.getElementById('aff-submit').click();
-  });
-})();
-          `
-        }}
-      />
     </main>
   );
 }
