@@ -78,7 +78,7 @@ export async function sendAffiliateApprovalEmail({
       </a>
 
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
-      <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:affiliates@olivhairsupply.com" style="color:#9B8878;">affiliates@olivhairsupply.com</a></p>
+      <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:affiliates@olivhairsupply.de" style="color:#9B8878;">affiliates@olivhairsupply.de</a></p>
     </div>
   </div>
 </body>
@@ -151,7 +151,7 @@ export async function sendWholesaleApprovalEmail({
       </a>
 
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
-      <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:wholesale@olivhairsupply.com" style="color:#9B8878;">wholesale@olivhairsupply.com</a></p>
+      <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:wholesale@olivhairsupply.de" style="color:#9B8878;">wholesale@olivhairsupply.de</a></p>
     </div>
   </div>
 </body>
@@ -314,7 +314,7 @@ export async function sendWholesaleOrderConfirmation({
       <p style="color:#6B5C4E;font-size:11px;line-height:1.7;margin:0 0 24px;">Reference: <code style="background:#F0E8DA;padding:2px 6px;font-size:11px;">${orderId}</code></p>
       <a href="${siteUrl}/wholesale" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">Back to Portal</a>
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
-      <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:wholesale@olivhairsupply.com" style="color:#9B8878;">wholesale@olivhairsupply.com</a></p>
+      <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:wholesale@olivhairsupply.de" style="color:#9B8878;">wholesale@olivhairsupply.de</a></p>
     </div>
   </div>
 </body>
