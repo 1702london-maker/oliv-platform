@@ -46,8 +46,9 @@ export default async function AffiliatePage() {
     var codeEl = document.getElementById('dash-code-val');
     if(codeEl) codeEl.value = ${JSON.stringify(code)};
 
-    // Open the dashboard using the built-in openDash() then switch to dashboard panel
-    if(typeof window.openDash === 'function') window.openDash();
+    // Open overlay directly — do NOT call openDash() as that redirects to login
+    var overlay = document.getElementById('oaff-dash-overlay');
+    if(overlay){ overlay.classList.add('open'); document.body.style.overflow='hidden'; }
     var loginPanel = document.getElementById('oaff-login-panel');
     if(loginPanel) loginPanel.style.display='none';
     var panel = document.getElementById('oaff-dash-panel');
