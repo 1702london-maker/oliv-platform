@@ -3,12 +3,12 @@ import { getWholesaleSession } from "@/lib/auth/wholesale-session";
 import { ShopifyClonePage } from "@/components/ShopifyClonePage";
 
 const WHOLESALE_CATEGORIES = [
-  { slug: "biziluxe-extensions",     label: "BiziLuxe Extensions" },
   { slug: "bizihair-extensions",     label: "Bizihair Extensions" },
-  { slug: "biziluxe-accessoires",    label: "Accessoires" },
-  { slug: "profi-friseurbedarf",     label: "Professional" },
-  { slug: "biziluxe-stylinggeraete", label: "Styling Tools" },
-  { slug: "buersten-und-kaemme",     label: "Brushes & Combs" },
+  { slug: "biziluxe-extensions",     label: "BiziLuxe Extensions" },
+  { slug: "biziluxe-accessoires",    label: "BiziLuxe Accessoires" },
+  { slug: "biziluxe-stylinggeraete", label: "BiziLuxe Stylinggeräte" },
+  { slug: "buersten-und-kaemme",     label: "Bürsten & Kämme" },
+  { slug: "profi-friseurbedarf",     label: "Profi Friseurbedarf" },
 ];
 
 export default async function WholesalePage() {
