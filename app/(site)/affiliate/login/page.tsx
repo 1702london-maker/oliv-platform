@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function AffiliateLoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
@@ -21,7 +19,7 @@ export default function AffiliateLoginPage() {
         body: JSON.stringify({ email: email.trim(), password: code.trim() }),
       });
       if (r.ok) {
-        router.push("/affiliate");
+        window.location.href = "/affiliate";
       } else {
         setError(true);
       }
