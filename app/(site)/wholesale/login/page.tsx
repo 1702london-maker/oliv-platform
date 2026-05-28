@@ -80,7 +80,7 @@ export default function WholesaleLoginPage() {
           <WholesaleLoginForm />
           <hr className="ohs-auth-divider" />
           <p className="ohs-auth-footer-text">
-            Not yet a wholesale partner? <a href="/wholesale">Apply here</a>
+            Not yet a wholesale partner? <a href="/wholesale?apply=1">Apply here</a>
           </p>
         </div>
       </div>

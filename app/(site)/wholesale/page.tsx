@@ -174,7 +174,7 @@ export default async function WholesalePage() {
       '<\/div>' +
       '<div class="owhl-product-actions">' +
         '<div class="owhl-qty-wrap">' +
-          '<button class="owhl-qty-btn" data-role="qdec">-<\/button>' +
+          '<button class="owhl-qty-btn" data-role="qdec">−<\/button>' +
           '<input class="owhl-qty-input" data-role="qty" type="number" value="3" min="3" readonly>' +
           '<button class="owhl-qty-btn" data-role="qinc">+<\/button>' +
         '<\/div>' +
@@ -356,6 +356,16 @@ export default async function WholesalePage() {
 (function(){
   window.owhlOpenLogin = function(){ window.location.href='/wholesale/login'; };
   window.owhlTryLogin  = function(){ window.location.href='/wholesale/login'; };
+  // Auto-open apply form when redirected from login page with ?apply=1
+  function maybeOpenApply(){
+    if(window.location.search.indexOf('apply=1') !== -1){
+      var o = document.getElementById('owhl-apply-overlay');
+      if(o){ o.classList.add('open'); document.body.style.overflow='hidden'; }
+    }
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', maybeOpenApply);
+  } else { maybeOpenApply(); }
 })();
 <\/script>`;
 
