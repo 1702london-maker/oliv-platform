@@ -352,37 +352,53 @@ function shopLandingOverrides() {
   white-space: nowrap;
 }
 @media (max-width: 768px) {
+  /* Pin the meta bar to the very bottom of the hero */
+  .oshp-hero { position: relative; }
+  .oshp-hero-inner { padding-bottom: 52px; }
   .oshp-hero-meta {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
     flex-direction: row !important;
-    justify-content: center;
+    justify-content: stretch;
     gap: 0 !important;
-    margin-top: 14px;
     flex-wrap: nowrap !important;
-    width: calc(100% - 48px);
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid rgba(201,169,110,0.20);
-    background: rgba(0,0,0,0.08);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    border: none !important;
+    border-top: 1px solid rgba(201,169,110,0.35) !important;
+    background: rgba(0,0,0,0.48) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   .oshp-hero-meta-item {
     flex: 1;
-    padding: 6px 4px !important;
-    border-right: 1px solid rgba(201,169,110,0.15) !important;
+    padding: 10px 6px 10px !important;
+    border-right: 1px solid rgba(255,255,255,0.12) !important;
     border-bottom: none !important;
     text-align: center;
   }
   .oshp-hero-meta-item:last-child { border-right: none !important; }
   .oshp-hero-meta-val {
-    font-size: 14px;
-    margin-bottom: 0;
+    display: block;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    color: #FFFFFF !important;
     letter-spacing: 0.5px;
+    margin-bottom: 3px;
+    line-height: 1;
   }
-  /* Hide labels on mobile — values speak for themselves in the horizontal strip */
   .oshp-hero-meta-label {
-    display: none;
+    display: block !important;
+    font-size: 6.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82) !important;
+    white-space: normal;
+    line-height: 1.25;
   }
 }`;
 }
