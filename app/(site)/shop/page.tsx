@@ -254,10 +254,13 @@ function shopLandingOverrides() {
   background: radial-gradient(ellipse at 50% 45%, rgba(60,56,52,0.32) 0%, rgba(40,36,32,0.58) 100%) !important;
 }
 .oshp-hero-img {
-  object-position: 55% center !important;
+  object-position: 52% center !important;
 }
 @media (max-width: 768px) {
-  .oshp-hero-img { object-position: 40% center !important; }
+  .oshp-hero-img { object-position: 50% center !important; }
+}
+@media (max-width: 480px) {
+  .oshp-hero-img { object-position: 50% center !important; }
 }
 .oshp-col-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
