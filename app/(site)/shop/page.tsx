@@ -263,6 +263,11 @@ function shopLandingOverrides() {
 .oshp-hero-img {
   object-position: 52% center !important;
 }
+/* Desktop: text to top, meta bar anchored to hero bottom */
+.oshp-hero { align-items: flex-start !important; }
+.oshp-hero-inner { position: static !important; padding: 20px 24px 0 !important; }
+.oshp-hero-eyebrow,
+.oshp-hero-title { position: relative; z-index: 2; }
 @media (max-width: 768px) {
   .oshp-hero-img { object-position: 50% center !important; }
 }
