@@ -350,31 +350,35 @@ function shopLandingOverrides() {
   white-space: nowrap;
 }
 @media (max-width: 768px) {
-  /* Remove inner container as positioned context so meta can pin to hero floor */
-  .oshp-hero-inner { position: static !important; }
+  /* Remove padding so meta bar can reach hero edges */
+  .oshp-hero-inner { position: static !important; padding: 24px 24px 0 !important; }
   /* Keep text above overlay */
   .oshp-hero-eyebrow,
   .oshp-hero-title,
   .oshp-hero-sub { position: relative; z-index: 2; }
-  /* Pin bar to very bottom of the hero */
+  /* Pin bar to very bottom of the hero — full edge-to-edge */
   .oshp-hero-meta {
     position: absolute !important;
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
     z-index: 2;
-    width: 100% !important;
+    width: 100vw !important;
     max-width: 100% !important;
     margin: 0 !important;
     flex-direction: row !important;
     gap: 0 !important;
     flex-wrap: nowrap !important;
+    display: flex !important;
   }
   .oshp-hero-meta-item {
-    flex: 1 !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
     border-bottom: none !important;
     text-align: center;
+    padding: 10px 4px !important;
   }
   .oshp-hero-meta-item:last-child { border-right: none !important; }
+  .oshp-hero-meta-label { white-space: normal !important; line-height: 1.3 !important; }
 }`;
 }
