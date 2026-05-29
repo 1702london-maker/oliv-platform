@@ -139,7 +139,9 @@ function getLocalShopifyProducts(categorySlug?: string): CatalogProduct[] {
       sku: variant.sku || null,
       retail_price_cents: Math.round(Number(variant.price) * 100),
       wholesale_price_cents: null,
-      inventory_quantity: Number(variant.inventory_quantity || 0)
+      inventory_quantity: Number(variant.inventory_quantity || 0),
+      color: null,
+      image_url: null
     }))
   }));
 }
@@ -177,7 +179,9 @@ function getLocalPublicProducts(categorySlug?: string): CatalogProduct[] {
               sku: `${category}-${slug}`.toUpperCase(),
               retail_price_cents: priceCents,
               wholesale_price_cents: Math.round(priceCents * 0.7),
-              inventory_quantity: 25
+              inventory_quantity: 25,
+            color: null,
+            image_url: null
             }
           ]
         };
