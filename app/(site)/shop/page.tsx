@@ -352,9 +352,7 @@ function shopLandingOverrides() {
   white-space: nowrap;
 }
 @media (max-width: 768px) {
-  /* Pin the meta bar to the very bottom of the hero */
-  .oshp-hero { position: relative; }
-  .oshp-hero-inner { padding-bottom: 52px; }
+  .oshp-hero-inner { padding-bottom: 58px; }
   .oshp-hero-meta {
     position: absolute !important;
     bottom: 0 !important;
@@ -364,41 +362,14 @@ function shopLandingOverrides() {
     max-width: 100% !important;
     margin: 0 !important;
     flex-direction: row !important;
-    justify-content: stretch;
     gap: 0 !important;
     flex-wrap: nowrap !important;
-    border: none !important;
-    border-top: 1px solid rgba(201,169,110,0.35) !important;
-    background: rgba(0,0,0,0.48) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
   }
   .oshp-hero-meta-item {
-    flex: 1;
-    padding: 10px 6px 10px !important;
-    border-right: 1px solid rgba(255,255,255,0.12) !important;
+    flex: 1 !important;
     border-bottom: none !important;
     text-align: center;
   }
   .oshp-hero-meta-item:last-child { border-right: none !important; }
-  .oshp-hero-meta-val {
-    display: block;
-    font-size: 17px !important;
-    font-weight: 900 !important;
-    color: #FFFFFF !important;
-    letter-spacing: 0.5px;
-    margin-bottom: 3px;
-    line-height: 1;
-  }
-  .oshp-hero-meta-label {
-    display: block !important;
-    font-size: 6.5px !important;
-    font-weight: 800 !important;
-    letter-spacing: 1px !important;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.82) !important;
-    white-space: normal;
-    line-height: 1.25;
-  }
 }`;
 }
