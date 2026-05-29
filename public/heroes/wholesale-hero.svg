@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+  <defs>
+    <linearGradient id="wsBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#424040"/><stop offset="28%" stop-color="#555250"/>
+      <stop offset="54%" stop-color="#5E5A56"/><stop offset="78%" stop-color="#575350"/>
+      <stop offset="100%" stop-color="#4A4744"/>
+    </linearGradient>
+    <linearGradient id="wsTopShad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1C1810" stop-opacity="0.52"/>
+      <stop offset="38%" stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="85%" stop-color="#100C08" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.38"/>
+    </linearGradient>
+    <radialGradient id="wsKey" cx="74%" cy="14%" r="56%">
+      <stop offset="0%" stop-color="#807060" stop-opacity="0.58"/>
+      <stop offset="55%" stop-color="#6A6058" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wsFill" cx="18%" cy="22%" r="42%">
+      <stop offset="0%" stop-color="#686460" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wsFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#363230"/><stop offset="100%" stop-color="#242018"/>
+    </linearGradient>
+    <linearGradient id="vigL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#161210" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#161210" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="vigR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#161210" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#161210" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="vigB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0C0A08" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0C0A08" stop-opacity="0.52"/>
+    </linearGradient>
+    <linearGradient id="boxCream" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8F2EA"/><stop offset="50%" stop-color="#F0E8DC"/>
+      <stop offset="100%" stop-color="#E4DACB"/>
+    </linearGradient>
+    <linearGradient id="boxSide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D8D0C2"/><stop offset="100%" stop-color="#C4BAA8"/>
+    </linearGradient>
+    <linearGradient id="boxTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DDD5C8"/><stop offset="100%" stop-color="#CCC4B5"/>
+    </linearGradient>
+    <linearGradient id="boxDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#282218"/><stop offset="100%" stop-color="#1A1610"/>
+    </linearGradient>
+    <linearGradient id="boxDarkSide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#181410"/><stop offset="100%" stop-color="#100C08"/>
+    </linearGradient>
+    <linearGradient id="boxDarkTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#222018"/><stop offset="100%" stop-color="#181410"/>
+    </linearGradient>
+    <linearGradient id="bustGrad" x1="0.3" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#E8E4DF"/><stop offset="40%" stop-color="#D4D0CB"/>
+      <stop offset="80%" stop-color="#B8B4AF"/><stop offset="100%" stop-color="#A0A09A"/>
+    </linearGradient>
+    <linearGradient id="neckGrad" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#E0DCDA"/><stop offset="100%" stop-color="#C4C0BC"/>
+    </linearGradient>
+    <linearGradient id="hairDark" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#180E04"/><stop offset="30%" stop-color="#281606"/>
+      <stop offset="65%" stop-color="#38220E"/><stop offset="100%" stop-color="#241408"/>
+    </linearGradient>
+    <linearGradient id="hairShineA" x1="0.08" y1="0" x2="0.22" y2="1">
+      <stop offset="0%" stop-color="#C09050" stop-opacity="0"/>
+      <stop offset="20%" stop-color="#D8A860" stop-opacity="0.7"/>
+      <stop offset="55%" stop-color="#B88040" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#885020" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hairShineB" x1="0.32" y1="0" x2="0.44" y2="1">
+      <stop offset="0%" stop-color="#C8A060" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#E0B870" stop-opacity="0.55"/>
+      <stop offset="62%" stop-color="#B88840" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#886028" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bladeL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9898A4"/><stop offset="28%" stop-color="#D4D4DC"/>
+      <stop offset="52%" stop-color="#EAEAF0"/><stop offset="78%" stop-color="#C0C0C8"/>
+      <stop offset="100%" stop-color="#888890"/>
+    </linearGradient>
+    <linearGradient id="handleG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D8AC3A"/><stop offset="30%" stop-color="#C89C28"/>
+      <stop offset="55%" stop-color="#E4BA48"/><stop offset="80%" stop-color="#C09030"/>
+      <stop offset="100%" stop-color="#A47818"/>
+    </linearGradient>
+    <radialGradient id="pivotG" cx="45%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#F0D870"/><stop offset="45%" stop-color="#D4A840"/>
+      <stop offset="100%" stop-color="#A47818"/>
+    </radialGradient>
+    <linearGradient id="clothG" x1="0" y1="0" x2="0.1" y2="1">
+      <stop offset="0%" stop-color="#1E1A10"/><stop offset="60%" stop-color="#141008"/>
+      <stop offset="100%" stop-color="#0E0C08"/>
+    </linearGradient>
+    <linearGradient id="ribbonG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#B8900A"/><stop offset="45%" stop-color="#E4C050"/>
+      <stop offset="100%" stop-color="#C09828"/>
+    </linearGradient>
+  </defs>
+
+  <!-- BACKDROP -->
+  <rect width="1440" height="580" fill="url(#wsBg)"/>
+  <rect width="1440" height="580" fill="url(#wsTopShad)"/>
+  <rect width="1440" height="580" fill="url(#wsKey)"/>
+  <rect width="1440" height="580" fill="url(#wsFill)"/>
+
+  <!-- FLOOR -->
+  <rect x="0" y="438" width="1440" height="142" fill="url(#wsFloor)"/>
+  <rect x="0" y="435" width="1440" height="5" fill="#14100C" opacity="0.35"/>
+  <rect x="0" y="440" width="1440" height="18" fill="#585450" opacity="0.07"/>
+
+  <!-- LEFT: LUXURY BOXES -->
+  <rect x="78" y="298" width="208" height="138" rx="2" fill="url(#boxCream)"/>
+  <polygon points="286,298 330,272 330,410 286,436" fill="url(#boxSide)"/>
+  <polygon points="78,298 286,298 330,272 122,272" fill="url(#boxTop)"/>
+  <line x1="80" y1="338" x2="284" y2="338" stroke="#C9A96E" stroke-width="0.9" opacity="0.55"/>
+  <text x="182" y="326" font-family="Georgia,serif" font-size="10" fill="#C9A96E" text-anchor="middle" letter-spacing="5" opacity="0.9">BIZILUXE</text>
+  <text x="182" y="358" font-family="Georgia,serif" font-size="8.5" fill="#9A8870" text-anchor="middle" letter-spacing="2.5" opacity="0.75">WHOLESALE SUPPLY</text>
+  <text x="182" y="400" font-family="Georgia,serif" font-size="7" fill="#8A7860" text-anchor="middle" letter-spacing="3" opacity="0.6" font-style="italic">Est. Berlin</text>
+  <rect x="102" y="192" width="182" height="108" rx="2" fill="url(#boxDark)"/>
+  <polygon points="284,192 320,172 320,280 284,300" fill="url(#boxDarkSide)"/>
+  <polygon points="102,192 284,192 320,172 138,172" fill="url(#boxDarkTop)"/>
+  <line x1="104" y1="218" x2="282" y2="218" stroke="#C9A96E" stroke-width="0.7" opacity="0.5"/>
+  <text x="193" y="210" font-family="Georgia,serif" font-size="7" fill="#C9A96E" text-anchor="middle" letter-spacing="4" opacity="0.75">OLIV</text>
+  <circle cx="193" cy="252" r="24" fill="none" stroke="#C9A96E" stroke-width="0.9" opacity="0.45"/>
+  <circle cx="193" cy="252" r="20" fill="none" stroke="#C9A96E" stroke-width="0.4" opacity="0.25"/>
+  <text x="193" y="258" font-family="Georgia,serif" font-size="20" fill="#C9A96E" text-anchor="middle" font-style="italic" opacity="0.88">BL</text>
+  <rect x="306" y="356" width="92" height="76" rx="1" fill="url(#boxCream)"/>
+  <polygon points="398,356 428,342 428,418 398,432" fill="url(#boxSide)"/>
+  <polygon points="306,356 398,356 428,342 336,342" fill="url(#boxTop)"/>
+  <path d="M308,360 Q326,350 346,356 Q366,350 388,357" fill="none" stroke="#FAF4EE" stroke-width="3.5" opacity="0.55" stroke-linecap="round"/>
+  <path d="M310,365 Q328,355 348,361 Q368,355 390,362" fill="none" stroke="#FAF4EE" stroke-width="2.5" opacity="0.35" stroke-linecap="round"/>
+  <line x1="352" y1="342" x2="352" y2="432" stroke="url(#ribbonG)" stroke-width="0.8" opacity="0.5"/>
+  <line x1="306" y1="395" x2="398" y2="395" stroke="url(#ribbonG)" stroke-width="0.8" opacity="0.5"/>
+  <path d="M340,395 Q332,385 338,380 Q344,376 352,382 Q360,376 366,380 Q372,385 364,395" fill="none" stroke="#D4A840" stroke-width="1.1" opacity="0.7"/>
+  <circle cx="352" cy="391" r="3.5" fill="#C9A96E" opacity="0.7"/>
+  <text x="352" y="418" font-family="Georgia,serif" font-size="7" fill="#A89070" text-anchor="middle" letter-spacing="2" opacity="0.65" font-style="italic">BL</text>
+  <ellipse cx="205" cy="439" rx="140" ry="5.5" fill="#080604" opacity="0.52"/>
+  <ellipse cx="362" cy="437" rx="65" ry="4" fill="#080604" opacity="0.38"/>
+
+  <!-- CENTER: MANNEQUIN BUST -->
+  <rect x="692" y="436" width="76" height="10" rx="5" fill="#201C18"/>
+  <rect x="702" y="446" width="56" height="26" rx="2" fill="#181410"/>
+  <rect x="682" y="470" width="96" height="7" rx="3.5" fill="#282220"/>
+  <path d="M598,438 Q645,385 682,358 L778,358 Q815,385 862,438 Q840,446 730,446 Q620,446 598,438 Z" fill="url(#bustGrad)"/>
+  <path d="M598,438 Q644,390 682,358 Q668,375 648,408 Q628,424 612,438 Z" fill="#181410" opacity="0.12"/>
+  <path d="M862,438 Q816,390 778,358 Q792,375 812,408 Q832,424 848,438 Z" fill="#181410" opacity="0.18"/>
+  <path d="M694,358 Q703,318 718,278 L742,278 Q757,318 766,358 Z" fill="url(#neckGrad)"/>
+  <path d="M742,278 Q756,318 764,358 Q756,345 742,312 Z" fill="#181410" opacity="0.14"/>
+  <path d="M600,255 Q598,182 655,155 Q692,138 730,140 Q768,138 805,155 Q862,182 860,255 Q878,320 875,418 Q858,440 855,438 Q838,400 835,360 Q826,305 818,262 Q800,218 762,212 Q730,208 698,212 Q660,218 642,262 Q634,305 625,360 Q622,400 606,438 Q603,440 586,418 Q582,320 600,255 Z" fill="url(#hairDark)"/>
+  <path d="M655,155 Q634,168 628,195 Q620,225 628,268 Q638,308 646,348 Q650,390 645,432 Q636,418 626,388 Q612,345 610,295 Q608,248 616,210 Q626,172 645,155 Z" fill="#281608"/>
+  <path d="M805,155 Q826,168 832,195 Q840,225 832,268 Q822,308 814,348 Q810,390 815,432 Q824,418 834,388 Q848,345 850,295 Q852,248 844,210 Q834,172 815,155 Z" fill="#221408"/>
+  <path d="M660,157 Q678,165 686,205 Q690,248 682,298 Q676,340 670,390" fill="none" stroke="url(#hairShineA)" stroke-width="20" opacity="0.72" stroke-linecap="round"/>
+  <path d="M726,144 Q746,158 752,202 Q756,248 748,298 Q742,338 738,385" fill="none" stroke="url(#hairShineB)" stroke-width="15" opacity="0.62" stroke-linecap="round"/>
+  <path d="M673,160 Q690,185 695,232 Q697,272 690,320" fill="none" stroke="#E0B868" stroke-width="2" opacity="0.28" stroke-linecap="round"/>
+  <path d="M692,158 Q708,183 712,228 Q714,270 708,318" fill="none" stroke="#D4A858" stroke-width="1.5" opacity="0.22" stroke-linecap="round"/>
+  <path d="M748,158 Q762,186 765,232 Q766,274 760,322" fill="none" stroke="#C89848" stroke-width="2" opacity="0.26" stroke-linecap="round"/>
+  <path d="M765,162 Q778,190 779,236 Q780,278 774,325" fill="none" stroke="#B88838" stroke-width="1.5" opacity="0.2" stroke-linecap="round"/>
+  <path d="M716,144 Q720,160 722,195" fill="none" stroke="#604020" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+  <ellipse cx="730" cy="477" rx="94" ry="6.5" fill="#080604" opacity="0.58"/>
+
+  <!-- RIGHT: TOOLS ON CLOTH -->
+  <path d="M938,282 Q968,276 1018,282 Q1068,278 1112,286 Q1148,282 1188,290 Q1200,288 1220,294 L1222,454 Q1185,449 1148,452 Q1110,455 1070,452 Q1032,455 995,451 Q960,455 940,450 Z" fill="url(#clothG)" opacity="0.94"/>
+  <path d="M938,282 Q968,275 1018,281 Q1068,277 1112,285 Q1148,281 1188,289" fill="none" stroke="#2A2418" stroke-width="1.2" opacity="0.55"/>
+  <g transform="translate(1005,295) rotate(-32)">
+    <path d="M-4.5,2 L-5,270 Q-0.5,278 4,270 L5,2 Q0.5,-7 -4.5,2 Z" fill="url(#bladeL)" opacity="0.94"/>
+    <line x1="-2" y1="8" x2="-3" y2="262" stroke="#F0F0F8" stroke-width="0.7" opacity="0.55"/>
+    <path d="M11,2 L10,270 Q14,278 18,270 L20,2 Q16,-7 11,2 Z" fill="url(#bladeL)" opacity="0.86"/>
+    <circle cx="7.5" cy="2" r="10" fill="url(#pivotG)"/>
+    <circle cx="7.5" cy="2" r="6" fill="#C89C28"/>
+    <circle cx="7.5" cy="2" r="2.5" fill="#F0D870"/>
+    <path d="M-5,270 Q-22,305 -12,338 Q-2,366 10,358 Q22,345 19,313 Q16,292 5,270 Z" fill="url(#handleG)"/>
+    <path d="M-3,277 Q-17,306 -10,334 Q-2,358 8,351 Q18,339 16,311 Q14,294 3,277 Z" fill="#1A1608" opacity="0.82"/>
+    <path d="M5,270 Q28,282 35,270 Q44,253 34,238 Q22,228 5,238 Q-3,248 -3,260 Z" fill="url(#handleG)"/>
+    <path d="M7,266 Q26,276 32,266 Q39,252 31,240 Q21,232 7,240 Q1,250 1,260 Z" fill="#1A1608" opacity="0.82"/>
+  </g>
+  <g transform="translate(1095,318) rotate(-24)" opacity="0.7">
+    <path d="M-3,2 L-4,232 Q-0.5,239 3,232 L5,2 Q1.5,-6 -3,2 Z" fill="url(#bladeL)" opacity="0.8"/>
+    <path d="M9.5,2 L8,232 Q11,239 14,232 L15,2 Q12,-6 9.5,2 Z" fill="url(#bladeL)" opacity="0.74"/>
+    <circle cx="6" cy="2" r="8" fill="url(#pivotG)"/>
+    <circle cx="6" cy="2" r="4.5" fill="#C89C28"/>
+    <path d="M-4,232 Q-18,262 -10,290 Q-2,314 8,307 Q18,294 15,265 Q12,246 4,232 Z" fill="url(#handleG)"/>
+    <path d="M-2,238 Q-14,262 -8,287 Q-1,308 7,302 Q15,290 13,265 Q11,249 2,238 Z" fill="#1A1608" opacity="0.8"/>
+    <path d="M4,232 Q23,242 29,232 Q36,218 27,206 Q16,197 4,206 Q-2,215 -2,224 Z" fill="url(#handleG)"/>
+  </g>
+  <g transform="translate(1170,310) rotate(15)" opacity="0.85">
+    <rect x="-6" y="0" width="12" height="145" rx="6" fill="#181410"/>
+    <rect x="-4" y="4" width="8" height="12" rx="2" fill="#C9A030" opacity="0.8"/>
+    <g stroke="#C8C0A8" stroke-width="2.5" stroke-linecap="round">
+      <line x1="-18" y1="32" x2="-6" y2="32"/><line x1="-20" y1="42" x2="-6" y2="42"/>
+      <line x1="-20" y1="52" x2="-6" y2="52"/><line x1="-20" y1="62" x2="-6" y2="62"/>
+      <line x1="-20" y1="72" x2="-6" y2="72"/><line x1="-20" y1="82" x2="-6" y2="82"/>
+    </g>
+    <g stroke="#A8A098" stroke-width="1.2" stroke-linecap="round">
+      <line x1="6" y1="32" x2="18" y2="32"/><line x1="6" y1="38" x2="19" y2="38"/>
+      <line x1="6" y1="44" x2="19" y2="44"/><line x1="6" y1="50" x2="19" y2="50"/>
+      <line x1="6" y1="56" x2="19" y2="56"/><line x1="6" y1="62" x2="19" y2="62"/>
+      <line x1="6" y1="68" x2="19" y2="68"/><line x1="6" y1="74" x2="19" y2="74"/>
+      <line x1="6" y1="80" x2="19" y2="80"/><line x1="6" y1="86" x2="19" y2="86"/>
+    </g>
+  </g>
+  <g transform="translate(980,345) rotate(55)" opacity="0.82">
+    <path d="M-8,10 Q-9,110 -6,148 Q0,158 6,148 Q9,110 8,10 Q2,-5 -8,10 Z" fill="#1C1610"/>
+    <rect x="-7" y="135" width="14" height="14" rx="1" fill="url(#handleG)"/>
+    <path d="M-22,-60 Q-24,0 -22,10 L22,10 Q24,0 22,-60 Q14,-78 0,-80 Q-14,-78 -22,-60 Z" fill="#242018"/>
+    <path d="M-18,-55 Q-20,-5 -18,6 L18,6 Q20,-5 18,-55 Q11,-70 0,-72 Q-11,-70 -18,-55 Z" fill="#181410"/>
+    <g fill="#C8B898" opacity="0.65">
+      <circle cx="-12" cy="-45" r="2.2"/><circle cx="-6" cy="-45" r="2.2"/><circle cx="0" cy="-45" r="2.2"/>
+      <circle cx="6" cy="-45" r="2.2"/><circle cx="12" cy="-45" r="2.2"/>
+      <circle cx="-14" cy="-35" r="2.2"/><circle cx="-8" cy="-35" r="2.2"/><circle cx="-2" cy="-35" r="2.2"/>
+      <circle cx="4" cy="-35" r="2.2"/><circle cx="10" cy="-35" r="2.2"/><circle cx="16" cy="-35" r="2.2"/>
+      <circle cx="-12" cy="-25" r="2.2"/><circle cx="-6" cy="-25" r="2.2"/><circle cx="0" cy="-25" r="2.2"/>
+      <circle cx="6" cy="-25" r="2.2"/><circle cx="12" cy="-25" r="2.2"/>
+      <circle cx="-14" cy="-15" r="2.2"/><circle cx="-8" cy="-15" r="2.2"/><circle cx="-2" cy="-15" r="2.2"/>
+      <circle cx="4" cy="-15" r="2.2"/><circle cx="10" cy="-15" r="2.2"/>
+      <circle cx="-10" cy="-5" r="2.2"/><circle cx="-4" cy="-5" r="2.2"/>
+      <circle cx="2" cy="-5" r="2.2"/><circle cx="8" cy="-5" r="2.2"/>
+    </g>
+  </g>
+  <line x1="968" y1="415" x2="1008" y2="392" stroke="#C9A96E" stroke-width="1.8" stroke-linecap="round" opacity="0.72"/>
+  <line x1="975" y1="430" x2="1015" y2="407" stroke="#C9A96E" stroke-width="1.8" stroke-linecap="round" opacity="0.62"/>
+  <line x1="981" y1="446" x2="1021" y2="423" stroke="#C9A96E" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="968" cy="415" r="2" fill="#C9A96E" opacity="0.85"/>
+  <circle cx="975" cy="430" r="2" fill="#C9A96E" opacity="0.75"/>
+  <circle cx="981" cy="446" r="2" fill="#C9A96E" opacity="0.68"/>
+  <circle cx="1155" cy="430" r="2.5" fill="#C9A96E" opacity="0.5"/>
+  <circle cx="1162" cy="440" r="1.8" fill="#C9A96E" opacity="0.42"/>
+  <circle cx="1148" cy="444" r="1.5" fill="#C9A96E" opacity="0.38"/>
+  <ellipse cx="1082" cy="457" rx="135" ry="6" fill="#080604" opacity="0.48"/>
+
+  <!-- FLOOR REFLECTIONS -->
+  <ellipse cx="730" cy="455" rx="82" ry="10" fill="#585450" opacity="0.07"/>
+  <rect x="86" y="440" width="246" height="18" rx="2" fill="#484440" opacity="0.06"/>
+
+  <!-- VIGNETTES -->
+  <rect x="0" y="0" width="190" height="580" fill="url(#vigL)"/>
+  <rect x="1250" y="0" width="190" height="580" fill="url(#vigR)"/>
+  <rect x="0" y="375" width="1440" height="205" fill="url(#vigB)"/>
+</svg>
