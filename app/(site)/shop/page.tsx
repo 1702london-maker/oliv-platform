@@ -169,7 +169,7 @@ function getShopShellHtml() {
 function buildShopLandingHtml() {
   let html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "collections.html"), "utf8");
 
-  html = html.replace(/<img class="oshp-hero-img"[\s\S]*?>/, '<div class="oshp-hero-img oshp-hero-img-empty"></div>');
+  html = html.replace(/<img class="oshp-hero-img"[\s\S]*?>/, '<img class="oshp-hero-img" src="/heroes/shop-hero.svg" alt="OlivHairSupply Shop" loading="eager" fetchpriority="high">');
   html = html.replace("The BiziLux <em>Edit</em>", "The BiziLuxe <em>Edit</em>");
   html = html.replace("BiziLux by OlivHairSupply", "BiziLuxe by OlivHairSupply");
   html = html.replace('<span class="oshp-hero-meta-val">4</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>', '<span class="oshp-hero-meta-val">6</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>');
@@ -248,7 +248,16 @@ ${featuredProducts.map((product) => `          <a href="${product.href}" class="
 function shopLandingOverrides() {
   return `
 .oshp-hero-img-empty {
-  background: linear-gradient(135deg, #2B2620 0%, #57463A 55%, #2B2620 100%);
+  background: #5E5A56;
+}
+.oshp-hero-overlay {
+  background: radial-gradient(ellipse at 50% 45%, rgba(60,56,52,0.32) 0%, rgba(40,36,32,0.58) 100%) !important;
+}
+.oshp-hero-img {
+  object-position: 55% center !important;
+}
+@media (max-width: 768px) {
+  .oshp-hero-img { object-position: 40% center !important; }
 }
 .oshp-col-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
