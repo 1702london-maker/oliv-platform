@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 380" preserveAspectRatio="xMidYMid slice" width="1440" height="380">
+  <defs>
+    <linearGradient id="baseBg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#160F07"/>
+      <stop offset="60%" stop-color="#241508"/>
+      <stop offset="100%" stop-color="#100B05"/>
+    </linearGradient>
+    <radialGradient id="warmGlow" cx="50%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#6B4010" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#3A2008" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#160F07" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="68%">
+      <stop offset="42%" stop-color="#160F07" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#080503" stop-opacity="0.9"/>
+    </radialGradient>
+    <linearGradient id="shimmer" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C9A96E" stop-opacity="0"/>
+      <stop offset="35%" stop-color="#C9A96E" stop-opacity="0.28"/>
+      <stop offset="65%" stop-color="#C9A96E" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1440" height="380" fill="url(#baseBg)"/>
+  <rect width="1440" height="380" fill="url(#warmGlow)"/>
+
+  <!-- Subtle hair-like curved lines across width -->
+  <g opacity="0.1" stroke="#C9A96E" stroke-width="1" fill="none">
+    <path d="M 0 180 Q 360 140 720 190 Q 1080 240 1440 180"/>
+    <path d="M 0 200 Q 360 160 720 210 Q 1080 260 1440 200"/>
+    <path d="M 0 220 Q 360 185 720 228 Q 1080 275 1440 218"/>
+    <path d="M 0 160 Q 360 125 720 172 Q 1080 220 1440 162"/>
+    <path d="M 0 240 Q 360 205 720 246 Q 1080 290 1440 238"/>
+  </g>
+
+  <!-- Flanking decorative verticals -->
+  <g opacity="0.08" fill="#C9A96E">
+    <rect x="0" y="0" width="3" height="380"/>
+    <rect x="1437" y="0" width="3" height="380"/>
+  </g>
+
+  <rect width="1440" height="380" fill="url(#vignette)"/>
+
+  <!-- Top gold rule -->
+  <rect x="0" y="0" width="1440" height="2" fill="url(#shimmer)"/>
+  <rect x="0" y="378" width="1440" height="2" fill="url(#shimmer)"/>
+</svg>

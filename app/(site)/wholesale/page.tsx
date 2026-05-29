@@ -24,9 +24,96 @@ export default async function WholesalePage() {
 
     const businessName = account?.business_name ?? session.business_name ?? "Wholesale Partner";
 
-    // ── Script 1: minimal boot (exact affiliate pattern) ──
+    // ── Script 1: boot + order history ──
     const bootScript = `<script>
 (function(){
+  /* ── CSS for order history section ── */
+  var ohStyle = document.createElement('style');
+  ohStyle.textContent =
+    '.owhl-oh-wrap{max-width:900px;margin:32px auto 0;padding:0 0 52px;}' +
+    '.owhl-oh-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:26px;font-weight:300;color:#2B2620;margin:0 0 18px;letter-spacing:.02em;}' +
+    '.owhl-oh-empty{border:1px dashed #E2D5C0;padding:28px 20px;text-align:center;font-size:11px;color:#9B8878;letter-spacing:2px;text-transform:uppercase;}' +
+    '.owhl-oh-table{width:100%;border-collapse:collapse;font-family:Montserrat,sans-serif;font-size:12px;}' +
+    '.owhl-oh-table th{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#6B5C4E;padding:0 12px 10px;text-align:left;border-bottom:1px solid #E2D5C0;}' +
+    '.owhl-oh-table td{padding:12px;border-bottom:1px solid #F0E8DC;color:#2B2620;vertical-align:middle;}' +
+    '.owhl-oh-table tr:last-child td{border-bottom:none;}' +
+    '.owhl-oh-table tr:hover td{background:#FDFAF6;}' +
+    '.owhl-oh-pill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:3px 9px;border-radius:2px;}' +
+    '.owhl-oh-pill-pending{background:#FEF3DC;color:#9A6A1A;}' +
+    '.owhl-oh-pill-processing{background:#DCF0FE;color:#1A6A9A;}' +
+    '.owhl-oh-pill-fulfilled{background:#DCFEE9;color:#1A7A44;}' +
+    '.owhl-oh-pill-cancelled{background:#F5F0E8;color:#9B8878;}' +
+    '.owhl-oh-id{font-family:monospace;font-size:11px;color:#6B5C4E;}';
+  document.head.appendChild(ohStyle);
+
+  function fmtEur(cents){
+    return '€'+(cents/100).toFixed(2);
+  }
+  function fmtDate(iso){
+    var d=new Date(iso);
+    return d.getDate().toString().padStart(2,'0')+'.'+(d.getMonth()+1).toString().padStart(2,'0')+'.'+d.getFullYear();
+  }
+  function fmtId(id){
+    return id ? id.toString().slice(-8).toUpperCase() : '—';
+  }
+  function pillClass(status){
+    if(status==='processing') return 'owhl-oh-pill owhl-oh-pill-processing';
+    if(status==='fulfilled')  return 'owhl-oh-pill owhl-oh-pill-fulfilled';
+    if(status==='cancelled')  return 'owhl-oh-pill owhl-oh-pill-cancelled';
+    return 'owhl-oh-pill owhl-oh-pill-pending';
+  }
+
+  function renderOrders(orders){
+    /* update top stats */
+    var statVals = document.querySelectorAll('.owhl-dash-stat-val');
+    if(statVals[0]) statVals[0].textContent = orders.length.toString();
+    if(statVals[1]) statVals[1].textContent = fmtEur(orders.reduce(function(s,o){ return s+(o.total_wholesale_cents||0); },0));
+    if(statVals[2]) statVals[2].textContent = orders.length ? fmtDate(orders[0].created_at) : 'None';
+
+    /* inject order history section above the shop */
+    var shopWrap = document.querySelector('.owhl-shop-wrap');
+    if(!shopWrap) return;
+    var existing = document.getElementById('owhl-oh-section');
+    if(existing) existing.remove();
+
+    var section = document.createElement('div');
+    section.id = 'owhl-oh-section';
+    section.className = 'owhl-oh-wrap';
+
+    if(!orders.length){
+      section.innerHTML =
+        '<h3 class="owhl-oh-title">Order History</h3>' +
+        '<div class="owhl-oh-empty">No orders placed yet. Browse the shop below to get started.</div>';
+    } else {
+      var rows = orders.map(function(o){
+        return '<tr>' +
+          '<td><span class="owhl-oh-id">#'+fmtId(o.id)+'</span></td>' +
+          '<td>'+fmtDate(o.created_at)+'</td>' +
+          '<td>'+o.items_count+' item'+(o.items_count===1?'':'s')+'</td>' +
+          '<td style="font-weight:600;">'+fmtEur(o.total_wholesale_cents)+'</td>' +
+          '<td><span class="'+pillClass(o.status)+'">'+o.status+'</span></td>' +
+          '</tr>';
+      }).join('');
+      section.innerHTML =
+        '<h3 class="owhl-oh-title">Order History</h3>' +
+        '<table class="owhl-oh-table">' +
+          '<thead><tr>' +
+            '<th>Order ID</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th>' +
+          '</tr></thead>' +
+          '<tbody>'+rows+'</tbody>' +
+        '</table>';
+    }
+    shopWrap.parentNode.insertBefore(section, shopWrap);
+  }
+
+  function loadOrders(){
+    fetch('/api/wholesale/orders')
+      .then(function(r){ return r.json(); })
+      .then(function(data){ renderOrders(data.orders||[]); })
+      .catch(function(){ renderOrders([]); });
+  }
+  window.owhlLoadOrders = loadOrders;
+
   function boot(){
     var nm = document.getElementById('owhl-name-display');
     if(nm) nm.textContent = ${JSON.stringify(businessName)};
@@ -40,6 +127,7 @@ export default async function WholesalePage() {
       fetch('/api/wholesale/logout',{method:'POST'})
         .then(function(){ window.location.href='/wholesale'; });
     };
+    loadOrders();
   }
   if(document.readyState==='loading'){
     document.addEventListener('DOMContentLoaded',boot);
@@ -56,10 +144,12 @@ export default async function WholesalePage() {
 
   /* ── gallery alternates (same as retail product page) ── */
   var GALLERY_ALTS = {
-    '/products/biziluxe-extensions':  ['koenigsallee-main.jpg','sanssouci-main.jpg','nymphenburg-main.jpg'],
-    '/products/bizihair-extensions':  ['koenigsallee-main.jpg','sanssouci-main.jpg','nymphenburg-main.jpg'],
-    '/products/biziluxe-accessoires': ['saphir-main.jpg','rotenburg-main.jpg','schwarzwald-main.jpg'],
-    '/products/profi-friseurbedarf':  ['waldenburg-main.jpg','zeppelin-main.jpg','glashuette-main.jpg']
+    '/products/biziluxe-extensions':      ['koenigsallee-main.jpg','sanssouci-main.jpg','nymphenburg-main.jpg'],
+    '/products/bizihair-extensions':      ['koenigsallee-main.jpg','sanssouci-main.jpg','nymphenburg-main.jpg'],
+    '/products/biziluxe-accessoires':     ['saphir-main.jpg','rotenburg-main.jpg','schwarzwald-main.jpg'],
+    '/products/profi-friseurbedarf':      ['waldenburg-main.jpg','zeppelin-main.jpg','glashuette-main.jpg'],
+    '/products/biziluxe-stylinggeraete':  ['stuttgart-main.svg','wolfsburg-main.svg','ulm-main.svg'],
+    '/products/buersten-und-kaemme':      ['passau-main.svg','weimar-main.svg','heidelberg-main.svg']
   };
 
   /* ── product options (exact same as retail AddToCart.tsx) ── */
@@ -645,7 +735,7 @@ export default async function WholesalePage() {
       body:JSON.stringify({items:items,notes:note,total_wholesale_cents:total})})
     .then(function(r){ return r.json(); })
     .then(function(d){
-      if(d.ok){ cart={}; renderCart(); showSuccess(); }
+      if(d.ok){ cart={}; renderCart(); showSuccess(); if(window.owhlLoadOrders) window.owhlLoadOrders(); }
       else{ alert('Something went wrong. Please try again.'); if(btn){btn.textContent='Submit Order Request';btn.disabled=false;} }
     })
     .catch(function(){ alert('Network error.'); if(btn){btn.textContent='Submit Order Request';btn.disabled=false;} });

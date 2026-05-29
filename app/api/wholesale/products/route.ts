@@ -100,9 +100,9 @@ function getLocalProducts() {
       const dir = path.join(root, category);
       return fs
         .readdirSync(dir)
-        .filter((f) => f.endsWith("-main.jpg"))
+        .filter((f) => f.endsWith("-main.jpg") || f.endsWith("-main.svg") || f.endsWith("-main.png"))
         .map((file, i) => {
-          const slug = file.replace("-main.jpg", "");
+          const slug = file.replace(/-main\.(jpg|svg|png)$/, "");
           const title = slug
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -131,5 +131,7 @@ function fallbackPrice(category: string, i: number): number {
   if (category === "biziluxe-extensions") return 12000 + i * 1500;
   if (category === "profi-friseurbedarf") return 4500 + i * 700;
   if (category === "biziluxe-accessoires") return 2900 + i * 500;
+  if (category === "biziluxe-stylinggeraete") return 8900 + i * 700;
+  if (category === "buersten-und-kaemme") return 2200 + i * 500;
   return 3900 + i * 500;
 }

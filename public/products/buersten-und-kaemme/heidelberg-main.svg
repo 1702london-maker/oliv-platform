@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <rect width="400" height="500" fill="#F5F0E8"/>
+  <rect x="16" y="16" width="368" height="468" fill="none" stroke="#E2D5C0" stroke-width="1"/>
+  <text x="200" y="98" font-family="Georgia,serif" font-size="8" letter-spacing="4" text-anchor="middle" fill="#B68A45">OLIV HAIR SUPPLY</text>
+  <g transform="translate(200,240)" opacity="0.13">
+    <ellipse cx="0" cy="-44" rx="22" ry="34" fill="#2B2620"/>
+    <rect x="-6" y="-12" width="12" height="68" rx="4" fill="#2B2620"/>
+    <line x1="-13" y1="-57" x2="-13" y2="-22" stroke="#B68A45" stroke-width="2.5" opacity="0.8"/>
+    <line x1="-6" y1="-64" x2="-6" y2="-22" stroke="#B68A45" stroke-width="2.5" opacity="0.8"/>
+    <line x1="0" y1="-66" x2="0" y2="-22" stroke="#B68A45" stroke-width="2.5" opacity="0.8"/>
+    <line x1="6" y1="-64" x2="6" y2="-22" stroke="#B68A45" stroke-width="2.5" opacity="0.8"/>
+    <line x1="13" y1="-57" x2="13" y2="-22" stroke="#B68A45" stroke-width="2.5" opacity="0.8"/>
+  </g>
+  <line x1="165" y1="372" x2="235" y2="372" stroke="#B68A45" stroke-width="1"/>
+  <text x="200" y="415" font-family="Georgia,serif" font-size="27" text-anchor="middle" fill="#2B2620" font-weight="300" letter-spacing="1">Heidelberg</text>
+  <text x="200" y="448" font-family="Arial,sans-serif" font-size="8" letter-spacing="3" text-anchor="middle" fill="#9B8878">B&#220;RSTEN &amp; K&#196;MME</text>
+</svg>

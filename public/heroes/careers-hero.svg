@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 520" preserveAspectRatio="xMidYMid slice" width="1440" height="520">
+  <defs>
+    <linearGradient id="baseBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F0B06"/>
+      <stop offset="55%" stop-color="#201408"/>
+      <stop offset="100%" stop-color="#0C0804"/>
+    </linearGradient>
+    <!-- Aspirational warm golden light - top centre -->
+    <radialGradient id="aspirationalGlow" cx="55%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#8A5A18" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#4A2E0C" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#0F0B06" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Subject warm light right -->
+    <radialGradient id="subjectGlow" cx="72%" cy="48%" r="38%">
+      <stop offset="0%" stop-color="#6B4010" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0F0B06" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="textOverlay" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0C0804" stop-opacity="0.88"/>
+      <stop offset="42%" stop-color="#160E06" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#0F0B06" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0F0B06" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="45%" stop-color="#0F0B06" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#060402" stop-opacity="0.92"/>
+    </radialGradient>
+    <filter id="softGlow"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+
+  <rect width="1440" height="520" fill="url(#baseBg)"/>
+  <rect width="1440" height="520" fill="url(#aspirationalGlow)"/>
+  <rect width="1440" height="520" fill="url(#subjectGlow)"/>
+
+  <!-- Professional figure on right (blurred/abstract) -->
+  <ellipse cx="1060" cy="190" rx="72" ry="88" fill="#5C3810" opacity="0.2"/>
+  <ellipse cx="1080" cy="380" rx="180" ry="95" fill="#3A2008" opacity="0.25"/>
+  <rect x="960" y="250" width="180" height="280" rx="40" fill="#2A1606" opacity="0.18"/>
+
+  <!-- Upward flowing lines = ambition/growth -->
+  <g opacity="0.14" stroke="#C9A96E" stroke-width="1.2" fill="none">
+    <path d="M 700 520 Q 720 380 740 260 Q 755 160 780 0"/>
+    <path d="M 740 520 Q 760 400 778 280 Q 790 180 810 0"/>
+    <path d="M 780 520 Q 798 420 812 300 Q 822 200 840 0"/>
+    <path d="M 820 520 Q 836 440 848 320 Q 856 220 872 0"/>
+    <path d="M 860 520 Q 874 460 884 340 Q 890 240 904 0"/>
+    <path d="M 900 520 Q 912 480 920 360 Q 926 260 938 0"/>
+    <path d="M 940 520 Q 950 495 956 390 Q 960 285 970 0"/>
+    <path d="M 980 520 Q 990 505 994 406 Q 998 304 1008 0"/>
+  </g>
+
+  <!-- Subtle gold sparkle dots -->
+  <g fill="#C9A96E" opacity="0.12">
+    <circle cx="500" cy="180" r="1.5"/>
+    <circle cx="620" cy="130" r="1"/>
+    <circle cx="800" cy="100" r="1.2"/>
+    <circle cx="450" cy="300" r="1"/>
+    <circle cx="680" cy="240" r="1.5"/>
+  </g>
+
+  <rect width="1440" height="520" fill="url(#textOverlay)"/>
+  <rect width="1440" height="520" fill="url(#vignette)"/>
+</svg>

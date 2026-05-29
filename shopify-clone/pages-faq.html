@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html class="js" lang="en">
   <head>
     <meta charset="utf-8">
@@ -1849,12 +1849,31 @@ first.parentNode.insertBefore(script, first);
 
 /* HERO */
 .ofaq-hero {
-  background: #EDE5D8;
-  padding: 72px 0;
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  border-bottom: 1px solid #E3D6C5;
+}
+.ofaq-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+.ofaq-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center top, rgba(30,20,8,0.42) 0%, rgba(10,7,3,0.78) 100%);
 }
 .ofaq-hero-inner {
+  position: relative;
+  z-index: 2;
   max-width: 700px;
   margin: 0 auto;
   padding: 0 40px;
@@ -1873,16 +1892,16 @@ first.parentNode.insertBefore(script, first);
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 52px;
   font-weight: 300;
-  color: #1F1F1F;
+  color: #F6F0E4;
   line-height: 1.1;
   margin-bottom: 14px;
 }
-.ofaq-hero-title em { font-style: italic; }
+.ofaq-hero-title em { font-style: italic; color: #C9A96E; }
 .ofaq-hero-sub {
   font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
-  font-weight: 500;
-  color: #555555;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(246,240,228,0.75);
   line-height: 1.85;
   margin-bottom: 28px;
 }
@@ -1895,20 +1914,23 @@ first.parentNode.insertBefore(script, first);
 }
 .ofaq-search {
   width: 100%;
-  border: 1.5px solid #E3D6C5;
+  border: 1.5px solid rgba(201,169,110,0.5);
   padding: 14px 48px 14px 18px;
   font-family: 'Montserrat', sans-serif;
   font-size: 15px;
-  font-weight: 500;
-  color: #1F1F1F;
+  font-weight: 400;
+  color: #F6F0E4;
   outline: none;
-  background: #FFFDFB;
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   transition: border-color 0.2s;
   border-radius: 0;
   -webkit-appearance: none;
+  box-sizing: border-box;
 }
-.ofaq-search:focus { border-color: #B68A45; }
-.ofaq-search::placeholder { color: #C4B8A8; }
+.ofaq-search:focus { border-color: #C9A96E; background: rgba(255,255,255,0.15); }
+.ofaq-search::placeholder { color: rgba(246,240,228,0.45); }
 .ofaq-search-icon {
   position: absolute;
   right: 16px;
@@ -1916,7 +1938,7 @@ first.parentNode.insertBefore(script, first);
   transform: translateY(-50%);
   width: 16px;
   height: 16px;
-  border: 1.5px solid #A0907E;
+  border: 1.5px solid rgba(201,169,110,0.6);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -2151,10 +2173,10 @@ first.parentNode.insertBefore(script, first);
   .ofaq-a { padding-right: 0; }
 }
 @media (max-width: 640px) {
-  .ofaq-hero { padding: 52px 0; }
+  .ofaq-hero { height: 360px; }
   .ofaq-hero-inner { padding: 0 24px; }
   .ofaq-hero-title { font-size: 36px; }
-  .ofaq-hero-sub { font-size: 16px; }
+  .ofaq-hero-sub { font-size: 14px; }
   .ofaq-layout { padding: 36px 24px; }
   .ofaq-cta { padding: 32px 24px; }
   .ofaq-cta-btn-dark,
@@ -2167,6 +2189,8 @@ first.parentNode.insertBefore(script, first);
 <div class="ofaq">
 
   <div class="ofaq-hero">
+    <img class="ofaq-hero-img" src="/heroes/faq-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
+    <div class="ofaq-hero-overlay"></div>
     <div class="ofaq-hero-inner">
       <span class="ofaq-eyebrow">Help Centre</span>
       <h1 class="ofaq-hero-title">Frequently Asked <em>Questions</em></h1>
@@ -2299,7 +2323,7 @@ first.parentNode.insertBefore(script, first);
         </div>
         <div class="ofaq-item">
           <div class="ofaq-q"><span class="ofaq-q-text">What is your return policy?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>We accept returns within 14 days of delivery for unused, sealed products. Please contact our team at <a href="/pages/contact">info@olivhairsupply.com</a> to initiate a return. Once your return is received and inspected, a refund will be processed within 5 to 10 business days to your original payment method.</p></div>
+          <div class="ofaq-a"><p>We accept returns within 14 days of delivery for unused, sealed products. Please contact our team at <a href="/pages/contact">info@olivhairsupply.de</a> to initiate a return. Once your return is received and inspected, a refund will be processed within 5 to 10 business days to your original payment method.</p></div>
         </div>
         <div class="ofaq-item">
           <div class="ofaq-q"><span class="ofaq-q-text">Do you offer exchanges?</span><div class="ofaq-q-icon"></div></div>

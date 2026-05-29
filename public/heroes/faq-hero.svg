@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMid slice" width="1440" height="420">
+  <defs>
+    <!-- Warm dark base — slightly softer than other heroes -->
+    <linearGradient id="baseBg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#1E1408"/>
+      <stop offset="50%" stop-color="#2C1C0A"/>
+      <stop offset="100%" stop-color="#160F06"/>
+    </linearGradient>
+    <!-- Central warm top glow -->
+    <radialGradient id="topGlow" cx="50%" cy="0%" r="55%">
+      <stop offset="0%" stop-color="#7A5020" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#3A2210" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#1E1408" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Soft central highlight -->
+    <radialGradient id="centerGlow" cx="50%" cy="55%" r="40%">
+      <stop offset="0%" stop-color="#5C3810" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#1E1408" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Edge vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="45%" stop-color="#1E1408" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0A0603" stop-opacity="0.88"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1440" height="420" fill="url(#baseBg)"/>
+  <rect width="1440" height="420" fill="url(#topGlow)"/>
+  <rect width="1440" height="420" fill="url(#centerGlow)"/>
+
+  <!-- Left decorative element — abstract hair or fabric -->
+  <g opacity="0.1" fill="#C9A96E">
+    <ellipse cx="120" cy="210" rx="80" ry="350"/>
+    <ellipse cx="80" cy="210" rx="40" ry="350"/>
+  </g>
+
+  <!-- Right decorative element -->
+  <g opacity="0.1" fill="#C9A96E">
+    <ellipse cx="1320" cy="210" rx="80" ry="350"/>
+    <ellipse cx="1360" cy="210" rx="40" ry="350"/>
+  </g>
+
+  <!-- Flowing hair strands — subtle, both sides -->
+  <g opacity="0.1" stroke="#D4B07A" stroke-width="1" fill="none">
+    <!-- Left side -->
+    <path d="M 60 0 Q 80 100 70 210 Q 65 320 85 420"/>
+    <path d="M 90 0 Q 110 120 100 230 Q 95 340 115 420"/>
+    <path d="M 120 0 Q 140 100 130 200 Q 125 310 145 420"/>
+    <!-- Right side -->
+    <path d="M 1380 0 Q 1360 100 1370 210 Q 1375 320 1355 420"/>
+    <path d="M 1350 0 Q 1330 120 1340 230 Q 1345 340 1325 420"/>
+    <path d="M 1320 0 Q 1300 100 1310 200 Q 1315 310 1295 420"/>
+  </g>
+
+  <!-- Central text area brightening (very subtle) -->
+  <rect x="360" y="80" width="720" height="260" rx="4" fill="#3A2410" opacity="0.06"/>
+
+  <!-- Gold horizontal rule (above and below conceptual text space) -->
+  <line x1="560" y1="100" x2="880" y2="100" stroke="#C9A96E" stroke-width="0.8" opacity="0.2"/>
+  <line x1="560" y1="320" x2="880" y2="320" stroke="#C9A96E" stroke-width="0.8" opacity="0.2"/>
+
+  <!-- Vignette -->
+  <rect width="1440" height="420" fill="url(#vignette)"/>
+
+  <!-- Top gold shimmer line -->
+  <linearGradient id="shimmer" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#C9A96E" stop-opacity="0"/>
+    <stop offset="40%" stop-color="#C9A96E" stop-opacity="0.3"/>
+    <stop offset="60%" stop-color="#C9A96E" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+  </linearGradient>
+  <rect x="0" y="0" width="1440" height="2" fill="url(#shimmer)"/>
+  <rect x="0" y="418" width="1440" height="2" fill="url(#shimmer)"/>
+</svg>

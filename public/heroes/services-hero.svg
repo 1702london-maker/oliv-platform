@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMid slice" width="1440" height="620">
+  <defs>
+    <!-- Base dark photography background -->
+    <linearGradient id="baseBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A1109"/>
+      <stop offset="40%" stop-color="#2B1E0F"/>
+      <stop offset="100%" stop-color="#0E0A05"/>
+    </linearGradient>
+    <!-- Warm studio light from top-right -->
+    <radialGradient id="studioLight" cx="75%" cy="20%" r="55%" fx="75%" fy="20%">
+      <stop offset="0%" stop-color="#5C3A1A" stop-opacity="0.7"/>
+      <stop offset="40%" stop-color="#3A2510" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1A1109" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Subject highlight - warm golden oval (simulates lit face/hair area) -->
+    <radialGradient id="subjectLight" cx="68%" cy="45%" r="35%" fx="65%" fy="42%">
+      <stop offset="0%" stop-color="#7A5020" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#4A2E10" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#1A1109" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Left-side overlay for text readability -->
+    <linearGradient id="textOverlay" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#140D05" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#200F06" stop-opacity="0.65"/>
+      <stop offset="75%" stop-color="#1A1109" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#1A1109" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Subtle hair strand pattern -->
+    <filter id="hairGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="1440" height="620" fill="url(#baseBg)"/>
+
+  <!-- Studio light wash from top right -->
+  <rect width="1440" height="620" fill="url(#studioLight)"/>
+
+  <!-- Subject body/hair glow on right side -->
+  <rect width="1440" height="620" fill="url(#subjectLight)"/>
+
+  <!-- Simulated shoulder/body silhouette (right side, blurred) -->
+  <ellipse cx="1080" cy="560" rx="340" ry="200" fill="#3A240E" opacity="0.5"/>
+  <ellipse cx="1020" cy="420" rx="220" ry="340" fill="#4A2D0E" opacity="0.35"/>
+
+  <!-- Hair cascade lines (right side) - suggest long flowing hair -->
+  <g opacity="0.18" filter="url(#hairGlow)">
+    <path d="M 820 0 Q 900 180 870 340 Q 850 480 900 620" stroke="#C9A96E" stroke-width="1.5" fill="none"/>
+    <path d="M 860 0 Q 950 200 920 380 Q 910 520 960 620" stroke="#C9A96E" stroke-width="1.2" fill="none"/>
+    <path d="M 900 0 Q 1000 220 970 400 Q 960 540 1010 620" stroke="#B8936A" stroke-width="1" fill="none"/>
+    <path d="M 950 0 Q 1040 240 1010 420 Q 1000 560 1060 620" stroke="#C9A96E" stroke-width="1.4" fill="none"/>
+    <path d="M 1000 0 Q 1080 200 1050 390 Q 1040 530 1100 620" stroke="#D4B07A" stroke-width="1" fill="none"/>
+    <path d="M 780 0 Q 840 160 820 310 Q 800 450 840 620" stroke="#B8936A" stroke-width="0.8" fill="none"/>
+    <path d="M 1050 0 Q 1120 180 1090 360 Q 1080 500 1140 620" stroke="#C9A96E" stroke-width="1.2" fill="none"/>
+    <path d="M 1100 0 Q 1160 160 1130 330 Q 1120 470 1180 620" stroke="#B8936A" stroke-width="1" fill="none"/>
+    <path d="M 1150 10 Q 1200 140 1180 300 Q 1170 450 1230 620" stroke="#C9A96E" stroke-width="0.9" fill="none"/>
+    <path d="M 1200 0 Q 1260 120 1240 280 Q 1230 420 1290 620" stroke="#D4B07A" stroke-width="0.8" fill="none"/>
+  </g>
+
+  <!-- Shoulder highlight (warm photographic skin tone) -->
+  <ellipse cx="1100" cy="580" rx="200" ry="80" fill="#7A4A18" opacity="0.15"/>
+
+  <!-- Face/head suggestion - subtle warm glow -->
+  <ellipse cx="1020" cy="200" rx="90" ry="105" fill="#8B5A20" opacity="0.12"/>
+
+  <!-- Left overlay for text readability -->
+  <rect width="1440" height="620" fill="url(#textOverlay)"/>
+
+  <!-- Bottom fade -->
+  <linearGradient id="btmFade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="70%" stop-color="#0E0A05" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#0E0A05" stop-opacity="0.6"/>
+  </linearGradient>
+  <rect width="1440" height="620" fill="url(#btmFade)"/>
+</svg>

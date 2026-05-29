@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" preserveAspectRatio="xMidYMid slice" width="1440" height="480">
+  <defs>
+    <linearGradient id="baseBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#120D07"/>
+      <stop offset="50%" stop-color="#231508"/>
+      <stop offset="100%" stop-color="#0A0704"/>
+    </linearGradient>
+    <!-- Central warm glow — editorial beauty lighting -->
+    <radialGradient id="centralGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5C3812" stop-opacity="0.65"/>
+      <stop offset="55%" stop-color="#2C1A08" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#120D07" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Top-centre spotlight -->
+    <radialGradient id="topSpot" cx="50%" cy="0%" r="45%">
+      <stop offset="0%" stop-color="#7A5020" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#120D07" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Dark vignette edges -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="50%" stop-color="#120D07" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#080503" stop-opacity="0.85"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1440" height="480" fill="url(#baseBg)"/>
+
+  <!-- Central warm glow -->
+  <rect width="1440" height="480" fill="url(#centralGlow)"/>
+
+  <!-- Top spotlight -->
+  <rect width="1440" height="480" fill="url(#topSpot)"/>
+
+  <!-- Subtle arched window / doorway silhouette (right side) -->
+  <g opacity="0.12">
+    <rect x="980" y="0" width="200" height="480" rx="100" fill="#6B4010"/>
+    <rect x="1050" y="0" width="60" height="480" fill="#8A5520" opacity="0.6"/>
+  </g>
+
+  <!-- Left architectural column suggestion -->
+  <g opacity="0.1">
+    <rect x="200" y="0" width="60" height="480" rx="8" fill="#6B4010"/>
+    <rect x="140" y="0" width="25" height="480" rx="4" fill="#5A3510" opacity="0.8"/>
+  </g>
+
+  <!-- Warm floor reflection -->
+  <ellipse cx="720" cy="520" rx="600" ry="120" fill="#4A2E0E" opacity="0.18"/>
+
+  <!-- Decorative thin horizontal lines (architectural detail) -->
+  <g opacity="0.08" stroke="#C9A96E" stroke-width="0.5">
+    <line x1="0" y1="340" x2="1440" y2="340"/>
+    <line x1="0" y1="360" x2="1440" y2="360"/>
+  </g>
+
+  <!-- Vignette dark edges -->
+  <rect width="1440" height="480" fill="url(#vignette)"/>
+
+  <!-- Subtle gold dust particles -->
+  <g opacity="0.06" fill="#C9A96E">
+    <circle cx="360" cy="180" r="1.5"/>
+    <circle cx="720" cy="120" r="1"/>
+    <circle cx="1080" cy="200" r="1.5"/>
+    <circle cx="550" cy="300" r="1"/>
+    <circle cx="900" cy="280" r="1.2"/>
+    <circle cx="200" cy="240" r="0.8"/>
+    <circle cx="1200" cy="160" r="1"/>
+    <circle cx="450" cy="140" r="1.2"/>
+  </g>
+</svg>

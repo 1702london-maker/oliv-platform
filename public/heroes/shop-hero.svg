@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+  <defs>
+    <linearGradient id="baseBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#130D06"/>
+      <stop offset="50%" stop-color="#241508"/>
+      <stop offset="100%" stop-color="#0E0805"/>
+    </linearGradient>
+    <!-- Warm right-side model light -->
+    <radialGradient id="modelLight" cx="72%" cy="42%" r="45%">
+      <stop offset="0%" stop-color="#6B4010" stop-opacity="0.6"/>
+      <stop offset="45%" stop-color="#3A2008" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#130D06" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Secondary shoulder fill light -->
+    <radialGradient id="shoulderLight" cx="65%" cy="75%" r="30%">
+      <stop offset="0%" stop-color="#8A5520" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#130D06" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Text side overlay -->
+    <linearGradient id="textOverlay" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0E0805" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#180F06" stop-opacity="0.7"/>
+      <stop offset="65%" stop-color="#130D06" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#130D06" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="68%">
+      <stop offset="45%" stop-color="#130D06" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#080503" stop-opacity="0.9"/>
+    </radialGradient>
+    <filter id="hairGlow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="580" fill="url(#baseBg)"/>
+  <rect width="1440" height="580" fill="url(#modelLight)"/>
+  <rect width="1440" height="580" fill="url(#shoulderLight)"/>
+
+  <!-- Model silhouette (right side) -->
+  <!-- Head -->
+  <ellipse cx="1020" cy="185" rx="85" ry="100" fill="#5C3810" opacity="0.22"/>
+  <!-- Neck -->
+  <rect x="998" y="270" width="44" height="80" rx="12" fill="#5C3810" opacity="0.18"/>
+  <!-- Shoulders -->
+  <ellipse cx="1040" cy="400" rx="210" ry="100" fill="#3A2208" opacity="0.28"/>
+  <!-- Body -->
+  <rect x="920" y="340" width="200" height="260" rx="50" fill="#2C1A08" opacity="0.2"/>
+
+  <!-- Long flowing hair from head down -->
+  <g opacity="0.22" filter="url(#hairGlow)" stroke="#C9A96E" fill="none">
+    <path d="M 940 80 Q 880 200 870 350 Q 860 480 880 580" stroke-width="2"/>
+    <path d="M 960 70 Q 910 200 895 360 Q 885 490 905 580" stroke-width="1.8"/>
+    <path d="M 980 65 Q 940 190 920 360 Q 910 490 935 580" stroke-width="1.5"/>
+    <path d="M 1000 65 Q 970 190 950 360 Q 940 490 965 580" stroke-width="1.6"/>
+    <path d="M 1020 60 Q 995 180 975 350 Q 965 480 990 580" stroke-width="1.8"/>
+    <path d="M 1040 65 Q 1020 180 1005 350 Q 998 480 1020 580" stroke-width="1.5"/>
+    <path d="M 1060 70 Q 1045 185 1030 350 Q 1025 478 1050 580" stroke-width="1.3"/>
+    <path d="M 1080 80 Q 1068 190 1055 355 Q 1050 478 1075 580" stroke-width="1.2"/>
+    <path d="M 1100 90 Q 1090 195 1080 360 Q 1076 480 1100 580" stroke-width="1"/>
+    <path d="M 1120 100 Q 1112 200 1104 365 Q 1100 482 1124 580" stroke-width="0.9"/>
+    <path d="M 1140 115 Q 1134 210 1128 370 Q 1124 484 1148 580" stroke-width="0.8"/>
+    <path d="M 1160 130 Q 1156 220 1150 375 Q 1148 485 1172 580" stroke-width="0.7"/>
+  </g>
+
+  <!-- Text overlay -->
+  <rect width="1440" height="580" fill="url(#textOverlay)"/>
+  <!-- Vignette -->
+  <rect width="1440" height="580" fill="url(#vignette)"/>
+
+  <!-- Bottom fade to black -->
+  <linearGradient id="btmFade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="75%" stop-color="#0E0805" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#0E0805" stop-opacity="0.7"/>
+  </linearGradient>
+  <rect width="1440" height="580" fill="url(#btmFade)"/>
+</svg>
