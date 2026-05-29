@@ -1170,18 +1170,18 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: 65% center;
   display: block;
 }
 .oab-hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #2C2118 0%, #1A140E 100%);
+  background: #5E5A56;
 }
 .oab-hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(26,20,14,0.44);
+  background: linear-gradient(to right, rgba(72,68,64,0.62) 0%, rgba(80,76,72,0.38) 40%, rgba(88,84,80,0.08) 100%);
 }
 .oab-hero-inner {
   position: relative;
@@ -1671,6 +1671,7 @@
 }
 @media (max-width: 768px) {
   .oab-hero { height: 420px; }
+  .oab-hero-img { object-position: center 18%; }
   .oab-hero-title { font-size: 40px; }
   .oab-story-title { font-size: 34px; }
   .oab-story-text { padding: 48px 24px; }
@@ -1696,7 +1697,7 @@
   <div class="oab-hero">
     
       <img class="oab-hero-img"
-        src="https://olivhairsupply-2.myshopify.com/cdn/shop/files/about-us-hero-olivhairsupply_e41770bd-0b0c-4b7c-a267-493f7159008d.png?v=1778595499&width=2000"
+        src="/heroes/about-hero.svg"
         alt="OlivHairSupply"
         loading="eager"
         fetchpriority="high"

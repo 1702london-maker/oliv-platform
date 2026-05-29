@@ -1,0 +1,322 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+  <defs>
+    <!-- Studio backdrop — matches home page grey exactly -->
+    <linearGradient id="studioBase" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#4A4744"/>
+      <stop offset="30%"  stop-color="#5B5752"/>
+      <stop offset="55%"  stop-color="#5E5A56"/>
+      <stop offset="80%"  stop-color="#585450"/>
+      <stop offset="100%" stop-color="#4E4B47"/>
+    </linearGradient>
+    <linearGradient id="studioTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#404040" stop-opacity="0.35"/>
+      <stop offset="40%"  stop-color="#404040" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#303030" stop-opacity="0.2"/>
+    </linearGradient>
+    <!-- Warm key light from upper right (studio light hitting subject) -->
+    <radialGradient id="keyLight" cx="72%" cy="28%" r="42%">
+      <stop offset="0%"   stop-color="#7A6A58" stop-opacity="0.6"/>
+      <stop offset="40%"  stop-color="#6A5A4A" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Fill light from left (softbox) -->
+    <radialGradient id="fillLight" cx="18%" cy="45%" r="38%">
+      <stop offset="0%"   stop-color="#68625C" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Skin tones — realistic Fitzpatrick scale -->
+    <radialGradient id="faceSkin" cx="50%" cy="40%" r="55%">
+      <stop offset="0%"   stop-color="#F0C8A0"/>
+      <stop offset="35%"  stop-color="#E0B080"/>
+      <stop offset="70%"  stop-color="#C89060"/>
+      <stop offset="100%" stop-color="#A87040"/>
+    </radialGradient>
+    <radialGradient id="neckSkin" cx="50%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#E8BA88"/>
+      <stop offset="60%"  stop-color="#C89060"/>
+      <stop offset="100%" stop-color="#A87040"/>
+    </radialGradient>
+    <radialGradient id="shoulderSkin" cx="40%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#E0B078"/>
+      <stop offset="55%"  stop-color="#C08858"/>
+      <stop offset="100%" stop-color="#985030"/>
+    </radialGradient>
+
+    <!-- HAIR GRADIENTS — dark brunette with warm highlights -->
+    <!-- Base dark hair -->
+    <linearGradient id="hairBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1A0E04"/>
+      <stop offset="30%"  stop-color="#2C1A08"/>
+      <stop offset="65%"  stop-color="#3A2410"/>
+      <stop offset="100%" stop-color="#2A1808"/>
+    </linearGradient>
+    <!-- Hair midtone -->
+    <linearGradient id="hairMid" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%"   stop-color="#3C2410"/>
+      <stop offset="40%"  stop-color="#5A3820"/>
+      <stop offset="100%" stop-color="#3C2410"/>
+    </linearGradient>
+    <!-- Hair highlight — golden/warm shine -->
+    <linearGradient id="hairShine1" x1="0" y1="0" x2="0.1" y2="1">
+      <stop offset="0%"   stop-color="#8B5828" stop-opacity="0"/>
+      <stop offset="20%"  stop-color="#A87040" stop-opacity="0.9"/>
+      <stop offset="50%"  stop-color="#C09050" stop-opacity="0.7"/>
+      <stop offset="80%"  stop-color="#9A6030" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7A4818" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hairShine2" x1="0.05" y1="0" x2="0.15" y2="1">
+      <stop offset="0%"   stop-color="#C09050" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#D4A860" stop-opacity="0.8"/>
+      <stop offset="55%"  stop-color="#B88040" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#8B5828" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Fine hair highlight threads -->
+    <linearGradient id="hairThread1" x1="0" y1="0" x2="0.08" y2="1">
+      <stop offset="0%"   stop-color="#D4A060" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#E8C080" stop-opacity="0.6"/>
+      <stop offset="60%"  stop-color="#C89040" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#A07030" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Left overlay for text readability (matches home page) -->
+    <linearGradient id="textOverlay" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#484440" stop-opacity="0.78"/>
+      <stop offset="35%"  stop-color="#504C48" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#5A5652" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#5A5652" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Subtle vignette (matches home page) -->
+    <radialGradient id="vignette" cx="60%" cy="45%" r="72%">
+      <stop offset="50%"  stop-color="#5E5A56" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#353230" stop-opacity="0.65"/>
+    </radialGradient>
+
+    <!-- Film grain filter for photographic texture -->
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+    <filter id="hairBlur">
+      <feGaussianBlur stdDeviation="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- ─── STUDIO BACKDROP ─── -->
+  <rect width="1440" height="580" fill="url(#studioBase)"/>
+  <rect width="1440" height="580" fill="url(#studioTop)"/>
+  <rect width="1440" height="580" fill="url(#keyLight)"/>
+  <rect width="1440" height="580" fill="url(#fillLight)"/>
+
+  <!-- ─── FIGURE — positioned right-center matching home page ─── -->
+  <!-- Shadow behind figure -->
+  <ellipse cx="960" cy="580" rx="320" ry="80" fill="#2A2624" opacity="0.5" filter="url(#softBlur)"/>
+
+  <!-- ── BODY / TORSO ── -->
+  <!-- Dress/clothing — dark, elegant -->
+  <ellipse cx="960" cy="560" rx="220" ry="120" fill="#1C1614" opacity="0.85"/>
+  <path d="M 760 580 Q 820 440 880 380 Q 920 350 960 345 Q 1000 350 1040 380 Q 1100 440 1160 580 Z" fill="#181412" opacity="0.9"/>
+
+  <!-- ── NECK ── -->
+  <ellipse cx="960" cy="345" rx="32" ry="48"
+    fill="url(#neckSkin)" opacity="0.92"/>
+  <!-- Neck shadow sides -->
+  <ellipse cx="936" cy="348" rx="12" ry="38" fill="#9A6840" opacity="0.35"/>
+  <ellipse cx="984" cy="348" rx="10" ry="36" fill="#B07848" opacity="0.25"/>
+
+  <!-- ── SHOULDERS ── -->
+  <!-- Left shoulder -->
+  <path d="M 840 360 Q 860 340 900 338 Q 920 340 930 348 Q 910 360 890 380 Q 860 395 838 400 Z"
+    fill="url(#shoulderSkin)" opacity="0.88"/>
+  <!-- Right shoulder -->
+  <path d="M 1080 360 Q 1060 340 1020 338 Q 1000 340 990 348 Q 1010 360 1030 380 Q 1060 395 1082 400 Z"
+    fill="url(#shoulderSkin)" opacity="0.88"/>
+  <!-- Shoulder shadow/form -->
+  <path d="M 840 365 Q 870 358 900 355 Q 920 358 935 368"
+    stroke="#9A6840" stroke-width="8" fill="none" opacity="0.25" stroke-linecap="round"/>
+
+  <!-- ── FACE ── -->
+  <!-- Face shadow/ambient occlusion -->
+  <ellipse cx="960" cy="242" rx="82" ry="98" fill="#8A5830" opacity="0.18" filter="url(#softBlur)"/>
+  <!-- Main face shape -->
+  <ellipse cx="960" cy="240" rx="75" ry="90"
+    fill="url(#faceSkin)" opacity="0.95"/>
+  <!-- Face edge shadow (3D form) -->
+  <path d="M 885 240 Q 888 180 915 155 Q 940 138 960 138 Q 980 138 1005 155 Q 1032 180 1035 240 Q 1032 300 1005 318 Q 980 330 960 330 Q 940 330 915 318 Q 888 300 885 240 Z"
+    fill="none" stroke="#8A5830" stroke-width="3" opacity="0.2"/>
+  <!-- Cheek warmth -->
+  <ellipse cx="916" cy="262" rx="22" ry="16" fill="#E89070" opacity="0.18"/>
+  <ellipse cx="1004" cy="262" rx="22" ry="16" fill="#E89070" opacity="0.18"/>
+  <!-- Nose shadow (subtle) -->
+  <ellipse cx="960" cy="275" rx="6" ry="8" fill="#9A6040" opacity="0.2"/>
+  <!-- Upper lip -->
+  <path d="M 942 298 Q 951 293 960 295 Q 969 293 978 298 Q 969 302 960 302 Q 951 302 942 298 Z"
+    fill="#C08060" opacity="0.65"/>
+  <!-- Lower lip -->
+  <path d="M 940 300 Q 952 310 960 312 Q 968 310 980 300 Q 969 308 960 310 Q 951 308 940 300 Z"
+    fill="#D09070" opacity="0.55"/>
+  <!-- Eye area (subtle, partially hidden by hair) -->
+  <ellipse cx="925" cy="222" rx="18" ry="8" fill="#3A2818" opacity="0.3"/>
+  <ellipse cx="995" cy="222" rx="18" ry="8" fill="#3A2818" opacity="0.3"/>
+  <!-- Eyebrow suggestions -->
+  <path d="M 908 208 Q 924 202 940 205" stroke="#2A1808" stroke-width="2.5" fill="none" opacity="0.6" stroke-linecap="round"/>
+  <path d="M 978 205 Q 994 202 1010 208" stroke="#2A1808" stroke-width="2.5" fill="none" opacity="0.6" stroke-linecap="round"/>
+  <!-- Eyelid/lash line -->
+  <path d="M 908 222 Q 925 218 940 222" stroke="#1A0E06" stroke-width="1.8" fill="none" opacity="0.5" stroke-linecap="round"/>
+  <path d="M 978 222 Q 993 218 1010 222" stroke="#1A0E06" stroke-width="1.8" fill="none" opacity="0.5" stroke-linecap="round"/>
+  <!-- Face key light (studio light catch) -->
+  <ellipse cx="992" cy="215" rx="28" ry="22" fill="#F8D8B0" opacity="0.12"/>
+
+  <!-- ─── HAIR — Dark Brunette, Long, Flowing ─── -->
+  <!-- Hair volume behind head (back layer) -->
+  <ellipse cx="960" cy="200" rx="130" ry="145" fill="#1A0E04" opacity="0.92"/>
+
+  <!-- ── HAIR BODY — main mass flowing down both sides ── -->
+  <!-- Right side flowing hair — main sweep -->
+  <path d="M 1030 100 Q 1080 160 1100 250 Q 1120 340 1105 440 Q 1095 510 1080 580"
+    stroke="#2C1A08" stroke-width="68" fill="none" opacity="0.95"/>
+  <path d="M 1020 80 Q 1075 150 1098 248 Q 1120 350 1108 450 Q 1098 525 1082 580"
+    stroke="#281608" stroke-width="55" fill="none" opacity="0.9"/>
+  <!-- Left side hair -->
+  <path d="M 890 100 Q 845 165 828 258 Q 812 352 825 450 Q 835 515 852 580"
+    stroke="#2C1A08" stroke-width="60" fill="none" opacity="0.9"/>
+  <!-- Centre back hair -->
+  <path d="M 960 60 Q 958 180 955 300 Q 952 420 958 580"
+    stroke="#221408" stroke-width="80" fill="none" opacity="0.85"/>
+
+  <!-- ── HAIR STRANDS — individual flowing lines for texture ── -->
+  <g opacity="0.85" stroke-linecap="round" fill="none" filter="url(#hairBlur)">
+    <!-- Dark base strands -->
+    <path d="M 870 80 Q 848 175 842 275 Q 836 375 844 475 Q 850 528 858 580" stroke="#221208" stroke-width="4.5"/>
+    <path d="M 885 72 Q 862 168 856 268 Q 850 368 858 468 Q 864 522 872 580" stroke="#2A1808" stroke-width="4"/>
+    <path d="M 898 68 Q 875 162 870 262 Q 864 362 872 462 Q 878 516 886 580" stroke="#1E1006" stroke-width="3.5"/>
+    <path d="M 910 66 Q 888 158 883 258 Q 878 358 886 458 Q 892 512 900 580" stroke="#261408" stroke-width="4"/>
+    <path d="M 922 64 Q 900 155 896 254 Q 892 354 900 454 Q 906 508 914 580" stroke="#2C1A08" stroke-width="3.5"/>
+    <path d="M 934 62 Q 913 152 910 251 Q 907 350 914 450 Q 920 504 928 580" stroke="#221008" stroke-width="4"/>
+    <path d="M 946 61 Q 926 150 924 248 Q 922 347 929 447 Q 935 501 942 580" stroke="#2A1608" stroke-width="3.5"/>
+    <path d="M 960 60 Q 942 149 940 248 Q 938 347 944 447 Q 950 501 957 580" stroke="#1E0E06" stroke-width="4.5"/>
+    <path d="M 974 61 Q 958 149 956 248 Q 954 347 961 447 Q 967 501 973 580" stroke="#2C1A08" stroke-width="4"/>
+    <path d="M 988 62 Q 974 150 972 249 Q 970 348 977 448 Q 983 502 989 580" stroke="#221208" stroke-width="3.5"/>
+    <path d="M 1002 64 Q 990 151 988 250 Q 986 349 993 449 Q 999 503 1005 580" stroke="#281608" stroke-width="4"/>
+    <path d="M 1016 66 Q 1005 152 1003 251 Q 1001 350 1008 450 Q 1014 504 1020 580" stroke="#2A1808" stroke-width="3.5"/>
+    <path d="M 1030 68 Q 1020 153 1019 252 Q 1018 351 1024 451 Q 1030 505 1036 580" stroke="#1E1006" stroke-width="4.5"/>
+    <path d="M 1044 72 Q 1036 156 1035 255 Q 1034 354 1040 454 Q 1046 508 1052 580" stroke="#261408" stroke-width="4"/>
+    <path d="M 1058 78 Q 1052 160 1051 259 Q 1050 358 1056 458 Q 1062 512 1068 580" stroke="#2A1808" stroke-width="3.5"/>
+    <path d="M 1072 86 Q 1068 166 1067 265 Q 1066 364 1072 464 Q 1078 518 1084 580" stroke="#221208" stroke-width="4"/>
+    <path d="M 1086 96 Q 1084 174 1083 273 Q 1082 372 1088 472 Q 1093 526 1099 580" stroke="#281608" stroke-width="3.5"/>
+    <path d="M 1098 108 Q 1098 184 1097 282 Q 1096 381 1101 480 Q 1106 534 1112 580" stroke="#1E1006" stroke-width="3"/>
+  </g>
+
+  <!-- ── HAIR HIGHLIGHTS — warm golden sheen (key light catch) ── -->
+  <g opacity="0.7" fill="none" stroke-linecap="round">
+    <!-- Main highlight sweep across right side -->
+    <path d="M 968 62 Q 952 151 950 249 Q 948 347 955 447 Q 961 501 967 580" stroke="#A87840" stroke-width="2.2"/>
+    <path d="M 980 63 Q 966 152 964 250 Q 962 348 969 448 Q 975 502 981 580" stroke="#C09050" stroke-width="1.8"/>
+    <path d="M 992 65 Q 980 153 978 251 Q 976 349 983 449 Q 989 503 995 580" stroke="#B88040" stroke-width="2"/>
+    <path d="M 1004 67 Q 994 154 992 252 Q 990 350 997 450 Q 1003 504 1009 580" stroke="#9A6830" stroke-width="1.8"/>
+    <path d="M 1016 70 Q 1008 156 1007 254 Q 1006 352 1012 452 Q 1018 506 1024 580" stroke="#C09050" stroke-width="2"/>
+    <path d="M 1028 74 Q 1022 159 1021 257 Q 1020 355 1026 455 Q 1032 509 1038 580" stroke="#A87840" stroke-width="1.8"/>
+    <path d="M 1040 80 Q 1036 163 1035 261 Q 1034 359 1040 459 Q 1046 513 1052 580" stroke="#B88040" stroke-width="1.6"/>
+    <!-- Left side highlight -->
+    <path d="M 948 62 Q 930 151 928 249 Q 926 347 933 447 Q 939 501 945 580" stroke="#9A6830" stroke-width="2"/>
+    <path d="M 936 64 Q 916 153 914 251 Q 912 349 919 449 Q 925 503 931 580" stroke="#A87840" stroke-width="1.8"/>
+    <path d="M 924 68 Q 902 157 900 255 Q 898 353 905 453 Q 911 507 917 580" stroke="#C09050" stroke-width="1.6"/>
+    <path d="M 912 74 Q 888 162 886 260 Q 884 358 891 458 Q 897 512 903 580" stroke="#9A6830" stroke-width="1.8"/>
+    <path d="M 900 82 Q 874 168 872 266 Q 870 364 877 464 Q 883 518 889 580" stroke="#A87840" stroke-width="1.6"/>
+  </g>
+
+  <!-- ── FINE HAIR SHIMMER THREADS ── -->
+  <g opacity="0.45" fill="none" stroke-linecap="round">
+    <path d="M 986 63 Q 974 152 973 250 Q 972 348 978 448 Q 984 502 990 580" stroke="#E8C880" stroke-width="0.9"/>
+    <path d="M 1000 65 Q 990 153 989 251 Q 988 349 994 449 Q 1000 503 1006 580" stroke="#F0D890" stroke-width="0.8"/>
+    <path d="M 1014 68 Q 1006 155 1005 253 Q 1004 351 1010 451 Q 1016 505 1022 580" stroke="#E8C880" stroke-width="0.9"/>
+    <path d="M 1028 73 Q 1022 159 1021 257 Q 1020 355 1026 455 Q 1032 509 1038 580" stroke="#D4B060" stroke-width="0.8"/>
+    <path d="M 970 63 Q 958 152 957 250 Q 956 348 962 448 Q 968 502 974 580" stroke="#F0D890" stroke-width="0.9"/>
+    <path d="M 956 65 Q 942 154 941 252 Q 940 350 946 450 Q 952 504 958 580" stroke="#E8C880" stroke-width="0.8"/>
+    <path d="M 942 69 Q 926 157 925 255 Q 924 353 930 453 Q 936 507 942 580" stroke="#D4B060" stroke-width="0.9"/>
+    <path d="M 928 76 Q 910 163 909 261 Q 908 359 914 459 Q 920 513 926 580" stroke="#E8C880" stroke-width="0.8"/>
+  </g>
+
+  <!-- ── HAIR TOP — crown area, forehead hairline ── -->
+  <ellipse cx="960" cy="140" rx="110" ry="88" fill="#1E1008" opacity="0.95"/>
+  <!-- Crown highlight -->
+  <path d="M 920 100 Q 960 88 1000 100" stroke="#6B4020" stroke-width="18" fill="none" opacity="0.5" stroke-linecap="round"/>
+  <path d="M 930 96 Q 960 86 990 96" stroke="#9A6030" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
+  <path d="M 940 93 Q 960 84 980 93" stroke="#C08040" stroke-width="4" fill="none" opacity="0.35" stroke-linecap="round"/>
+  <!-- Hairline against forehead -->
+  <path d="M 898 162 Q 928 148 960 144 Q 992 148 1022 162" fill="none" stroke="#1A0E04" stroke-width="10" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- ── EAR (partially visible, left side) ── -->
+  <ellipse cx="885" cy="252" rx="12" ry="16" fill="#C89060" opacity="0.75"/>
+  <ellipse cx="885" cy="252" rx="7" ry="10" fill="#A87048" opacity="0.5"/>
+
+  <!-- ── SUBTLE EYE DETAIL ── -->
+  <!-- Left eye (partially visible) -->
+  <ellipse cx="924" cy="228" rx="15" ry="7" fill="#1A0E06" opacity="0.7"/>
+  <path d="M 910 228 Q 924 222 938 228" stroke="#0E0804" stroke-width="1.5" fill="none" opacity="0.8"/>
+  <!-- Right eye -->
+  <ellipse cx="996" cy="228" rx="15" ry="7" fill="#1A0E06" opacity="0.7"/>
+  <path d="M 982 228 Q 996 222 1010 228" stroke="#0E0804" stroke-width="1.5" fill="none" opacity="0.8"/>
+  <!-- Eye catch light (studio reflection) -->
+  <circle cx="930" cy="225" r="2.5" fill="#E8D8B8" opacity="0.7"/>
+  <circle cx="1002" cy="225" r="2.5" fill="#E8D8B8" opacity="0.7"/>
+  <!-- Iris -->
+  <ellipse cx="924" cy="227" rx="7" ry="6" fill="#3A2810" opacity="0.85"/>
+  <ellipse cx="996" cy="227" rx="7" ry="6" fill="#3A2810" opacity="0.85"/>
+  <ellipse cx="924" cy="227" rx="3.5" ry="3" fill="#0A0604" opacity="0.9"/>
+  <ellipse cx="996" cy="227" rx="3.5" ry="3" fill="#0A0604" opacity="0.9"/>
+
+  <!-- ── LASHES ── -->
+  <g stroke="#0E0804" stroke-width="1.2" fill="none" opacity="0.7" stroke-linecap="round">
+    <path d="M 910 226 Q 908 220 907 215"/>
+    <path d="M 913 224 Q 911 218 910 213"/>
+    <path d="M 916 223 Q 915 217 915 212"/>
+    <path d="M 919 222 Q 919 216 919 211"/>
+    <path d="M 922 222 Q 923 216 924 211"/>
+    <path d="M 925 222 Q 926 216 928 211"/>
+    <path d="M 928 222 Q 930 217 932 212"/>
+    <path d="M 931 222 Q 934 217 936 213"/>
+    <path d="M 934 223 Q 937 218 939 214"/>
+    <path d="M 937 224 Q 940 219 942 216"/>
+    <!-- Right eye lashes -->
+    <path d="M 982 226 Q 980 220 979 215"/>
+    <path d="M 985 224 Q 983 218 982 213"/>
+    <path d="M 988 223 Q 987 217 987 212"/>
+    <path d="M 991 222 Q 991 216 991 211"/>
+    <path d="M 994 222 Q 995 216 996 211"/>
+    <path d="M 997 222 Q 998 216 1000 211"/>
+    <path d="M 1000 222 Q 1002 217 1004 212"/>
+    <path d="M 1003 222 Q 1006 217 1008 213"/>
+    <path d="M 1006 223 Q 1009 218 1011 214"/>
+    <path d="M 1009 224 Q 1012 219 1014 216"/>
+  </g>
+
+  <!-- ── FACE FORM SHADOWS ── -->
+  <!-- Temple/side shadow -->
+  <path d="M 888 180 Q 882 220 884 260 Q 886 300 895 330" stroke="#8A5030" stroke-width="16" fill="none" opacity="0.2" stroke-linecap="round"/>
+  <!-- Nose shadow line -->
+  <path d="M 958 258 Q 955 272 952 285 Q 956 292 960 293" stroke="#9A5830" stroke-width="3" fill="none" opacity="0.25" stroke-linecap="round"/>
+  <!-- Philtrum/upper lip shadow -->
+  <path d="M 956 288 Q 960 294 964 288" stroke="#8A4828" stroke-width="2" fill="none" opacity="0.35"/>
+
+  <!-- ── FIGURE SHADOW (cast shadow on backdrop) ── -->
+  <ellipse cx="900" cy="400" rx="80" ry="200" fill="#3A3530" opacity="0.12" filter="url(#softBlur)"/>
+
+  <!-- ── STUDIO FLOOR SHADOW ── -->
+  <ellipse cx="960" cy="560" rx="300" ry="40" fill="#303030" opacity="0.18" filter="url(#softBlur)"/>
+
+  <!-- ─── OVERLAYS ─── -->
+  <!-- Left text overlay (matches home page gradient) -->
+  <rect width="1440" height="580" fill="url(#textOverlay)"/>
+  <!-- Vignette (matches home page) -->
+  <rect width="1440" height="580" fill="url(#vignette)"/>
+
+  <!-- Subtle film grain -->
+  <rect width="1440" height="580" fill="url(#studioBase)" opacity="0.04" filter="url(#grain)"/>
+</svg>
