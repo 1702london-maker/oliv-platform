@@ -17,9 +17,24 @@ export function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClonePagePr
       : html + injectBeforeClose;
   }
 
-  return <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />;
-}
+  // Extract <style> blocks and hoist them to <head> via React
+  // This prevents body-style repaints (flash of unstyled content)
+  const styleBlocks: string[] = [];
+  const htmlWithoutStyles = html.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (_, css) => {
+    styleBlocks.push(css);
+    return "";
+  });
 
+  return (
+    <>
+      {styleBlocks.map((css, i) => (
+        // @ts-ignore — React 19 hoists <style> with precedence to <head>
+        <style key={i} precedence="default" dangerouslySetInnerHTML={{ __html: css }} />
+      ))}
+      <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: htmlWithoutStyles }} />
+    </>
+  );
+}
 function normalizeShopifyHtml(rawHtml: string, page: string) {
   let html = rawHtml
     .replaceAll('href="/collections"', 'href="/shop"')
