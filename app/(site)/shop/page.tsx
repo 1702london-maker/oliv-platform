@@ -23,70 +23,70 @@ const shopCollections = [
     title: "BiziLuxe Accessoires",
     slug: "biziluxe-accessoires",
     desc: "Finishing accessories, care pieces and refined essentials for maintaining your BiziLuxe look.",
-    image: "/products/biziluxe-accessoires/schwarzwald-main.jpg"
+    image: "/products/biziluxe-accessoires/parchim/parchim-gold-main.jpg"
   },
   {
     title: "BiziLuxe Stylinggeräte",
     slug: "biziluxe-stylinggeraete",
     desc: "Styling tools selected for controlled heat, polished results and daily salon-level care.",
-    image: "/products/profi-friseurbedarf/glashuette-main.jpg"
+    image: "/products/biziluxe-accessoires/ludwigslust/ludwigslust-schwarz-main.jpg"
   },
   {
     title: "Bürsten & Kämme",
     slug: "buersten-und-kaemme",
     desc: "Brushes and combs for gentle detangling, blending and extension-safe daily maintenance.",
-    image: "/products/buersten-und-kaemme/goslar/goslar-main.jpg"
+    image: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg"
   },
   {
     title: "Profi Friseurbedarf",
     slug: "profi-friseurbedarf",
     desc: "Professional supplies and appliances for salon workflows, installation and precision finishing.",
-    image: "/products/profi-friseurbedarf/solingen-main.jpg"
+    image: "/products/profi-friseurbedarf/herford/herford-main.jpg"
   }
 ];
 
 const featuredProducts = [
   {
-    title: "Meissen",
+    title: "Parchim",
     tag: "BiziLuxe Accessoires",
-    price: "&euro;29,00",
-    href: "/products/meissen",
-    image: "/products/biziluxe-accessoires/meissen-main.jpg"
-  },
-  {
-    title: "Saphir",
-    tag: "BiziLuxe Accessoires",
-    price: "&euro;39,00",
-    href: "/products/saphir",
-    image: "/products/biziluxe-accessoires/saphir-main.jpg"
-  },
-  {
-    title: "Rosenthal",
-    tag: "BiziLuxe Accessoires",
-    price: "&euro;34,00",
-    href: "/products/rosenthal",
-    image: "/products/biziluxe-accessoires/rosenthal-main.jpg"
-  },
-  {
-    title: "Goslar",
-    tag: "Bürsten & Kämme",
-    price: "&euro;24,00",
-    href: "/products/goslar",
-    image: "/products/buersten-und-kaemme/goslar/goslar-main.jpg"
-  },
-  {
-    title: "Solingen",
-    tag: "Profi Friseurbedarf",
     price: "&euro;45,00",
-    href: "/products/solingen",
-    image: "/products/profi-friseurbedarf/solingen-main.jpg"
+    href: "/products/parchim",
+    image: "/products/biziluxe-accessoires/parchim/parchim-gold-main.jpg"
   },
   {
-    title: "Bavaria",
+    title: "Rügen",
+    tag: "BiziLuxe Accessoires",
+    price: "&euro;35,00",
+    href: "/products/ruegen",
+    image: "/products/biziluxe-accessoires/ruegen/ruegen-gold-main.jpg"
+  },
+  {
+    title: "Ludwigslust",
+    tag: "BiziLuxe Stylinggeräte",
+    price: "&euro;189,00",
+    href: "/products/ludwigslust",
+    image: "/products/biziluxe-accessoires/ludwigslust/ludwigslust-schwarz-main.jpg"
+  },
+  {
+    title: "Lübeck",
+    tag: "Bürsten & Kämme",
+    price: "&euro;22,00",
+    href: "/products/luebeck",
+    image: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg"
+  },
+  {
+    title: "Herford",
     tag: "Profi Friseurbedarf",
-    price: "&euro;52,00",
-    href: "/products/bavaria",
-    image: "/products/profi-friseurbedarf/bavaria-main.jpg"
+    price: "&euro;59,00",
+    href: "/products/herford",
+    image: "/products/profi-friseurbedarf/herford/herford-main.jpg"
+  },
+  {
+    title: "Recklinghausen",
+    tag: "Profi Friseurbedarf",
+    price: "&euro;189,00",
+    href: "/products/recklinghausen",
+    image: "/products/profi-friseurbedarf/recklinghausen/recklinghausen-main.jpg"
   }
 ];
 
@@ -275,14 +275,17 @@ function shopLandingOverrides() {
 }
 .oshp-col-card,
 .oshp-col-card-large {
-  min-height: 260px !important;
+  height: 280px !important;
+  min-height: unset !important;
   grid-row: auto !important;
 }
 .oshp-col-card-img,
 .oshp-col-card-large .oshp-col-card-img,
 .oshp-col-card-ph {
-  height: 100% !important;
-  min-height: 260px !important;
+  height: 280px !important;
+  min-height: unset !important;
+  width: 100% !important;
+  object-fit: cover !important;
 }
 .oshp-col-card-name,
 .oshp-col-card-large .oshp-col-card-name {
