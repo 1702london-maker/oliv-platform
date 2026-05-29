@@ -27,7 +27,7 @@ export default async function ProductPage({ params }: PageProps) {
   const before = fixShellCartLinks(shell.slice(0, mainStart + marker.length));
   const after = shell.slice(footerStart);
   const firstVariant = product.variants[0];
-  const galleryImages = getProductGalleryImages(product.image_url);
+  const galleryImages = getProductGalleryImages(product.image_url, product.variants);
 
   return (
     <>
@@ -82,23 +82,19 @@ function fixShellCartLinks(html: string) {
     .replace(/href="\/shop" class="ohs-icon-btn" style="position:relative;" aria-label="Cart"/g, 'href="/cart" class="ohs-icon-btn" style="position:relative;" aria-label="Cart"');
 }
 
-function getProductGalleryImages(imageUrl: string | null) {
-  if (!imageUrl) return [];
+function getProductGalleryImages(imageUrl: string | null, variants: { image_url?: string | null }[] = []) {
+  const variantImages = variants
+    .map((v) => v.image_url)
+    .filter((url): url is string => Boolean(url));
 
-  const categoryPath = imageUrl.split("/").slice(0, -1).join("/");
-  const gallery = [imageUrl];
-  const alternates: Record<string, string[]> = {
-    "/products/biziluxe-extensions": ["koenigsallee-main.jpg", "sanssouci-main.jpg", "nymphenburg-main.jpg"],
-    "/products/biziluxe-accessoires": ["saphir-main.jpg", "rotenburg-main.jpg", "schwarzwald-main.jpg"],
-    "/products/profi-friseurbedarf": ["waldenburg-main.jpg", "zeppelin-main.jpg", "glashuette-main.jpg"]
-  };
-
-  for (const file of alternates[categoryPath] || []) {
-    const next = `${categoryPath}/${file}`;
-    if (!gallery.includes(next)) gallery.push(next);
-    if (gallery.length === 3) break;
+  const gallery: string[] = [];
+  if (imageUrl) gallery.push(imageUrl);
+  for (const url of variantImages) {
+    if (!gallery.includes(url)) gallery.push(url);
+    if (gallery.length >= 4) break;
   }
 
-  while (gallery.length < 3) gallery.push(imageUrl);
-  return gallery.slice(0, 3);
+  if (!gallery.length) return [];
+  while (gallery.length < 3) gallery.push(gallery[0]);
+  return gallery.slice(0, 4);
 }

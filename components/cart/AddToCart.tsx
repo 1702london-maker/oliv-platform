@@ -6,8 +6,10 @@ import { formatMoney } from "@/lib/catalog/money";
 type Variant = {
   id: string;
   title: string;
+  color: string | null;
   retail_price_cents: number;
   wholesale_price_cents: number | null;
+  image_url: string | null;
 };
 
 type AddToCartProps = {
@@ -50,14 +52,14 @@ const HAIR_COLOURS = [
 ];
 const HAIR_LENGTHS = ["40cm", "45cm", "50cm", "55cm", "60cm", "65cm"];
 const HAIR_TEXTURES = ["Glatt", "Wellig"];
-const NON_HAIR_COLOURS = ["Schwarz", "Braun", "Naturfarbe", "Weiß"];
+
 
 export function AddToCart({ product, variants, priceMode = "retail", currency = "EUR" }: AddToCartProps) {
   const [variantId, setVariantId] = useState(variants[0]?.id || "");
   const isHair = product.image_url?.includes("/biziluxe-extensions/") || product.image_url?.includes("/bizihair-extensions/");
   const usesSimpleColours =
     product.image_url?.includes("/biziluxe-accessoires/") || product.image_url?.includes("/profi-friseurbedarf/");
-  const [colour, setColour] = useState((isHair ? HAIR_COLOURS : NON_HAIR_COLOURS)[0]);
+  const [colour, setColour] = useState(HAIR_COLOURS[0]);
   const [length, setLength] = useState(HAIR_LENGTHS[0]);
   const [texture, setTexture] = useState(HAIR_TEXTURES[0]);
   const [quantity, setQuantity] = useState(1);
@@ -73,7 +75,7 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
     if (!selected) return;
 
     const existing = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]") as CartItem[];
-    const optionTitle = isHair ? `${colour} / ${length} / ${texture}` : usesSimpleColours ? colour : selected.title;
+    const optionTitle = isHair ? `${colour} / ${length} / ${texture}` : selected.title;
     const cartKey = `${selected.id}:${optionTitle}`;
     const index = existing.findIndex((item) => (item.cartKey || item.variantId) === cartKey);
     if (index >= 0) {
@@ -99,16 +101,28 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
 
   return (
     <div className="ohs-buy-box">
-      {isHair || usesSimpleColours ? (
+      {isHair ? (
         <>
-          <OptionGroup label="Colour" options={isHair ? HAIR_COLOURS : NON_HAIR_COLOURS} value={colour} onChange={setColour} />
-          {isHair ? (
-            <>
-              <OptionGroup label="Length" options={HAIR_LENGTHS} value={length} onChange={setLength} />
-              <OptionGroup label="Texture" options={HAIR_TEXTURES} value={texture} onChange={setTexture} />
-            </>
-          ) : null}
+          <OptionGroup label="Colour" options={HAIR_COLOURS} value={colour} onChange={setColour} />
+          <OptionGroup label="Length" options={HAIR_LENGTHS} value={length} onChange={setLength} />
+          <OptionGroup label="Texture" options={HAIR_TEXTURES} value={texture} onChange={setTexture} />
         </>
+      ) : usesSimpleColours && variants.length > 0 ? (
+        <fieldset className="ohs-option-group">
+          <legend>Colour</legend>
+          <div>
+            {variants.map((variant) => (
+              <button
+                key={variant.id}
+                type="button"
+                className={variant.id === variantId ? "active" : ""}
+                onClick={() => setVariantId(variant.id)}
+              >
+                {variant.color || variant.title}
+              </button>
+            ))}
+          </div>
+        </fieldset>
       ) : (
         <label>
           <span>Option</span>

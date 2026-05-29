@@ -7,7 +7,9 @@ export type CatalogVariant = {
   id: string;
   shopify_id?: number | null;
   title: string;
+  color: string | null;
   sku: string | null;
+  image_url: string | null;
   retail_price_cents: number;
   wholesale_price_cents: number | null;
   inventory_quantity: number;
@@ -49,7 +51,7 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
   let query = supabase
     .from("products")
     .select(
-      "id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,sku,retail_price_cents,wholesale_price_cents,inventory_quantity)"
+      "id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,color,sku,retail_price_cents,wholesale_price_cents,inventory_quantity,image_url,position)"
     )
     .eq("status", "active")
     .order("title", { ascending: true });
@@ -72,7 +74,7 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
     slug: product.slug,
     description: product.description,
     image_url: product.image_url,
-    variants: product.product_variants || []
+    variants: (product.product_variants || []).sort((a: any, b: any) => (a.position ?? 99) - (b.position ?? 99))
   }));
 
   if (categorySlug && needsPathCategoryFallback) {
