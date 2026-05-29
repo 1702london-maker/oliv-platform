@@ -334,17 +334,34 @@ function shopLandingOverrides() {
   }
   }
   .oshp-hero-meta {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  margin-top: 28px;
-  flex-wrap: wrap;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  border: none !important;
+  border-top: 1px solid rgba(182,138,69,0.25) !important;
+  background: rgba(43,38,32,0.55) !important;
+  align-items: stretch !important;
 }
 .oshp-hero-meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 0 !important;
+  text-align: center !important;
+  padding: 14px 8px !important;
+  border-right: 1px solid rgba(182,138,69,0.2) !important;
+  border-bottom: none !important;
 }
+.oshp-hero-meta-item:last-child { border-right: none !important; }
 .oshp-hero-meta-val {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 28px;
@@ -394,5 +411,29 @@ function shopLandingOverrides() {
   }
   .oshp-hero-meta-item:last-child { border-right: none !important; }
   .oshp-hero-meta-label { white-space: normal !important; line-height: 1.3 !important; }
-}`;
+}
+/* Quality You Can Feel — white background, full width */
+.oshp-story {
+  background: #ffffff !important;
+  width: 100% !important;
+}
+.oshp-story-inner {
+  max-width: 100% !important;
+  padding: 80px !important;
+}
+.oshp-story-eyebrow { color: #B68A45 !important; }
+.oshp-story-title { color: #2B2620 !important; }
+.oshp-story-title em { color: #B68A45 !important; }
+.oshp-story-body { color: #4A3F35 !important; }
+.oshp-story-stat {
+  background: #F6F1E8 !important;
+  border: 1px solid #E3D6C5 !important;
+}
+.oshp-story-stat-val { color: #2B2620 !important; }
+.oshp-story-stat-val em { color: #B68A45 !important; }
+.oshp-story-stat-label { color: #7A6A5A !important; }
+@media (max-width: 768px) {
+  .oshp-story-inner { padding: 48px 24px !important; }
+}
+`;
 }
