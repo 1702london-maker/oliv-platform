@@ -1,0 +1,335 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+  <defs>
+    <linearGradient id="drBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#424040"/>
+      <stop offset="28%"  stop-color="#555250"/>
+      <stop offset="54%"  stop-color="#5E5A56"/>
+      <stop offset="78%"  stop-color="#575350"/>
+      <stop offset="100%" stop-color="#4A4744"/>
+    </linearGradient>
+    <linearGradient id="drTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.50"/>
+      <stop offset="38%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.40"/>
+    </linearGradient>
+    <radialGradient id="drKey" cx="72%" cy="14%" r="52%">
+      <stop offset="0%"   stop-color="#807060" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="drFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#363230"/>
+      <stop offset="100%" stop-color="#242018"/>
+    </linearGradient>
+    <!-- Chair -->
+    <linearGradient id="drChairL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#282420"/>
+      <stop offset="30%"  stop-color="#1A1614"/>
+      <stop offset="70%"  stop-color="#141210"/>
+      <stop offset="100%" stop-color="#0E0C0A"/>
+    </linearGradient>
+    <linearGradient id="drMetal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#4A4440"/>
+      <stop offset="30%"  stop-color="#6A6460"/>
+      <stop offset="60%"  stop-color="#888280"/>
+      <stop offset="80%"  stop-color="#5A5450"/>
+      <stop offset="100%" stop-color="#3A3430"/>
+    </linearGradient>
+    <linearGradient id="drChairGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#A07818"/>
+      <stop offset="40%"  stop-color="#C9A96E"/>
+      <stop offset="70%"  stop-color="#D4B478"/>
+      <stop offset="100%" stop-color="#9A7018"/>
+    </linearGradient>
+    <!-- Hair — warm golden/brunette being blow-dried -->
+    <linearGradient id="hBase" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0%"   stop-color="#1A0E04"/>
+      <stop offset="35%"  stop-color="#3C2410"/>
+      <stop offset="70%"  stop-color="#5A3820"/>
+      <stop offset="100%" stop-color="#3C2410"/>
+    </linearGradient>
+    <linearGradient id="hWarm" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C09050" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#D8A860" stop-opacity="0.72"/>
+      <stop offset="60%"  stop-color="#E8C070" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#C09050" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="hGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#F0D880" stop-opacity="0"/>
+      <stop offset="40%"  stop-color="#F8E890" stop-opacity="0.65"/>
+      <stop offset="70%"  stop-color="#E8D070" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#D0B050" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Hair dryer body -->
+    <linearGradient id="dryerBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#2A2824"/>
+      <stop offset="30%"  stop-color="#1E1C18"/>
+      <stop offset="70%"  stop-color="#161412"/>
+      <stop offset="100%" stop-color="#0E0C0A"/>
+    </linearGradient>
+    <linearGradient id="dryerSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#5A5550" stop-opacity="0.0"/>
+      <stop offset="25%"  stop-color="#7A7570" stop-opacity="0.5"/>
+      <stop offset="50%"  stop-color="#9A9590" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#5A5550" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="dryerGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#A07818"/>
+      <stop offset="50%"  stop-color="#C9A96E"/>
+      <stop offset="100%" stop-color="#9A7018"/>
+    </linearGradient>
+    <linearGradient id="dryerNozzle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#323028"/>
+      <stop offset="100%" stop-color="#1A1814"/>
+    </linearGradient>
+    <!-- Warm air glow from nozzle -->
+    <radialGradient id="airGlow" cx="0%" cy="50%" r="100%">
+      <stop offset="0%"   stop-color="#E8C050" stop-opacity="0.55"/>
+      <stop offset="40%"  stop-color="#D4A030" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#B88020" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Brand -->
+    <linearGradient id="goldT" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#B8900A"/>
+      <stop offset="50%"  stop-color="#E8C858"/>
+      <stop offset="100%" stop-color="#C09828"/>
+    </linearGradient>
+    <linearGradient id="bkFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#201C14"/>
+      <stop offset="100%" stop-color="#121008"/>
+    </linearGradient>
+    <linearGradient id="bkTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#2C2418"/>
+      <stop offset="100%" stop-color="#1C1810"/>
+    </linearGradient>
+    <!-- Skin -->
+    <radialGradient id="drSkinNeck" cx="50%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#E8BA88"/>
+      <stop offset="60%"  stop-color="#C89060"/>
+      <stop offset="100%" stop-color="#A87040"/>
+    </radialGradient>
+    <radialGradient id="drSkinShoulder" cx="40%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#D8A868"/>
+      <stop offset="55%"  stop-color="#B88048"/>
+      <stop offset="100%" stop-color="#905030"/>
+    </radialGradient>
+    <!-- Stylist arm -->
+    <radialGradient id="drSkinArm" cx="50%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#E0B07A"/>
+      <stop offset="60%"  stop-color="#C09060"/>
+      <stop offset="100%" stop-color="#986040"/>
+    </radialGradient>
+    <!-- Overlays -->
+    <linearGradient id="drTextOv" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#484440" stop-opacity="0.80"/>
+      <stop offset="30%"  stop-color="#504C48" stop-opacity="0.50"/>
+      <stop offset="65%"  stop-color="#5A5652" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#5A5652" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="drVig" cx="55%" cy="50%" r="70%">
+      <stop offset="50%"  stop-color="#5E5A56" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#282420" stop-opacity="0.75"/>
+    </radialGradient>
+    <filter id="drBlur"><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="drHairBlur"><feGaussianBlur stdDeviation="0.5"/></filter>
+    <filter id="drGlowF"><feGaussianBlur stdDeviation="8"/></filter>
+  </defs>
+
+  <!-- BACKDROP -->
+  <rect width="1440" height="580" fill="url(#drBg)"/>
+  <rect width="1440" height="580" fill="url(#drTop)"/>
+  <rect width="1440" height="580" fill="url(#drKey)"/>
+  <!-- Floor -->
+  <rect x="0" y="490" width="1440" height="90" fill="url(#drFloor)"/>
+  <line x1="0" y1="490" x2="1440" y2="490" stroke="#1A1612" stroke-width="2" opacity="0.5"/>
+
+  <!-- ─── SALON CHAIR ─── -->
+  <ellipse cx="680" cy="498" rx="130" ry="12" fill="#080604" opacity="0.48" filter="url(#drBlur)"/>
+  <ellipse cx="680" cy="495" rx="100" ry="9" fill="#1A1614" opacity="0.9"/>
+  <rect x="662" y="358" width="36" height="138" fill="url(#drMetal)"/>
+  <rect x="666" y="358" width="9" height="138" fill="#888280" opacity="0.32"/>
+  <rect x="654" y="335" width="52" height="32" rx="5" fill="#2A2620"/>
+  <rect x="657" y="337" width="46" height="28" rx="4" fill="#3A3430"/>
+  <!-- Seat -->
+  <rect x="580" y="295" width="200" height="65" rx="20" fill="url(#drChairL)"/>
+  <rect x="582" y="297" width="196" height="22" rx="14" fill="#282420" opacity="0.6"/>
+  <line x1="610" y1="312" x2="750" y2="312" stroke="#3A3430" stroke-width="0.9" opacity="0.45"/>
+  <line x1="610" y1="334" x2="750" y2="334" stroke="#3A3430" stroke-width="0.9" opacity="0.38"/>
+  <!-- Backrest -->
+  <rect x="614" y="130" width="132" height="178" rx="22" fill="url(#drChairL)"/>
+  <rect x="618" y="134" width="124" height="170" rx="18" fill="#1A1614"/>
+  <line x1="635" y1="175" x2="737" y2="175" stroke="#2A2420" stroke-width="0.9" opacity="0.4"/>
+  <line x1="635" y1="225" x2="737" y2="225" stroke="#2A2420" stroke-width="0.8" opacity="0.35"/>
+  <line x1="635" y1="272" x2="737" y2="272" stroke="#2A2420" stroke-width="0.8" opacity="0.32"/>
+  <text x="680" y="212" font-family="'Cormorant Garamond',Georgia,serif" font-size="15" font-style="italic" fill="#C9A96E" text-anchor="middle" letter-spacing="3.5" opacity="0.35">OHS</text>
+  <!-- Footrest -->
+  <rect x="568" y="418" width="224" height="9" rx="4.5" fill="url(#drChairGold)"/>
+  <ellipse cx="573" cy="422" rx="6" ry="6" fill="#C9A96E" opacity="0.9"/>
+  <ellipse cx="787" cy="422" rx="6" ry="6" fill="#C9A96E" opacity="0.9"/>
+  <!-- Armrests -->
+  <rect x="574" y="278" width="14" height="55" rx="4" fill="url(#drMetal)"/>
+  <rect x="772" y="278" width="14" height="55" rx="4" fill="url(#drMetal)"/>
+  <rect x="570" y="273" width="22" height="13" rx="4" fill="#1A1614"/>
+  <rect x="768" y="273" width="22" height="13" rx="4" fill="#1A1614"/>
+
+  <!-- ─── CLIENT — warm highlighted hair, from behind ─── -->
+  <ellipse cx="676" cy="240" rx="92" ry="130" fill="#201810" opacity="0.20" filter="url(#drBlur)"/>
+  <!-- Shoulders -->
+  <path d="M 588 268 Q 614 252 638 248 Q 654 244 680 244 Q 706 244 722 248 Q 746 252 772 268 Q 786 276 790 290 L 570 290 Q 574 276 588 268 Z" fill="#2A2420" opacity="0.88"/>
+  <!-- Neck -->
+  <rect x="662" y="175" width="36" height="72" rx="14" fill="url(#drSkinNeck)" opacity="0.82"/>
+  <!-- Shoulder skin -->
+  <path d="M 588 270 Q 620 255 648 250 L 668 262 Q 650 272 628 284 Q 602 296 586 296 Z" fill="url(#drSkinShoulder)" opacity="0.80"/>
+  <path d="M 772 270 Q 740 255 712 250 L 692 262 Q 710 272 732 284 Q 758 296 774 296 Z" fill="url(#drSkinShoulder)" opacity="0.80"/>
+
+  <!-- ─── WARM HIGHLIGHTED HAIR (being blow-dried, flowing right) ─── -->
+  <!-- Hair volume behind head -->
+  <ellipse cx="680" cy="130" rx="80" ry="88" fill="#2C1808" opacity="0.92"/>
+
+  <!-- Main hair mass — flowing dramatically to the right from dryer heat -->
+  <g fill="none" stroke-linecap="round" filter="url(#drHairBlur)">
+    <!-- Dark base strands sweeping right and down -->
+    <g opacity="0.90" stroke="#1A0E04">
+      <path d="M 636 65 Q 680 100 740 148 Q 800 198 860 252 Q 920 308 980 360 Q 1040 410 1100 452 Q 1150 488 1190 510" stroke-width="6"/>
+      <path d="M 648 62 Q 694 98 754 147 Q 814 198 874 253 Q 934 308 994 360 Q 1054 412 1114 454 Q 1164 490 1202 512" stroke-width="5.5"/>
+      <path d="M 660 60 Q 708 96 768 146 Q 828 198 888 254 Q 948 310 1008 362 Q 1068 414 1128 456 Q 1176 492 1214 514" stroke-width="5"/>
+      <path d="M 672 59 Q 720 95 780 145 Q 840 196 900 252 Q 960 308 1020 360 Q 1080 412 1140 454 Q 1188 490 1224 512" stroke-width="5.5"/>
+      <path d="M 684 58 Q 732 94 792 144 Q 852 196 912 252 Q 972 308 1032 360 Q 1092 412 1152 454 Q 1200 490 1236 512" stroke-width="5"/>
+      <path d="M 696 58 Q 744 94 804 144 Q 864 196 924 252 Q 984 308 1044 360 Q 1104 412 1164 453 Q 1212 490 1248 512" stroke-width="6"/>
+      <path d="M 708 60 Q 756 96 816 146 Q 876 198 936 254 Q 996 310 1056 362 Q 1116 414 1176 456 Q 1224 492 1260 514" stroke-width="5.5"/>
+      <path d="M 720 62 Q 768 98 828 148 Q 888 200 948 256 Q 1008 312 1068 364 Q 1128 416 1188 458 Q 1235 494 1270 516" stroke-width="5"/>
+    </g>
+    <!-- Warm midtone strands -->
+    <g opacity="0.72" stroke="#5A3818">
+      <path d="M 642 64 Q 688 100 748 150 Q 808 201 868 256 Q 928 312 988 364 Q 1048 415 1108 457" stroke-width="4.5"/>
+      <path d="M 654 62 Q 702 98 762 148 Q 822 200 882 255 Q 942 310 1002 362 Q 1062 414 1122 456" stroke-width="4"/>
+      <path d="M 666 61 Q 714 97 774 147 Q 834 199 894 254 Q 954 309 1014 361 Q 1074 413 1134 455" stroke-width="4.5"/>
+      <path d="M 678 60 Q 726 96 786 146 Q 846 198 906 253 Q 966 308 1026 360 Q 1086 412 1146 454" stroke-width="4"/>
+    </g>
+    <!-- Golden warm highlights (heat from dryer) -->
+    <g opacity="0.68" stroke="#C09050">
+      <path d="M 650 63 Q 698 99 758 149 Q 818 200 878 255 Q 938 311 998 363 Q 1058 415 1118 457" stroke-width="2.5"/>
+      <path d="M 662 62 Q 710 98 770 148 Q 830 200 890 255 Q 950 311 1010 363 Q 1070 415 1130 457" stroke-width="2.8"/>
+      <path d="M 674 61 Q 722 97 782 147 Q 842 199 902 254 Q 962 310 1022 362 Q 1082 414 1142 456" stroke-width="2.5"/>
+      <path d="M 686 61 Q 734 97 794 147 Q 854 199 914 254 Q 974 310 1034 362 Q 1094 414 1154 456" stroke-width="2.8"/>
+      <path d="M 698 62 Q 746 98 806 148 Q 866 200 926 255 Q 986 311 1046 363 Q 1106 415 1166 457" stroke-width="2.5"/>
+    </g>
+    <!-- Fine bright shimmer threads -->
+    <g opacity="0.48" stroke="#E8C878">
+      <path d="M 658 62 Q 706 98 766 148 Q 826 200 886 255 Q 946 311 1006 363 Q 1066 415 1126 457" stroke-width="1.2"/>
+      <path d="M 670 61 Q 718 97 778 147 Q 838 199 898 254 Q 958 310 1018 362 Q 1078 414 1138 456" stroke-width="1.4"/>
+      <path d="M 682 61 Q 730 97 790 147 Q 850 199 910 254 Q 970 310 1030 362 Q 1090 414 1150 456" stroke-width="1.2"/>
+    </g>
+    <!-- Ultra-fine glimmer -->
+    <g opacity="0.30" stroke="#FFF8C8">
+      <path d="M 664 62 Q 712 98 772 148 Q 832 200 892 255 Q 952 311 1012 363" stroke-width="0.7"/>
+      <path d="M 676 62 Q 724 98 784 148 Q 844 200 904 255 Q 964 311 1024 363" stroke-width="0.8"/>
+    </g>
+  </g>
+
+  <!-- Crown of head -->
+  <ellipse cx="680" cy="96" rx="70" ry="56" fill="#1E1008" opacity="0.96"/>
+  <path d="M 638 88 Q 680 74 722 88" stroke="#6B4020" stroke-width="16" fill="none" opacity="0.45" stroke-linecap="round"/>
+  <path d="M 646 84 Q 680 72 714 84" stroke="#C09050" stroke-width="7" fill="none" opacity="0.40" stroke-linecap="round"/>
+  <path d="M 654 80 Q 680 70 706 80" stroke="#D8B060" stroke-width="3.5" fill="none" opacity="0.35" stroke-linecap="round"/>
+
+  <!-- ─── STYLIST ARM (from right, holding dryer) ─── -->
+  <path d="M 1180 130 Q 1140 160 1100 192 Q 1072 214 1052 228"
+    stroke="url(#drSkinArm)" stroke-width="26" fill="none" opacity="0.72" stroke-linecap="round"/>
+  <path d="M 1182 128 Q 1142 158 1102 190"
+    stroke="#E8C080" stroke-width="9" fill="none" opacity="0.28" stroke-linecap="round"/>
+
+  <!-- ─── PROFESSIONAL HAIR DRYER ─── -->
+  <!-- Warm air glow (behind dryer, radiating left toward hair) -->
+  <ellipse cx="960" cy="215" rx="110" ry="55" fill="url(#airGlow)" filter="url(#drGlowF)" opacity="0.9"/>
+  <ellipse cx="985" cy="215" rx="75" ry="38" fill="#E8C050" opacity="0.10" filter="url(#drGlowF)"/>
+
+  <!-- Air flow lines (warm air from nozzle) -->
+  <g stroke="#D4A030" fill="none" stroke-linecap="round" opacity="0.30">
+    <path d="M 1010 175 Q 960 185 910 198 Q 860 212 820 228" stroke-width="2"/>
+    <path d="M 1010 200 Q 958 208 906 220 Q 856 232 818 246" stroke-width="2.5"/>
+    <path d="M 1010 225 Q 958 230 906 240 Q 856 250 820 262" stroke-width="2"/>
+    <path d="M 1010 250 Q 960 252 910 260 Q 862 268 824 278" stroke-width="1.8"/>
+  </g>
+
+  <!-- Dryer body — large professional ionic dryer -->
+  <g transform="translate(1060, 210) rotate(18)">
+    <!-- Main barrel -->
+    <rect x="-32" y="-100" width="64" height="155" rx="18" fill="url(#dryerBody)"/>
+    <!-- Barrel sheen -->
+    <rect x="-32" y="-100" width="64" height="155" rx="18" fill="url(#dryerSheen)" opacity="0.8"/>
+    <!-- Gold ring accent near nozzle end -->
+    <rect x="-32" y="-108" width="64" height="12" rx="6" fill="url(#dryerGold)"/>
+    <!-- Gold ring accent mid-barrel -->
+    <rect x="-32" y="28"  width="64" height="8"  rx="4" fill="url(#dryerGold)" opacity="0.75"/>
+    <!-- Vent grille lines on body -->
+    <g stroke="#3A3830" stroke-width="1.5" opacity="0.7">
+      <line x1="-20" y1="-40" x2="20" y2="-40"/>
+      <line x1="-22" y1="-30" x2="22" y2="-30"/>
+      <line x1="-24" y1="-20" x2="24" y2="-20"/>
+      <line x1="-24" y1="-10" x2="24" y2="-10"/>
+      <line x1="-24" y1="0"   x2="24" y2="0"/>
+      <line x1="-24" y1="10"  x2="24" y2="10"/>
+      <line x1="-22" y1="20"  x2="22" y2="20"/>
+    </g>
+    <!-- Vent holes (circular) -->
+    <g fill="#1A1814" opacity="0.6">
+      <circle cx="-16" cy="-35" r="2.5"/>
+      <circle cx="-6"  cy="-35" r="2.5"/>
+      <circle cx="4"   cy="-35" r="2.5"/>
+      <circle cx="14"  cy="-35" r="2.5"/>
+      <circle cx="-16" cy="-15" r="2.5"/>
+      <circle cx="-6"  cy="-15" r="2.5"/>
+      <circle cx="4"   cy="-15" r="2.5"/>
+      <circle cx="14"  cy="-15" r="2.5"/>
+      <circle cx="-16" cy="5"   r="2.5"/>
+      <circle cx="-6"  cy="5"   r="2.5"/>
+      <circle cx="4"   cy="5"   r="2.5"/>
+      <circle cx="14"  cy="5"   r="2.5"/>
+    </g>
+    <!-- Brand text on barrel -->
+    <text x="0" y="-60" font-family="'Montserrat',sans-serif" font-size="7.5" font-weight="700" fill="#C9A96E" text-anchor="middle" letter-spacing="2.5" opacity="0.75">BIZILUXE</text>
+    <!-- Power button -->
+    <circle cx="0" cy="48" r="8" fill="#2A2824" stroke="#C9A96E" stroke-width="1.2" opacity="0.9"/>
+    <circle cx="0" cy="48" r="5" fill="#1A1814" opacity="0.9"/>
+    <circle cx="0" cy="48" r="2.5" fill="#C9A96E" opacity="0.85"/>
+    <!-- Handle (perpendicular) -->
+    <rect x="-18" y="52" width="36" height="100" rx="14" fill="url(#dryerBody)"/>
+    <rect x="-18" y="52" width="36" height="100" rx="14" fill="url(#dryerSheen)" opacity="0.6"/>
+    <!-- Handle grip lines -->
+    <g stroke="#3A3830" stroke-width="1.2" opacity="0.55">
+      <line x1="-12" y1="70"  x2="12" y2="70"/>
+      <line x1="-12" y1="82"  x2="12" y2="82"/>
+      <line x1="-12" y1="94"  x2="12" y2="94"/>
+      <line x1="-12" y1="106" x2="12" y2="106"/>
+      <line x1="-12" y1="118" x2="12" y2="118"/>
+      <line x1="-12" y1="130" x2="12" y2="130"/>
+    </g>
+    <!-- Gold handle accent ring -->
+    <rect x="-18" y="148" width="36" height="7" rx="3.5" fill="url(#dryerGold)" opacity="0.8"/>
+    <!-- Cord -->
+    <path d="M 0,152 Q 10,185 5,230 Q 0,275 15,320"
+      stroke="#1A1814" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85"/>
+    <path d="M 0,152 Q 10,185 5,230 Q 0,275 15,320"
+      stroke="#3A3830" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <!-- Nozzle concentrator (flat, at barrel end) -->
+    <rect x="-28" y="-122" width="56" height="22" rx="5" fill="url(#dryerNozzle)"/>
+    <rect x="-22" y="-120" width="44" height="18" rx="4" fill="#141210"/>
+    <line x1="-20" y1="-111" x2="20" y2="-111" stroke="#C9A96E" stroke-width="0.7" opacity="0.4"/>
+    <!-- Nozzle opening glow -->
+    <rect x="-20" y="-122" width="40" height="6" rx="3" fill="#E8C050" opacity="0.35" filter="url(#drGlowF)"/>
+  </g>
+
+  <!-- ─── BRAND PLACARD ─── -->
+  <rect x="110" y="262" width="258" height="100" fill="url(#bkFace)"/>
+  <rect x="110" y="254" width="258" height="10"  fill="url(#bkTop)"/>
+  <rect x="366" y="262" width="26"  height="100" fill="#0C0A08" opacity="0.9"/>
+  <rect x="366" y="254" width="26"  height="10"  fill="#0A0808"/>
+  <line x1="112" y1="287" x2="364" y2="287" stroke="#C9A96E" stroke-width="0.8" opacity="0.45"/>
+  <line x1="112" y1="348" x2="364" y2="348" stroke="#C9A96E" stroke-width="0.8" opacity="0.45"/>
+  <text x="238" y="314" font-family="'Cormorant Garamond',Georgia,serif" font-size="22" font-weight="300" fill="url(#goldT)" text-anchor="middle" letter-spacing="4.5" opacity="0.97">OLIVHAIRSUPPLY</text>
+  <text x="238" y="336" font-family="'Cormorant Garamond',Georgia,serif" font-size="10" font-style="italic" fill="#D4B87A" text-anchor="middle" letter-spacing="4" opacity="0.90">Academy · Berlin</text>
+
+  <!-- ─── OVERLAYS ─── -->
+  <rect width="1440" height="580" fill="url(#drTextOv)"/>
+  <rect width="1440" height="580" fill="url(#drVig)"/>
+</svg>

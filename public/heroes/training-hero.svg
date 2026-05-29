@@ -1,0 +1,509 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+  <defs>
+    <!-- Studio backdrop — matches other pages exactly -->
+    <linearGradient id="studio" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#464240"/>
+      <stop offset="30%"  stop-color="#585450"/>
+      <stop offset="55%"  stop-color="#5E5A56"/>
+      <stop offset="82%"  stop-color="#565250"/>
+      <stop offset="100%" stop-color="#4C4844"/>
+    </linearGradient>
+    <linearGradient id="studioTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#303030" stop-opacity="0.42"/>
+      <stop offset="38%"  stop-color="#303030" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#282420" stop-opacity="0.28"/>
+    </linearGradient>
+    <radialGradient id="keyLight" cx="72%" cy="18%" r="50%">
+      <stop offset="0%"   stop-color="#787060" stop-opacity="0.52"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="fillLight" cx="18%" cy="45%" r="38%">
+      <stop offset="0%"   stop-color="#68625C" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- CLIENT — skin (light/fair) -->
+    <radialGradient id="cFace" cx="50%" cy="40%" r="55%">
+      <stop offset="0%"   stop-color="#F2D4B8"/>
+      <stop offset="35%"  stop-color="#E2B898"/>
+      <stop offset="70%"  stop-color="#C89870"/>
+      <stop offset="100%" stop-color="#A87848"/>
+    </radialGradient>
+    <radialGradient id="cNeck" cx="50%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#EABF90"/>
+      <stop offset="60%"  stop-color="#C89868"/>
+      <stop offset="100%" stop-color="#A87848"/>
+    </radialGradient>
+    <radialGradient id="cShoulder" cx="40%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#D8A870"/>
+      <stop offset="55%"  stop-color="#B88050"/>
+      <stop offset="100%" stop-color="#985030"/>
+    </radialGradient>
+
+    <!-- CLIENT HAIR — silver/platinum long -->
+    <linearGradient id="silvBase" x1="0" y1="0" x2="0.08" y2="1">
+      <stop offset="0%"   stop-color="#A8A8B8"/>
+      <stop offset="30%"  stop-color="#C4C4D4"/>
+      <stop offset="65%"  stop-color="#D2D2E2"/>
+      <stop offset="100%" stop-color="#B8B8C8"/>
+    </linearGradient>
+    <linearGradient id="silvShine" x1="0" y1="0" x2="0.12" y2="1">
+      <stop offset="0%"   stop-color="#F0F0FF" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#FAFAFF" stop-opacity="0.78"/>
+      <stop offset="55%"  stop-color="#E8E8F8" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#D0D0E0" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- STYLIST — skin (medium/fair) -->
+    <radialGradient id="sFace" cx="50%" cy="38%" r="55%">
+      <stop offset="0%"   stop-color="#F4D6B8"/>
+      <stop offset="35%"  stop-color="#E4B890"/>
+      <stop offset="70%"  stop-color="#CA9868"/>
+      <stop offset="100%" stop-color="#AA7848"/>
+    </radialGradient>
+    <radialGradient id="sNeck" cx="50%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#ECC090"/>
+      <stop offset="60%"  stop-color="#CA9868"/>
+      <stop offset="100%" stop-color="#AA7848"/>
+    </radialGradient>
+    <radialGradient id="sArm" cx="40%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#E8B888"/>
+      <stop offset="55%"  stop-color="#C89468"/>
+      <stop offset="100%" stop-color="#A87448"/>
+    </radialGradient>
+
+    <!-- STYLIST HAIR — blonde -->
+    <linearGradient id="blBase" x1="0" y1="0" x2="0.1" y2="1">
+      <stop offset="0%"   stop-color="#8A7020"/>
+      <stop offset="30%"  stop-color="#A88A30"/>
+      <stop offset="65%"  stop-color="#C4A840"/>
+      <stop offset="100%" stop-color="#9E8230"/>
+    </linearGradient>
+    <linearGradient id="blShine" x1="0" y1="0" x2="0.08" y2="1">
+      <stop offset="0%"   stop-color="#F4ECA0" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#FFF8C8" stop-opacity="0.85"/>
+      <stop offset="55%"  stop-color="#F0E090" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#D8C060" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Clothing — dark charcoal -->
+    <linearGradient id="cloth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1A1816"/>
+      <stop offset="50%"  stop-color="#141210"/>
+      <stop offset="100%" stop-color="#0E0C0A"/>
+    </linearGradient>
+    <linearGradient id="clothSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#2A2826" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#3A3834" stop-opacity="0.38"/>
+      <stop offset="60%"  stop-color="#2A2826" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#1A1816" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Salon chair -->
+    <linearGradient id="chLeather" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#1E1C18"/>
+      <stop offset="40%"  stop-color="#141210"/>
+      <stop offset="100%" stop-color="#0E0C0A"/>
+    </linearGradient>
+    <linearGradient id="chMetal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#484440"/>
+      <stop offset="30%"  stop-color="#686460"/>
+      <stop offset="60%"  stop-color="#868280"/>
+      <stop offset="100%" stop-color="#383430"/>
+    </linearGradient>
+    <linearGradient id="chGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#A07818"/>
+      <stop offset="40%"  stop-color="#C9A96E"/>
+      <stop offset="70%"  stop-color="#D4B478"/>
+      <stop offset="100%" stop-color="#9A7018"/>
+    </linearGradient>
+
+    <!-- Hair dryer -->
+    <linearGradient id="dBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1E1C18"/>
+      <stop offset="50%"  stop-color="#141210"/>
+      <stop offset="100%" stop-color="#0C0A08"/>
+    </linearGradient>
+    <linearGradient id="dSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#5A5550" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#8A8580" stop-opacity="0.45"/>
+      <stop offset="60%"  stop-color="#6A6560" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#4A4540" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="dGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#9A7015"/>
+      <stop offset="50%"  stop-color="#C9A96E"/>
+      <stop offset="100%" stop-color="#9A7015"/>
+    </linearGradient>
+
+    <!-- Brand -->
+    <linearGradient id="goldT" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#B8900A"/>
+      <stop offset="50%"  stop-color="#E8C858"/>
+      <stop offset="100%" stop-color="#C09828"/>
+    </linearGradient>
+    <linearGradient id="bkFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#201C14"/>
+      <stop offset="100%" stop-color="#121008"/>
+    </linearGradient>
+    <linearGradient id="bkTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#2C2418"/>
+      <stop offset="100%" stop-color="#1C1810"/>
+    </linearGradient>
+
+    <!-- Text overlay + vignette (matches other pages) -->
+    <linearGradient id="textOv" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#484440" stop-opacity="0.72"/>
+      <stop offset="30%"  stop-color="#504C48" stop-opacity="0.48"/>
+      <stop offset="60%"  stop-color="#5A5652" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#5A5652" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="vig" cx="55%" cy="48%" r="70%">
+      <stop offset="48%"  stop-color="#5E5A56" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#282420" stop-opacity="0.75"/>
+    </radialGradient>
+
+    <filter id="sb"><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="hb"><feGaussianBlur stdDeviation="0.4"/></filter>
+    <filter id="fb"><feGaussianBlur stdDeviation="1.2"/></filter>
+  </defs>
+
+  <!-- ─── STUDIO BACKDROP ─── -->
+  <rect width="1440" height="580" fill="url(#studio)"/>
+  <rect width="1440" height="580" fill="url(#studioTop)"/>
+  <rect width="1440" height="580" fill="url(#keyLight)"/>
+  <rect width="1440" height="580" fill="url(#fillLight)"/>
+  <rect x="0" y="522" width="1440" height="58" fill="#3A3632" opacity="0.65"/>
+  <line x1="0" y1="522" x2="1440" y2="522" stroke="#2A2620" stroke-width="1.2" opacity="0.45"/>
+
+  <!-- ─── SALON CHAIR ─── -->
+  <ellipse cx="650" cy="527" rx="115" ry="10" fill="#060402" opacity="0.48" filter="url(#sb)"/>
+  <ellipse cx="650" cy="524" rx="88"  ry="8"  fill="#1A1614" opacity="0.9"/>
+  <!-- Column -->
+  <rect x="634" y="392" width="32" height="132" fill="url(#chMetal)"/>
+  <rect x="638" y="392" width="8"  height="132" fill="#888280" opacity="0.28"/>
+  <!-- Hydraulic -->
+  <rect x="625" y="370" width="50" height="30" rx="5" fill="#282420"/>
+  <rect x="628" y="372" width="44" height="26" rx="4" fill="#363230"/>
+  <!-- Seat -->
+  <rect x="568" y="318" width="164" height="56" rx="16" fill="url(#chLeather)"/>
+  <rect x="570" y="320" width="160" height="18" rx="10" fill="#282420" opacity="0.55"/>
+  <line x1="594" y1="334" x2="718" y2="334" stroke="#3A3430" stroke-width="0.8" opacity="0.4"/>
+  <line x1="594" y1="352" x2="718" y2="352" stroke="#3A3430" stroke-width="0.8" opacity="0.35"/>
+  <!-- Backrest -->
+  <rect x="598" y="158" width="104" height="166" rx="18" fill="url(#chLeather)"/>
+  <rect x="602" y="162" width="96"  height="158" rx="14" fill="#1A1614"/>
+  <line x1="617" y1="200" x2="684" y2="200" stroke="#2A2420" stroke-width="0.8" opacity="0.38"/>
+  <line x1="617" y1="248" x2="684" y2="248" stroke="#2A2420" stroke-width="0.7" opacity="0.32"/>
+  <line x1="617" y1="292" x2="684" y2="292" stroke="#2A2420" stroke-width="0.7" opacity="0.28"/>
+  <text x="650" y="232" font-family="'Cormorant Garamond',Georgia,serif" font-size="13" font-style="italic" fill="#C9A96E" text-anchor="middle" letter-spacing="3" opacity="0.30">OHS</text>
+  <!-- Gold footrest -->
+  <rect x="557" y="446" width="186" height="8" rx="4" fill="url(#chGold)"/>
+  <ellipse cx="562" cy="450" rx="5" ry="5" fill="#C9A96E" opacity="0.9"/>
+  <ellipse cx="738" cy="450" rx="5" ry="5" fill="#C9A96E" opacity="0.9"/>
+  <!-- Armrests -->
+  <rect x="563" y="303" width="12" height="44" rx="4" fill="url(#chMetal)"/>
+  <rect x="724" y="303" width="12" height="44" rx="4" fill="url(#chMetal)"/>
+  <rect x="559" y="298" width="20" height="11" rx="3" fill="#1A1614"/>
+  <rect x="720" y="298" width="20" height="11" rx="3" fill="#1A1614"/>
+
+  <!-- ─── CLIENT FIGURE (seated, 3/4 front, eyes closed) ─── -->
+  <ellipse cx="648" cy="295" rx="108" ry="175" fill="#181410" opacity="0.20" filter="url(#sb)"/>
+  <!-- Torso/clothing -->
+  <path d="M 552 425 Q 578 358 602 320 Q 620 296 650 290 Q 680 296 698 320 Q 722 358 748 425 Q 753 448 756 472 L 544 472 Q 547 448 552 425 Z"
+    fill="url(#cloth)" opacity="0.93"/>
+  <path d="M 552 425 Q 578 358 602 320 Q 620 296 650 290 Q 680 296 698 320 Q 722 358 748 425 Q 753 448 756 472 L 544 472 Q 547 448 552 425 Z"
+    fill="url(#clothSheen)" opacity="0.55"/>
+  <!-- Shoulders -->
+  <path d="M 560 312 Q 582 296 608 290 Q 624 285 650 283 Q 676 285 692 290 Q 718 296 740 312 Q 750 322 752 335 L 548 335 Q 550 322 560 312 Z"
+    fill="#1C1814" opacity="0.82"/>
+  <!-- Neck -->
+  <rect x="636" y="215" width="28" height="72" rx="12" fill="url(#cNeck)" opacity="0.88"/>
+  <!-- Client shoulders skin -->
+  <path d="M 560 314 Q 588 298 614 292 L 632 304 Q 614 315 592 327 Q 566 338 552 338 Z" fill="url(#cShoulder)" opacity="0.76"/>
+  <path d="M 740 314 Q 712 298 686 292 L 668 304 Q 686 315 708 327 Q 734 338 748 338 Z" fill="url(#cShoulder)" opacity="0.76"/>
+
+  <!-- CLIENT FACE -->
+  <ellipse cx="648" cy="170" rx="86"  ry="102" fill="#8A5830" opacity="0.13" filter="url(#fb)"/>
+  <ellipse cx="648" cy="166" rx="70"  ry="86"  fill="url(#cFace)" opacity="0.96"/>
+  <!-- Cheeks -->
+  <ellipse cx="608" cy="190" rx="23" ry="17" fill="#E89070" opacity="0.17"/>
+  <ellipse cx="688" cy="190" rx="23" ry="17" fill="#E89070" opacity="0.17"/>
+  <!-- Eyes closed -->
+  <path d="M 614 153 Q 630 145 646 149" stroke="#1A0E06" stroke-width="2.2" fill="none" opacity="0.82" stroke-linecap="round"/>
+  <path d="M 615 154 Q 622 160 630 161 Q 638 160 644 155" stroke="#1A0E06" stroke-width="1.3" fill="none" opacity="0.50" stroke-linecap="round"/>
+  <path d="M 652 149 Q 668 145 684 153" stroke="#1A0E06" stroke-width="2.2" fill="none" opacity="0.82" stroke-linecap="round"/>
+  <path d="M 654 151 Q 661 160 669 161 Q 677 160 683 152" stroke="#1A0E06" stroke-width="1.3" fill="none" opacity="0.50" stroke-linecap="round"/>
+  <!-- Lashes -->
+  <g stroke="#0E0804" stroke-width="1.2" fill="none" opacity="0.62" stroke-linecap="round">
+    <path d="M 615 152 Q 613 144 612 138"/><path d="M 620 149 Q 619 141 619 135"/>
+    <path d="M 625 148 Q 625 140 626 134"/><path d="M 630 147 Q 631 140 633 134"/>
+    <path d="M 635 148 Q 637 141 640 135"/><path d="M 640 149 Q 643 143 646 138"/>
+    <path d="M 653 149 Q 651 141 650 135"/><path d="M 658 148 Q 657 140 657 134"/>
+    <path d="M 663 147 Q 664 140 665 134"/><path d="M 668 148 Q 670 141 672 135"/>
+    <path d="M 673 149 Q 676 143 679 138"/><path d="M 678 151 Q 681 144 685 139"/>
+  </g>
+  <!-- Eyebrows -->
+  <path d="M 607 135 Q 626 127 644 131" stroke="#2A1808" stroke-width="2.6" fill="none" opacity="0.52" stroke-linecap="round"/>
+  <path d="M 656 131 Q 674 127 693 135" stroke="#2A1808" stroke-width="2.6" fill="none" opacity="0.52" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="648" cy="202" rx="7" ry="9" fill="#9A6040" opacity="0.18"/>
+  <path d="M 645 192 Q 642 205 640 216 Q 644 221 648 222" stroke="#9A5830" stroke-width="2.5" fill="none" opacity="0.20" stroke-linecap="round"/>
+  <!-- Lips -->
+  <path d="M 632 228 Q 642 222 650 224 Q 658 222 668 228 Q 658 233 650 235 Q 642 233 632 228 Z" fill="#C08060" opacity="0.70"/>
+  <path d="M 631 230 Q 642 242 650 245 Q 658 242 669 230 Q 658 238 650 240 Q 642 238 631 230 Z" fill="#D09070" opacity="0.58"/>
+  <!-- Key light on face -->
+  <ellipse cx="678" cy="140" rx="28" ry="22" fill="#F8D8B0" opacity="0.12"/>
+  <!-- Temple shadow -->
+  <path d="M 582 160 Q 578 195 580 230 Q 582 268 592 292" stroke="#8A5030" stroke-width="16" fill="none" opacity="0.17" stroke-linecap="round"/>
+
+  <!-- CLIENT SILVER HAIR -->
+  <!-- Volume mass -->
+  <ellipse cx="648" cy="114" rx="118" ry="108" fill="#9898A8" opacity="0.90"/>
+  <ellipse cx="648" cy="66"  rx="80"  ry="54"  fill="#A4A4B4" opacity="0.95"/>
+  <!-- Crown shine -->
+  <path d="M 602 76 Q 648 58 694 76" stroke="#D0D0E0" stroke-width="18" fill="none" opacity="0.52" stroke-linecap="round"/>
+  <path d="M 612 72 Q 648 56 684 72" stroke="#E8E8F8" stroke-width="8"  fill="none" opacity="0.44" stroke-linecap="round"/>
+  <path d="M 622 68 Q 648 55 674 68" stroke="#F4F4FF" stroke-width="3.5" fill="none" opacity="0.36" stroke-linecap="round"/>
+  <path d="M 648 50 L 648 78" stroke="#888898" stroke-width="2" opacity="0.55"/>
+  <!-- Hairline -->
+  <path d="M 574 136 Q 608 118 632 111 Q 642 108 648 107 Q 654 108 664 111 Q 688 118 722 136"
+    fill="none" stroke="#9898A8" stroke-width="11" stroke-linecap="round" opacity="0.82"/>
+  <path d="M 580 138 Q 612 122 636 115 Q 644 112 648 111 Q 652 112 660 115 Q 684 122 716 138"
+    fill="none" stroke="#C4C4D4" stroke-width="4.5" stroke-linecap="round" opacity="0.62"/>
+  <!-- Main flowing silver hair -->
+  <g fill="none" stroke-linecap="round" filter="url(#hb)">
+    <g opacity="0.90" stroke="#A8A8B8">
+      <path d="M 568 94 Q 538 200 532 312 Q 526 424 532 522" stroke-width="7"/>
+      <path d="M 581 88 Q 550 194 544 306 Q 538 418 544 516" stroke-width="6.5"/>
+      <path d="M 594 84 Q 564 190 558 302 Q 552 414 558 512" stroke-width="6"/>
+      <path d="M 607 81 Q 578 187 572 299 Q 566 411 572 509" stroke-width="6.5"/>
+      <path d="M 620 79 Q 592 185 586 297 Q 580 409 586 507" stroke-width="6"/>
+      <path d="M 633 78 Q 606 184 600 296 Q 594 408 600 506" stroke-width="6.5"/>
+      <path d="M 646 77 Q 620 183 614 295 Q 608 407 614 505" stroke-width="6"/>
+      <path d="M 650 77 Q 677 183 682 295 Q 687 407 682 505" stroke-width="6"/>
+      <path d="M 663 78 Q 691 184 697 296 Q 703 408 697 506" stroke-width="6.5"/>
+      <path d="M 676 79 Q 705 185 711 297 Q 717 409 711 507" stroke-width="6"/>
+      <path d="M 689 81 Q 719 187 726 299 Q 733 411 726 509" stroke-width="6.5"/>
+      <path d="M 702 84 Q 733 190 740 302 Q 747 414 740 512" stroke-width="6"/>
+      <path d="M 715 88 Q 747 194 754 306 Q 761 418 754 516" stroke-width="6.5"/>
+      <path d="M 728 94 Q 762 200 768 312 Q 774 424 768 522" stroke-width="7"/>
+    </g>
+    <!-- Highlights -->
+    <g opacity="0.60" stroke="#D8D8E8">
+      <path d="M 574 92 Q 544 198 538 310 Q 532 422 538 520" stroke-width="2.5"/>
+      <path d="M 587 86 Q 557 192 551 304 Q 545 416 551 514" stroke-width="2.8"/>
+      <path d="M 600 83 Q 571 189 565 301 Q 559 413 565 511" stroke-width="2.5"/>
+      <path d="M 613 81 Q 585 187 579 299 Q 573 411 579 509" stroke-width="2.8"/>
+      <path d="M 626 79 Q 599 185 594 297 Q 589 409 594 507" stroke-width="2.5"/>
+      <path d="M 639 78 Q 613 184 608 296 Q 603 408 608 506" stroke-width="2.8"/>
+      <path d="M 657 78 Q 684 184 689 296 Q 694 408 689 506" stroke-width="2.5"/>
+      <path d="M 670 79 Q 698 185 704 297 Q 710 409 704 507" stroke-width="2.8"/>
+      <path d="M 683 81 Q 712 187 718 299 Q 724 411 718 509" stroke-width="2.5"/>
+      <path d="M 696 83 Q 727 189 733 301 Q 739 413 733 511" stroke-width="2.8"/>
+      <path d="M 709 86 Q 741 192 747 304 Q 753 416 747 514" stroke-width="2.5"/>
+      <path d="M 722 92 Q 755 198 761 310 Q 767 422 761 520" stroke-width="2.8"/>
+    </g>
+    <!-- Fine shimmer -->
+    <g opacity="0.38" stroke="#F0F0FF">
+      <path d="M 614 80 Q 587 186 581 298 Q 575 410 581 508" stroke-width="1.0"/>
+      <path d="M 627 79 Q 601 185 596 297 Q 591 409 596 507" stroke-width="1.2"/>
+      <path d="M 640 78 Q 615 184 610 296 Q 605 408 610 506" stroke-width="1.0"/>
+      <path d="M 656 78 Q 683 184 688 296 Q 693 408 688 506" stroke-width="1.0"/>
+      <path d="M 669 79 Q 697 185 703 297 Q 709 409 703 507" stroke-width="1.2"/>
+      <path d="M 682 80 Q 711 186 718 298 Q 725 410 718 508" stroke-width="1.0"/>
+    </g>
+    <g opacity="0.24" stroke="#FFFFFF">
+      <path d="M 634 78 Q 609 184 604 296 Q 599 408 604 506" stroke-width="0.7"/>
+      <path d="M 662 78 Q 689 184 694 296 Q 699 408 694 506" stroke-width="0.7"/>
+    </g>
+  </g>
+  <!-- Ear left -->
+  <ellipse cx="582" cy="185" rx="10" ry="14" fill="#C89060" opacity="0.65"/>
+  <ellipse cx="582" cy="185" rx="6"  ry="9"  fill="#A87048" opacity="0.50"/>
+
+  <!-- ─── STYLIST FIGURE (standing behind, to right of client) ─── -->
+  <ellipse cx="978" cy="420" rx="98"  ry="155" fill="#181410" opacity="0.18" filter="url(#sb)"/>
+  <!-- Torso -->
+  <path d="M 858 284 Q 880 242 920 222 Q 950 208 978 206 Q 1006 208 1036 222 Q 1076 242 1098 284 Q 1114 314 1118 352 Q 1124 406 1120 462 L 836 462 Q 832 406 838 352 Q 842 314 858 284 Z"
+    fill="url(#cloth)" opacity="0.94"/>
+  <path d="M 858 284 Q 880 242 920 222 Q 950 208 978 206 Q 1006 208 1036 222 Q 1076 242 1098 284 Q 1114 314 1118 352 Q 1124 406 1120 462 L 836 462 Q 832 406 838 352 Q 842 314 858 284 Z"
+    fill="url(#clothSheen)" opacity="0.48"/>
+  <!-- Blazer lapel -->
+  <path d="M 958 215 Q 954 246 950 278 Q 960 292 978 297 Q 996 292 1006 278 Q 1002 246 998 215 Q 988 224 978 226 Q 968 224 958 215 Z"
+    fill="#141210" opacity="0.78"/>
+  <!-- Left arm (holding dryer) -->
+  <path d="M 874 302 Q 852 355 836 404 Q 824 440 818 468" stroke="url(#cloth)" stroke-width="64" fill="none" opacity="0.90" stroke-linecap="round"/>
+  <!-- Right arm (working through hair) -->
+  <path d="M 1062 300 Q 1038 352 1016 398 Q 998 434 990 462" stroke="url(#cloth)" stroke-width="58" fill="none" opacity="0.90" stroke-linecap="round"/>
+  <!-- Stylist neck -->
+  <rect x="962" y="158" width="32" height="52" rx="12" fill="url(#sNeck)" opacity="0.88"/>
+
+  <!-- STYLIST FACE -->
+  <ellipse cx="978" cy="100" rx="76" ry="90"  fill="#8A5830" opacity="0.13" filter="url(#fb)"/>
+  <ellipse cx="978" cy="96"  rx="64" ry="78"  fill="url(#sFace)"  opacity="0.96"/>
+  <!-- Cheeks -->
+  <ellipse cx="938" cy="112" rx="21" ry="15" fill="#E88868" opacity="0.14"/>
+  <ellipse cx="1018" cy="112" rx="21" ry="15" fill="#E88868" opacity="0.14"/>
+  <!-- Eyes (looking down) -->
+  <ellipse cx="946" cy="82"  rx="13" ry="6.5" fill="#1A0E06" opacity="0.68"/>
+  <ellipse cx="1010" cy="82" rx="13" ry="6.5" fill="#1A0E06" opacity="0.68"/>
+  <path d="M 934 82 Q 946 76 958 82" stroke="#0E0804" stroke-width="1.5" fill="none" opacity="0.78"/>
+  <path d="M 998 82 Q 1010 76 1022 82" stroke="#0E0804" stroke-width="1.5" fill="none" opacity="0.78"/>
+  <ellipse cx="946" cy="84"  rx="6.5" ry="5.5" fill="#3A2810" opacity="0.82"/>
+  <ellipse cx="1010" cy="84" rx="6.5" ry="5.5" fill="#3A2810" opacity="0.82"/>
+  <ellipse cx="946" cy="85"  rx="3.2" ry="2.8" fill="#0E0806" opacity="0.88"/>
+  <ellipse cx="1010" cy="85" rx="3.2" ry="2.8" fill="#0E0806" opacity="0.88"/>
+  <circle cx="948"  cy="80"  r="2"   fill="#E8D8B8" opacity="0.62"/>
+  <circle cx="1012" cy="80"  r="2"   fill="#E8D8B8" opacity="0.62"/>
+  <!-- Lashes -->
+  <g stroke="#0E0804" stroke-width="1.1" fill="none" opacity="0.62" stroke-linecap="round">
+    <path d="M 934 80 Q 932 73 931 67"/><path d="M 938 78 Q 937 71 937 65"/>
+    <path d="M 942 77 Q 942 70 943 64"/><path d="M 946 77 Q 947 70 948 64"/>
+    <path d="M 950 77 Q 952 71 954 65"/><path d="M 954 78 Q 957 72 960 67"/>
+    <path d="M 998 78 Q 996 71 995 65"/><path d="M 1002 77 Q 1001 70 1001 64"/>
+    <path d="M 1006 77 Q 1006 70 1007 64"/><path d="M 1010 77 Q 1011 70 1012 64"/>
+    <path d="M 1014 78 Q 1016 72 1018 66"/><path d="M 1018 79 Q 1021 73 1024 68"/>
+  </g>
+  <!-- Eyebrows -->
+  <path d="M 928 62 Q 946 54 962 58" stroke="#3A2010" stroke-width="2.6" fill="none" opacity="0.55" stroke-linecap="round"/>
+  <path d="M 994 58 Q 1010 54 1028 62" stroke="#3A2010" stroke-width="2.6" fill="none" opacity="0.55" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M 975 112 Q 972 124 970 134 Q 974 139 978 140 Q 982 139 986 134 Q 984 124 981 112" stroke="#9A5830" stroke-width="2" fill="none" opacity="0.22" stroke-linecap="round"/>
+  <!-- Lips -->
+  <path d="M 962 164 Q 970 159 978 161 Q 986 159 994 164 Q 986 168 978 169 Q 970 168 962 164 Z" fill="#C08060" opacity="0.62"/>
+  <path d="M 961 166 Q 970 175 978 177 Q 986 175 995 166 Q 986 172 978 174 Q 970 172 961 166 Z" fill="#D09070" opacity="0.52"/>
+  <!-- Key light -->
+  <ellipse cx="1003" cy="68" rx="24" ry="19" fill="#F8D8B0" opacity="0.12"/>
+  <!-- Temple -->
+  <path d="M 916 88 Q 912 118 914 150 Q 916 180 926 204" stroke="#8A5030" stroke-width="15" fill="none" opacity="0.16" stroke-linecap="round"/>
+
+  <!-- STYLIST HAIR — blonde, long straight -->
+  <ellipse cx="978" cy="38" rx="86" ry="56" fill="#9A7820" opacity="0.92"/>
+  <ellipse cx="978" cy="30" rx="74" ry="44" fill="#B08A28" opacity="0.88"/>
+  <path d="M 938 36 Q 978 22 1018 36" stroke="#F8ECA0" stroke-width="15" fill="none" opacity="0.38" stroke-linecap="round"/>
+  <path d="M 948 32 Q 978 20 1008 32" stroke="#FFF8D0" stroke-width="6"  fill="none" opacity="0.36" stroke-linecap="round"/>
+  <path d="M 978 14 L 978 44" stroke="#7A6018" stroke-width="2.2" opacity="0.52"/>
+  <!-- Hairline -->
+  <path d="M 910 72 Q 940 58 962 52 Q 970 49 978 48 Q 986 49 994 52 Q 1016 58 1046 72"
+    fill="none" stroke="#8A7018" stroke-width="11" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 916 74 Q 944 62 966 56 Q 974 53 978 52 Q 982 53 990 56 Q 1012 62 1040 74"
+    fill="none" stroke="#C9A036" stroke-width="4.5" stroke-linecap="round" opacity="0.65"/>
+  <!-- Blonde strands -->
+  <g fill="none" stroke-linecap="round" filter="url(#hb)">
+    <g opacity="0.88" stroke="#8A7020">
+      <path d="M 914 60 Q 882 160 876 272 Q 870 384 878 482" stroke-width="6"/>
+      <path d="M 927 54 Q 895 154 889 266 Q 883 378 891 476" stroke-width="5.5"/>
+      <path d="M 940 51 Q 909 151 903 263 Q 897 375 905 473" stroke-width="5"/>
+      <path d="M 953 49 Q 923 149 917 261 Q 911 373 919 471" stroke-width="5.5"/>
+      <path d="M 966 48 Q 937 148 932 260 Q 927 372 934 470" stroke-width="5"/>
+      <path d="M 990 48 Q 1019 148 1024 260 Q 1029 372 1022 470" stroke-width="5"/>
+      <path d="M 1003 49 Q 1033 149 1039 261 Q 1045 373 1037 471" stroke-width="5.5"/>
+      <path d="M 1016 51 Q 1047 151 1053 263 Q 1059 375 1051 473" stroke-width="5"/>
+      <path d="M 1029 54 Q 1061 154 1067 266 Q 1073 378 1065 476" stroke-width="5.5"/>
+      <path d="M 1042 60 Q 1075 160 1081 272 Q 1087 384 1079 482" stroke-width="6"/>
+    </g>
+    <g opacity="0.62" stroke="#C9A036">
+      <path d="M 920 57 Q 889 157 883 269 Q 877 381 885 479" stroke-width="2.6"/>
+      <path d="M 933 52 Q 902 152 896 264 Q 890 376 898 474" stroke-width="2.3"/>
+      <path d="M 946 50 Q 916 150 910 262 Q 904 374 912 472" stroke-width="2.6"/>
+      <path d="M 959 49 Q 930 149 925 261 Q 920 373 927 471" stroke-width="2.3"/>
+      <path d="M 997 49 Q 1026 149 1031 261 Q 1036 373 1029 471" stroke-width="2.3"/>
+      <path d="M 1010 50 Q 1040 150 1046 262 Q 1052 374 1044 472" stroke-width="2.6"/>
+      <path d="M 1023 52 Q 1054 152 1060 264 Q 1066 376 1058 474" stroke-width="2.3"/>
+      <path d="M 1036 57 Q 1068 157 1074 269 Q 1080 381 1072 479" stroke-width="2.6"/>
+    </g>
+    <g opacity="0.46" stroke="#F8ECA0">
+      <path d="M 939 51 Q 909 151 904 263 Q 899 375 906 473" stroke-width="1.2"/>
+      <path d="M 952 49 Q 923 149 918 261 Q 913 373 920 471" stroke-width="1.4"/>
+      <path d="M 965 48 Q 937 148 932 260 Q 927 372 934 470" stroke-width="1.2"/>
+      <path d="M 991 48 Q 1020 148 1025 260 Q 1030 372 1023 470" stroke-width="1.2"/>
+      <path d="M 1004 49 Q 1034 149 1040 261 Q 1046 373 1038 471" stroke-width="1.4"/>
+      <path d="M 1017 51 Q 1048 151 1054 263 Q 1060 375 1052 473" stroke-width="1.2"/>
+    </g>
+  </g>
+  <!-- Stylist ear (right, partially visible) -->
+  <ellipse cx="1054" cy="108" rx="10" ry="13" fill="#CA9868" opacity="0.62"/>
+  <ellipse cx="1054" cy="108" rx="6"  ry="8"  fill="#AA7848" opacity="0.48"/>
+
+  <!-- STYLIST RIGHT ARM (working through client's hair) -->
+  <path d="M 1078 312 Q 1054 364 1028 412 Q 1008 448 996 478"
+    stroke="url(#sArm)" stroke-width="26" fill="none" opacity="0.78" stroke-linecap="round"/>
+  <path d="M 1080 310 Q 1057 361 1032 408"
+    stroke="#E8C080" stroke-width="8" fill="none" opacity="0.22" stroke-linecap="round"/>
+  <!-- Fingers -->
+  <g stroke="url(#sArm)" fill="none" stroke-linecap="round" opacity="0.70">
+    <path d="M 989 470 Q 983 490 979 508" stroke-width="9"/>
+    <path d="M 997 473 Q 992 493 989 511" stroke-width="8"/>
+    <path d="M 1005 475 Q 1001 496 999 514" stroke-width="7.5"/>
+    <path d="M 981 468 Q 975 487 972 505" stroke-width="8.5"/>
+  </g>
+
+  <!-- STYLIST LEFT ARM (holding hair dryer) -->
+  <path d="M 878 306 Q 856 358 840 406 Q 828 442 822 470"
+    stroke="url(#sArm)" stroke-width="26" fill="none" opacity="0.78" stroke-linecap="round"/>
+  <path d="M 880 304 Q 859 355 844 402"
+    stroke="#E8C080" stroke-width="8" fill="none" opacity="0.22" stroke-linecap="round"/>
+
+  <!-- ─── HAIR DRYER (in stylist's left hand) ─── -->
+  <g transform="translate(800, 432) rotate(-20)">
+    <!-- Barrel -->
+    <rect x="-26" y="-92" width="52" height="140" rx="15" fill="url(#dBody)"/>
+    <rect x="-26" y="-92" width="52" height="140" rx="15" fill="url(#dSheen)" opacity="0.8"/>
+    <!-- Gold ring nozzle end -->
+    <rect x="-26" y="-100" width="52" height="11" rx="5.5" fill="url(#dGold)"/>
+    <!-- Gold ring mid -->
+    <rect x="-26" y="22"   width="52" height="7"  rx="3.5" fill="url(#dGold)" opacity="0.72"/>
+    <!-- Vent grille -->
+    <g stroke="#3A3830" stroke-width="1.4" opacity="0.62">
+      <line x1="-17" y1="-38" x2="17" y2="-38"/><line x1="-19" y1="-28" x2="19" y2="-28"/>
+      <line x1="-21" y1="-18" x2="21" y2="-18"/><line x1="-21" y1="-8"  x2="21" y2="-8"/>
+      <line x1="-21" y1="2"   x2="21" y2="2"/>  <line x1="-19" y1="12"  x2="19" y2="12"/>
+    </g>
+    <!-- Vent holes -->
+    <g fill="#1A1814" opacity="0.52">
+      <circle cx="-13" cy="-32" r="2"/><circle cx="-5"  cy="-32" r="2"/>
+      <circle cx="3"   cy="-32" r="2"/><circle cx="11"  cy="-32" r="2"/>
+      <circle cx="-13" cy="-13" r="2"/><circle cx="-5"  cy="-13" r="2"/>
+      <circle cx="3"   cy="-13" r="2"/><circle cx="11"  cy="-13" r="2"/>
+      <circle cx="-13" cy="6"   r="2"/><circle cx="-5"  cy="6"   r="2"/>
+      <circle cx="3"   cy="6"   r="2"/><circle cx="11"  cy="6"   r="2"/>
+    </g>
+    <!-- Brand text -->
+    <text x="0" y="-53" font-family="'Montserrat',sans-serif" font-size="6" font-weight="700" fill="#C9A96E" text-anchor="middle" letter-spacing="2" opacity="0.70">BIZILUXE</text>
+    <!-- Power button -->
+    <circle cx="0" cy="40" r="7"   fill="#222018" stroke="#C9A96E" stroke-width="1" opacity="0.88"/>
+    <circle cx="0" cy="40" r="4.2" fill="#161412" opacity="0.9"/>
+    <circle cx="0" cy="40" r="2"   fill="#C9A96E" opacity="0.80"/>
+    <!-- Handle -->
+    <rect x="-15" y="46" width="30" height="88" rx="12" fill="url(#dBody)"/>
+    <rect x="-15" y="46" width="30" height="88" rx="12" fill="url(#dSheen)" opacity="0.52"/>
+    <g stroke="#3A3830" stroke-width="1.1" opacity="0.48">
+      <line x1="-9" y1="62"  x2="9" y2="62"/> <line x1="-9" y1="74"  x2="9" y2="74"/>
+      <line x1="-9" y1="86"  x2="9" y2="86"/> <line x1="-9" y1="98"  x2="9" y2="98"/>
+      <line x1="-9" y1="110" x2="9" y2="110"/><line x1="-9" y1="122" x2="9" y2="122"/>
+    </g>
+    <rect x="-15" y="128" width="30" height="6" rx="3" fill="url(#dGold)" opacity="0.72"/>
+    <!-- Cord -->
+    <path d="M 0,134 Q 8,162 4,200 Q 0,238 11,275"
+      stroke="#141210" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.82"/>
+    <!-- Nozzle concentrator -->
+    <rect x="-22" y="-112" width="44" height="20" rx="4" fill="#1E1C18"/>
+    <rect x="-17" y="-110" width="34" height="16" rx="3" fill="#141210"/>
+    <line x1="-15" y1="-102" x2="15" y2="-102" stroke="#C9A96E" stroke-width="0.7" opacity="0.40"/>
+  </g>
+
+  <!-- ─── BRAND PLACARD ─── -->
+  <rect x="72"  y="270" width="248" height="94"  fill="url(#bkFace)"/>
+  <rect x="72"  y="262" width="248" height="10"  fill="url(#bkTop)"/>
+  <rect x="318" y="270" width="23"  height="94"  fill="#0C0A08" opacity="0.9"/>
+  <rect x="318" y="262" width="23"  height="10"  fill="#0A0808"/>
+  <line x1="74"  y1="294" x2="316" y2="294" stroke="#C9A96E" stroke-width="0.8" opacity="0.44"/>
+  <line x1="74"  y1="350" x2="316" y2="350" stroke="#C9A96E" stroke-width="0.8" opacity="0.44"/>
+  <text x="194" y="320" font-family="'Cormorant Garamond',Georgia,serif" font-size="20" font-weight="300" fill="url(#goldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">OLIVHAIRSUPPLY</text>
+  <text x="194" y="340" font-family="'Cormorant Garamond',Georgia,serif" font-size="9.5" font-style="italic" fill="#D4B87A" text-anchor="middle" letter-spacing="4" opacity="0.88">Academy · Berlin</text>
+
+  <!-- ─── OVERLAYS (same as all other pages) ─── -->
+  <rect width="1440" height="580" fill="url(#textOv)"/>
+  <rect width="1440" height="580" fill="url(#vig)"/>
+</svg>
