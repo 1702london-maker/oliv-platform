@@ -589,10 +589,12 @@
 .owhl-hero-overlay{background:linear-gradient(to bottom,rgba(15,10,6,0.12) 0%,rgba(15,10,6,0.32) 100%)!important;}
 @media(min-width:769px){.owhl-hero{overflow:hidden;}.owhl-hero-img{transform:scale(1.4)!important;transform-origin:68% center!important;}}
 @media(max-width:768px){
-  .owhl-hero-inner{position:absolute!important;top:0!important;bottom:0!important;left:0!important;right:0!important;transform:none!important;max-width:100%!important;padding:72px 24px 78px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;}
+  .owhl-hero{height:84vh!important;min-height:520px!important;overflow:hidden!important;}
+  .owhl-hero-inner{position:absolute!important;top:0!important;bottom:0!important;left:0!important;right:0!important;transform:none!important;max-width:100%!important;padding:72px 24px 0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;}
   .owhl-hero-eyebrow{margin-bottom:auto!important;}
-  .owhl-hero-title{margin-top:auto!important;margin-bottom:4px!important;}
-  .owhl-whl-btns{bottom:32px!important;gap:8px!important;}
+  .owhl-hero-title{margin-top:auto!important;margin-bottom:80px!important;}
+  .owhl-whl-btns{position:absolute!important;bottom:28px!important;left:0!important;right:0!important;display:flex!important;justify-content:center!important;gap:8px!important;z-index:5!important;}
+  .owhl-btn-gold,.owhl-btn-dark{font-size:7px!important;padding:7px 12px!important;letter-spacing:1.5px!important;}
 }
 </style>
 <div class="owhl">
