@@ -1158,7 +1158,8 @@
 
 .oab-hero {
   position: relative;
-  height: 580px;
+  height: 100vh;
+  min-height: 600px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -1184,11 +1185,14 @@
   background: linear-gradient(to right, rgba(72,68,64,0.62) 0%, rgba(80,76,72,0.38) 40%, rgba(88,84,80,0.08) 100%);
 }
 .oab-hero-inner {
-  position: relative;
+  position: absolute;
   z-index: 2;
-  text-align: center;
-  padding: 40px 20px;
-  max-width: 760px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5%;
+  text-align: left;
+  padding: 0;
+  max-width: 38%;
 }
 .oab-hero-eyebrow {
   font-family: 'Montserrat', sans-serif;
@@ -1217,6 +1221,58 @@
   line-height: 1.8;
   max-width: 560px;
   margin: 0 auto;
+}
+.oab-hero-btns {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.oab-btn-hero-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #B68A45;
+  color: #FFFDFB;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.oab-btn-hero-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #FFFDFB;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  border: 1px solid rgba(255,255,255,0.6);
+  cursor: pointer;
+  text-decoration: none;
+}
+.oab-btn-hero-dark:hover { border-color: #fff; }
+.oab-btn-hero-gold:hover { background: #C99A50; }
+@media(max-width:768px){
+  .oab-hero-inner{position:absolute;top:0;bottom:0;left:0;right:0;transform:none;max-width:100%;padding:72px 24px 120px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;}
+  .oab-hero-title{font-size:36px!important;line-height:1.08!important;max-width:280px;}
+  .oab-hero-eyebrow{margin-bottom:auto!important;font-size:9px!important;}
+  .oab-hero-title{margin-top:auto!important;margin-bottom:4px!important;}
+  .oab-hero-btns{bottom:32px;gap:8px;}
+  .oab-btn-hero-gold,.oab-btn-hero-dark{font-size:7px;padding:7px 10px;letter-spacing:1.5px;}
 }
 
 .oab-story {
@@ -1703,15 +1759,17 @@
         fetchpriority="high"
       >
     
-    <div class="oab-hero-overlay"></div>
+    <div class="oab-hero-overlay" style="background:linear-gradient(to bottom,rgba(15,10,6,0.15) 0%,rgba(15,10,6,0.45) 100%)!important;"></div>
     <div class="oab-hero-inner">
       <span class="oab-hero-eyebrow">Berlin, Est. 2016</span>
       <h1 class="oab-hero-title">
         Born from a passion<br>for <em>exceptional</em> hair.
       </h1>
-      <p class="oab-hero-sub">
-        OlivHairSupply began with one vision: to give every woman access to luxury hair that looks, feels and moves like her own.
-      </p>
+
+    </div>
+    <div class="oab-hero-btns">
+      <a href="/pages/careers" class="oab-btn-hero-gold">Careers</a>
+      <a href="/appointments" class="oab-btn-hero-dark">Book Appointment</a>
     </div>
   </div>
 
@@ -1931,6 +1989,16 @@
           <span class="oab-team-role">Senior Braiding and Extension Specialist</span>
           <span class="oab-team-specialty">Braids, cornrows, weaving and Brazilian knots</span>
           <p class="oab-team-bio">With over 15 years experience, known for precision, neat finishes and client comfort.</p>
+        </div>
+      </div>
+
+      <div class="oab-team-card">
+        <div class="oab-team-ph"><span>Fatima</span></div>
+        <div class="oab-team-info">
+          <div class="oab-team-name">Fatima</div>
+          <span class="oab-team-role">Colour and Extension Specialist</span>
+          <span class="oab-team-specialty">Balayage, keratin treatments, tape-ins and nano rings</span>
+          <p class="oab-team-bio">Known for flawless colour transitions and seamless extension blends across all hair textures.</p>
         </div>
       </div>
 
