@@ -1,21 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
   <defs>
     <linearGradient id="wBg" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#F8F8F8"/>
-      <stop offset="50%"  stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#F5F5F5"/>
+      <stop offset="0%"   stop-color="#424040"/>
+      <stop offset="28%"  stop-color="#555250"/>
+      <stop offset="54%"  stop-color="#5E5A56"/>
+      <stop offset="78%"  stop-color="#575350"/>
+      <stop offset="100%" stop-color="#4A4744"/>
     </linearGradient>
     <linearGradient id="wTopS" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#E8E8E8" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#D0D0D0" stop-opacity="0.1"/>
+      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.52"/>
+      <stop offset="38%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.38"/>
     </linearGradient>
     <radialGradient id="wKey" cx="72%" cy="14%" r="55%">
-      <stop offset="0%"   stop-color="#E8E0D8" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#FFFFFF"  stop-opacity="0"/>
+      <stop offset="0%"   stop-color="#807060" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="wFloor" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#EBEBEB"/>
-      <stop offset="100%" stop-color="#E0E0E0"/>
+      <stop offset="0%"   stop-color="#363230"/>
+      <stop offset="100%" stop-color="#242018"/>
     </linearGradient>
     <linearGradient id="vigL" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0.35"/>
@@ -102,7 +105,7 @@
 
   <!-- FLOOR -->
   <rect x="0" y="448" width="1440" height="132" fill="url(#wFloor)"/>
-  <rect x="0" y="445" width="1440" height="5"   fill="#C8C8C8" opacity="0.5"/>
+  <rect x="0" y="445" width="1440" height="5"   fill="#14100C" opacity="0.38"/>
 
   <!-- ══════════════ HAIR — BEHIND BOXES ══════════════ -->
   <path d="M666,40 Q652,130 640,225 Q626,330 635,415 Q640,462 633,508 Q627,545 620,578" fill="none" stroke="url(#hDark)" stroke-width="24" opacity="0.88" stroke-linecap="round"/>
