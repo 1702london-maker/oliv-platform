@@ -350,8 +350,11 @@ function shopLandingOverrides() {
   white-space: nowrap;
 }
 @media (max-width: 768px) {
+  /* Push text to top so shopping bag shows clearly */
+  .oshp-hero { align-items: flex-start !important; }
+  .oshp-hero-title { font-size: 34px !important; }
   /* Remove padding so meta bar can reach hero edges */
-  .oshp-hero-inner { position: static !important; padding: 24px 24px 0 !important; }
+  .oshp-hero-inner { position: static !important; padding: 16px 24px 0 !important; }
   /* Keep text above overlay */
   .oshp-hero-eyebrow,
   .oshp-hero-title,
