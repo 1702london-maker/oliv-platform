@@ -352,8 +352,33 @@ function shopLandingOverrides() {
   white-space: nowrap;
 }
 @media (max-width: 768px) {
-  .oshp-hero-meta { gap: 20px; margin-top: 20px; }
-  .oshp-hero-meta-val { font-size: 22px; }
-  .oshp-hero-meta-label { font-size: 8px; letter-spacing: 1.5px; white-space: normal; }
+  .oshp-hero-meta {
+    flex-direction: row !important;
+    justify-content: center;
+    gap: 0 !important;
+    margin-top: 16px;
+    flex-wrap: nowrap !important;
+    width: 100%;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(201,169,110,0.3);
+    background: rgba(0,0,0,0.25);
+  }
+  .oshp-hero-meta-item {
+    flex: 1;
+    padding: 10px 6px !important;
+    border-right: 1px solid rgba(201,169,110,0.2) !important;
+    border-bottom: none !important;
+    text-align: center;
+  }
+  .oshp-hero-meta-item:last-child { border-right: none !important; }
+  .oshp-hero-meta-val { font-size: 18px; }
+  .oshp-hero-meta-label {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+    white-space: normal;
+    line-height: 1.3;
+  }
 }`;
 }
