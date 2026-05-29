@@ -356,29 +356,35 @@ function shopLandingOverrides() {
     flex-direction: row !important;
     justify-content: center;
     gap: 0 !important;
-    margin-top: 16px;
+    margin-top: 12px;
     flex-wrap: nowrap !important;
-    width: 100%;
-    max-width: 360px;
+    width: calc(100% - 32px);
+    max-width: 340px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid rgba(201,169,110,0.3);
-    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(201,169,110,0.22);
+    background: rgba(0,0,0,0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
   .oshp-hero-meta-item {
     flex: 1;
-    padding: 10px 6px !important;
-    border-right: 1px solid rgba(201,169,110,0.2) !important;
+    padding: 7px 4px !important;
+    border-right: 1px solid rgba(201,169,110,0.18) !important;
     border-bottom: none !important;
     text-align: center;
   }
   .oshp-hero-meta-item:last-child { border-right: none !important; }
-  .oshp-hero-meta-val { font-size: 18px; }
+  .oshp-hero-meta-val {
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
   .oshp-hero-meta-label {
-    font-size: 7px;
-    letter-spacing: 0.8px;
+    font-size: 6px;
+    letter-spacing: 0.6px;
     white-space: normal;
-    line-height: 1.3;
+    line-height: 1.25;
+    color: rgba(255,255,255,0.6);
   }
 }`;
 }
