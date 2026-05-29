@@ -50,6 +50,12 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
       .replaceAll("window.location.href = '/login?next=/wholesale'", "window.location.href = '/wholesale/login'");
   }
 
+  if (page === "pages-training") {
+    html = html
+      .replaceAll('action="/contact#contact_form"', 'action="/api/applications/training"')
+      .replaceAll("window.location.href = '/login?next=/training'", "window.location.href = '/training/login'");
+  }
+
   if (page === "appointments") {
     html = html.replaceAll('action="/contact#oappt-hidden-form"', 'action="/api/appointments"');
   }

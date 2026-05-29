@@ -1587,11 +1587,8 @@
       <div class="otr-hero-content">
         <span class="otr-eyebrow">OlivHairSupply Academy</span>
         <h1 class="otr-hero-title">
-          Become a Certified<br><em>Luxury Hair Specialist.</em>
+          Become professionally <em>Certified.</em>
         </h1>
-        <p class="otr-hero-sub">
-          Learn premium installation techniques, master BiziLux systems, and build a profitable hair business.
-        </p>
         <div class="otr-hero-btns">
           <a href="/pages/training" class="otr-btn-gold">Enroll Now</a>
           <a href="/appointments" class="otr-btn-dark">Book Training Consultation</a>
@@ -1613,6 +1610,138 @@
             <span class="otr-stat-num">Certified</span>
             <span class="otr-stat-label">On Completion</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LUXURY TRAINING IMAGES -->
+  <style>
+  .otrg-images{padding:0;}
+  .otrg-img-grid{display:grid;grid-template-columns:1fr 1fr;height:540px;}
+  .otrg-img-panel{position:relative;overflow:hidden;}
+  .otrg-img-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+  .otrg-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,10,6,0.80) 0%,rgba(15,10,6,0.18) 55%);}
+  .otrg-img-divider{position:absolute;inset-block:0;left:50%;width:1px;background:rgba(201,169,110,0.35);z-index:3;pointer-events:none;}
+  .otrg-img-content{position:absolute;bottom:40px;left:44px;right:24px;z-index:2;}
+  .otrg-img-icon{font-size:44px;color:rgba(201,169,110,0.65);display:block;margin-bottom:14px;line-height:1;}
+  .otrg-img-label{font-family:'Montserrat',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#C9A96E;margin-bottom:10px;}
+  .otrg-img-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(22px,2.2vw,34px);font-weight:300;color:#F6F1E8;line-height:1.2;}
+  .otrg-img-title em{font-style:italic;color:#C9A96E;}
+  /* TRAINING GATE */
+  .otrg-gate{background:#F8F5EF;padding:84px 0;}
+  .otrg-inner{max-width:1100px;margin:0 auto;padding:0 40px;}
+  .otrg-header{text-align:center;margin-bottom:52px;}
+  .otrg-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,3.2vw,46px);font-weight:300;color:#2B2620;line-height:1.15;}
+  .otrg-title em{font-style:italic;color:#C9A96E;}
+  .otrg-sub{font-family:'Montserrat',sans-serif;font-size:12.5px;color:#8B7355;margin-top:12px;letter-spacing:0.3px;}
+  .otrg-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .otrg-card{background:#fff;border:1px solid #E8DDD0;padding:36px 28px 28px;display:flex;flex-direction:column;}
+  .otrg-tag{font-family:'Montserrat',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#B68A45;border:1px solid #C9A96E;padding:4px 10px;display:inline-block;margin-bottom:16px;align-self:flex-start;}
+  .otrg-card-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;color:#2B2620;margin-bottom:20px;}
+  .otrg-list{flex:1;margin-bottom:24px;}
+  .otrg-item{font-family:'Montserrat',sans-serif;font-size:11.5px;color:#5A4E42;padding:9px 0;border-bottom:1px solid #F0E8DC;line-height:1.5;}
+  .otrg-item:first-child{border-top:1px solid #F0E8DC;}
+  .otrg-btn{display:block;width:100%;padding:13px 20px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;}
+  .otrg-btn-gold{background:#C9A96E;color:#fff;}
+  .otrg-btn-gold:hover{background:#B68A45;}
+  .otrg-btn-dark{background:#2B2620;color:#fff;}
+  .otrg-btn-dark:hover{background:#1a0f08;}
+  /* GATE MODALS */
+  .otrg-modal-overlay{position:fixed;inset:0;background:rgba(10,7,4,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;padding:20px;}
+  .otrg-modal-overlay.open{opacity:1;pointer-events:all;}
+  .otrg-modal{background:#FDFAF6;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;position:relative;padding:48px 44px 44px;}
+  .otrg-modal-close{position:absolute;top:20px;right:20px;background:none;border:none;cursor:pointer;width:28px;height:28px;display:flex;flex-direction:column;justify-content:space-between;padding:5px 0;}
+  .otrg-modal-close span{display:block;width:100%;height:1.5px;background:#2B2620;transform-origin:center;}
+  .otrg-modal-close span:first-child{transform:rotate(45deg) translate(5px,5px);}
+  .otrg-modal-close span:last-child{transform:rotate(-45deg) translate(5px,-5px);}
+  .otrg-modal-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#B68A45;display:block;margin-bottom:12px;}
+  .otrg-modal-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:400;color:#2B2620;margin-bottom:10px;}
+  .otrg-modal-title em{font-style:italic;color:#C9A96E;}
+  .otrg-modal-sub{font-family:'Montserrat',sans-serif;font-size:12px;color:#6B5C4A;line-height:1.7;margin-bottom:28px;}
+  .otrg-form-field{margin-bottom:18px;}
+  .otrg-form-label{display:block;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#2B2620;margin-bottom:7px;}
+  .otrg-form-input,.otrg-form-select,.otrg-form-textarea{width:100%;padding:11px 14px;border:1px solid #D4C5B2;background:#FDFAF6;font-family:'Montserrat',sans-serif;font-size:13px;color:#2B2620;outline:none;transition:border-color 0.2s;}
+  .otrg-form-input:focus,.otrg-form-select:focus,.otrg-form-textarea:focus{border-color:#C9A96E;}
+  .otrg-form-textarea{min-height:80px;resize:vertical;}
+  .otrg-form-submit{width:100%;padding:14px;background:#C9A96E;color:#fff;font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border:none;cursor:pointer;margin-top:8px;transition:background 0.2s;}
+  .otrg-form-submit:hover{background:#B68A45;}
+  .otrg-form-note{font-family:'Montserrat',sans-serif;font-size:11px;color:#8B7355;text-align:center;margin-top:14px;}
+  .otrg-form-note a{color:#B68A45;text-decoration:none;}
+  .otrg-login-error{font-family:'Montserrat',sans-serif;font-size:11.5px;color:#C0392B;display:none;margin-bottom:12px;}
+  @media(max-width:768px){
+    .otrg-cards{grid-template-columns:1fr;}
+    .otrg-img-grid{grid-template-columns:1fr;height:auto;}
+    .otrg-img-panel{height:300px;}
+    .otrg-inner{padding:0 20px;}
+    .otrg-modal{padding:36px 24px 28px;}
+    .otrg-img-divider{display:none;}
+  }
+  </style>
+
+  <div class="otrg-images">
+    <div class="otrg-img-grid">
+      <div class="otrg-img-panel">
+        <div class="otrg-img-bg" style="background-image:linear-gradient(160deg,#1a0c06 0%,#2B2620 45%,#3d2515 100%);"></div>
+        <div class="otrg-img-overlay"></div>
+        <div class="otrg-img-content">
+          <span class="otrg-img-icon">✂</span>
+          <div class="otrg-img-label">Precision Cutting</div>
+          <div class="otrg-img-title">Expert Hands.<br><em>Every Detail.</em></div>
+        </div>
+      </div>
+      <div class="otrg-img-panel">
+        <div class="otrg-img-bg" style="background-image:linear-gradient(160deg,#0f0a05 0%,#241c14 50%,#2B2620 100%);"></div>
+        <div class="otrg-img-overlay"></div>
+        <div class="otrg-img-content">
+          <span class="otrg-img-icon">💨</span>
+          <div class="otrg-img-label">Styling & Finish</div>
+          <div class="otrg-img-title">Flawless.<br><em>Every Time.</em></div>
+        </div>
+      </div>
+      <div class="otrg-img-divider"></div>
+    </div>
+  </div>
+
+  <div class="otrg-gate">
+    <div class="otrg-inner">
+      <div class="otrg-header">
+        <h2 class="otrg-title">Where Do You <em>Stand?</em></h2>
+        <p class="otrg-sub">Select the path that applies to you.</p>
+      </div>
+      <div class="otrg-cards">
+        <div class="otrg-card">
+          <span class="otrg-tag">New Student</span>
+          <div class="otrg-card-title">Not Yet Enrolled</div>
+          <div class="otrg-list">
+            <div class="otrg-item">Choose your programme</div>
+            <div class="otrg-item">Submit your application</div>
+            <div class="otrg-item">Await review from our team</div>
+            <div class="otrg-item">Receive confirmation within 3 to 5 business days</div>
+          </div>
+          <button class="otrg-btn otrg-btn-gold" onclick="otrgOpenApply()">Apply Now</button>
+        </div>
+        <div class="otrg-card">
+          <span class="otrg-tag">Enrolled Student</span>
+          <div class="otrg-card-title">Already Enrolled</div>
+          <div class="otrg-list">
+            <div class="otrg-item">Log in to your student portal</div>
+            <div class="otrg-item">Access your course materials</div>
+            <div class="otrg-item">Book your training dates</div>
+            <div class="otrg-item">Track your certification progress</div>
+          </div>
+          <button class="otrg-btn otrg-btn-gold" onclick="otrgOpenLogin()">Log In to Portal</button>
+        </div>
+        <div class="otrg-card">
+          <span class="otrg-tag">Have Questions</span>
+          <div class="otrg-card-title">Need More Information</div>
+          <div class="otrg-list">
+            <div class="otrg-item">Questions about the programme?</div>
+            <div class="otrg-item">Not sure which course is right?</div>
+            <div class="otrg-item">Want to discuss options first?</div>
+            <div class="otrg-item">Our team responds within one business day</div>
+          </div>
+          <a href="/pages/contact" class="otrg-btn otrg-btn-dark">Contact Us</a>
         </div>
       </div>
     </div>
@@ -1746,12 +1875,7 @@
           <p class="otr-section-sub">Our programmes welcome anyone serious about building a career at the luxury end of the hair industry.</p>
         </div>
         <div>
-          <div class="otr-who-cards">
-            <div class="otr-who-card"><div class="otr-who-dot"></div><div><div class="otr-who-card-title">Beginners Entering the Industry</div><p class="otr-who-card-text">Start your career the right way with premium skills, professional technique and a luxury mindset from day one.</p></div></div>
-            <div class="otr-who-card"><div class="otr-who-dot"></div><div><div class="otr-who-card-title">Stylists Upgrading Their Skills</div><p class="otr-who-card-text">Already working in hair and want to move upmarket? Our advanced courses bridge the gap to luxury service delivery.</p></div></div>
-            <div class="otr-who-card"><div class="otr-who-dot"></div><div><div class="otr-who-card-title">Salon Owners</div><p class="otr-who-card-text">Upskill your team, introduce extension services and increase your salon revenue with certified professionals on staff.</p></div></div>
-            <div class="otr-who-card"><div class="otr-who-dot"></div><div><div class="otr-who-card-title">Entrepreneurs Building a Brand</div><p class="otr-who-card-text">Learn the technical and business skills to launch and grow a luxury hair brand that commands premium pricing.</p></div></div>
-          </div>
+          <div class="otr-who-cards"></div>
         </div>
       </div>
     </div>
@@ -1801,13 +1925,120 @@
       <h2 class="otr-cta-title">Start Your<br><em>Luxury Career</em></h2>
       <p class="otr-cta-sub">Limited spaces available. Secure your place today and begin your journey to becoming a certified luxury hair specialist.</p>
       <div class="otr-cta-btns">
-        <a href="/pages/training" class="otr-btn-cta-primary">Enroll Now</a>
+        <button class="otr-btn-cta-primary" onclick="otrgOpenApply()">Apply Now</button>
         <a href="/appointments" class="otr-btn-cta-outline">Book Training Consultation</a>
       </div>
     </div>
   </div>
 
 </div>
+
+<!-- TRAINING APPLY MODAL -->
+<div class="otrg-modal-overlay" id="otrg-apply-overlay">
+  <div class="otrg-modal">
+    <button class="otrg-modal-close" id="otrg-apply-close" aria-label="Close"><span></span><span></span></button>
+    <div>
+      <span class="otrg-modal-eyebrow">Training Application</span>
+      <h2 class="otrg-modal-title">Apply for <em>Certification</em></h2>
+      <p class="otrg-modal-sub">Complete the form below. Our team reviews all applications personally and will contact you within 3 to 5 business days.</p>
+      <form class="otrg-form" action="/contact#contact_form" method="post" accept-charset="UTF-8">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="utf8" value="true">
+        <input type="hidden" name="contact[tags]" value="training-application">
+        <div class="otrg-form-field">
+          <label class="otrg-form-label" for="otrg-name">Full Name</label>
+          <input class="otrg-form-input" type="text" id="otrg-name" name="contact[name]" placeholder="Your full name" required>
+        </div>
+        <div class="otrg-form-field">
+          <label class="otrg-form-label" for="otrg-email">Email Address</label>
+          <input class="otrg-form-input" type="email" id="otrg-email" name="contact[email]" placeholder="your@email.com" required>
+        </div>
+        <div class="otrg-form-field">
+          <label class="otrg-form-label" for="otrg-phone">Phone Number</label>
+          <input class="otrg-form-input" type="tel" id="otrg-phone" name="contact[phone]" placeholder="+49 …">
+        </div>
+        <div class="otrg-form-field">
+          <label class="otrg-form-label" for="otrg-programme">Programme of Interest</label>
+          <select class="otrg-form-select" id="otrg-programme" name="contact[programme]">
+            <option value="">Select a programme</option>
+            <option value="foundation">Beginner Foundation — From €500</option>
+            <option value="advanced">Advanced Installation — From €1,200</option>
+            <option value="master">Master Business & Brand — From €2,500</option>
+          </select>
+        </div>
+        <div class="otrg-form-field">
+          <label class="otrg-form-label" for="otrg-experience">Current Experience Level</label>
+          <select class="otrg-form-select" id="otrg-experience" name="contact[experience]">
+            <option value="">Select your level</option>
+            <option value="beginner">Beginner — No prior experience</option>
+            <option value="intermediate">Intermediate — Some salon experience</option>
+            <option value="professional">Professional — Working in the industry</option>
+            <option value="salon-owner">Salon Owner</option>
+          </select>
+        </div>
+        <div class="otrg-form-field">
+          <label class="otrg-form-label" for="otrg-message">Why do you want to train with us?</label>
+          <textarea class="otrg-form-textarea" id="otrg-message" name="contact[body]" placeholder="Tell us a little about yourself and your goals…"></textarea>
+        </div>
+        <button type="submit" class="otrg-form-submit">Submit Application</button>
+        <p class="otrg-form-note">Already enrolled? <a href="#" onclick="otrgCloseApply(); otrgOpenLogin(); return false;">Log in to your portal.</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TRAINING LOGIN MODAL -->
+<div class="otrg-modal-overlay" id="otrg-login-overlay">
+  <div class="otrg-modal">
+    <button class="otrg-modal-close" id="otrg-login-close" aria-label="Close"><span></span><span></span></button>
+    <div>
+      <span class="otrg-modal-eyebrow">Student Portal</span>
+      <h2 class="otrg-modal-title">Access Your <em>Training Portal</em></h2>
+      <p class="otrg-modal-sub">Enter your student credentials. These are sent to you by OlivHairSupply once your application is approved.</p>
+      <div class="otrg-form-field">
+        <label class="otrg-form-label" for="otrg-login-email">Email Address</label>
+        <input class="otrg-form-input" type="email" id="otrg-login-email" placeholder="your@email.com">
+      </div>
+      <div class="otrg-form-field">
+        <label class="otrg-form-label" for="otrg-login-code">Training Access Code</label>
+        <input class="otrg-form-input" type="text" id="otrg-login-code" placeholder="Enter your access code">
+      </div>
+      <p class="otrg-login-error" id="otrg-login-error">Incorrect details. Please check your email and access code and try again.</p>
+      <button type="button" class="otrg-form-submit" onclick="otrgTryLogin()">Access Training Portal</button>
+      <p class="otrg-form-note">Not yet enrolled? <a href="#" onclick="otrgCloseLogin(); otrgOpenApply(); return false;">Apply for a training programme.</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function otrgOpenApply() {
+  var o = document.getElementById('otrg-apply-overlay');
+  if (o) { o.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+function otrgCloseApply() {
+  var o = document.getElementById('otrg-apply-overlay');
+  if (o) { o.classList.remove('open'); document.body.style.overflow = ''; }
+}
+function otrgOpenLogin() {
+  var o = document.getElementById('otrg-login-overlay');
+  if (o) { o.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+function otrgCloseLogin() {
+  var o = document.getElementById('otrg-login-overlay');
+  if (o) { o.classList.remove('open'); document.body.style.overflow = ''; }
+}
+function otrgTryLogin() {
+  var email = document.getElementById('otrg-login-email').value.trim();
+  var code  = document.getElementById('otrg-login-code').value.trim();
+  var err   = document.getElementById('otrg-login-error');
+  if (!email || !code) { err.style.display = 'block'; return; }
+  window.location.href = '/training/login?email=' + encodeURIComponent(email) + '&code=' + encodeURIComponent(code);
+}
+document.getElementById('otrg-apply-close').addEventListener('click', otrgCloseApply);
+document.getElementById('otrg-login-close').addEventListener('click', otrgCloseLogin);
+document.getElementById('otrg-apply-overlay').addEventListener('click', function(e) { if (e.target === this) otrgCloseApply(); });
+document.getElementById('otrg-login-overlay').addEventListener('click', function(e) { if (e.target === this) otrgCloseLogin(); });
+</script>
 
 </div><div id="shopify-section-template--30019524100434__newsletter" class="shopify-section">
 
