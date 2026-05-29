@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-309 -124 2057 829" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-69 -124 2057 829" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
   <defs>
     <!-- Studio backdrop — matches home page grey exactly -->
     <linearGradient id="studioBase" x1="0" y1="0" x2="1" y2="0">
@@ -109,10 +109,10 @@
   </defs>
 
   <!-- ─── STUDIO BACKDROP ─── -->
-  <rect x="-309" y="-124" width="2057" height="829" fill="url(#studioBase)"/>
-  <rect x="-309" y="-124" width="2057" height="829" fill="url(#studioTop)"/>
-  <rect x="-309" y="-124" width="2057" height="829" fill="url(#keyLight)"/>
-  <rect x="-309" y="-124" width="2057" height="829" fill="url(#fillLight)"/>
+  <rect x="-69" y="-124" width="2057" height="829" fill="url(#studioBase)"/>
+  <rect x="-69" y="-124" width="2057" height="829" fill="url(#studioTop)"/>
+  <rect x="-69" y="-124" width="2057" height="829" fill="url(#keyLight)"/>
+  <rect x="-69" y="-124" width="2057" height="829" fill="url(#fillLight)"/>
 
   <!-- ─── FIGURE — positioned right-center matching home page ─── -->
   <!-- Shadow behind figure -->
@@ -313,10 +313,10 @@
 
   <!-- ─── OVERLAYS ─── -->
   <!-- Left text overlay (matches home page gradient) -->
-  <rect x="-309" y="-124" width="2057" height="829" fill="url(#textOverlay)"/>
+  <rect x="-69" y="-124" width="2057" height="829" fill="url(#textOverlay)"/>
   <!-- Vignette (matches home page) -->
-  <rect x="-309" y="-124" width="2057" height="829" fill="url(#vignette)"/>
+  <rect x="-69" y="-124" width="2057" height="829" fill="url(#vignette)"/>
 
   <!-- Subtle film grain -->
-  <rect x="-309" y="-124" width="2057" height="829" fill="url(#studioBase)" opacity="0.04" filter="url(#grain)"/>
+  <rect x="-69" y="-124" width="2057" height="829" fill="url(#studioBase)" opacity="0.04" filter="url(#grain)"/>
 </svg>
