@@ -356,35 +356,33 @@ function shopLandingOverrides() {
     flex-direction: row !important;
     justify-content: center;
     gap: 0 !important;
-    margin-top: 12px;
+    margin-top: 14px;
     flex-wrap: nowrap !important;
-    width: calc(100% - 32px);
-    max-width: 340px;
+    width: calc(100% - 48px);
+    max-width: 300px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid rgba(201,169,110,0.22);
-    background: rgba(0,0,0,0.12);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(201,169,110,0.20);
+    background: rgba(0,0,0,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
   .oshp-hero-meta-item {
     flex: 1;
-    padding: 7px 4px !important;
-    border-right: 1px solid rgba(201,169,110,0.18) !important;
+    padding: 6px 4px !important;
+    border-right: 1px solid rgba(201,169,110,0.15) !important;
     border-bottom: none !important;
     text-align: center;
   }
   .oshp-hero-meta-item:last-child { border-right: none !important; }
   .oshp-hero-meta-val {
-    font-size: 15px;
-    margin-bottom: 2px;
+    font-size: 14px;
+    margin-bottom: 0;
+    letter-spacing: 0.5px;
   }
+  /* Hide labels on mobile — values speak for themselves in the horizontal strip */
   .oshp-hero-meta-label {
-    font-size: 6px;
-    letter-spacing: 0.6px;
-    white-space: normal;
-    line-height: 1.25;
-    color: rgba(255,255,255,0.6);
+    display: none;
   }
 }`;
 }
