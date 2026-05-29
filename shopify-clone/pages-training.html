@@ -1571,17 +1571,34 @@
 }
 </style>
 
+<style>
+.otr-hero-inner{position:absolute!important;top:50%!important;transform:translateY(-50%)!important;left:4%!important;bottom:auto!important;padding-bottom:0!important;max-width:32%!important;}
+.otr-hero-btns{display:none!important;}
+.otr-hero-stats{display:none!important;}
+.otr-hero-title{font-size:clamp(26px,3.4vw,50px)!important;transform:none!important;}
+.otrn-hero-btns{position:absolute!important;bottom:44px!important;left:0!important;right:0!important;display:flex!important;justify-content:center!important;gap:20px!important;z-index:5;}
+.otrn-btn-gold{font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:#C9A96E;color:#fff;border:none;padding:14px 28px;cursor:pointer;transition:background 0.2s;}
+.otrn-btn-gold:hover{background:#B68A45;}
+.otrn-btn-dark{font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:#2B2620;color:#fff;border:none;padding:14px 28px;cursor:pointer;transition:background 0.2s;}
+.otrn-btn-dark:hover{background:#1a0f08;}
+@media(max-width:768px){
+  .otr-hero-inner{position:absolute!important;top:0!important;bottom:0!important;left:0!important;right:0!important;transform:none!important;max-width:100%!important;padding:72px 24px 0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;}
+  .otr-eyebrow{margin-bottom:auto!important;}
+  .otr-hero-title{margin-top:auto!important;margin-bottom:80px!important;}
+  .otrn-hero-btns{bottom:28px!important;gap:8px!important;}
+  .otrn-btn-gold,.otrn-btn-dark{font-size:7px!important;padding:7px 12px!important;letter-spacing:1.5px!important;}
+}
+</style>
+
 <div class="otr">
 
   <div class="otr-hero">
-    
-      <img class="otr-hero-img"
-        src="https://olivhairsupply-2.myshopify.com/cdn/shop/files/training-hero.png?v=1778598957&width=2400"
-        alt="OlivHairSupply Academy"
-        loading="eager"
-        fetchpriority="high"
-      >
-    
+    <img class="otr-hero-img"
+      src="https://olivhairsupply-2.myshopify.com/cdn/shop/files/training-hero.png?v=1778598957&width=2400"
+      alt="OlivHairSupply Academy"
+      loading="eager"
+      fetchpriority="high"
+    >
     <div class="otr-hero-overlay"></div>
     <div class="otr-hero-inner">
       <div class="otr-hero-content">
@@ -1589,29 +1606,11 @@
         <h1 class="otr-hero-title">
           Become professionally <em>Certified.</em>
         </h1>
-        <div class="otr-hero-btns">
-          <a href="/pages/training" class="otr-btn-gold">Enroll Now</a>
-          <a href="/appointments" class="otr-btn-dark">Book Training Consultation</a>
-        </div>
-        <div class="otr-hero-stats">
-          <div class="otr-stat">
-            <span class="otr-stat-num">3</span>
-            <span class="otr-stat-label">Programmes</span>
-          </div>
-          <div class="otr-stat">
-            <span class="otr-stat-num">100%</span>
-            <span class="otr-stat-label">Hands-On Training</span>
-          </div>
-          <div class="otr-stat">
-            <span class="otr-stat-num">Small</span>
-            <span class="otr-stat-label">Class Sizes</span>
-          </div>
-          <div class="otr-stat">
-            <span class="otr-stat-num">Certified</span>
-            <span class="otr-stat-label">On Completion</span>
-          </div>
-        </div>
       </div>
+    </div>
+    <div class="otrn-hero-btns">
+      <button class="otrn-btn-gold" onclick="otrgOpenApply()">Apply Now</button>
+      <button class="otrn-btn-dark" onclick="otrgOpenLogin()">Log In to Portal</button>
     </div>
   </div>
 
@@ -1700,50 +1699,6 @@
         </div>
       </div>
       <div class="otrg-img-divider"></div>
-    </div>
-  </div>
-
-  <div class="otrg-gate">
-    <div class="otrg-inner">
-      <div class="otrg-header">
-        <h2 class="otrg-title">Where Do You <em>Stand?</em></h2>
-        <p class="otrg-sub">Select the path that applies to you.</p>
-      </div>
-      <div class="otrg-cards">
-        <div class="otrg-card">
-          <span class="otrg-tag">New Student</span>
-          <div class="otrg-card-title">Not Yet Enrolled</div>
-          <div class="otrg-list">
-            <div class="otrg-item">Choose your programme</div>
-            <div class="otrg-item">Submit your application</div>
-            <div class="otrg-item">Await review from our team</div>
-            <div class="otrg-item">Receive confirmation within 3 to 5 business days</div>
-          </div>
-          <button class="otrg-btn otrg-btn-gold" onclick="otrgOpenApply()">Apply Now</button>
-        </div>
-        <div class="otrg-card">
-          <span class="otrg-tag">Enrolled Student</span>
-          <div class="otrg-card-title">Already Enrolled</div>
-          <div class="otrg-list">
-            <div class="otrg-item">Log in to your student portal</div>
-            <div class="otrg-item">Access your course materials</div>
-            <div class="otrg-item">Book your training dates</div>
-            <div class="otrg-item">Track your certification progress</div>
-          </div>
-          <button class="otrg-btn otrg-btn-gold" onclick="otrgOpenLogin()">Log In to Portal</button>
-        </div>
-        <div class="otrg-card">
-          <span class="otrg-tag">Have Questions</span>
-          <div class="otrg-card-title">Need More Information</div>
-          <div class="otrg-list">
-            <div class="otrg-item">Questions about the programme?</div>
-            <div class="otrg-item">Not sure which course is right?</div>
-            <div class="otrg-item">Want to discuss options first?</div>
-            <div class="otrg-item">Our team responds within one business day</div>
-          </div>
-          <a href="/pages/contact" class="otrg-btn otrg-btn-dark">Contact Us</a>
-        </div>
-      </div>
     </div>
   </div>
 
