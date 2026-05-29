@@ -2338,12 +2338,32 @@
   .owhl-dash-stats { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .owhl-hero { height: 460px !important; min-height: 460px !important; max-height: none; }
-  .owhl-hero-inner { padding: 32px 0 0 24px !important; }
-  .owhl-hero-btns { flex-direction: row !important; flex-wrap: nowrap !important; }
-  .owhl-btn-gold, .owhl-btn-dark { padding: 14px 16px !important; font-size: 11px !important; }
-  .owhl-hero-title { font-size: 52px; }
-  .owhl-hero-sub { font-size: 16px; }
+  /* HERO — match home page mobile pattern */
+  .owhl-hero { height: 84vh !important; min-height: 600px !important; max-height: none !important; }
+  .owhl-hero-img { object-position: 68% center !important; }
+  .owhl-hero-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    padding: 72px 24px 40px !important;
+    position: static !important;
+    text-align: left !important;
+  }
+  .owhl-hero-eyebrow { font-size: 9px !important; letter-spacing: 4px !important; margin-bottom: auto !important; }
+  .owhl-hero-title { font-size: 36px !important; line-height: 1.08 !important; margin-bottom: 12px !important; max-width: 280px !important; }
+  .owhl-hero-btns {
+    position: static !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    background: none !important;
+    border-top: none !important;
+    bottom: auto !important;
+    padding: 0 !important;
+  }
+  .owhl-btn-gold, .owhl-btn-dark { max-width: 160px !important; font-size: 7px !important; padding: 7px 10px !important; letter-spacing: 1.5px !important; }
+  .owhl-hero-title { font-size: 36px; }
+  .owhl-hero-sub { font-size: 12px; }
   .owhl-inner { padding: 0 24px; }
   .owhl-title { font-size: 36px; }
   .owhl-benefits-title { font-size: 36px; }
