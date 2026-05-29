@@ -352,12 +352,19 @@ function shopLandingOverrides() {
   white-space: nowrap;
 }
 @media (max-width: 768px) {
-  .oshp-hero-inner { padding-bottom: 58px; }
+  /* Remove inner container as positioned context so meta can pin to hero floor */
+  .oshp-hero-inner { position: static !important; }
+  /* Keep text above overlay */
+  .oshp-hero-eyebrow,
+  .oshp-hero-title,
+  .oshp-hero-sub { position: relative; z-index: 2; }
+  /* Pin bar to very bottom of the hero */
   .oshp-hero-meta {
     position: absolute !important;
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
+    z-index: 2;
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
