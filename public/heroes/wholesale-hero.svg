@@ -87,11 +87,11 @@
     </linearGradient>
   </defs>
 
-  <rect width="1440" height="580" fill="url(#wBg)"/>
-  <rect width="1440" height="580" fill="url(#wTopS)"/>
-  <rect width="1440" height="580" fill="url(#wKey)"/>
-  <rect x="0" y="448" width="1440" height="132" fill="url(#wFloor)"/>
-  <rect x="0" y="445" width="1440" height="5" fill="#14100C" opacity="0.38"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#wBg)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#wTopS)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#wKey)"/>
+  <rect x="-308" y="448" width="2057" height="257" fill="url(#wFloor)"/>
+  <rect x="-308" y="445" width="2057" height="5" fill="#14100C" opacity="0.38"/>
 
   <path d="M666,40 Q652,130 640,225 Q626,330 635,415 Q640,462 633,508 Q627,545 620,578" fill="none" stroke="url(#hDark)" stroke-width="24" opacity="0.88" stroke-linecap="round"/>
   <path d="M682,36 Q674,128 670,224 Q664,330 670,416 Q674,463 668,510 Q662,548 655,578" fill="none" stroke="url(#hDark)" stroke-width="19" opacity="0.82" stroke-linecap="round"/>
@@ -184,7 +184,7 @@
   </g>
 
   <ellipse cx="690" cy="456" rx="165" ry="7" fill="#060402" opacity="0.36"/>
-  <rect x="0"    y="0"   width="200"  height="580" fill="url(#vigL)"/>
-  <rect x="1240" y="0"   width="200"  height="580" fill="url(#vigR)"/>
-  <rect x="0"    y="370" width="1440" height="210" fill="url(#vigB)"/>
+  <rect x="-308" y="-124" width="508" height="829" fill="url(#vigL)"/>
+  <rect x="1240" y="-124" width="509" height="829" fill="url(#vigR)"/>
+  <rect x="-308" y="370" width="2057" height="335" fill="url(#vigB)"/>
 </svg>
