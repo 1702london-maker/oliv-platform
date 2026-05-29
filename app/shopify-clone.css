@@ -7810,8 +7810,11 @@
   .owhl-dash-stats { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .owhl-hero { max-height: none; }
-  .owhl-hero-title { font-size: 52px; }
+  .owhl-hero { min-height: 84vh; max-height: none; }
+  .owhl-hero-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; text-align: left; padding: 72px 24px 120px; justify-content: center; max-width: 100%; transform: none; }
+  .owhl-hero-eyebrow { font-size: 9px !important; letter-spacing: 4px; margin-bottom: 12px; }
+  .owhl-hero-title { font-size: 36px !important; line-height: 1.08 !important; max-width: 280px; transform: none !important; }
+  .owhl-hero-btns { position: absolute; bottom: 40px; left: 0; right: 0; flex-direction: row; gap: 8px; flex-wrap: nowrap; justify-content: center; }
   .owhl-hero-sub { font-size: 16px; }
   .owhl-inner { padding: 0 24px; }
   .owhl-title { font-size: 36px; }
