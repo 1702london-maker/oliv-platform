@@ -338,7 +338,6 @@ function shopLandingOverrides() {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 28px;
   font-weight: 300;
-  color: #FFFFFF;
   line-height: 1;
   letter-spacing: 1px;
 }
@@ -348,7 +347,6 @@ function shopLandingOverrides() {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
   white-space: nowrap;
 }
 @media (max-width: 768px) {
