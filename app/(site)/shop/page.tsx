@@ -17,25 +17,25 @@ const shopCollections = [
     title: "BiziLuxe Extensions",
     slug: "biziluxe-extensions",
     desc: "Luxury Remy human hair extensions in premium textures, lengths and salon-ready finishes.",
-    image: "/products/biziluxe-extensions/schloss-charlottenburg-main.jpg"
+    image: ""
   },
   {
     title: "BiziLuxe Accessoires",
     slug: "biziluxe-accessoires",
     desc: "Finishing accessories, care pieces and refined essentials for maintaining your BiziLuxe look.",
-    image: "/products/biziluxe-accessoires/meissen-main.jpg"
+    image: "/products/biziluxe-accessoires/schwarzwald-main.jpg"
   },
   {
     title: "BiziLuxe Stylinggeräte",
     slug: "biziluxe-stylinggeraete",
     desc: "Styling tools selected for controlled heat, polished results and daily salon-level care.",
-    image: ""
+    image: "/products/profi-friseurbedarf/glashuette-main.jpg"
   },
   {
     title: "Bürsten & Kämme",
     slug: "buersten-und-kaemme",
     desc: "Brushes and combs for gentle detangling, blending and extension-safe daily maintenance.",
-    image: ""
+    image: "/products/buersten-und-kaemme/goslar/goslar-main.jpg"
   },
   {
     title: "Profi Friseurbedarf",
@@ -46,20 +46,6 @@ const shopCollections = [
 ];
 
 const featuredProducts = [
-  {
-    title: "Schloss Charlottenburg",
-    tag: "BiziLuxe Extensions",
-    price: "&euro;120,00",
-    href: "/products/schloss-charlottenburg",
-    image: "/products/biziluxe-extensions/schloss-charlottenburg-main.jpg"
-  },
-  {
-    title: "Königsallee",
-    tag: "BiziLuxe Extensions",
-    price: "&euro;135,00",
-    href: "/products/koenigsallee",
-    image: "/products/biziluxe-extensions/koenigsallee-main.jpg"
-  },
   {
     title: "Meissen",
     tag: "BiziLuxe Accessoires",
@@ -75,11 +61,32 @@ const featuredProducts = [
     image: "/products/biziluxe-accessoires/saphir-main.jpg"
   },
   {
+    title: "Rosenthal",
+    tag: "BiziLuxe Accessoires",
+    price: "&euro;34,00",
+    href: "/products/rosenthal",
+    image: "/products/biziluxe-accessoires/rosenthal-main.jpg"
+  },
+  {
+    title: "Goslar",
+    tag: "Bürsten & Kämme",
+    price: "&euro;24,00",
+    href: "/products/goslar",
+    image: "/products/buersten-und-kaemme/goslar/goslar-main.jpg"
+  },
+  {
     title: "Solingen",
     tag: "Profi Friseurbedarf",
     price: "&euro;45,00",
     href: "/products/solingen",
     image: "/products/profi-friseurbedarf/solingen-main.jpg"
+  },
+  {
+    title: "Bavaria",
+    tag: "Profi Friseurbedarf",
+    price: "&euro;52,00",
+    href: "/products/bavaria",
+    image: "/products/profi-friseurbedarf/bavaria-main.jpg"
   }
 ];
 
@@ -280,6 +287,7 @@ function shopLandingOverrides() {
 .oshp-col-card-name,
 .oshp-col-card-large .oshp-col-card-name {
   font-size: clamp(26px, 3vw, 34px) !important;
+  color: #C9A96E !important;
 }
 .oshp-col-card-desc {
   font-size: 12px !important;
