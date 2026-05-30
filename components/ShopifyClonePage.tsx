@@ -39,14 +39,9 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
     '<select$1><option value="DE" selected>EUR &euro;</option><option value="GB">GBP &pound;</option><option value="US">USD $</option></select>'
   );
 
-  // Remove Spanish from locale selector server-side
+  // Remove Spanish + form auto-submit server-side (client handles language switching)
   html = html.replace(/<option[^>]*value="es"[^>]*>[\s\S]*?<\/option>/gi, '');
-
-  // Remove onchange auto-submit from locale selects — our JS handles it client-side
   html = html.replace(/(<select[^>]*name="locale_code"[^>]*)onchange="this\.form\.submit\(\)"([^>]*>)/g, '$1$2');
-
-  // Inline language + currency script (avoids external file loading issues)
-  html = html + INLINE_I18N_SCRIPT;
 
   if (page === "affiliate") {
     html = html
