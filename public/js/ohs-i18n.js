@@ -122,6 +122,9 @@
       s.value = lang;
     });
 
+    // Remove anti-flicker class — nav fades back in after translation
+    document.documentElement.classList.remove('ohs-translating');
+
     localStorage.setItem('ohs-lang', lang);
   }
 
@@ -191,6 +194,8 @@
     if (lang === 'de') applyLanguage('de');
     else {
       document.querySelectorAll('select[name="locale_code"]').forEach(function (s) { s.value = 'en'; });
+      // Remove anti-flicker class (EN is the default, no translation needed)
+      document.documentElement.classList.remove('ohs-translating');
     }
     bindLangSelectors();
     storePrices();
