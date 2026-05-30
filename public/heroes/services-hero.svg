@@ -1,77 +1,245 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMid slice" width="1440" height="620">
   <defs>
-    <!-- Base dark photography background -->
-    <linearGradient id="baseBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1A1109"/>
-      <stop offset="40%" stop-color="#2B1E0F"/>
-      <stop offset="100%" stop-color="#0E0A05"/>
+    <!-- Warm salon background -->
+    <linearGradient id="sBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#6A5A48"/>
+      <stop offset="35%"  stop-color="#4E3E2C"/>
+      <stop offset="100%" stop-color="#2C2018"/>
     </linearGradient>
-    <!-- Warm studio light from top-right -->
-    <radialGradient id="studioLight" cx="75%" cy="20%" r="55%" fx="75%" fy="20%">
-      <stop offset="0%" stop-color="#5C3A1A" stop-opacity="0.7"/>
-      <stop offset="40%" stop-color="#3A2510" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#1A1109" stop-opacity="0"/>
+    <!-- Key light from upper-right -->
+    <radialGradient id="keyLight" cx="75%" cy="10%" r="60%">
+      <stop offset="0%"   stop-color="#C9A96E" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#8A6A3A" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#2C2018" stop-opacity="0"/>
     </radialGradient>
-    <!-- Subject highlight - warm golden oval (simulates lit face/hair area) -->
-    <radialGradient id="subjectLight" cx="68%" cy="45%" r="35%" fx="65%" fy="42%">
-      <stop offset="0%" stop-color="#7A5020" stop-opacity="0.55"/>
-      <stop offset="50%" stop-color="#4A2E10" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#1A1109" stop-opacity="0"/>
+    <!-- Fill light on scene -->
+    <radialGradient id="fillLight" cx="55%" cy="55%" r="45%">
+      <stop offset="0%"   stop-color="#B89A6A" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#2C2018" stop-opacity="0"/>
     </radialGradient>
-    <!-- Left-side overlay for text readability -->
-    <linearGradient id="textOverlay" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#140D05" stop-opacity="0.95"/>
-      <stop offset="45%" stop-color="#200F06" stop-opacity="0.65"/>
-      <stop offset="75%" stop-color="#1A1109" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#1A1109" stop-opacity="0"/>
+    <!-- Floor -->
+    <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#3A2E1E"/>
+      <stop offset="100%" stop-color="#1A1208"/>
     </linearGradient>
-    <!-- Subtle hair strand pattern -->
-    <filter id="hairGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    <!-- Sink basin -->
+    <linearGradient id="basinG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#D4CAB8"/>
+      <stop offset="100%" stop-color="#A89E8A"/>
+    </linearGradient>
+    <!-- Skin tones -->
+    <radialGradient id="skinClient" cx="50%" cy="30%" r="65%">
+      <stop offset="0%"   stop-color="#D4AA7A"/>
+      <stop offset="100%" stop-color="#A87848"/>
+    </radialGradient>
+    <radialGradient id="skinStylist" cx="50%" cy="30%" r="65%">
+      <stop offset="0%"   stop-color="#C89A68"/>
+      <stop offset="100%" stop-color="#9A6A38"/>
+    </radialGradient>
+    <!-- Hair -->
+    <linearGradient id="hairDark" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%"   stop-color="#3C2A14"/>
+      <stop offset="100%" stop-color="#1E1008"/>
+    </linearGradient>
+    <linearGradient id="hairMed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#4A3520"/>
+      <stop offset="100%" stop-color="#2A1A0A"/>
+    </linearGradient>
+    <!-- Apron -->
+    <linearGradient id="apronG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#F0E8DC"/>
+      <stop offset="100%" stop-color="#D4C8B4"/>
+    </linearGradient>
+    <!-- Left text vignette -->
+    <linearGradient id="vigL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#1A1208" stop-opacity="0.92"/>
+      <stop offset="50%"  stop-color="#1A1208" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Right edge -->
+    <linearGradient id="vigR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="60%"  stop-color="#1A1208" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#1A1208" stop-opacity="0.55"/>
+    </linearGradient>
+    <!-- Top/bottom -->
+    <linearGradient id="vigT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0E0A06" stop-opacity="0.5"/>
+      <stop offset="25%"  stop-color="#0E0A06" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="vigB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="70%"  stop-color="#0E0A06" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0E0A06" stop-opacity="0.65"/>
+    </linearGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+    <filter id="softer">
+      <feGaussianBlur stdDeviation="3"/>
     </filter>
   </defs>
 
-  <!-- Base background -->
-  <rect width="1440" height="620" fill="url(#baseBg)"/>
+  <!-- ── BACKGROUND ── -->
+  <rect width="1440" height="620" fill="url(#sBg)"/>
+  <rect width="1440" height="620" fill="url(#keyLight)"/>
+  <rect width="1440" height="620" fill="url(#fillLight)"/>
 
-  <!-- Studio light wash from top right -->
-  <rect width="1440" height="620" fill="url(#studioLight)"/>
+  <!-- Wall panels -->
+  <rect x="0" y="0" width="1440" height="480" fill="#5A4A36" opacity="0.25"/>
+  <rect x="0" y="472" width="1440" height="8" fill="#2A1E10" opacity="0.6"/>
 
-  <!-- Subject body/hair glow on right side -->
-  <rect width="1440" height="620" fill="url(#subjectLight)"/>
+  <!-- Subtle wall tile lines -->
+  <line x1="400" y1="0"   x2="400" y2="480" stroke="#4A3A28" stroke-width="0.6" opacity="0.35"/>
+  <line x1="700" y1="0"   x2="700" y2="480" stroke="#4A3A28" stroke-width="0.6" opacity="0.35"/>
+  <line x1="1000" y1="0"  x2="1000" y2="480" stroke="#4A3A28" stroke-width="0.6" opacity="0.35"/>
+  <line x1="1300" y1="0"  x2="1300" y2="480" stroke="#4A3A28" stroke-width="0.6" opacity="0.35"/>
+  <line x1="0" y1="160"   x2="1440" y2="160" stroke="#4A3A28" stroke-width="0.5" opacity="0.25"/>
+  <line x1="0" y1="320"   x2="1440" y2="320" stroke="#4A3A28" stroke-width="0.5" opacity="0.25"/>
 
-  <!-- Simulated shoulder/body silhouette (right side, blurred) -->
-  <ellipse cx="1080" cy="560" rx="340" ry="200" fill="#3A240E" opacity="0.5"/>
-  <ellipse cx="1020" cy="420" rx="220" ry="340" fill="#4A2D0E" opacity="0.35"/>
+  <!-- Floor -->
+  <rect x="0" y="480" width="1440" height="140" fill="url(#floorG)"/>
 
-  <!-- Hair cascade lines (right side) - suggest long flowing hair -->
-  <g opacity="0.18" filter="url(#hairGlow)">
-    <path d="M 820 0 Q 900 180 870 340 Q 850 480 900 620" stroke="#C9A96E" stroke-width="1.5" fill="none"/>
-    <path d="M 860 0 Q 950 200 920 380 Q 910 520 960 620" stroke="#C9A96E" stroke-width="1.2" fill="none"/>
-    <path d="M 900 0 Q 1000 220 970 400 Q 960 540 1010 620" stroke="#B8936A" stroke-width="1" fill="none"/>
-    <path d="M 950 0 Q 1040 240 1010 420 Q 1000 560 1060 620" stroke="#C9A96E" stroke-width="1.4" fill="none"/>
-    <path d="M 1000 0 Q 1080 200 1050 390 Q 1040 530 1100 620" stroke="#D4B07A" stroke-width="1" fill="none"/>
-    <path d="M 780 0 Q 840 160 820 310 Q 800 450 840 620" stroke="#B8936A" stroke-width="0.8" fill="none"/>
-    <path d="M 1050 0 Q 1120 180 1090 360 Q 1080 500 1140 620" stroke="#C9A96E" stroke-width="1.2" fill="none"/>
-    <path d="M 1100 0 Q 1160 160 1130 330 Q 1120 470 1180 620" stroke="#B8936A" stroke-width="1" fill="none"/>
-    <path d="M 1150 10 Q 1200 140 1180 300 Q 1170 450 1230 620" stroke="#C9A96E" stroke-width="0.9" fill="none"/>
-    <path d="M 1200 0 Q 1260 120 1240 280 Q 1230 420 1290 620" stroke="#D4B07A" stroke-width="0.8" fill="none"/>
-  </g>
+  <!-- ── BACKWASH BASIN (centred at x=820) ── -->
+  <!-- Basin shadow on floor -->
+  <ellipse cx="820" cy="510" rx="230" ry="22" fill="#0E0A06" opacity="0.4" filter="url(#softer)"/>
+  <!-- Pedestal -->
+  <rect x="766" y="448" width="108" height="62" rx="5" fill="#2A2218"/>
+  <rect x="770" y="448" width="100" height="4" rx="2" fill="#3A3028"/>
+  <!-- Basin outer shell -->
+  <path d="M590 370 Q590 330 612 318 L1028 318 Q1050 330 1050 370 L1038 438 Q1038 458 1016 463 L624 463 Q602 458 602 438 Z" fill="#C0B6A6"/>
+  <!-- Basin inner -->
+  <path d="M598 372 Q598 335 618 324 L1022 324 Q1042 335 1042 372 L1030 436 Q1030 454 1010 458 L630 458 Q610 454 610 436 Z" fill="url(#basinG)"/>
+  <!-- Basin bowl dark -->
+  <ellipse cx="820" cy="398" rx="200" ry="52" fill="#9A9080" opacity="0.5"/>
+  <ellipse cx="820" cy="403" rx="185" ry="42" fill="#3E3428"/>
+  <!-- Water in basin -->
+  <ellipse cx="820" cy="410" rx="165" ry="28" fill="#8AB4C4" opacity="0.28"/>
+  <path d="M670 408 Q710 402 750 408 Q790 414 830 408 Q870 402 910 408 Q940 412 960 408" stroke="#A8C8D8" stroke-width="1.5" fill="none" opacity="0.35"/>
+  <!-- Basin rim highlight -->
+  <path d="M590 370 Q592 330 614 318 L670 318" stroke="#E0D8C8" stroke-width="1.5" fill="none" opacity="0.5"/>
 
-  <!-- Shoulder highlight (warm photographic skin tone) -->
-  <ellipse cx="1100" cy="580" rx="200" ry="80" fill="#7A4A18" opacity="0.15"/>
+  <!-- Showerhead hose -->
+  <path d="M1058 190 Q1090 215 1085 295 Q1080 348 1058 372" stroke="#8A7A68" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <circle cx="1058" cy="377" r="11" fill="#9A8A78"/>
+  <circle cx="1058" cy="377" r="7"  fill="#7A6A58"/>
+  <!-- Water drip -->
+  <path d="M1054 388 Q1052 402 1050 418" stroke="#A8C8D4" stroke-width="2.5" fill="none" opacity="0.45" stroke-dasharray="5 3"/>
 
-  <!-- Face/head suggestion - subtle warm glow -->
-  <ellipse cx="1020" cy="200" rx="90" ry="105" fill="#8B5A20" opacity="0.12"/>
+  <!-- ── CLIENT — seated, head leaned back into basin ── -->
+  <!-- Cape / gown over body -->
+  <path d="M616 380 Q606 395 600 428 Q595 458 598 480 L800 480 Q804 458 798 428 Q792 396 780 380 Q758 392 720 398 Q682 402 648 394 Z" fill="#C8C0B2" opacity="0.88"/>
+  <!-- Shoulders / upper body -->
+  <path d="M636 358 Q626 338 634 308 Q640 282 664 272 Q692 264 722 268 Q750 272 762 292 Q772 312 768 342 Q764 364 748 374 Q726 384 696 388 Q666 390 644 378 Z" fill="url(#skinClient)" filter="url(#soft)"/>
+  <!-- Neck -->
+  <rect x="698" y="252" width="26" height="26" rx="9" fill="#C8A070"/>
+  <!-- Head — tilted back -->
+  <ellipse cx="712" cy="232" rx="50" ry="46" fill="url(#skinClient)" transform="rotate(-12 712 232)"/>
+  <!-- Client wet hair spread into basin -->
+  <path d="M664 246 Q645 265 640 295 Q636 322 642 352 Q654 370 678 380 L712 390 Q736 388 756 376 Q772 362 774 340 Q778 314 768 290 Q756 266 732 254 Q718 247 700 246 Q682 245 664 246 Z" fill="url(#hairDark)" opacity="0.92"/>
+  <!-- Hair sheen -->
+  <path d="M668 260 Q654 282 652 316" stroke="#6A4A28" stroke-width="1.5" fill="none" opacity="0.45"/>
+  <path d="M688 254 Q674 276 674 310" stroke="#6A4A28" stroke-width="1.2" fill="none" opacity="0.35"/>
+  <!-- Client face — eyes closed, relaxed -->
+  <!-- Brow bone -->
+  <ellipse cx="698" cy="222" rx="14" ry="7" fill="#C09068" opacity="0.35" transform="rotate(-12 698 222)"/>
+  <ellipse cx="726" cy="218" rx="14" ry="7" fill="#C09068" opacity="0.35" transform="rotate(-12 726 218)"/>
+  <!-- Closed eyes -->
+  <path d="M688 220 Q697 215 708 219" stroke="#3E2410" stroke-width="1.8" fill="none" stroke-linecap="round" transform="rotate(-8 698 219)"/>
+  <path d="M716 216 Q725 211 736 215" stroke="#3E2410" stroke-width="1.8" fill="none" stroke-linecap="round" transform="rotate(-8 726 216)"/>
+  <!-- Nose -->
+  <path d="M707 232 Q711 238 715 236" stroke="#9A6840" stroke-width="1.3" fill="none" stroke-linecap="round" transform="rotate(-8 712 236)"/>
+  <!-- Relaxed mouth, slight smile -->
+  <path d="M698 248 Q712 254 726 249" stroke="#9A6848" stroke-width="1.5" fill="none" stroke-linecap="round" transform="rotate(-5 712 251)"/>
 
-  <!-- Left overlay for text readability -->
-  <rect width="1440" height="620" fill="url(#textOverlay)"/>
+  <!-- ── STYLIST — standing behind basin, leaning forward ── -->
+  <!-- Legs / lower body -->
+  <path d="M888 480 Q882 450 884 418 Q886 398 892 383 L942 383 Q948 398 950 418 Q952 450 946 480 Z" fill="#1E1A12"/>
+  <!-- Torso -->
+  <path d="M856 250 Q850 232 855 206 Q860 182 878 172 Q898 162 920 164 Q940 166 952 182 Q964 198 962 224 Q960 250 952 264 Q936 278 912 282 Q884 284 856 250 Z" fill="#2A2418"/>
+  <!-- Apron -->
+  <path d="M864 248 Q856 264 854 298 Q851 338 854 375 Q862 390 878 394 L942 394 Q958 390 962 375 Q965 338 962 298 Q960 264 952 250 Q934 264 912 268 Q890 270 864 248 Z" fill="url(#apronG)" opacity="0.93"/>
+  <!-- Apron chest strap lines -->
+  <path d="M892 252 Q888 232 892 218" stroke="#E0D8CC" stroke-width="1.8" fill="none" opacity="0.4"/>
+  <path d="M932 252 Q936 232 932 218" stroke="#E0D8CC" stroke-width="1.8" fill="none" opacity="0.4"/>
+  <!-- Neck -->
+  <rect x="900" y="148" width="24" height="28" rx="7" fill="#C49A68"/>
+  <!-- Head -->
+  <ellipse cx="912" cy="122" rx="44" ry="47" fill="url(#skinStylist)"/>
+  <!-- Stylist hair — pulled back into bun -->
+  <path d="M870 106 Q866 82 874 62 Q884 42 902 36 Q918 30 934 36 Q950 44 956 64 Q962 86 954 108 Q942 96 928 92 Q912 88 896 94 Q882 100 870 106 Z" fill="url(#hairMed)"/>
+  <ellipse cx="948" cy="76" rx="16" ry="15" fill="#2E1E0C"/>
+  <ellipse cx="948" cy="76" rx="11" ry="10" fill="#3A2810"/>
+  <!-- Hair highlight on bun -->
+  <path d="M940 66 Q948 62 956 68" stroke="#5A3C1C" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <!-- Stylist face — looking down, focused calm -->
+  <!-- Eyes (looking down) -->
+  <path d="M893 118 Q902 113 913 116" stroke="#2E1808" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M921 114 Q930 109 941 112" stroke="#2E1808" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Eyebrows -->
+  <path d="M889 106 Q900 102 913 105" stroke="#1E1006" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M919 102 Q930 98 943 101" stroke="#1E1006" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- Nose -->
+  <path d="M909 130 Q912 137 916 136 Q919 136 921 133" stroke="#9A7048" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <!-- Gentle expression -->
+  <path d="M902 148 Q912 153 922 149" stroke="#9A6848" stroke-width="1.4" fill="none" stroke-linecap="round"/>
 
-  <!-- Bottom fade -->
-  <linearGradient id="btmFade" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="70%" stop-color="#0E0A05" stop-opacity="0"/>
-    <stop offset="100%" stop-color="#0E0A05" stop-opacity="0.6"/>
-  </linearGradient>
-  <rect width="1440" height="620" fill="url(#btmFade)"/>
+  <!-- Stylist left arm — reaching left into hair -->
+  <path d="M856 250 Q834 272 816 306 Q800 338 796 366 Q797 378 808 380 Q818 381 824 369 Q828 346 842 316 Q858 284 870 262 Z" fill="#C49A68"/>
+  <!-- Left hand -->
+  <ellipse cx="802" cy="372" rx="17" ry="11" fill="#C49A68" transform="rotate(-25 802 372)"/>
+  <!-- finger hints -->
+  <path d="M790 368 Q786 362 790 358" stroke="#A87A48" stroke-width="1.2" fill="none"/>
+  <path d="M792 378 Q788 384 784 381" stroke="#A87A48" stroke-width="1.2" fill="none"/>
+
+  <!-- Stylist right arm — reaching right into hair -->
+  <path d="M960 252 Q978 274 988 310 Q996 342 992 368 Q990 380 980 380 Q969 379 966 366 Q963 342 956 314 Q946 282 936 262 Z" fill="#C49A68"/>
+  <!-- Right hand -->
+  <ellipse cx="986" cy="372" rx="17" ry="11" fill="#C49A68" transform="rotate(25 986 372)"/>
+  <path d="M998 368 Q1002 362 998 358" stroke="#A87A48" stroke-width="1.2" fill="none"/>
+  <path d="M996 378 Q1000 384 1004 381" stroke="#A87A48" stroke-width="1.2" fill="none"/>
+
+  <!-- Lather / foam on hair -->
+  <ellipse cx="712" cy="322" rx="60" ry="22" fill="#FFFFFF" opacity="0.15"/>
+  <ellipse cx="692" cy="332" rx="34" ry="13" fill="#FFFFFF" opacity="0.11"/>
+  <ellipse cx="734" cy="328" rx="30" ry="12" fill="#FFFFFF" opacity="0.12"/>
+  <circle cx="672" cy="320" r="9"  fill="#FFFFFF" opacity="0.09"/>
+  <circle cx="748" cy="318" r="11" fill="#FFFFFF" opacity="0.09"/>
+  <circle cx="712" cy="310" r="8"  fill="#FFFFFF" opacity="0.08"/>
+
+  <!-- ── PRODUCT SHELF (right wall) ── -->
+  <rect x="1080" y="200" width="180" height="10" rx="2" fill="#3A3020"/>
+  <rect x="1080" y="210" width="180" height="3"  fill="#2A2015"/>
+  <!-- Bottles -->
+  <rect x="1090" y="158" width="20" height="42" rx="5" fill="#9A8A72"/>
+  <rect x="1090" y="158" width="20" height="11" rx="3" fill="#7A6A52"/>
+  <rect x="1094" y="146" width="12" height="14" rx="3" fill="#8A7A62"/>
+  <rect x="1118" y="165" width="18" height="35" rx="4" fill="#C9A96E" opacity="0.85"/>
+  <rect x="1118" y="165" width="18" height="10" rx="3" fill="#A88A4E"/>
+  <rect x="1122" y="153" width="10" height="14" rx="3" fill="#B89A5E"/>
+  <rect x="1144" y="162" width="22" height="38" rx="5" fill="#7A7060"/>
+  <rect x="1144" y="162" width="22" height="10" rx="3" fill="#5A5040"/>
+  <rect x="1149" y="150" width="12" height="14" rx="3" fill="#6A6050"/>
+  <rect x="1174" y="170" width="16" height="30" rx="4" fill="#D8CCBA" opacity="0.75"/>
+  <rect x="1176" y="158" width="12" height="14" rx="3" fill="#C8BCAA"/>
+
+  <!-- ── MIRROR above basin ── -->
+  <rect x="610" y="40"  width="420" height="265" rx="5" fill="#252018" opacity="0.65"/>
+  <rect x="613" y="43"  width="414" height="259" rx="4" fill="#1E1A14" opacity="0.5"/>
+  <!-- mirror frame -->
+  <rect x="606" y="36"  width="432" height="277" rx="6" fill="none" stroke="#6A5A3E" stroke-width="3.5"/>
+  <rect x="602" y="32"  width="440" height="285" rx="7" fill="none" stroke="#3A3020" stroke-width="2" opacity="0.5"/>
+  <!-- subtle reflection glints -->
+  <path d="M614 44 L680 44" stroke="#C9A96E" stroke-width="1.2" opacity="0.2"/>
+  <!-- Blurred silhouettes in mirror -->
+  <ellipse cx="748" cy="155" rx="40" ry="44" fill="#2E2818" opacity="0.4" filter="url(#soft)"/>
+  <ellipse cx="870" cy="138" rx="35" ry="40" fill="#2E2818" opacity="0.35" filter="url(#soft)"/>
+  <path d="M715 198 Q730 178 748 174 Q768 178 780 198" fill="#262015" opacity="0.38" filter="url(#soft)"/>
+
+  <!-- Warm key light pool -->
+  <ellipse cx="900" cy="220" rx="320" ry="200" fill="#C9A96E" opacity="0.06"/>
+
+  <!-- ── VIGNETTES ── -->
+  <rect width="1440" height="620" fill="url(#vigL)"/>
+  <rect width="1440" height="620" fill="url(#vigR)"/>
+  <rect width="1440" height="620" fill="url(#vigT)"/>
+  <rect width="1440" height="620" fill="url(#vigB)"/>
+
 </svg>
