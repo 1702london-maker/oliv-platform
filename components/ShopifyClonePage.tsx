@@ -82,74 +82,99 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
 // Injected directly into every ShopifyClone page — no external file, no race.
 const INLINE_I18N_SCRIPT = `<script>
 (function(){
-  var DE = {
-    'Worldwide Shipping — Free Over €200':'Weltweiter Versand – Kostenlos ab 200 €',
-    'Luxury Hair. Premium Quality. Designed for You.':'Luxuriöses Haar. Höchste Qualität. Für dich geschaffen.',
-    'Luxury Hair. Premium Quality. Every Strand Designed Just For You.':'Luxuriöses Haar. Premium-Qualität. Jede Strähne für dich perfektioniert.',
-    'Become an Affiliate →':'Affiliate-Partner werden →',
-    // Home hero
-    'BiziLuxe Collection':'BiziLuxe Kollektion',
-    'Premium Hair.':'Premium Haar.',
-    'Effortless':'Zeitlose',
-    'Confidence.':'Eleganz.',
-    'Luxury extensions crafted for women who refuse compromise.':'Luxuriöse Haarverlängerungen für Frauen, die keine Kompromisse eingehen.',
-    'Luxury human hair extensions crafted for women who refuse compromise. Sourced from the world\'s finest suppliers, installed by Berlin\'s most trusted specialists.':'Luxuriöse Echthaar-Extensions für Frauen, die keine Kompromisse eingehen. Von den besten Lieferanten weltweit, installiert von Berlins renommiertesten Spezialisten.',
-    'Shop BiziLuxe Hair':'BiziLuxe Hair entdecken',
-    'SHOP BIZILUXE':'BIZILUXE ENTDECKEN',
-    'Book Appointment':'Termin buchen',
-    'BOOK APPOINTMENT':'TERMIN BUCHEN',
-    'Book an Appointment':'Termin buchen',
-    // Trust strip
-    '100% Human Hair':'100 % Echthaar',
-    '100% HUMAN HAIR':'100 % ECHTHAAR',
-    'Free EU Shipping Over €200':'Kostenloser EU-Versand ab 200 €',
-    'Free EU Shipping Over &euro;200':'Kostenloser EU-Versand ab 200 €',
-    'FREE EU SHIPPING OVER €200':'KOSTENLOSER EU-VERSAND AB 200 €',
-    'Free EU shipping on orders over €200':'Kostenloser EU-Versand ab 200 €',
-    'FREE EU SHIPPING':'KOSTENLOSER EU-VERSAND',
-    'Expert Colour Matching':'Professionelle Farbberatung',
-    'EXPERT COLOUR MATCHING':'PROFESSIONELLE FARBBERATUNG',
-    'Worldwide Delivery':'Weltweite Lieferung',
-    'WORLDWIDE DELIVERY':'WELTWEITE LIEFERUNG',
-    'Berlin In-Store Experience':'Berlin Salon-Erlebnis',
-    'BERLIN IN-STORE EXPERIENCE':'BERLIN SALON-ERLEBNIS',
-    'Home':'Startseite','About':'Über uns','Shop':'Shop',
-    'Wholesale':'Großhandel','Training':'Schulungen',
-    'Appointment':'Termin buchen','Services':'Services',
-    'Affiliate':'Affiliate','Rentals':'Clips Verleih',
-    'Affiliate Programme':'Affiliate Program',
-    'More':'Mehr','MORE':'Mehr','Help':'Hilfe','HELP':'Hilfe',
-    'About':'Über Uns','ABOUT':'Über Uns',
-    'Stay Connected':'Bleib verbunden','STAY CONNECTED':'Bleib verbunden',
-    'Our Story':'Unsere Geschichte','Careers':'Karriere','Press':'Presse',
-    'Sustainability':'Nachhaltigkeit','Social Responsibility':'Soziale Verantwortung',
-    'Journal':'Magazin','FAQ':'FAQ','Shipping':'Versand',
-    'Returns':'Rücksendungen','Track Order':'Bestellung verfolgen',
-    'Contact Us':'Kontakt',
-    'Stay connected with OlivHairSupply Club.':'Bleib immer auf dem Laufenden mit dem OlivHairSupply Club.',
-    'Stay connected with Olivhairsupply Club.':'Bleib immer auf dem Laufenden mit dem OlivHairSupply Club.',
-    'Language & Currency':'Sprache & Währung'
-  };
+  // ARRAY (not object) — guarantees order. Longest keys first to prevent
+  // short keys (e.g. 'Shipping') from corrupting longer matches.
+  var DE_PAIRS = [
+    // Long sentences first
+    ['Luxury human hair extensions crafted for women who refuse compromise. Sourced from the world\'s finest suppliers, installed by Berlin\'s most trusted specialists.','Luxuriöse Echthaar-Extensions für Frauen, die keine Kompromisse eingehen. Von den besten Lieferanten weltweit, installiert von Berlins renommiertesten Spezialisten.'],
+    ['Luxury extensions crafted for women who refuse compromise.','Luxuriöse Haarverlängerungen für Frauen, die keine Kompromisse eingehen.'],
+    ['Luxury Hair. Premium Quality. Every Strand Designed Just For You.','Luxuriöses Haar. Premium-Qualität. Jede Strähne für dich perfektioniert.'],
+    ['Luxury Hair. Premium Quality. Designed for You.','Luxuriöses Haar. Höchste Qualität. Für dich geschaffen.'],
+    ['Stay connected with OlivHairSupply Club.','Bleib immer auf dem Laufenden mit dem OlivHairSupply Club.'],
+    ['Stay connected with Olivhairsupply Club.','Bleib immer auf dem Laufenden mit dem OlivHairSupply Club.'],
+    ['Worldwide Shipping — Free Over €200','Weltweiter Versand – Kostenlos ab 200 €'],
+    // Trust strip (long before short)
+    ['Free EU shipping on orders over €200','Kostenloser EU-Versand ab 200 €'],
+    ['Free EU Shipping Over €200','Kostenloser EU-Versand ab 200 €'],
+    ['FREE EU SHIPPING OVER €200','KOSTENLOSER EU-VERSAND AB 200 €'],
+    ['FREE EU SHIPPING','KOSTENLOSER EU-VERSAND'],
+    ['Free EU Shipping','Kostenloser EU-Versand'],
+    ['100% Human Hair','100 % Echthaar'],
+    ['100% HUMAN HAIR','100 % ECHTHAAR'],
+    ['Expert Colour Matching','Professionelle Farbberatung'],
+    ['EXPERT COLOUR MATCHING','PROFESSIONELLE FARBBERATUNG'],
+    ['Worldwide Delivery','Weltweite Lieferung'],
+    ['WORLDWIDE DELIVERY','WELTWEITE LIEFERUNG'],
+    ['Berlin In-Store Experience','Berlin Salon-Erlebnis'],
+    ['BERLIN IN-STORE EXPERIENCE','BERLIN SALON-ERLEBNIS'],
+    // Hero
+    ['BiziLuxe Collection','BiziLuxe Kollektion'],
+    ['Shop BiziLuxe Hair','BiziLuxe Hair entdecken'],
+    ['SHOP BIZILUXE HAIR','BIZILUXE HAIR ENTDECKEN'],
+    ['SHOP BIZILUXE','BIZILUXE ENTDECKEN'],
+    ['Book an Appointment','Termin buchen'],
+    ['Book Appointment','Termin buchen'],
+    ['BOOK APPOINTMENT','TERMIN BUCHEN'],
+    ['Premium Hair.','Premium Haar.'],
+    ['Confidence.','Eleganz.'],
+    ['Effortless','Zeitlose'],
+    // Topbar
+    ['Become an Affiliate →','Affiliate-Partner werden →'],
+    // Nav (long before short)
+    ['Affiliate Programme','Affiliate Program'],
+    ['Social Responsibility','Soziale Verantwortung'],
+    ['Track Order','Bestellung verfolgen'],
+    ['Stay Connected','Bleib verbunden'],
+    ['STAY CONNECTED','Bleib verbunden'],
+    ['Contact Us','Kontakt'],
+    ['Our Story','Unsere Geschichte'],
+    ['Sustainability','Nachhaltigkeit'],
+    ['Wholesale','Großhandel'],
+    ['Training','Schulungen'],
+    ['Appointment','Termin buchen'],
+    ['Careers','Karriere'],
+    ['Journal','Magazin'],
+    ['Returns','Rücksendungen'],
+    ['Shipping','Versand'],
+    ['Rentals','Clips Verleih'],
+    ['Services','Services'],
+    ['Affiliate','Affiliate'],
+    ['About','Über Uns'],
+    ['ABOUT','ÜBER UNS'],
+    ['Press','Presse'],
+    ['More','Mehr'],
+    ['MORE','MEHR'],
+    ['Help','Hilfe'],
+    ['HELP','HILFE'],
+    ['Home','Startseite'],
+    ['Shop','Shop'],
+    ['FAQ','FAQ'],
+    // Footer newsletter
+    ['Language & Currency','Sprache & Währung'],
+  ];
+  // Convert to object for rev() compatibility
+  var DE = {};
+  for(var _i=0;_i<DE_PAIRS.length;_i++){DE[DE_PAIRS[_i][0]]=DE_PAIRS[_i][1];}
   var CURR = {EUR:{s:'€',r:1},GBP:{s:'£',r:0.86},USD:{s:'$',r:1.09}};
   var SKIP = {SCRIPT:1,STYLE:1,NOSCRIPT:1,TEXTAREA:1,INPUT:1};
 
-  function tx(node,dict){
+  function tx(node,pairs){
     if(node.nodeType===3){
       var v=node.nodeValue; if(!v||!v.trim())return;
-      for(var k in dict)if(v.indexOf(k)!==-1)v=v.split(k).join(dict[k]);
+      for(var i=0;i<pairs.length;i++){if(v.indexOf(pairs[i][0])!==-1)v=v.split(pairs[i][0]).join(pairs[i][1]);}
       if(v!==node.nodeValue)node.nodeValue=v;
     }else if(node.nodeType===1&&!SKIP[node.tagName]){
-      if(node.placeholder){for(var k in dict)if(node.placeholder.indexOf(k)!==-1)node.placeholder=node.placeholder.split(k).join(dict[k]);}
-      for(var c=node.firstChild;c;c=c.nextSibling)tx(c,dict);
+      if(node.placeholder){for(var i=0;i<pairs.length;i++){if(node.placeholder.indexOf(pairs[i][0])!==-1)node.placeholder=node.placeholder.split(pairs[i][0]).join(pairs[i][1]);}}
+      for(var c=node.firstChild;c;c=c.nextSibling)tx(c,pairs);
     }
   }
 
-  function rev(d){var r={};for(var k in d)r[d[k]]=k;return r;}
+  function revPairs(p){return p.map(function(x){return[x[1],x[0]];});}
 
   function setLang(lang){
     if(document.body.dataset.ohsLang===lang)return;
-    if(lang==='de'){tx(document.body,DE);}
-    else if(document.body.dataset.ohsLang==='de'){tx(document.body,rev(DE));}
+    if(lang==='de'){tx(document.body,DE_PAIRS);}
+    else if(document.body.dataset.ohsLang==='de'){tx(document.body,revPairs(DE_PAIRS));}
     document.body.dataset.ohsLang=lang;
     document.querySelectorAll('select[name="locale_code"]').forEach(function(s){s.value=lang;});
     try{localStorage.setItem('ohs-lang',lang);}catch(e){}
