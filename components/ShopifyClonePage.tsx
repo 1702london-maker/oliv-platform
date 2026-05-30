@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { ShopifyClonePageClient } from "./ShopifyClonePageClient";
 
 type ShopifyClonePageProps = {
   page: string;
@@ -17,7 +18,7 @@ export function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClonePagePr
       : html + injectBeforeClose;
   }
 
-  return <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />;
+  return <ShopifyClonePageClient html={html} />;
 }
 
 function normalizeShopifyHtml(rawHtml: string, page: string) {
