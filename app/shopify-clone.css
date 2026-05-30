@@ -869,6 +869,19 @@
   flex-shrink: 0;
 }
 
+
+/* German nav: reduce spacing so right-side icons stay visible */
+body[data-ohs-lang="de"] .ohs-nav-left li a {
+  letter-spacing: 0.8px !important;
+  padding-left: 7px !important;
+  padding-right: 7px !important;
+}
+body[data-ohs-lang="de"] .ohs-nav-right li a.ohs-nav-link {
+  letter-spacing: 0.8px !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+
 /* ══════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════ */
