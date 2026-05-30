@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
   <defs>
-    <!-- Studio backdrop — same palette as all pages -->
+    <!-- Studio backdrop — identical palette to wholesale/about/shop -->
     <linearGradient id="aBg" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#424040"/>
       <stop offset="28%"  stop-color="#555250"/>
@@ -22,62 +22,56 @@
       <stop offset="100%" stop-color="#242018"/>
     </linearGradient>
 
-    <!-- Mirror surface & frame -->
-    <linearGradient id="aMirrorSurface" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#6A6662" stop-opacity="0.72"/>
-      <stop offset="40%"  stop-color="#7A7672" stop-opacity="0.58"/>
-      <stop offset="100%" stop-color="#5A5652" stop-opacity="0.48"/>
+    <!-- Mirror -->
+    <linearGradient id="aMirSurf" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#6A6662" stop-opacity="0.70"/>
+      <stop offset="50%"  stop-color="#7A7672" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#5A5652" stop-opacity="0.45"/>
     </linearGradient>
-    <linearGradient id="aMirrorFrame" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="aMirFrame" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%"   stop-color="#A07818"/>
       <stop offset="25%"  stop-color="#D4B060"/>
       <stop offset="50%"  stop-color="#E8C870"/>
       <stop offset="75%"  stop-color="#C9A040"/>
       <stop offset="100%" stop-color="#9A7018"/>
     </linearGradient>
-    <linearGradient id="aMirrorSheen" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="aMirSheen" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0"/>
-      <stop offset="25%"  stop-color="#FFFFFF" stop-opacity="0.18"/>
-      <stop offset="50%"  stop-color="#FFFFFF" stop-opacity="0.08"/>
+      <stop offset="25%"  stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="55%"  stop-color="#FFFFFF" stop-opacity="0.07"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </linearGradient>
-    <!-- Small vanity mirror -->
-    <radialGradient id="aVanMirror" cx="40%" cy="30%" r="60%">
-      <stop offset="0%"   stop-color="#8A8682" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#5A5652" stop-opacity="0.4"/>
-    </radialGradient>
 
     <!-- Chair -->
-    <linearGradient id="aChairL" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="aChL" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#282420"/>
-      <stop offset="30%"  stop-color="#1A1614"/>
-      <stop offset="70%"  stop-color="#141210"/>
+      <stop offset="40%"  stop-color="#141210"/>
       <stop offset="100%" stop-color="#0E0C0A"/>
     </linearGradient>
-    <linearGradient id="aChairM" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="aChM" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#484440"/>
-      <stop offset="30%"  stop-color="#686460"/>
-      <stop offset="60%"  stop-color="#888280"/>
+      <stop offset="40%"  stop-color="#686460"/>
+      <stop offset="70%"  stop-color="#888280"/>
       <stop offset="100%" stop-color="#383430"/>
     </linearGradient>
-    <linearGradient id="aChairGold" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="aChGold" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#A07818"/>
       <stop offset="40%"  stop-color="#C9A96E"/>
       <stop offset="70%"  stop-color="#D4B478"/>
       <stop offset="100%" stop-color="#9A7018"/>
     </linearGradient>
 
-    <!-- Vanity table -->
-    <linearGradient id="aVanity" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#201C18"/>
-      <stop offset="100%" stop-color="#141210"/>
-    </linearGradient>
-    <linearGradient id="aVanityTop" x1="0" y1="0" x2="0" y2="1">
+    <!-- Vanity -->
+    <linearGradient id="aVanTop" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%"   stop-color="#2E2A26"/>
-      <stop offset="100%" stop-color="#201C18"/>
+      <stop offset="100%" stop-color="#1A1614"/>
     </linearGradient>
+    <radialGradient id="aVanMir" cx="40%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#8A8682" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#5A5652" stop-opacity="0.4"/>
+    </radialGradient>
 
-    <!-- Gold brand text -->
+    <!-- Brand / gold text -->
     <linearGradient id="aGoldT" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#B8900A"/>
       <stop offset="50%"  stop-color="#E8C858"/>
@@ -87,160 +81,143 @@
       <stop offset="0%"   stop-color="#201C14"/>
       <stop offset="100%" stop-color="#121008"/>
     </linearGradient>
-    <linearGradient id="aBkTop" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="aBkTop2" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%"   stop-color="#2C2418"/>
       <stop offset="100%" stop-color="#1C1810"/>
     </linearGradient>
 
     <!-- Overlays -->
     <linearGradient id="aTextOv" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#484440" stop-opacity="0.80"/>
-      <stop offset="30%"  stop-color="#504C48" stop-opacity="0.50"/>
-      <stop offset="62%"  stop-color="#5A5652" stop-opacity="0.14"/>
+      <stop offset="0%"   stop-color="#484440" stop-opacity="0.82"/>
+      <stop offset="28%"  stop-color="#504C48" stop-opacity="0.52"/>
+      <stop offset="58%"  stop-color="#5A5652" stop-opacity="0.14"/>
       <stop offset="100%" stop-color="#5A5652" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="aVig" cx="55%" cy="50%" r="70%">
-      <stop offset="48%"  stop-color="#5E5A56" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#282420" stop-opacity="0.78"/>
+    <radialGradient id="aVig" cx="56%" cy="50%" r="68%">
+      <stop offset="46%"  stop-color="#5E5A56" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#282420" stop-opacity="0.82"/>
     </radialGradient>
 
-    <filter id="aSb"><feGaussianBlur stdDeviation="2.5"/></filter>
-    <filter id="aMirBlur"><feGaussianBlur stdDeviation="1.5"/></filter>
+    <filter id="aSb"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="aMb"><feGaussianBlur stdDeviation="1.5"/></filter>
   </defs>
 
-  <!-- ─── BACKDROP ─── -->
+  <!-- ─── STUDIO BACKDROP ─── -->
   <rect width="1440" height="580" fill="url(#aBg)"/>
   <rect width="1440" height="580" fill="url(#aTop)"/>
   <rect width="1440" height="580" fill="url(#aKey)"/>
-  <!-- Floor -->
-  <rect x="0" y="490" width="1440" height="90" fill="url(#aFloor)"/>
-  <line x1="0" y1="490" x2="1440" y2="490" stroke="#1A1612" stroke-width="2" opacity="0.5"/>
+  <rect x="0" y="492" width="1440" height="88" fill="url(#aFloor)"/>
+  <line x1="0" y1="492" x2="1440" y2="492" stroke="#1A1612" stroke-width="1.8" opacity="0.5"/>
 
-  <!-- ─── WHOLE COMPOSITION centred as floating island ─── -->
-  <g transform="translate(50 0)">
+  <!-- ══════════════════════════════════════════════
+       LARGE SALON MIRROR  — centred at x:840
+       Left edge x:660   Right edge x:1020
+  ══════════════════════════════════════════════ -->
+  <rect x="654" y="-6" width="372" height="502" rx="12" fill="#1A1612" opacity="0.32" filter="url(#aSb)"/>
+  <rect x="660" y="-6" width="360" height="498" rx="10" fill="url(#aMirFrame)"/>
+  <rect x="670" y="4"  width="340" height="478" rx="8"  fill="#1A1612" opacity="0.5"/>
+  <rect x="676" y="10" width="328" height="466" rx="6"  fill="url(#aMirSurf)"/>
+  <rect x="676" y="10" width="328" height="466" rx="6"  fill="url(#aMirSheen)"/>
+  <!-- Reflection shimmer -->
+  <path d="M 700 32 Q 820 62 900 32" stroke="#FFFFFF" stroke-width="0.6" fill="none" opacity="0.10"/>
+  <path d="M 710 52 Q 800 77 880 50" stroke="#FFFFFF" stroke-width="0.4" fill="none" opacity="0.07"/>
 
-  <!-- ─── LARGE SALON MIRROR (back wall, centre-right) ─── -->
-  <!-- Mirror shadow on wall -->
-  <rect x="594" y="-8" width="372" height="500" rx="12" fill="#1A1612" opacity="0.35" filter="url(#aSb)"/>
-  <!-- Gold outer frame -->
-  <rect x="600" y="-8" width="360" height="498" rx="10" fill="url(#aMirrorFrame)"/>
-  <!-- Gold inner frame line -->
-  <rect x="610" y="2"   width="340" height="478" rx="8" fill="#1A1612" opacity="0.5"/>
-  <!-- Mirror surface -->
-  <rect x="616" y="8"   width="328" height="466" rx="6" fill="url(#aMirrorSurface)"/>
-  <!-- Mirror sheen (diagonal light catch) -->
-  <rect x="616" y="8"   width="328" height="466" rx="6" fill="url(#aMirrorSheen)"/>
-  <!-- Subtle reflection lines -->
-  <path d="M 640 30 Q 760 60 840 30" stroke="#FFFFFF" stroke-width="0.6" fill="none" opacity="0.12"/>
-  <path d="M 650 50 Q 740 75 820 48" stroke="#FFFFFF" stroke-width="0.4" fill="none" opacity="0.08"/>
+  <!-- OHS PREMIUM HAIR inside mirror — centred between x:660 and x:1020 -->
+  <rect x="710" y="28" width="260" height="58" rx="3" fill="#1A1612" opacity="0.72"/>
+  <line x1="715" y1="46"  x2="965" y2="46"  stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
+  <line x1="715" y1="78"  x2="965" y2="78"  stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
+  <text x="840" y="58" font-family="'Cormorant Garamond',Georgia,serif" font-size="16" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="5" opacity="0.96">OHS</text>
+  <text x="840" y="73" font-family="'Montserrat',sans-serif" font-size="8.5" font-weight="700" fill="#D4B87A" text-anchor="middle" letter-spacing="4" opacity="0.88">PREMIUM HAIR</text>
 
-  <!-- OLIVHAIRSUPPLY branding IN the mirror (top section) -->
-  <!-- Mirror logo plate -->
-  <rect x="650" y="28" width="260" height="60" rx="3" fill="#1A1612" opacity="0.72"/>
-  <line x1="655" y1="48"  x2="905" y2="48"  stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
-  <line x1="655" y1="80"  x2="905" y2="80"  stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
-  <text x="780" y="60" font-family="'Cormorant Garamond',Georgia,serif" font-size="14" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.95">OLIVHAIRSUPPLY</text>
-  <text x="780" y="74" font-family="'Cormorant Garamond',Georgia,serif" font-size="8" font-style="italic" fill="#D4B87A" text-anchor="middle" letter-spacing="3.5" opacity="0.85">Berlin · Premium Hair</text>
+  <!-- Mirror corner ornaments -->
+  <circle cx="680" cy="14"  r="5" fill="url(#aChGold)" opacity="0.90"/>
+  <circle cx="1000" cy="14"  r="5" fill="url(#aChGold)" opacity="0.90"/>
+  <circle cx="680" cy="470" r="5" fill="url(#aChGold)" opacity="0.90"/>
+  <circle cx="1000" cy="470" r="5" fill="url(#aChGold)" opacity="0.90"/>
+  <circle cx="660" cy="248" r="4" fill="url(#aChGold)" opacity="0.85"/>
+  <circle cx="1020" cy="248" r="4" fill="url(#aChGold)" opacity="0.85"/>
 
-  <!-- Mirror gold corner ornaments -->
-  <circle cx="620"  cy="12"  r="5" fill="url(#aChairGold)" opacity="0.9"/>
-  <circle cx="940"  cy="12"  r="5" fill="url(#aChairGold)" opacity="0.9"/>
-  <circle cx="620"  cy="470" r="5" fill="url(#aChairGold)" opacity="0.9"/>
-  <circle cx="940"  cy="470" r="5" fill="url(#aChairGold)" opacity="0.9"/>
-  <!-- Mid-frame ornaments -->
-  <circle cx="600"  cy="248" r="4" fill="url(#aChairGold)" opacity="0.85"/>
-  <circle cx="960"  cy="248" r="4" fill="url(#aChairGold)" opacity="0.85"/>
-
-  <!-- ─── SALON CHAIR (centre, in front of mirror) ─── -->
-  <ellipse cx="780" cy="496" rx="118" ry="10" fill="#060402" opacity="0.50" filter="url(#aSb)"/>
-  <!-- Pedestal base -->
-  <ellipse cx="780" cy="492" rx="88"  ry="8"  fill="#1A1614" opacity="0.90"/>
-  <!-- Column -->
-  <rect x="764" y="362" width="32" height="130" fill="url(#aChairM)"/>
-  <rect x="768" y="362" width="8"  height="130" fill="#888280" opacity="0.28"/>
-  <!-- Hydraulic pump -->
-  <rect x="756" y="340" width="48" height="30" rx="5" fill="#282420"/>
-  <rect x="759" y="342" width="42" height="26" rx="4" fill="#363230"/>
+  <!-- ══════════════════════════════════════════════
+       SALON CHAIR — centred at x:840, in front of mirror
+  ══════════════════════════════════════════════ -->
+  <ellipse cx="840" cy="496" rx="115" ry="10" fill="#060402" opacity="0.50" filter="url(#aSb)"/>
+  <ellipse cx="840" cy="492" rx="86"  ry="8"  fill="#1A1614" opacity="0.90"/>
+  <rect x="824" y="362" width="32" height="130" fill="url(#aChM)"/>
+  <rect x="828" y="362" width="8"  height="130" fill="#888280" opacity="0.28"/>
+  <rect x="816" y="340" width="48" height="30" rx="5" fill="#282420"/>
+  <rect x="819" y="342" width="42" height="26" rx="4" fill="#363230"/>
   <!-- Seat -->
-  <rect x="700" y="300" width="160" height="56" rx="16" fill="url(#aChairL)"/>
-  <rect x="702" y="302" width="156" height="18" rx="10" fill="#282420" opacity="0.55"/>
-  <line x1="724" y1="317" x2="836" y2="317" stroke="#3A3430" stroke-width="0.8" opacity="0.42"/>
-  <line x1="724" y1="336" x2="836" y2="336" stroke="#3A3430" stroke-width="0.8" opacity="0.35"/>
-  <!-- Backrest -->
-  <rect x="726" y="130" width="108" height="178" rx="20" fill="url(#aChairL)"/>
-  <rect x="730" y="134" width="100" height="170" rx="16" fill="#1A1614"/>
-  <line x1="745" y1="174" x2="820" y2="174" stroke="#2A2420" stroke-width="0.8" opacity="0.38"/>
-  <line x1="745" y1="220" x2="820" y2="220" stroke="#2A2420" stroke-width="0.7" opacity="0.32"/>
-  <line x1="745" y1="264" x2="820" y2="264" stroke="#2A2420" stroke-width="0.7" opacity="0.28"/>
-  <!-- OHS monogram on backrest -->
-  <text x="780" y="208" font-family="'Cormorant Garamond',Georgia,serif" font-size="13" font-style="italic" fill="#C9A96E" text-anchor="middle" letter-spacing="3" opacity="0.32">OHS</text>
+  <rect x="760" y="300" width="160" height="56" rx="16" fill="url(#aChL)"/>
+  <rect x="762" y="302" width="156" height="18" rx="10" fill="#282420" opacity="0.55"/>
+  <line x1="784" y1="317" x2="896" y2="317" stroke="#3A3430" stroke-width="0.8" opacity="0.42"/>
+  <line x1="784" y1="336" x2="896" y2="336" stroke="#3A3430" stroke-width="0.8" opacity="0.35"/>
+  <!-- Backrest — tall, top touches mirror brand plate -->
+  <rect x="786" y="88" width="108" height="220" rx="20" fill="url(#aChL)"/>
+  <rect x="790" y="92" width="100" height="212" rx="16" fill="#1A1614"/>
+  <line x1="806" y1="144" x2="880" y2="144" stroke="#2A2420" stroke-width="0.8" opacity="0.38"/>
+  <line x1="806" y1="198" x2="880" y2="198" stroke="#2A2420" stroke-width="0.7" opacity="0.32"/>
+  <line x1="806" y1="252" x2="880" y2="252" stroke="#2A2420" stroke-width="0.7" opacity="0.28"/>
+  <text x="840" y="192" font-family="'Cormorant Garamond',Georgia,serif" font-size="13" font-style="italic" fill="#C9A96E" text-anchor="middle" letter-spacing="3" opacity="0.30">OHS</text>
   <!-- Gold footrest -->
-  <rect x="688" y="422" width="184" height="8" rx="4" fill="url(#aChairGold)"/>
-  <ellipse cx="693" cy="426" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
-  <ellipse cx="867" cy="426" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
+  <rect x="748" y="420" width="184" height="8" rx="4" fill="url(#aChGold)"/>
+  <ellipse cx="753" cy="424" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
+  <ellipse cx="927" cy="424" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
   <!-- Armrests -->
-  <rect x="695" y="284" width="12" height="44" rx="4" fill="url(#aChairM)"/>
-  <rect x="853" y="284" width="12" height="44" rx="4" fill="url(#aChairM)"/>
-  <rect x="691" y="279" width="20" height="11" rx="3" fill="#1A1614"/>
-  <rect x="849" y="279" width="20" height="11" rx="3" fill="#1A1614"/>
+  <rect x="755" y="283" width="12" height="44" rx="4" fill="url(#aChM)"/>
+  <rect x="913" y="283" width="12" height="44" rx="4" fill="url(#aChM)"/>
+  <rect x="751" y="278" width="20" height="11" rx="3" fill="#1A1614"/>
+  <rect x="909" y="278" width="20" height="11" rx="3" fill="#1A1614"/>
+  <!-- Chair reflection in mirror -->
+  <rect x="796" y="295" width="90" height="165" rx="10" fill="#282420" opacity="0.14" filter="url(#aMb)"/>
 
-  <!-- Chair reflection in mirror (subtle) -->
-  <rect x="736" y="300" width="90" height="170" rx="10" fill="#282420" opacity="0.18" filter="url(#aMirBlur)"/>
+  <!-- ══════════════════════════════════════════════
+       VANITY TABLE — right edge x:660, touching mirror
+       Left edge x:420   Width: 240
+  ══════════════════════════════════════════════ -->
+  <ellipse cx="540" cy="494" rx="125" ry="9"  fill="#060402" opacity="0.40" filter="url(#aSb)"/>
+  <rect x="428" y="370" width="12" height="120" rx="4" fill="#1E1A16"/>
+  <rect x="622" y="370" width="12" height="120" rx="4" fill="#1E1A16"/>
+  <rect x="410" y="340" width="252" height="36" rx="6" fill="url(#aVanTop)"/>
+  <rect x="410" y="364" width="252" height="10" rx="2" fill="#1A1614" opacity="0.8"/>
+  <line x1="410" y1="340" x2="662" y2="340" stroke="#C9A96E" stroke-width="1.2" opacity="0.42"/>
 
-  <!-- ─── LEFT GROUP scaled 75% from its centre (475, 375) ─── -->
-  <g transform="translate(118.75 93.75) scale(0.75)">
-
-  <!-- ─── VANITY TABLE (shifted +138px right, touching mirror) ─── -->
-  <ellipse cx="478" cy="426" rx="135" ry="10" fill="#060402" opacity="0.42" filter="url(#aSb)"/>
-  <!-- Table legs -->
-  <rect x="366" y="368" width="12" height="120" rx="4" fill="#1E1A16"/>
-  <rect x="570" y="368" width="12" height="120" rx="4" fill="#1E1A16"/>
-  <!-- Table surface -->
-  <rect x="348" y="338" width="252" height="36" rx="6" fill="url(#aVanityTop)"/>
-  <rect x="348" y="362" width="252" height="10" rx="2" fill="#1A1614" opacity="0.8"/>
-  <line x1="348" y1="338" x2="600" y2="338" stroke="#C9A96E" stroke-width="1.2" opacity="0.45"/>
-
-  <!-- Products on vanity -->
-  <rect x="386" y="268" width="28" height="72" rx="6" fill="#1A1814"/>
-  <rect x="388" y="270" width="24" height="68" rx="5" fill="#242018"/>
-  <rect x="392" y="266" width="16" height="8"  rx="2" fill="#2A2420"/>
-  <text x="400" y="306" font-family="'Montserrat',sans-serif" font-size="5.5" fill="#C9A96E" text-anchor="middle" letter-spacing="1.5" transform="rotate(-90,400,306)" opacity="0.72">BIZILUXE</text>
-  <ellipse cx="442" cy="324" rx="20" ry="24" fill="#1E1C18"/>
-  <ellipse cx="442" cy="318" rx="14" ry="10" fill="#2A2824"/>
-  <rect x="437" y="308" width="10" height="10" rx="2" fill="#242018"/>
-  <rect x="468" y="285" width="22" height="56" rx="5" fill="#201E1A"/>
-  <rect x="470" y="287" width="18" height="52" rx="4" fill="#2C2A26"/>
-  <rect x="473" y="283" width="12" height="6"  rx="2" fill="#242018"/>
+  <!-- Vanity products -->
+  <rect x="448" y="270" width="26" height="72" rx="6" fill="#1A1814"/>
+  <rect x="450" y="272" width="22" height="68" rx="5" fill="#242018"/>
+  <rect x="454" y="268" width="14" height="8"  rx="2" fill="#2A2420"/>
+  <text x="461" y="307" font-family="'Montserrat',sans-serif" font-size="5" fill="#C9A96E" text-anchor="middle" letter-spacing="1.5" transform="rotate(-90,461,307)" opacity="0.70">BIZILUXE</text>
+  <ellipse cx="502" cy="322" rx="18" ry="22" fill="#1E1C18"/>
+  <ellipse cx="502" cy="316" rx="12" ry="9"  fill="#2A2824"/>
+  <rect x="497" y="307" width="10" height="9"  rx="2" fill="#242018"/>
+  <rect x="526" y="286" width="20" height="55" rx="5" fill="#201E1A"/>
+  <rect x="528" y="288" width="16" height="51" rx="4" fill="#2C2A26"/>
+  <rect x="531" y="284" width="10" height="6"  rx="2" fill="#242018"/>
   <!-- Comb -->
-  <rect x="514" y="334" width="60" height="7"  rx="2" fill="#1A1814"/>
-  <g stroke="#3A3630" stroke-width="1.2" opacity="0.6">
-    <line x1="518" y1="334" x2="518" y2="326"/><line x1="523" y1="334" x2="523" y2="324"/>
-    <line x1="528" y1="334" x2="528" y2="326"/><line x1="533" y1="334" x2="533" y2="324"/>
-    <line x1="538" y1="334" x2="538" y2="326"/><line x1="543" y1="334" x2="543" y2="324"/>
-    <line x1="548" y1="334" x2="548" y2="326"/><line x1="553" y1="334" x2="553" y2="324"/>
-    <line x1="558" y1="334" x2="558" y2="326"/><line x1="563" y1="334" x2="563" y2="326"/>
+  <rect x="566" y="335" width="56" height="7"  rx="2" fill="#1A1814"/>
+  <g stroke="#3A3630" stroke-width="1.1" opacity="0.6">
+    <line x1="570" y1="335" x2="570" y2="327"/><line x1="575" y1="335" x2="575" y2="325"/>
+    <line x1="580" y1="335" x2="580" y2="327"/><line x1="585" y1="335" x2="585" y2="325"/>
+    <line x1="590" y1="335" x2="590" y2="327"/><line x1="595" y1="335" x2="595" y2="325"/>
+    <line x1="600" y1="335" x2="600" y2="327"/><line x1="605" y1="335" x2="605" y2="325"/>
+    <line x1="610" y1="335" x2="610" y2="327"/><line x1="615" y1="335" x2="615" y2="327"/>
   </g>
 
-  <!-- Small vanity mirror -->
-  <rect x="355" y="306" width="6" height="35" rx="3" fill="#2A2420"/>
-  <rect x="350" y="338" width="16" height="5"  rx="2" fill="#242018"/>
-  <circle cx="358" cy="292" r="30" fill="url(#aChairGold)" opacity="0.88"/>
-  <circle cx="358" cy="292" r="25" fill="url(#aVanMirror)"/>
-  <circle cx="351" cy="284" r="7"  fill="#FFFFFF" opacity="0.10"/>
+  <!-- Small vanity mirror (round) -->
+  <rect x="418" y="308" width="6" height="34" rx="3" fill="#2A2420"/>
+  <rect x="413" y="340" width="16" height="5"  rx="2" fill="#242018"/>
+  <circle cx="421" cy="294" r="28" fill="url(#aChGold)" opacity="0.88"/>
+  <circle cx="421" cy="294" r="23" fill="url(#aVanMir)"/>
+  <circle cx="414" cy="286" r="6"  fill="#FFFFFF" opacity="0.10"/>
 
-  <!-- ─── BRAND PLACARD (smaller, shifted right, text: BIZILUXE HAIR) ─── -->
-  <rect x="374" y="282" width="162" height="60"  fill="url(#aBkFace)"/>
-  <rect x="374" y="275" width="162" height="9"   fill="url(#aBkTop)"/>
-  <rect x="534" y="282" width="16"  height="60"  fill="#0C0A08" opacity="0.9"/>
-  <rect x="534" y="275" width="16"  height="9"   fill="#0A0808"/>
-  <line x1="376" y1="298" x2="532" y2="298" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
-  <line x1="376" y1="335" x2="532" y2="335" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
-  <text x="455" y="316" font-family="'Cormorant Garamond',Georgia,serif" font-size="16" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">BIZILUXE</text>
-  <text x="455" y="330" font-family="'Montserrat',sans-serif" font-size="7.5" font-weight="600" fill="#D4B87A" text-anchor="middle" letter-spacing="3.5" opacity="0.88">HAIR</text>
-
-  </g><!-- end left group scale -->
-
-  </g><!-- end floating island group -->
+  <!-- BIZILUXE HAIR placard (smaller, sitting on vanity) -->
+  <rect x="430" y="275" width="148" height="54" fill="url(#aBkFace)"/>
+  <rect x="430" y="268" width="148" height="9"  fill="url(#aBkTop2)"/>
+  <rect x="576" y="275" width="14"  height="54" fill="#0C0A08" opacity="0.9"/>
+  <rect x="576" y="268" width="14"  height="9"  fill="#0A0808"/>
+  <line x1="432" y1="291" x2="574" y2="291" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
+  <line x1="432" y1="323" x2="574" y2="323" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
+  <text x="503" y="309" font-family="'Cormorant Garamond',Georgia,serif" font-size="15" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">BIZILUXE</text>
+  <text x="503" y="321" font-family="'Montserrat',sans-serif" font-size="7" font-weight="600" fill="#D4B87A" text-anchor="middle" letter-spacing="3.5" opacity="0.88">HAIR</text>
 
   <!-- ─── OVERLAYS ─── -->
   <rect width="1440" height="580" fill="url(#aTextOv)"/>
