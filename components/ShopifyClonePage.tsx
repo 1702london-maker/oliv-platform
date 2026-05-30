@@ -39,6 +39,18 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
     '<select$1><option value="DE" selected>EUR &euro;</option><option value="GB">GBP &pound;</option><option value="US">USD $</option></select>'
   );
 
+  // Remove Spanish from locale selector — server-side so it's gone on load
+  html = html.replace(/<option[^>]*value="es"[^>]*>[\s\S]*?<\/option>/gi, '');
+
+  // Replace locale form submit with data-lang-switcher for JS to intercept
+  html = html.replace(/(<select[^>]*name="locale_code"[^>]*>)/g, '$1');
+
+  // Inject language + currency switcher script on every ShopifyClone page
+  const i18nScript = `<script src="/js/ohs-i18n.js"></script>`;
+  html = html.includes("</body>")
+    ? html.replace("</body>", i18nScript + "</body>")
+    : html + i18nScript;
+
   if (page === "affiliate") {
     html = html
       .replaceAll('action="/contact#contact_form"', 'action="/api/applications/affiliate"')
