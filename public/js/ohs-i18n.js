@@ -189,14 +189,14 @@
   // ── INIT ──────────────────────────────────────────────────────────────────────
   function init() {
     removeSpanish();
-    // Apply saved language (only translate if DE — default is EN/English)
     var lang = getLang();
-    if (lang === 'de') applyLanguage('de');
-    else {
+    if (lang === 'de') {
+      applyLanguage('de');
+    } else {
       document.querySelectorAll('select[name="locale_code"]').forEach(function (s) { s.value = 'en'; });
-      // Remove anti-flicker class (EN is the default, no translation needed)
-      document.documentElement.classList.remove('ohs-translating');
     }
+    // Always remove anti-flicker class — ensures nav is never permanently hidden
+    document.documentElement.classList.remove('ohs-translating');
     bindLangSelectors();
     storePrices();
     applyPrices();
