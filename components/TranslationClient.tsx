@@ -38,6 +38,18 @@ const DE_PAIRS: [string, string][] = [
   ["Ethically SourcedQuality guaranteed", "Ethisch bezogen – Garantierte Qualität"],
   ["Ethically Sourced", "Ethisch bezogen"],
   ["Quality guaranteed", "Garantierte Qualität"],
+  // Rentals page hero — "Luxury Hair <em>Rentals.</em>" splits text nodes
+  ["BiziLuxe Clip-In Collection", "BiziLuxe Clip-In Kollektion"],
+  ["Book Rental Consultation", "Beratung zur Anmietung buchen"],
+  ["Speak to Our Team", "Unser Team kontaktieren"],
+  ["Book Your Consultation", "Beratung buchen"],
+  ["Luxury Hair ", "Luxuriöse Haarverlängerungen zum "],
+  ["Luxury Hair", "Luxuriöse Haarverlängerungen"],
+  ["Rentals.", "Mieten."],   // em content — must come BEFORE plain "Rentals"
+  // Services page hero — "Services <em>Tailored to You.</em>" splits text nodes
+  ["Our Services", "Unsere Services"],
+  ["Tailored to You.", "für dein perfektes Haar."],
+  ["Services ", "Individuelle Lösungen "],
   // Training page hero
   ["Book Training Consultation", "Beratungsgespräch buchen"],
   ["Become professionally ", "Werde professionell "],
@@ -99,7 +111,7 @@ const DE_PAIRS: [string, string][] = [
   ["Journal", "Magazin"],
   ["Returns", "Rücksendungen"],
   ["Shipping", "Versand"],
-  ["Rentals", "Clips Verleih"],
+  ["Rentals", "Clip in Verleih"],
   ["Services", "Services"],
   ["Affiliate", "Affiliate"],
   ["About", "Über Uns"],

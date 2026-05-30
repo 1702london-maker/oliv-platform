@@ -34,6 +34,18 @@ const DE_PAIRS: [string, string][] = [
   ["Premium Hair.", "Premium Haar."],
   ["Confidence.", "Eleganz."],
   ["Effortless", "Zeitlose"],
+  // Rentals page hero
+  ["BiziLuxe Clip-In Collection", "BiziLuxe Clip-In Kollektion"],
+  ["Book Rental Consultation", "Beratung zur Anmietung buchen"],
+  ["Speak to Our Team", "Unser Team kontaktieren"],
+  ["Book Your Consultation", "Beratung buchen"],
+  ["Luxury Hair ", "Luxuriöse Haarverlängerungen zum "],
+  ["Luxury Hair", "Luxuriöse Haarverlängerungen"],
+  ["Rentals.", "Mieten."],
+  // Services page hero
+  ["Our Services", "Unsere Services"],
+  ["Tailored to You.", "für dein perfektes Haar."],
+  ["Services ", "Individuelle Lösungen "],
   // Training page hero
   ["Book Training Consultation", "Beratungsgespräch buchen"],
   ["Become professionally ", "Werde professionell "],
@@ -98,7 +110,7 @@ const DE_PAIRS: [string, string][] = [
   ["Journal", "Magazin"],
   ["Returns", "Rücksendungen"],
   ["Shipping", "Versand"],
-  ["Rentals", "Clips Verleih"],
+  ["Rentals", "Clip in Verleih"],
   ["Services", "Services"],
   ["Affiliate", "Affiliate"],
   ["About", "Über Uns"],
