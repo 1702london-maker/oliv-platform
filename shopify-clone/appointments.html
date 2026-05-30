@@ -3081,75 +3081,73 @@ first.parentNode.insertBefore(script, first);
 <script>
 var OAPPT_SERVICES = [
   {
-    id: 'weave-braided',
-    name: 'Weave Install — Braided Base',
-    desc: 'Professional weave installation on a braided base.',
+    id: 'weft-braided',
+    name: 'Weft Extensions — With Braiding',
+    desc: 'Professional weft installation on a braided base.',
     optionLabel: 'Number of rows',
     options: [
       { label: 'Select...', value: '', price: 0 },
-      { label: '1 row', value: '1-row', price: 40 },
-      { label: '2 rows', value: '2-rows', price: 70 },
-      { label: '3 rows', value: '3-rows', price: 95 },
-      { label: '4 rows', value: '4-rows', price: 120 },
-      { label: '5 rows', value: '5-rows', price: 150 },
-      { label: '6 rows', value: '6-rows', price: 180 }
+      { label: '1 row — €40',  value: '1-row',  price: 40  },
+      { label: '2 rows — €70', value: '2-rows', price: 70  },
+      { label: '3 rows — €95', value: '3-rows', price: 95  },
+      { label: '4 rows — €120',value: '4-rows', price: 120 },
+      { label: '5 rows — €140',value: '5-rows', price: 140 }
     ],
     hasPurchase: true
   },
   {
-    id: 'weave-knotted',
-    name: 'Weave Install — Knotted Method',
-    desc: 'Professional weave installation using the knotted method.',
+    id: 'weft-no-braid',
+    name: 'Weft Extensions — Without Braiding',
+    desc: 'Weft installation without a braided base.',
     optionLabel: 'Number of rows',
     options: [
       { label: 'Select...', value: '', price: 0 },
-      { label: '1 row', value: '1-row', price: 40 },
-      { label: '2 rows', value: '2-rows', price: 70 },
-      { label: '3 rows', value: '3-rows', price: 105 },
-      { label: '4 rows', value: '4-rows', price: 140 },
-      { label: '5 rows', value: '5-rows', price: 175 }
+      { label: '1 row — €35',  value: '1-row',  price: 35  },
+      { label: '2 rows — €70', value: '2-rows', price: 70  },
+      { label: '3 rows — €105',value: '3-rows', price: 105 },
+      { label: '4 rows — €140',value: '4-rows', price: 140 }
     ],
     hasPurchase: true
   },
   {
-    id: 'tape-install',
-    name: 'Tape Extensions Installation',
-    desc: 'Professional tape extension fitting.',
+    id: 'tape-full',
+    name: 'Tape Extensions — Full Application',
+    desc: 'Full tape extension application including hair.',
     optionLabel: 'Number of tapes',
     options: [
       { label: 'Select...', value: '', price: 0 },
-      { label: '20 tapes', value: '20-tapes', price: 35 },
-      { label: '40 tapes', value: '40-tapes', price: 70 },
-      { label: '60 tapes', value: '60-tapes', price: 100 },
-      { label: '80 tapes', value: '80-tapes', price: 120 }
-    ],
-    hasPurchase: true
-  },
-  {
-    id: 'tape-reinstall',
-    name: 'Tape Reinstall',
-    desc: 'Reinstallation of existing tape extensions.',
-    optionLabel: 'Number of tapes',
-    options: [
-      { label: 'Select...', value: '', price: 0 },
-      { label: '20 tapes', value: '20-tapes', price: 70 },
-      { label: '40 tapes', value: '40-tapes', price: 130 },
-      { label: '60 tapes', value: '60-tapes', price: 175 },
-      { label: '80 tapes', value: '80-tapes', price: 220 }
+      { label: '20 pieces — €70',      value: '20', price: 70  },
+      { label: '40 pieces — €130',     value: '40', price: 130 },
+      { label: '60 pieces — €175',     value: '60', price: 175 },
+      { label: '80/100 pieces — €220', value: '80-100', price: 220 }
     ],
     hasPurchase: false
   },
   {
-    id: 'keratin-bonds',
-    name: 'Keratin Bonds',
-    desc: 'Professional keratin bond extension application.',
-    optionLabel: 'Hair weight / strands',
+    id: 'tape-only',
+    name: 'Tape Extensions — Application Only',
+    desc: 'Tape extension fitting using your own hair.',
+    optionLabel: 'Number of tapes',
     options: [
       { label: 'Select...', value: '', price: 0 },
-      { label: '50 strands', value: '50', price: 90 },
-      { label: '100 strands', value: '100', price: 170 },
-      { label: '150 strands', value: '150', price: 210 },
-      { label: '200 strands', value: '200', price: 250 }
+      { label: '20 pieces — €35',  value: '20', price: 35  },
+      { label: '40 pieces — €70',  value: '40', price: 70  },
+      { label: '60 pieces — €100', value: '60', price: 100 },
+      { label: '80 pieces — €130', value: '80', price: 130 }
+    ],
+    hasPurchase: true
+  },
+  {
+    id: 'bonding',
+    name: 'Bonding Extensions',
+    desc: 'Professional keratin bonding extension application.',
+    optionLabel: 'Number of pieces',
+    options: [
+      { label: 'Select...', value: '', price: 0 },
+      { label: '50 pieces — €90',  value: '50',  price: 90  },
+      { label: '100 pieces — €170',value: '100', price: 170 },
+      { label: '150 pieces — €240',value: '150', price: 240 },
+      { label: '200 pieces — €290',value: '200', price: 290 }
     ],
     hasPurchase: true
   },
@@ -3160,23 +3158,20 @@ var OAPPT_SERVICES = [
     optionLabel: 'Hair weight (g)',
     options: [
       { label: 'Select...', value: '', price: 0 },
-      { label: '50g', value: '50g', price: 90 },
-      { label: '100g', value: '100g', price: 170 },
-      { label: '150g', value: '150g', price: 210 },
-      { label: '200g', value: '200g', price: 250 }
+      { label: '100g — €170', value: '100g', price: 170 },
+      { label: '150g — €210', value: '150g', price: 210 },
+      { label: '200g — €250', value: '200g', price: 250 }
     ],
     hasPurchase: true
   },
   {
     id: 'full-weave',
     name: 'Full Weave',
-    desc: 'Complete full weave installation.',
+    desc: 'Full weave installation with or without closure.',
     optionLabel: 'Weave type',
     options: [
       { label: 'Select...', value: '', price: 0 },
-      { label: 'Closure', value: 'closure', price: 140 },
-      { label: 'Leave-Out', value: 'leave-out', price: 125 },
-      { label: 'Reinstall', value: 'reinstall', price: 160 }
+      { label: 'With or Without Closure — €140', value: 'closure', price: 140 }
     ],
     hasPurchase: true
   },
@@ -3187,14 +3182,29 @@ var OAPPT_SERVICES = [
     optionLabel: 'Braid type',
     options: [
       { label: 'Select...', value: '', price: 0 },
-      { label: 'Standard', value: 'standard', price: 290 },
-      { label: 'Kids', value: 'kids', price: 220 },
-      { label: 'Feed-In', value: 'feed-in', price: 250 },
-      { label: 'Ponytail', value: 'ponytail', price: 230 },
-      { label: '2 Boxer Braids', value: '2-boxer', price: 60 },
-      { label: '4 Boxer Braids', value: '4-boxer', price: 75 },
-      { label: '6 Boxer Braids', value: '6-boxer', price: 95 },
-      { label: 'Cornrows (from)', value: 'cornrows', price: 50 }
+      { label: 'Braids — €290',                    value: 'standard',    price: 290 },
+      { label: 'Thin Braids — €380',               value: 'thin',        price: 380 },
+      { label: 'Open Braids — €290',               value: 'open',        price: 290 },
+      { label: 'Braids for Kids (up to 10) — €220',value: 'kids',        price: 220 },
+      { label: 'Feed-In Braids with Rastas — €250',value: 'feedin',      price: 250 },
+      { label: 'Feed-In Ponytail — €230',          value: 'ponytail',    price: 230 },
+      { label: 'Micro / Million Braids — €600',    value: 'micro',       price: 600 },
+      { label: 'Boxer Braids 2 pieces — €60',      value: '2-boxer',     price: 60  },
+      { label: 'Boxer Braids 4 strands — €75',     value: '4-boxer',     price: 75  },
+      { label: 'Boxer Braids 6 strands — €95',     value: '6-boxer',     price: 95  },
+      { label: 'Cornrows — €50',                   value: 'cornrows',    price: 50  }
+    ],
+    hasPurchase: false
+  },
+  {
+    id: 'crochet',
+    name: 'Crochet',
+    desc: 'Crochet installation services.',
+    optionLabel: 'Crochet type',
+    options: [
+      { label: 'Select...', value: '', price: 0 },
+      { label: 'Crochet Without Hair — €240',  value: 'no-hair',  price: 240 },
+      { label: 'Crochet All Inclusive — €270', value: 'inclusive', price: 270 }
     ],
     hasPurchase: false
   }
