@@ -63,5 +63,8 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
 
   html = html.replace(/action="\/contact#[^"]*"/g, 'action="/api/contact"');
 
+  // Strip floating WhatsApp / iMessage chat widget scraped from Shopify
+  html = html.replace(/<style>\s*\.ohs-chat[\s\S]*?<\/style>\s*<div class="ohs-chat-wrap"[\s\S]*?<\/div>/g, '');
+
   return html;
 }
