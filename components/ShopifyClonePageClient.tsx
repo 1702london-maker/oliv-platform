@@ -40,7 +40,7 @@ const DE_PAIRS: [string, string][] = [
   ["Experience", "Erlebnis"],
   ["Become Affiliate", "Affiliate werden"],
   // Affiliate page hero
-  ["OlivHairSupply Affiliate", "OlivHairSupply Affiliate-Programm"],
+  // OlivHairSupply Affiliate eyebrow translated directly in affiliate.html
   ["Earn. Influence. ", "Verdienen. Inspirieren. "],
   ["Earn. Influence.", "Verdienen. Inspirieren."],
   ["Elevate.", "Wachsen."],
