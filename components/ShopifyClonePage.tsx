@@ -86,7 +86,7 @@ const INLINE_I18N_SCRIPT = `<script>
   // short keys (e.g. 'Shipping') from corrupting longer matches.
   var DE_PAIRS = [
     // Long sentences first
-    ['Luxury human hair extensions crafted for women who refuse compromise. Sourced from the world\'s finest suppliers, installed by Berlin\'s most trusted specialists.','Luxuriöse Echthaar-Extensions für Frauen, die keine Kompromisse eingehen. Von den besten Lieferanten weltweit, installiert von Berlins renommiertesten Spezialisten.'],
+    ["Luxury human hair extensions crafted for women who refuse compromise. Sourced from the world’s finest suppliers, installed by Berlin’s most trusted specialists.","Luxuriöse Echthaar-Extensions für Frauen, die keine Kompromisse eingehen. Von den besten Lieferanten weltweit, installiert von Berlins renommiertesten Spezialisten."],
     ['Luxury extensions crafted for women who refuse compromise.','Luxuriöse Haarverlängerungen für Frauen, die keine Kompromisse eingehen.'],
     ['Luxury Hair. Premium Quality. Every Strand Designed Just For You.','Luxuriöses Haar. Premium-Qualität. Jede Strähne für dich perfektioniert.'],
     ['Luxury Hair. Premium Quality. Designed for You.','Luxuriöses Haar. Höchste Qualität. Für dich geschaffen.'],
