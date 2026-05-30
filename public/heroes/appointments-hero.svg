@@ -184,61 +184,53 @@
   <!-- Chair reflection in mirror (subtle) -->
   <rect x="736" y="300" width="90" height="170" rx="10" fill="#282420" opacity="0.18" filter="url(#aMirBlur)"/>
 
-  <!-- ─── VANITY TABLE (left side) ─── -->
-  <!-- Table surface shadow -->
-  <ellipse cx="340" cy="426" rx="135" ry="10" fill="#060402" opacity="0.42" filter="url(#aSb)"/>
+  <!-- ─── VANITY TABLE (shifted +138px right, touching mirror) ─── -->
+  <ellipse cx="478" cy="426" rx="135" ry="10" fill="#060402" opacity="0.42" filter="url(#aSb)"/>
   <!-- Table legs -->
-  <rect x="228" y="368" width="12" height="120" rx="4" fill="#1E1A16"/>
-  <rect x="432" y="368" width="12" height="120" rx="4" fill="#1E1A16"/>
+  <rect x="366" y="368" width="12" height="120" rx="4" fill="#1E1A16"/>
+  <rect x="570" y="368" width="12" height="120" rx="4" fill="#1E1A16"/>
   <!-- Table surface -->
-  <rect x="210" y="338" width="252" height="36" rx="6" fill="url(#aVanityTop)"/>
-  <rect x="210" y="362" width="252" height="10" rx="2" fill="#1A1614" opacity="0.8"/>
-  <!-- Surface gold edge -->
-  <line x1="210" y1="338" x2="462" y2="338" stroke="#C9A96E" stroke-width="1.2" opacity="0.45"/>
+  <rect x="348" y="338" width="252" height="36" rx="6" fill="url(#aVanityTop)"/>
+  <rect x="348" y="362" width="252" height="10" rx="2" fill="#1A1614" opacity="0.8"/>
+  <line x1="348" y1="338" x2="600" y2="338" stroke="#C9A96E" stroke-width="1.2" opacity="0.45"/>
 
   <!-- Products on vanity -->
-  <!-- Bottle 1 (tall) -->
-  <rect x="248" y="268" width="28" height="72" rx="6" fill="#1A1814"/>
-  <rect x="250" y="270" width="24" height="68" rx="5" fill="#242018"/>
-  <rect x="254" y="266" width="16" height="8"  rx="2" fill="#2A2420"/>
-  <text x="262" y="306" font-family="'Montserrat',sans-serif" font-size="5.5" fill="#C9A96E" text-anchor="middle" letter-spacing="1.5" transform="rotate(-90,262,306)" opacity="0.72">BIZILUXE</text>
-  <!-- Bottle 2 (short round) -->
-  <ellipse cx="304" cy="324" rx="20" ry="24" fill="#1E1C18"/>
-  <ellipse cx="304" cy="318" rx="14" ry="10" fill="#2A2824"/>
-  <rect x="299" y="308" width="10" height="10" rx="2" fill="#242018"/>
-  <!-- Bottle 3 (medium) -->
-  <rect x="330" y="285" width="22" height="56" rx="5" fill="#201E1A"/>
-  <rect x="332" y="287" width="18" height="52" rx="4" fill="#2C2A26"/>
-  <rect x="335" y="283" width="12" height="6"  rx="2" fill="#242018"/>
-  <!-- Comb on table -->
-  <rect x="376" y="334" width="60" height="7"  rx="2" fill="#1A1814"/>
+  <rect x="386" y="268" width="28" height="72" rx="6" fill="#1A1814"/>
+  <rect x="388" y="270" width="24" height="68" rx="5" fill="#242018"/>
+  <rect x="392" y="266" width="16" height="8"  rx="2" fill="#2A2420"/>
+  <text x="400" y="306" font-family="'Montserrat',sans-serif" font-size="5.5" fill="#C9A96E" text-anchor="middle" letter-spacing="1.5" transform="rotate(-90,400,306)" opacity="0.72">BIZILUXE</text>
+  <ellipse cx="442" cy="324" rx="20" ry="24" fill="#1E1C18"/>
+  <ellipse cx="442" cy="318" rx="14" ry="10" fill="#2A2824"/>
+  <rect x="437" y="308" width="10" height="10" rx="2" fill="#242018"/>
+  <rect x="468" y="285" width="22" height="56" rx="5" fill="#201E1A"/>
+  <rect x="470" y="287" width="18" height="52" rx="4" fill="#2C2A26"/>
+  <rect x="473" y="283" width="12" height="6"  rx="2" fill="#242018"/>
+  <!-- Comb -->
+  <rect x="514" y="334" width="60" height="7"  rx="2" fill="#1A1814"/>
   <g stroke="#3A3630" stroke-width="1.2" opacity="0.6">
-    <line x1="380" y1="334" x2="380" y2="326"/><line x1="385" y1="334" x2="385" y2="324"/>
-    <line x1="390" y1="334" x2="390" y2="326"/><line x1="395" y1="334" x2="395" y2="324"/>
-    <line x1="400" y1="334" x2="400" y2="326"/><line x1="405" y1="334" x2="405" y2="324"/>
-    <line x1="410" y1="334" x2="410" y2="326"/><line x1="415" y1="334" x2="415" y2="324"/>
-    <line x1="420" y1="334" x2="420" y2="326"/><line x1="425" y1="334" x2="425" y2="326"/>
+    <line x1="518" y1="334" x2="518" y2="326"/><line x1="523" y1="334" x2="523" y2="324"/>
+    <line x1="528" y1="334" x2="528" y2="326"/><line x1="533" y1="334" x2="533" y2="324"/>
+    <line x1="538" y1="334" x2="538" y2="326"/><line x1="543" y1="334" x2="543" y2="324"/>
+    <line x1="548" y1="334" x2="548" y2="326"/><line x1="553" y1="334" x2="553" y2="324"/>
+    <line x1="558" y1="334" x2="558" y2="326"/><line x1="563" y1="334" x2="563" y2="326"/>
   </g>
 
-  <!-- Small vanity mirror (round, on table) -->
-  <!-- Mirror stand -->
-  <rect x="217" y="306" width="6" height="35" rx="3" fill="#2A2420"/>
-  <rect x="212" y="338" width="16" height="5"  rx="2" fill="#242018"/>
-  <!-- Mirror frame -->
-  <circle cx="220" cy="292" r="30" fill="url(#aChairGold)" opacity="0.88"/>
-  <circle cx="220" cy="292" r="25" fill="url(#aVanMirror)"/>
-  <!-- Reflection shine -->
-  <circle cx="213" cy="284" r="7"  fill="#FFFFFF" opacity="0.10"/>
+  <!-- Small vanity mirror -->
+  <rect x="355" y="306" width="6" height="35" rx="3" fill="#2A2420"/>
+  <rect x="350" y="338" width="16" height="5"  rx="2" fill="#242018"/>
+  <circle cx="358" cy="292" r="30" fill="url(#aChairGold)" opacity="0.88"/>
+  <circle cx="358" cy="292" r="25" fill="url(#aVanMirror)"/>
+  <circle cx="351" cy="284" r="7"  fill="#FFFFFF" opacity="0.10"/>
 
-  <!-- ─── BRAND PLACARD ─── -->
-  <rect x="68"  y="268" width="252" height="96"  fill="url(#aBkFace)"/>
-  <rect x="68"  y="260" width="252" height="10"  fill="url(#aBkTop)"/>
-  <rect x="318" y="268" width="24"  height="96"  fill="#0C0A08" opacity="0.9"/>
-  <rect x="318" y="260" width="24"  height="10"  fill="#0A0808"/>
-  <line x1="70"  y1="292" x2="316" y2="292" stroke="#C9A96E" stroke-width="0.8" opacity="0.44"/>
-  <line x1="70"  y1="350" x2="316" y2="350" stroke="#C9A96E" stroke-width="0.8" opacity="0.44"/>
-  <text x="193" y="318" font-family="'Cormorant Garamond',Georgia,serif" font-size="20" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">OLIVHAIRSUPPLY</text>
-  <text x="193" y="338" font-family="'Cormorant Garamond',Georgia,serif" font-size="9.5" font-style="italic" fill="#D4B87A" text-anchor="middle" letter-spacing="4" opacity="0.88">Berlin · Premium Hair</text>
+  <!-- ─── BRAND PLACARD (smaller, shifted right, text: BIZILUXE HAIR) ─── -->
+  <rect x="374" y="282" width="162" height="60"  fill="url(#aBkFace)"/>
+  <rect x="374" y="275" width="162" height="9"   fill="url(#aBkTop)"/>
+  <rect x="534" y="282" width="16"  height="60"  fill="#0C0A08" opacity="0.9"/>
+  <rect x="534" y="275" width="16"  height="9"   fill="#0A0808"/>
+  <line x1="376" y1="298" x2="532" y2="298" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
+  <line x1="376" y1="335" x2="532" y2="335" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
+  <text x="455" y="316" font-family="'Cormorant Garamond',Georgia,serif" font-size="16" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">BIZILUXE</text>
+  <text x="455" y="330" font-family="'Montserrat',sans-serif" font-size="7.5" font-weight="600" fill="#D4B87A" text-anchor="middle" letter-spacing="3.5" opacity="0.88">HAIR</text>
 
   <!-- ─── OVERLAYS ─── -->
   <rect width="1440" height="580" fill="url(#aTextOv)"/>
