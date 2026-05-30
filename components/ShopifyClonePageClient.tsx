@@ -34,9 +34,10 @@ const DE_PAIRS: [string, string][] = [
   ["Premium Hair.", "Premium Haar."],
   ["Confidence.", "Eleganz."],
   ["Effortless", "Zeitlose"],
-  // About page
-  ["Born from a passion", "Aus Leidenschaft entstanden"],
+  // About page — "Born from <em>a passion</em>" splits into two text nodes
   ["Berlin, Est. 2016", "Berlin, gegründet 2016"],
+  ["Born from", "Aus Leidenschaft"],
+  ["a passion", "entstanden"],
   // Shop page hero
   ["BiziLuxe by Olivhairsupply", "BiziLuxe by OlivHairSupply"],
   ["BiziLuxe by OlivHairSupply", "BiziLuxe by OlivHairSupply"],
