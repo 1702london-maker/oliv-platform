@@ -3041,3 +3041,557 @@
 
 </div>
 <!-- END sections: footer-group -->
+<script>
+(function () {
+  'use strict';
+
+  // ── DATA ──────────────────────────────────────────────────────────────────
+  var SERVICES = [
+    {
+      id: 'wash-style',
+      name: 'Wash & Style',
+      desc: 'A luxurious shampoo, condition, blow-dry and style finish.',
+      basePrice: 65,
+      duration: 60,
+      configurator: [
+        { id: 'hair-length', label: 'Hair Length', type: 'radio',
+          options: [
+            { label: 'Short', priceAdj: 0 },
+            { label: 'Medium', priceAdj: 10 },
+            { label: 'Long', priceAdj: 20 },
+            { label: 'Extra Long', priceAdj: 30 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'colour',
+      name: 'Colour Service',
+      desc: 'Full colour, highlights, balayage or toning — expertly applied.',
+      basePrice: 120,
+      duration: 120,
+      configurator: [
+        { id: 'colour-type', label: 'Colour Type', type: 'radio',
+          options: [
+            { label: 'Full Colour', priceAdj: 0 },
+            { label: 'Highlights', priceAdj: 20 },
+            { label: 'Balayage', priceAdj: 40 },
+            { label: 'Toner Only', priceAdj: -30 }
+          ]
+        },
+        { id: 'hair-length', label: 'Hair Length', type: 'radio',
+          options: [
+            { label: 'Short', priceAdj: 0 },
+            { label: 'Medium', priceAdj: 15 },
+            { label: 'Long', priceAdj: 30 },
+            { label: 'Extra Long', priceAdj: 50 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'treatment',
+      name: 'Hair Treatment',
+      desc: 'Deep conditioning, keratin smoothing or bond-repair therapy.',
+      basePrice: 85,
+      duration: 90,
+      configurator: [
+        { id: 'treatment-type', label: 'Treatment Type', type: 'radio',
+          options: [
+            { label: 'Deep Conditioning', priceAdj: 0 },
+            { label: 'Keratin Smoothing', priceAdj: 50 },
+            { label: 'Bond Repair', priceAdj: 35 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'cut-finish',
+      name: 'Cut & Finish',
+      desc: 'Precision cut and professional blowout finish.',
+      basePrice: 55,
+      duration: 60,
+      configurator: [
+        { id: 'hair-length', label: 'Hair Length', type: 'radio',
+          options: [
+            { label: 'Short', priceAdj: 0 },
+            { label: 'Medium', priceAdj: 10 },
+            { label: 'Long', priceAdj: 15 },
+            { label: 'Extra Long', priceAdj: 25 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'bridal',
+      name: 'Bridal & Event',
+      desc: 'Bespoke styling for your most important moments.',
+      basePrice: 180,
+      duration: 150,
+      configurator: []
+    },
+    {
+      id: 'extensions',
+      name: 'Hair Extensions',
+      desc: 'Premium tape-in, micro-ring or clip-in extension application.',
+      basePrice: 250,
+      duration: 180,
+      configurator: [
+        { id: 'ext-type', label: 'Extension Method', type: 'radio',
+          options: [
+            { label: 'Tape-In', priceAdj: 0 },
+            { label: 'Micro-Ring', priceAdj: 40 },
+            { label: 'Clip-In (fitting only)', priceAdj: -100 }
+          ]
+        }
+      ]
+    }
+  ];
+
+  var STYLISTS = [
+    { id: 'olivia', name: 'Olivia M.', badge: 'Senior Stylist', specialty: 'Colour & Balayage', bio: '10+ years crafting lived-in colour and bespoke blondes.', surcharge: 0, locations: ['a','b'] },
+    { id: 'sara', name: 'Sara K.', badge: 'Stylist', specialty: 'Cut & Extensions', bio: 'Precision cuts and natural-looking extension specialist.', surcharge: 0, locations: ['a'] },
+    { id: 'jasmine', name: 'Jasmine L.', badge: 'Senior Stylist', specialty: 'Bridal & Events', bio: 'Berlin\'s go-to for bridal and luxury occasion styling.', surcharge: 20, locations: ['a','b'] },
+    { id: 'marc', name: 'Marc D.', badge: 'Stylist', specialty: 'Treatments & Texture', bio: 'Keratin and bond-repair authority with a creative eye.', surcharge: 0, locations: ['b'] }
+  ];
+
+  var TIME_SLOTS = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00'];
+
+  // ── STATE ─────────────────────────────────────────────────────────────────
+  var state = {
+    step: 1,
+    location: null,
+    service: null,
+    configSelections: {},
+    stylist: null,
+    date: null,
+    time: null,
+    name: '',
+    email: '',
+    phone: '',
+    notes: '',
+    calYear: null,
+    calMonth: null
+  };
+
+  // ── INIT ──────────────────────────────────────────────────────────────────
+  // Scripts run via React useEffect — DOMContentLoaded has already fired.
+  // Use requestAnimationFrame to ensure the DOM is fully painted first.
+  function init() {
+    var now = new Date();
+    state.calYear = now.getFullYear();
+    state.calMonth = now.getMonth();
+    renderProgress();
+    renderServiceGrid();
+    renderCalendar();
+    handleURLParam();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  function handleURLParam() {
+    var params = new URLSearchParams(window.location.search);
+    var booking = params.get('booking');
+    if (booking === 'submitted') {
+      document.getElementById('oappt-steps-wrap').style.display = 'none';
+      document.getElementById('oappt-confirm-wrap').style.display = 'block';
+      document.getElementById('oappt-progress').style.display = 'none';
+    }
+  }
+
+  // ── PROGRESS BAR ──────────────────────────────────────────────────────────
+  var STEP_LABELS = ['Location','Service','Configure','Stylist','Date','Time','Details','Confirm'];
+
+  function renderProgress() {
+    var el = document.getElementById('oappt-progress');
+    if (!el) return;
+    var html = '';
+    for (var i = 0; i < 8; i++) {
+      var n = i + 1;
+      var cls = 'oappt-progress-step';
+      if (n < state.step) cls += ' done';
+      if (n === state.step) cls += ' active';
+      var line = i < 7 ? '<div class="oappt-progress-line"></div>' : '';
+      html += '<div class="' + cls + '">' +
+        '<div class="oappt-progress-node">' + (n < state.step ? '&#10003;' : n) + '</div>' +
+        '<div class="oappt-progress-label">' + STEP_LABELS[i] + '</div>' +
+        '</div>' + line;
+    }
+    el.innerHTML = html;
+  }
+
+  // ── STEP NAV ──────────────────────────────────────────────────────────────
+  window.oapptNext = function (fromStep) {
+    clearError(fromStep);
+    if (!validate(fromStep)) return;
+    goTo(fromStep + 1);
+  };
+
+  window.oapptBack = function (fromStep) {
+    goTo(fromStep - 1);
+  };
+
+  function goTo(step) {
+    document.getElementById('oappt-step-' + state.step).classList.remove('active');
+    state.step = step;
+    var el = document.getElementById('oappt-step-' + step);
+    if (el) el.classList.add('active');
+    renderProgress();
+    updateSummaryPanel();
+    if (step === 4) renderStylistGrid();
+    if (step === 6) renderTimeSlots();
+    if (step === 8) renderBookingSummary();
+    window.scrollTo({ top: document.querySelector('.oappt-main') ? document.querySelector('.oappt-main').offsetTop - 20 : 0, behavior: 'smooth' });
+  }
+
+  // ── VALIDATION ────────────────────────────────────────────────────────────
+  function validate(step) {
+    if (step === 1 && !state.location) { showError(1); return false; }
+    if (step === 2 && !state.service) { showError(2); return false; }
+    if (step === 3) {
+      var svc = getService();
+      if (svc) {
+        for (var i = 0; i < svc.configurator.length; i++) {
+          var cfg = svc.configurator[i];
+          if (!state.configSelections[cfg.id]) { showError(3); return false; }
+        }
+      }
+    }
+    if (step === 4 && !state.stylist) { showError(4); return false; }
+    if (step === 5 && !state.date) { showError(5); return false; }
+    if (step === 6 && !state.time) { showError(6); return false; }
+    if (step === 7) {
+      var name = document.getElementById('oappt-full-name').value.trim();
+      var email = document.getElementById('oappt-email').value.trim();
+      var phone = document.getElementById('oappt-phone').value.trim();
+      if (!name || !email || !validateEmail(email) || !phone) { showError(7); return false; }
+      state.name = name;
+      state.email = email;
+      state.phone = phone;
+      state.notes = document.getElementById('oappt-notes').value.trim();
+    }
+    return true;
+  }
+
+  function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+  function showError(step) { var el = document.getElementById('oappt-err-' + step); if (el) el.style.display = 'block'; }
+  function clearError(step) { var el = document.getElementById('oappt-err-' + step); if (el) el.style.display = 'none'; }
+
+  // ── LOCATION ──────────────────────────────────────────────────────────────
+  window.oapptSelectLocation = function (loc) {
+    state.location = loc;
+    state.service = null;
+    state.configSelections = {};
+    state.stylist = null;
+    document.querySelectorAll('.oappt-location-card').forEach(function (c) {
+      c.classList.toggle('selected', c.dataset.loc === loc);
+    });
+    clearError(1);
+    updateSummaryPanel();
+  };
+
+  // ── SERVICE ───────────────────────────────────────────────────────────────
+  function renderServiceGrid() {
+    var grid = document.getElementById('oappt-service-grid');
+    if (!grid) return;
+    var html = '';
+    SERVICES.forEach(function (svc) {
+      html += '<div class="oappt-service-card" data-svc="' + svc.id + '" onclick="oapptSelectService(\'' + svc.id + '\')">' +
+        '<div class="oappt-service-tick"></div>' +
+        '<div class="oappt-service-name">' + svc.name + '</div>' +
+        '<div class="oappt-service-desc">' + svc.desc + '</div>' +
+        '<div style="margin-top:12px;font-family:\'Montserrat\',sans-serif;font-size:13px;font-weight:600;color:#B68A45;">From &euro;' + svc.basePrice + '</div>' +
+        '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  window.oapptSelectService = function (id) {
+    state.service = id;
+    state.configSelections = {};
+    state.stylist = null;
+    document.querySelectorAll('.oappt-service-card').forEach(function (c) {
+      c.classList.toggle('selected', c.dataset.svc === id);
+    });
+    renderConfigurator();
+    clearError(2);
+    updateSummaryPanel();
+  };
+
+  function getService() { return SERVICES.find(function (s) { return s.id === state.service; }); }
+
+  // ── CONFIGURATOR ──────────────────────────────────────────────────────────
+  function renderConfigurator() {
+    var el = document.getElementById('oappt-configurator');
+    if (!el) return;
+    var svc = getService();
+    if (!svc || svc.configurator.length === 0) {
+      el.innerHTML = '<p style="font-family:\'Montserrat\',sans-serif;font-size:14px;color:#7A6A5A;">No additional configuration needed for this service.</p>';
+      return;
+    }
+    var html = '';
+    svc.configurator.forEach(function (cfg) {
+      html += '<div class="oappt-config-section">' +
+        '<span class="oappt-config-label">Select Option</span>' +
+        '<div class="oappt-config-title">' + cfg.label + '</div>';
+      if (cfg.type === 'radio') {
+        html += '<div class="oappt-radio-group">';
+        cfg.options.forEach(function (opt) {
+          var adj = opt.priceAdj !== 0 ? ' (' + (opt.priceAdj > 0 ? '+' : '') + '&euro;' + opt.priceAdj + ')' : '';
+          html += '<div class="oappt-radio-option" data-cfg="' + cfg.id + '" data-val="' + opt.label + '" data-adj="' + opt.priceAdj + '" onclick="oapptSelectConfig(\'' + cfg.id + '\',this)">' + opt.label + adj + '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+    el.innerHTML = html;
+  }
+
+  window.oapptSelectConfig = function (cfgId, el) {
+    state.configSelections[cfgId] = { label: el.dataset.val, adj: Number(el.dataset.adj) };
+    document.querySelectorAll('.oappt-radio-option[data-cfg="' + cfgId + '"]').forEach(function (o) {
+      o.classList.toggle('selected', o === el);
+    });
+    clearError(3);
+    updateSummaryPanel();
+  };
+
+  // ── STYLISTS ──────────────────────────────────────────────────────────────
+  function renderStylistGrid() {
+    var grid = document.getElementById('oappt-stylist-grid');
+    if (!grid) return;
+    var filtered = STYLISTS.filter(function (s) { return !state.location || s.locations.indexOf(state.location) > -1; });
+    var html = '';
+    filtered.forEach(function (s) {
+      var sur = s.surcharge > 0 ? '<span class="oappt-stylist-surcharge">+&euro;' + s.surcharge + ' surcharge</span>' : '';
+      html += '<div class="oappt-stylist-card" data-stylist="' + s.id + '" onclick="oapptSelectStylist(\'' + s.id + '\')">' +
+        '<div class="oappt-stylist-tick"></div>' +
+        '<div class="oappt-stylist-img"><div class="oappt-stylist-img-ph">' + s.name.charAt(0) + '</div></div>' +
+        '<div class="oappt-stylist-body">' +
+        '<span class="oappt-stylist-badge">' + s.badge + '</span>' +
+        '<div class="oappt-stylist-name">' + s.name + '</div>' +
+        '<div class="oappt-stylist-specialty">' + s.specialty + '</div>' +
+        '<div class="oappt-stylist-bio">' + s.bio + '</div>' +
+        sur +
+        '</div></div>';
+    });
+    grid.innerHTML = html;
+    if (state.stylist) {
+      var card = grid.querySelector('[data-stylist="' + state.stylist + '"]');
+      if (card) card.classList.add('selected');
+    }
+  }
+
+  window.oapptSelectStylist = function (id) {
+    state.stylist = id;
+    document.querySelectorAll('.oappt-stylist-card').forEach(function (c) {
+      c.classList.toggle('selected', c.dataset.stylist === id);
+    });
+    clearError(4);
+    updateSummaryPanel();
+  };
+
+  // ── CALENDAR ──────────────────────────────────────────────────────────────
+  function renderCalendar() {
+    var monthEl = document.getElementById('oappt-cal-month');
+    var datesEl = document.getElementById('oappt-cal-dates');
+    if (!monthEl || !datesEl) return;
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    monthEl.textContent = months[state.calMonth] + ' ' + state.calYear;
+
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var first = new Date(state.calYear, state.calMonth, 1);
+    var startDay = (first.getDay() + 6) % 7; // Monday = 0
+    var daysInMonth = new Date(state.calYear, state.calMonth + 1, 0).getDate();
+
+    var html = '';
+    for (var i = 0; i < startDay; i++) html += '<div class="oappt-cal-date"></div>';
+
+    for (var d = 1; d <= daysInMonth; d++) {
+      var date = new Date(state.calYear, state.calMonth, d);
+      var dow = date.getDay(); // 0=Sun
+      var isPast = date < today;
+      var isSun = dow === 0;
+      var dateStr = formatDate(date);
+      var cls = 'oappt-cal-date';
+      if (isPast || isSun) { cls += ' unavailable'; }
+      else { cls += ' available'; }
+      if (dateStr === state.date) cls += ' selected';
+      var onclick = (!isPast && !isSun) ? ' onclick="oapptSelectDate(\'' + dateStr + '\')"' : '';
+      html += '<div class="' + cls + '"' + onclick + '>' + d + '</div>';
+    }
+    datesEl.innerHTML = html;
+  }
+
+  window.oapptCalPrev = function () {
+    state.calMonth--;
+    if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+    renderCalendar();
+  };
+
+  window.oapptCalNext = function () {
+    state.calMonth++;
+    if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
+    renderCalendar();
+  };
+
+  window.oapptSelectDate = function (dateStr) {
+    state.date = dateStr;
+    state.time = null;
+    renderCalendar();
+    clearError(5);
+    updateSummaryPanel();
+  };
+
+  function formatDate(d) {
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2,'0');
+    var dd = String(d.getDate()).padStart(2,'0');
+    return y + '-' + m + '-' + dd;
+  }
+
+  function formatDateDisplay(str) {
+    if (!str) return '';
+    var parts = str.split('-');
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return parseInt(parts[2]) + ' ' + months[parseInt(parts[1]) - 1] + ' ' + parts[0];
+  }
+
+  // ── TIME SLOTS ────────────────────────────────────────────────────────────
+  function renderTimeSlots() {
+    var grid = document.getElementById('oappt-slots-grid');
+    if (!grid) return;
+    var html = '';
+    TIME_SLOTS.forEach(function (t) {
+      var cls = 'oappt-slot' + (t === state.time ? ' selected' : '');
+      html += '<div class="' + cls + '" onclick="oapptSelectTime(\'' + t + '\')">' + t + '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  window.oapptSelectTime = function (t) {
+    state.time = t;
+    document.querySelectorAll('.oappt-slot').forEach(function (el) {
+      el.classList.toggle('selected', el.textContent === t);
+    });
+    clearError(6);
+    updateSummaryPanel();
+  };
+
+  // ── BOOKING SUMMARY (step 8) ───────────────────────────────────────────────
+  function renderBookingSummary() {
+    var el = document.getElementById('oappt-booking-summary');
+    if (!el) return;
+    var svc = getService();
+    var stylist = STYLISTS.find(function (s) { return s.id === state.stylist; });
+    var locName = state.location === 'a' ? 'Schoneberg' : state.location === 'b' ? 'Kurfurstendamm' : '';
+    var rows = [
+      ['Location', locName],
+      ['Service', svc ? svc.name : ''],
+      ['Stylist', stylist ? stylist.name : ''],
+      ['Date', formatDateDisplay(state.date)],
+      ['Time', state.time],
+      ['Name', state.name],
+      ['Email', state.email],
+      ['Phone', state.phone]
+    ];
+    if (state.notes) rows.push(['Notes', state.notes]);
+    var configRows = Object.values ? Object.values(state.configSelections) : Object.keys(state.configSelections).map(function(k){ return state.configSelections[k]; });
+    if (configRows.length) {
+      rows.splice(2, 0, ['Options', configRows.map(function(c){ return c.label; }).join(', ')]);
+    }
+
+    var html = '';
+    rows.forEach(function (r) {
+      html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">' + r[0] + '</span><span class="oappt-confirm-row-val">' + r[1] + '</span></div>';
+    });
+    html += '<div class="oappt-confirm-total-row">' +
+      '<span class="oappt-confirm-total-label">Estimated Total</span>' +
+      '<span class="oappt-confirm-total-val">&euro;' + calcTotal() + '</span></div>';
+    el.innerHTML = html;
+  }
+
+  // ── SIDE SUMMARY PANEL ────────────────────────────────────────────────────
+  function updateSummaryPanel() {
+    var body = document.getElementById('oappt-summary-body');
+    var totalWrap = document.getElementById('oappt-summary-total');
+    var totalVal = document.getElementById('oappt-summary-total-val');
+    if (!body) return;
+
+    var svc = getService();
+    var stylist = STYLISTS.find(function (s) { return s.id === state.stylist; });
+    var locName = state.location === 'a' ? 'Schoneberg' : state.location === 'b' ? 'Kurfurstendamm' : null;
+
+    if (!locName) {
+      body.innerHTML = '<p class="oappt-summary-empty">Select a location to begin.</p>';
+      if (totalWrap) totalWrap.style.display = 'none';
+      return;
+    }
+
+    var rows = [];
+    rows.push({ k: 'Location', v: locName });
+    if (svc) rows.push({ k: 'Service', v: svc.name });
+    var cfgKeys = Object.keys(state.configSelections);
+    if (cfgKeys.length) rows.push({ k: 'Options', v: cfgKeys.map(function(k){ return state.configSelections[k].label; }).join(', ') });
+    if (stylist) rows.push({ k: 'Stylist', v: stylist.name });
+    if (state.date) rows.push({ k: 'Date', v: formatDateDisplay(state.date) });
+    if (state.time) rows.push({ k: 'Time', v: state.time });
+
+    var html = '';
+    rows.forEach(function (r) {
+      html += '<div class="oappt-summary-line"><span class="oappt-summary-line-label">' + r.k + '</span><span class="oappt-summary-line-val">' + r.v + '</span></div>';
+    });
+    body.innerHTML = html;
+
+    if (svc && totalWrap && totalVal) {
+      totalWrap.style.display = 'flex';
+      totalVal.innerHTML = '&euro;' + calcTotal();
+    }
+  }
+
+  function calcTotal() {
+    var svc = getService();
+    if (!svc) return 0;
+    var total = svc.basePrice;
+    Object.keys(state.configSelections).forEach(function (k) {
+      total += state.configSelections[k].adj || 0;
+    });
+    var stylist = STYLISTS.find(function (s) { return s.id === state.stylist; });
+    if (stylist) total += stylist.surcharge || 0;
+    return total;
+  }
+
+  // ── SUBMIT ────────────────────────────────────────────────────────────────
+  window.oapptSubmitBooking = function (e) {
+    e.preventDefault();
+    var svc = getService();
+    var stylist = STYLISTS.find(function (s) { return s.id === state.stylist; });
+    var locName = state.location === 'a' ? 'Schoneberg (Winterfeldtstrasse 7)' : 'Kurfurstendamm (115B)';
+    var cfgLine = Object.keys(state.configSelections).map(function(k){ return k + ': ' + state.configSelections[k].label; }).join(', ');
+
+    var body = [
+      'Date: ' + state.date,
+      'Time: ' + state.time,
+      'Location: ' + locName,
+      'Service: ' + (svc ? svc.name : ''),
+      cfgLine ? 'Options: ' + cfgLine : '',
+      'Stylist: ' + (stylist ? stylist.name : ''),
+      'Estimated Total: €' + calcTotal(),
+      state.notes ? 'Notes: ' + state.notes : ''
+    ].filter(Boolean).join('\n');
+
+    document.getElementById('oappt-form-name').value = state.name;
+    document.getElementById('oappt-form-email').value = state.email;
+    document.getElementById('oappt-form-phone').value = state.phone;
+    document.getElementById('oappt-form-body').value = body;
+
+    document.getElementById('oappt-hidden-form').submit();
+  };
+
+})();
+</script>
