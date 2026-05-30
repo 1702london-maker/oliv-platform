@@ -34,6 +34,12 @@ const DE_PAIRS: [string, string][] = [
   ["Premium Hair.", "Premium Haar."],
   ["Confidence.", "Eleganz."],
   ["Effortless", "Zeitlose"],
+  // Training page hero
+  ["Book Training Consultation", "Beratungsgespräch buchen"],
+  ["Become professionally ", "Werde professionell "],
+  ["Become professionally", "Werde professionell"],
+  ["Certified.", "zertifiziert."],
+  ["Enroll Now", "Jetzt anmelden"],
   // About page — "Born from <em>a passion</em>" splits into two text nodes
   ["Berlin, Est. 2016", "Berlin, gegründet 2016"],
   ["Born from", "Aus Leidenschaft"],
