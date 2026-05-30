@@ -180,10 +180,14 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
 
     // Apply saved language
     const savedLang = (() => { try { return localStorage.getItem('ohs-lang') || 'en'; } catch { return 'en'; } })();
-    if (savedLang === 'de') {
+    // Only translate if neither this nor TranslationClient has run yet
+    const alreadyDE = document.body.dataset.ohsLang === 'de' || document.body.dataset.globalLang === 'de';
+    if (savedLang === 'de' && !alreadyDE) {
       translateNode(document.body, DE_PAIRS);
       document.body.dataset.ohsLang = 'de';
-      document.body.dataset.globalLang = 'de'; // prevent TranslationClient double-run
+      document.body.dataset.globalLang = 'de';
+    } else if (savedLang === 'de') {
+      document.body.dataset.ohsLang = 'de';
     }
 
     // Bind language selector

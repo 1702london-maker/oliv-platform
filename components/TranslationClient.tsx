@@ -162,7 +162,9 @@ export function TranslationClient() {
       try { return localStorage.getItem("ohs-lang") || "en"; } catch { return "en"; }
     })();
 
-    if (savedLang === "de" && document.body.dataset.globalLang !== "de") {
+    // Skip if ShopifyClonePageClient already translated (ohsLang set by it)
+    const alreadyTranslated = document.body.dataset.globalLang === "de" || document.body.dataset.ohsLang === "de";
+    if (savedLang === "de" && !alreadyTranslated) {
       translateNode(document.body, DE_PAIRS);
       document.body.dataset.globalLang = "de";
     }
