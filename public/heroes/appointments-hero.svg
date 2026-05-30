@@ -184,6 +184,9 @@
   <!-- Chair reflection in mirror (subtle) -->
   <rect x="736" y="300" width="90" height="170" rx="10" fill="#282420" opacity="0.18" filter="url(#aMirBlur)"/>
 
+  <!-- ─── LEFT GROUP scaled 75% from its centre (475, 375) ─── -->
+  <g transform="translate(118.75 93.75) scale(0.75)">
+
   <!-- ─── VANITY TABLE (shifted +138px right, touching mirror) ─── -->
   <ellipse cx="478" cy="426" rx="135" ry="10" fill="#060402" opacity="0.42" filter="url(#aSb)"/>
   <!-- Table legs -->
@@ -231,6 +234,8 @@
   <line x1="376" y1="335" x2="532" y2="335" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
   <text x="455" y="316" font-family="'Cormorant Garamond',Georgia,serif" font-size="16" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">BIZILUXE</text>
   <text x="455" y="330" font-family="'Montserrat',sans-serif" font-size="7.5" font-weight="600" fill="#D4B87A" text-anchor="middle" letter-spacing="3.5" opacity="0.88">HAIR</text>
+
+  </g><!-- end left group scale -->
 
   <!-- ─── OVERLAYS ─── -->
   <rect width="1440" height="580" fill="url(#aTextOv)"/>
