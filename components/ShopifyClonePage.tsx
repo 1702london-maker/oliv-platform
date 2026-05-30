@@ -152,6 +152,15 @@ const INLINE_I18N_SCRIPT = `<script>
   }
 
   function init(){
+    // Inject nav spacing fix for German (bypasses CSS bundle cache)
+    var deStyle=document.getElementById('ohs-de-style');
+    if(!deStyle){
+      deStyle=document.createElement('style');
+      deStyle.id='ohs-de-style';
+      deStyle.textContent='body[data-ohs-lang="de"] .ohs-nav-left li a{letter-spacing:0.8px!important;padding-left:7px!important;padding-right:7px!important;}body[data-ohs-lang="de"] .ohs-nav-right li a.ohs-nav-link{letter-spacing:0.8px!important;padding-left:6px!important;padding-right:6px!important;}';
+      document.head.appendChild(deStyle);
+    }
+
     var lang;try{lang=localStorage.getItem('ohs-lang')||'en';}catch(e){lang='en';}
     if(lang==='de')setLang('de');
     else document.querySelectorAll('select[name="locale_code"]').forEach(function(s){s.value='en';});
