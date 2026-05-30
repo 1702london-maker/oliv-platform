@@ -112,6 +112,9 @@
   <rect x="-308" y="448"  width="2057" height="257" fill="url(#aFloor)"/>
   <rect x="-308" y="445"  width="2057" height="5"   fill="#14100C" opacity="0.38"/>
 
+  <!-- Content scaled 60% (40% smaller) around canvas centre -->
+  <g transform="translate(720.5,290.5) scale(0.6) translate(-720.5,-290.5)">
+
   <!-- ══════════════════════════════════════
        LARGE SALON MIRROR — placed like
        wholesale product boxes, centre x:680
@@ -231,6 +234,8 @@
   <line x1="246" y1="278" x2="388" y2="278" stroke="#C9A96E" stroke-width="0.7" opacity="0.44"/>
   <text x="317" y="266" font-family="'Cormorant Garamond',Georgia,serif" font-size="15" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">BIZILUXE</text>
   <text x="317" y="278" font-family="'Montserrat',sans-serif" font-size="7" font-weight="600" fill="#D4B87A" text-anchor="middle" letter-spacing="3.5" opacity="0.88">HAIR</text>
+
+  </g><!-- end content scale -->
 
   <!-- ─── VIGNETTES (same as wholesale) ─── -->
   <rect x="-308" y="-124" width="508" height="829" fill="url(#vigL)"/>
