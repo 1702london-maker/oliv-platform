@@ -185,7 +185,7 @@
   <rect x="736" y="300" width="90" height="170" rx="10" fill="#282420" opacity="0.18" filter="url(#aMirBlur)"/>
 
   <!-- ─── LEFT GROUP scaled 75% from its centre (475, 375) ─── -->
-  <g transform="translate(118.75 93.75) scale(0.75)">
+  <g transform="translate(55 60) scale(0.75)">
 
   <!-- ─── VANITY TABLE (shifted +138px right, touching mirror) ─── -->
   <ellipse cx="478" cy="426" rx="135" ry="10" fill="#060402" opacity="0.42" filter="url(#aSb)"/>
