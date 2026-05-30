@@ -34,6 +34,18 @@ const DE_PAIRS: [string, string][] = [
   ["Premium Hair.", "Premium Haar."],
   ["Confidence.", "Eleganz."],
   ["Effortless", "Zeitlose"],
+  // Appointments page hero
+  ["Book Your ", "Buche dein "],
+  ["Book Your", "Buche dein"],
+  ["Experience", "Erlebnis"],
+  ["Become Affiliate", "Affiliate werden"],
+  // Affiliate page hero
+  ["OlivHairSupply Affiliate", "OlivHairSupply Affiliate-Programm"],
+  ["Earn. Influence. ", "Verdienen. Inspirieren. "],
+  ["Earn. Influence.", "Verdienen. Inspirieren."],
+  ["Elevate.", "Wachsen."],
+  ["Become an Affiliate", "Affiliate werden"],
+  ["Log in to Dashboard", "Zum Dashboard anmelden"],
   // Rentals page hero
   ["BiziLuxe Clip-In Collection", "BiziLuxe Clip-In Kollektion"],
   ["Book Rental Consultation", "Beratung zur Anmietung buchen"],

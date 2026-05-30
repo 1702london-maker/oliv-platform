@@ -38,6 +38,18 @@ const DE_PAIRS: [string, string][] = [
   ["Ethically SourcedQuality guaranteed", "Ethisch bezogen – Garantierte Qualität"],
   ["Ethically Sourced", "Ethisch bezogen"],
   ["Quality guaranteed", "Garantierte Qualität"],
+  // Appointments page hero — "Book Your <em>Experience</em>" splits text nodes
+  ["Book Your ", "Buche dein "],
+  ["Book Your", "Buche dein"],
+  ["Experience", "Erlebnis"],
+  ["Become Affiliate", "Affiliate werden"],
+  // Affiliate page hero — "Earn. Influence. <em>Elevate.</em>" splits
+  ["OlivHairSupply Affiliate", "OlivHairSupply Affiliate-Programm"],
+  ["Earn. Influence. ", "Verdienen. Inspirieren. "],
+  ["Earn. Influence.", "Verdienen. Inspirieren."],
+  ["Elevate.", "Wachsen."],
+  ["Become an Affiliate", "Affiliate werden"],
+  ["Log in to Dashboard", "Zum Dashboard anmelden"],
   // Rentals page hero — "Luxury Hair <em>Rentals.</em>" splits text nodes
   ["BiziLuxe Clip-In Collection", "BiziLuxe Clip-In Kollektion"],
   ["Book Rental Consultation", "Beratung zur Anmietung buchen"],
