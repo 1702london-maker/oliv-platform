@@ -148,41 +148,41 @@
   <circle cx="600"  cy="248" r="4" fill="url(#aChairGold)" opacity="0.85"/>
   <circle cx="960"  cy="248" r="4" fill="url(#aChairGold)" opacity="0.85"/>
 
-  <!-- ─── SALON CHAIR (raised, touching mirror, centred between vanity & mirror) ─── -->
-  <ellipse cx="740" cy="496" rx="118" ry="10" fill="#060402" opacity="0.50" filter="url(#aSb)"/>
+  <!-- ─── SALON CHAIR (centre, in front of mirror) ─── -->
+  <ellipse cx="780" cy="496" rx="118" ry="10" fill="#060402" opacity="0.50" filter="url(#aSb)"/>
   <!-- Pedestal base -->
-  <ellipse cx="740" cy="492" rx="88"  ry="8"  fill="#1A1614" opacity="0.90"/>
+  <ellipse cx="780" cy="492" rx="88"  ry="8"  fill="#1A1614" opacity="0.90"/>
   <!-- Column -->
-  <rect x="724" y="355" width="32" height="137" fill="url(#aChairM)"/>
-  <rect x="728" y="355" width="8"  height="137" fill="#888280" opacity="0.28"/>
+  <rect x="764" y="362" width="32" height="130" fill="url(#aChairM)"/>
+  <rect x="768" y="362" width="8"  height="130" fill="#888280" opacity="0.28"/>
   <!-- Hydraulic pump -->
-  <rect x="716" y="333" width="48" height="30" rx="5" fill="#282420"/>
-  <rect x="719" y="335" width="42" height="26" rx="4" fill="#363230"/>
+  <rect x="756" y="340" width="48" height="30" rx="5" fill="#282420"/>
+  <rect x="759" y="342" width="42" height="26" rx="4" fill="#363230"/>
   <!-- Seat -->
-  <rect x="660" y="290" width="160" height="56" rx="16" fill="url(#aChairL)"/>
-  <rect x="662" y="292" width="156" height="18" rx="10" fill="#282420" opacity="0.55"/>
-  <line x1="684" y1="308" x2="796" y2="308" stroke="#3A3430" stroke-width="0.8" opacity="0.42"/>
-  <line x1="684" y1="326" x2="796" y2="326" stroke="#3A3430" stroke-width="0.8" opacity="0.35"/>
-  <!-- Backrest — tall, top touching mirror bottom brand area -->
-  <rect x="686" y="44" width="108" height="258" rx="20" fill="url(#aChairL)"/>
-  <rect x="690" y="48" width="100" height="250" rx="16" fill="#1A1614"/>
-  <line x1="705" y1="110" x2="780" y2="110" stroke="#2A2420" stroke-width="0.8" opacity="0.38"/>
-  <line x1="705" y1="170" x2="780" y2="170" stroke="#2A2420" stroke-width="0.7" opacity="0.32"/>
-  <line x1="705" y1="230" x2="780" y2="230" stroke="#2A2420" stroke-width="0.7" opacity="0.28"/>
+  <rect x="700" y="300" width="160" height="56" rx="16" fill="url(#aChairL)"/>
+  <rect x="702" y="302" width="156" height="18" rx="10" fill="#282420" opacity="0.55"/>
+  <line x1="724" y1="317" x2="836" y2="317" stroke="#3A3430" stroke-width="0.8" opacity="0.42"/>
+  <line x1="724" y1="336" x2="836" y2="336" stroke="#3A3430" stroke-width="0.8" opacity="0.35"/>
+  <!-- Backrest -->
+  <rect x="726" y="130" width="108" height="178" rx="20" fill="url(#aChairL)"/>
+  <rect x="730" y="134" width="100" height="170" rx="16" fill="#1A1614"/>
+  <line x1="745" y1="174" x2="820" y2="174" stroke="#2A2420" stroke-width="0.8" opacity="0.38"/>
+  <line x1="745" y1="220" x2="820" y2="220" stroke="#2A2420" stroke-width="0.7" opacity="0.32"/>
+  <line x1="745" y1="264" x2="820" y2="264" stroke="#2A2420" stroke-width="0.7" opacity="0.28"/>
   <!-- OHS monogram on backrest -->
-  <text x="740" y="168" font-family="'Cormorant Garamond',Georgia,serif" font-size="13" font-style="italic" fill="#C9A96E" text-anchor="middle" letter-spacing="3" opacity="0.32">OHS</text>
+  <text x="780" y="208" font-family="'Cormorant Garamond',Georgia,serif" font-size="13" font-style="italic" fill="#C9A96E" text-anchor="middle" letter-spacing="3" opacity="0.32">OHS</text>
   <!-- Gold footrest -->
-  <rect x="648" y="416" width="184" height="8" rx="4" fill="url(#aChairGold)"/>
-  <ellipse cx="653" cy="420" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
-  <ellipse cx="827" cy="420" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
+  <rect x="688" y="422" width="184" height="8" rx="4" fill="url(#aChairGold)"/>
+  <ellipse cx="693" cy="426" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
+  <ellipse cx="867" cy="426" rx="5" ry="5" fill="#C9A96E" opacity="0.90"/>
   <!-- Armrests -->
-  <rect x="655" y="273" width="12" height="44" rx="4" fill="url(#aChairM)"/>
-  <rect x="813" y="273" width="12" height="44" rx="4" fill="url(#aChairM)"/>
-  <rect x="651" y="268" width="20" height="11" rx="3" fill="#1A1614"/>
-  <rect x="809" y="268" width="20" height="11" rx="3" fill="#1A1614"/>
+  <rect x="695" y="284" width="12" height="44" rx="4" fill="url(#aChairM)"/>
+  <rect x="853" y="284" width="12" height="44" rx="4" fill="url(#aChairM)"/>
+  <rect x="691" y="279" width="20" height="11" rx="3" fill="#1A1614"/>
+  <rect x="849" y="279" width="20" height="11" rx="3" fill="#1A1614"/>
 
   <!-- Chair reflection in mirror (subtle) -->
-  <rect x="696" y="200" width="90" height="270" rx="10" fill="#282420" opacity="0.15" filter="url(#aMirBlur)"/>
+  <rect x="736" y="300" width="90" height="170" rx="10" fill="#282420" opacity="0.18" filter="url(#aMirBlur)"/>
 
   <!-- ─── VANITY TABLE (left side) ─── -->
   <!-- Table surface shadow -->
@@ -230,10 +230,15 @@
   <!-- Reflection shine -->
   <circle cx="213" cy="284" r="7"  fill="#FFFFFF" opacity="0.10"/>
 
-  <!-- ─── OHS PREMIUM HAIR text ─── -->
-  <text x="100" y="440" font-family="'Cormorant Garamond',Georgia,serif" font-size="42" font-weight="300" fill="url(#aGoldT)" letter-spacing="6" opacity="0.90">OHS</text>
-  <text x="100" y="472" font-family="'Montserrat',sans-serif" font-size="11" font-weight="600" fill="#D4B87A" letter-spacing="5" opacity="0.78">PREMIUM HAIR</text>
-  <line x1="100" y1="482" x2="290" y2="482" stroke="#C9A96E" stroke-width="0.8" opacity="0.40"/>
+  <!-- ─── BRAND PLACARD ─── -->
+  <rect x="68"  y="268" width="252" height="96"  fill="url(#aBkFace)"/>
+  <rect x="68"  y="260" width="252" height="10"  fill="url(#aBkTop)"/>
+  <rect x="318" y="268" width="24"  height="96"  fill="#0C0A08" opacity="0.9"/>
+  <rect x="318" y="260" width="24"  height="10"  fill="#0A0808"/>
+  <line x1="70"  y1="292" x2="316" y2="292" stroke="#C9A96E" stroke-width="0.8" opacity="0.44"/>
+  <line x1="70"  y1="350" x2="316" y2="350" stroke="#C9A96E" stroke-width="0.8" opacity="0.44"/>
+  <text x="193" y="318" font-family="'Cormorant Garamond',Georgia,serif" font-size="20" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">OLIVHAIRSUPPLY</text>
+  <text x="193" y="338" font-family="'Cormorant Garamond',Georgia,serif" font-size="9.5" font-style="italic" fill="#D4B87A" text-anchor="middle" letter-spacing="4" opacity="0.88">Berlin · Premium Hair</text>
 
   <!-- ─── OVERLAYS ─── -->
   <rect width="1440" height="580" fill="url(#aTextOv)"/>
