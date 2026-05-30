@@ -68,6 +68,8 @@ const DE_PAIRS: [string, string][] = [
   ["Quality guaranteed", "Garantierte Qualität"],
   // Wholesale page
   ["Partner With OlivHairSupply", "Partner von OlivHairSupply werden"],
+  ["Partner With ", "Partner von "],
+  ["Partner With", "Partner von"],
   ["Become a wholesaler", "Werde Großhandelspartner"],
   ["Become a Wholesaler", "Werde Großhandelspartner"],
   ["Log Into Wholesale Shop", "Zum Großhandelsshop anmelden"],
