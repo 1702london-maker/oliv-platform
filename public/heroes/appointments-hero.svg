@@ -133,8 +133,8 @@
   <rect x="552" y="-78" width="260" height="60" rx="3" fill="#1A1612" opacity="0.72"/>
   <line x1="557" y1="-60" x2="807" y2="-60" stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
   <line x1="557" y1="-26" x2="807" y2="-26" stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
-  <text x="682" y="-46" font-family="'Cormorant Garamond',Georgia,serif" font-size="16" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="5" opacity="0.96">OHS</text>
-  <text x="682" y="-32" font-family="'Montserrat',sans-serif" font-size="8.5" font-weight="700" fill="#D4B87A" text-anchor="middle" letter-spacing="4" opacity="0.88">PREMIUM HAIR</text>
+  <text x="682" y="-48" font-family="'Cormorant Garamond',Georgia,serif" font-size="14" font-weight="300" fill="url(#aGoldT)" text-anchor="middle" letter-spacing="4" opacity="0.96">OLIVHAIRSUPPLY</text>
+  <text x="682" y="-32" font-family="'Cormorant Garamond',Georgia,serif" font-size="8" font-style="italic" fill="#D4B87A" text-anchor="middle" letter-spacing="3.5" opacity="0.85">Berlin · Premium Hair</text>
 
   <!-- Mirror corner ornaments -->
   <circle cx="522"  cy="-88" r="5" fill="url(#aChGold)" opacity="0.90"/>
