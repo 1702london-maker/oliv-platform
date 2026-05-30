@@ -183,6 +183,7 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
     if (savedLang === 'de') {
       translateNode(document.body, DE_PAIRS);
       document.body.dataset.ohsLang = 'de';
+      document.body.dataset.globalLang = 'de'; // prevent TranslationClient double-run
     }
 
     // Bind language selector
@@ -193,6 +194,7 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
         if (lang === 'de' && document.body.dataset.ohsLang !== 'de') {
           translateNode(document.body, DE_PAIRS);
           document.body.dataset.ohsLang = 'de';
+          document.body.dataset.globalLang = 'de';
         } else if (lang === 'en' && document.body.dataset.ohsLang === 'de') {
           translateNode(document.body, DE_PAIRS.map(([a, b]) => [b, a] as [string, string]));
           document.body.dataset.ohsLang = 'en';
