@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { AffiliateTracker } from "@/components/affiliate/AffiliateTracker";
+import { TranslationClient } from "@/components/TranslationClient";
 import Script from "next/script";
 import "./globals.css";
 import "./shopify-clone.css";
@@ -21,6 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <AffiliateTracker />
+        <TranslationClient />
         {children}
         <Script id="mobile-nav" strategy="afterInteractive">{`
           (function() {
