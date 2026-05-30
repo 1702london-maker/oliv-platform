@@ -1,57 +1,132 @@
-/* OlivHairSupply — Currency Switcher
-   Translation is handled server-side. This script only handles
-   EUR / GBP / USD switching client-side via localStorage.        */
+/* OlivHairSupply — Language + Currency Switcher
+   EN (default) / DE language toggle + EUR/GBP/USD currency.     */
 (function () {
   'use strict';
 
+  // ── GERMAN TRANSLATIONS (topbar + nav only for now) ─────────────────────────
+  var DE = {
+    // Topbar
+    'Worldwide Shipping — Free Over €200':          'Weltweiter Versand – Kostenlos ab 200 €',
+    'Luxury Hair. Premium Quality. Designed for You.': 'Luxuriöses Haar. Höchste Qualität. Für dich geschaffen.',
+    'Become an Affiliate →':                        'Affiliate-Partner werden →',
+
+    // Primary nav (desktop + mobile)
+    'Home':       'Startseite',
+    'About':      'Über uns',
+    'Shop':       'Shop',
+    'Wholesale':  'Großhandel',
+    'Training':   'Schulungen',
+    'Appointment':'Termin buchen',
+    'Services':   'Services',
+    'Affiliate':  'Affiliate',
+    'Rentals':    'Clips Verleih',
+
+    // Mobile drawer
+    'Affiliate Programme': 'Affiliate',
+    'Language &amp; Currency': 'Sprache &amp; Währung',
+  };
+
+  // ── CURRENCY CONFIG ──────────────────────────────────────────────────────────
   var CURRENCIES = {
     EUR: { symbol: '€', rate: 1 },
     GBP: { symbol: '£', rate: 0.86 },
     USD: { symbol: '$', rate: 1.09 }
   };
 
-  function getCurrency() {
-    return localStorage.getItem('ohs-currency') || 'EUR';
+  // ── STORAGE ──────────────────────────────────────────────────────────────────
+  function getLang()     { return localStorage.getItem('ohs-lang')     || 'en'; }
+  function getCurrency() { return localStorage.getItem('ohs-currency') || 'EUR'; }
+
+  // ── REMOVE SPANISH FROM SELECTORS ────────────────────────────────────────────
+  function removeSpanish() {
+    document.querySelectorAll('select[name="locale_code"] option[value="es"]').forEach(function (o) {
+      o.parentNode.removeChild(o);
+    });
   }
 
-  // Store original EUR text on every price-containing element (once)
+  // ── LANGUAGE ─────────────────────────────────────────────────────────────────
+  // Walk text nodes and replace EN → DE (or restore DE → EN).
+  // Works on leaf text nodes only; ignores script/style.
+  var SKIP = { SCRIPT:1, STYLE:1, NOSCRIPT:1, TEXTAREA:1 };
+
+  function translateNode(node, dict) {
+    if (node.nodeType === 3) {
+      var v = node.nodeValue;
+      if (!v || !v.trim()) return;
+      for (var k in dict) {
+        if (v.indexOf(k) !== -1) v = v.split(k).join(dict[k]);
+      }
+      if (v !== node.nodeValue) node.nodeValue = v;
+    } else if (node.nodeType === 1 && !SKIP[node.tagName]) {
+      for (var c = node.firstChild; c; c = c.nextSibling) translateNode(c, dict);
+    }
+  }
+
+  // Build reverse dict for EN restoration
+  function reverseDict(dict) {
+    var r = {};
+    for (var k in dict) r[dict[k]] = k;
+    return r;
+  }
+
+  function applyLanguage(lang) {
+    var dict = lang === 'de' ? DE : reverseDict(DE);
+    translateNode(document.body, dict);
+
+    // Sync all locale selectors to correct value
+    document.querySelectorAll('select[name="locale_code"]').forEach(function (s) {
+      s.value = lang;
+    });
+
+    localStorage.setItem('ohs-lang', lang);
+  }
+
+  function bindLangSelectors() {
+    document.querySelectorAll('select[name="locale_code"]').forEach(function (sel) {
+      sel.addEventListener('change', function (e) {
+        e.preventDefault();
+        var lang = sel.value === 'de' ? 'de' : 'en';
+        // Sync all selectors first
+        document.querySelectorAll('select[name="locale_code"]').forEach(function (s) { s.value = lang; });
+        applyLanguage(lang);
+      });
+      // Prevent form submission — handle client-side only
+      if (sel.form) {
+        sel.form.addEventListener('submit', function (e) { e.preventDefault(); });
+      }
+    });
+  }
+
+  // ── CURRENCY ──────────────────────────────────────────────────────────────────
   function storePrices() {
     var walker = document.createTreeWalker(document.body, 4);
     var node;
     while ((node = walker.nextNode())) {
       var p = node.parentElement;
-      if (!p || p.tagName === 'SCRIPT' || p.tagName === 'STYLE') continue;
+      if (!p || SKIP[p.tagName]) continue;
       if (!node.nodeValue || node.nodeValue.indexOf('€') === -1) continue;
-      if (!p.dataset.eurText) {
-        p.dataset.eurText = p.innerHTML;
-      }
+      if (!p.dataset.eurText) p.dataset.eurText = p.innerHTML;
     }
   }
 
   function applyPrices() {
     var code = getCurrency();
     var cfg  = CURRENCIES[code] || CURRENCIES.EUR;
-    var els  = document.querySelectorAll('[data-eur-text]');
-    for (var i = 0; i < els.length; i++) {
-      var el = els[i];
-      var orig = el.dataset.eurText;
-      var result = orig.replace(/€\s*([\d,]+(?:\.\d{1,2})?)/g, function (_, num) {
-        var eur = parseFloat(num.replace(/,/g, ''));
+    document.querySelectorAll('[data-eur-text]').forEach(function (el) {
+      el.innerHTML = el.dataset.eurText.replace(/€\s*([\d,]+(?:\.\d{1,2})?)/g, function (_, n) {
+        var eur = parseFloat(n.replace(/,/g, ''));
         var val = eur * cfg.rate;
         return cfg.symbol + (val % 1 === 0 ? val.toFixed(0) : val.toFixed(2));
       });
-      el.innerHTML = result;
-    }
-    // Sync selectors
-    var selectorVal = code === 'GBP' ? 'GB' : code === 'USD' ? 'US' : 'DE';
-    document.querySelectorAll('select[name="country_code"]').forEach(function (s) {
-      s.value = selectorVal;
     });
+    var selVal = code === 'GBP' ? 'GB' : code === 'USD' ? 'US' : 'DE';
+    document.querySelectorAll('select[name="country_code"]').forEach(function (s) { s.value = selVal; });
   }
 
-  function bindSelectors() {
+  function bindCurrencySelectors() {
     document.querySelectorAll('select[name="country_code"]').forEach(function (sel) {
-      sel.addEventListener('change', function () {
+      sel.addEventListener('change', function (e) {
+        e.preventDefault();
         var val  = sel.value;
         var code = val === 'GB' ? 'GBP' : val === 'US' ? 'USD' : 'EUR';
         localStorage.setItem('ohs-currency', code);
@@ -59,17 +134,24 @@
         applyPrices();
       });
       if (sel.form) {
-        sel.form.addEventListener('submit', function (e) {
-          if ((e.target as HTMLFormElement).id && (e.target as HTMLFormElement).id.indexOf('locale') !== -1) e.preventDefault();
-        });
+        sel.form.addEventListener('submit', function (e) { e.preventDefault(); });
       }
     });
   }
 
+  // ── INIT ──────────────────────────────────────────────────────────────────────
   function init() {
+    removeSpanish();
+    // Apply saved language (only translate if DE — default is EN/English)
+    var lang = getLang();
+    if (lang === 'de') applyLanguage('de');
+    else {
+      document.querySelectorAll('select[name="locale_code"]').forEach(function (s) { s.value = 'en'; });
+    }
+    bindLangSelectors();
     storePrices();
     applyPrices();
-    bindSelectors();
+    bindCurrencySelectors();
   }
 
   if (document.readyState === 'loading') {
@@ -77,4 +159,5 @@
   } else {
     init();
   }
+
 })();
