@@ -22,8 +22,45 @@
     'Rentals':    'Clips Verleih',
 
     // Mobile drawer
-    'Affiliate Programme': 'Affiliate',
     'Language &amp; Currency': 'Sprache &amp; Währung',
+
+    // Footer tagline
+    'Luxury Hair. Premium Quality. Every Strand Designed Just For You.': 'Luxuriöses Haar. Premium-Qualität. Jede Strähne für dich perfektioniert.',
+
+    // Footer section headings
+    'More':  'Mehr',
+    'MORE':  'Mehr',
+    'Help':  'Hilfe',
+    'HELP':  'Hilfe',
+    'About': 'Über Uns',
+    'ABOUT': 'Über Uns',
+    'Stay Connected': 'Bleib verbunden',
+    'STAY CONNECTED': 'Bleib verbunden',
+
+    // Footer links — More column
+    'Training':            'Schulungen',
+    'Journal':             'Magazin',
+    'Services':            'Services',
+    'Wholesale':           'Großhandel',
+    'Affiliate Programme': 'Affiliate Program',
+
+    // Footer links — About column
+    'Our Story':           'Unsere Geschichte',
+    'Careers':             'Karriere',
+    'Press':               'Presse',
+    'Sustainability':      'Nachhaltigkeit',
+    'Social Responsibility': 'Soziale Verantwortung',
+
+    // Footer links — Help column
+    'FAQ':          'FAQ',
+    'Shipping':     'Versand',
+    'Returns':      'Rücksendungen',
+    'Track Order':  'Bestellung verfolgen',
+    'Contact Us':   'Kontakt',
+
+    // Footer newsletter
+    'Stay connected with OlivHairSupply Club.':   'Bleib immer auf dem Laufenden mit dem OlivHairSupply Club.',
+    'Stay connected with Olivhairsupply Club.':   'Bleib immer auf dem Laufenden mit dem OlivHairSupply Club.',
   };
 
   // ── CURRENCY CONFIG ──────────────────────────────────────────────────────────
@@ -70,10 +107,17 @@
   }
 
   function applyLanguage(lang) {
-    var dict = lang === 'de' ? DE : reverseDict(DE);
-    translateNode(document.body, dict);
+    // Guard: if already at this lang, skip (prevents double-apply in React StrictMode)
+    if (document.body.dataset.ohsLang === lang) return;
+    // Revert to EN first if switching from DE to EN
+    if (lang === 'en' && document.body.dataset.ohsLang === 'de') {
+      translateNode(document.body, reverseDict(DE));
+    } else if (lang === 'de') {
+      translateNode(document.body, DE);
+    }
+    document.body.dataset.ohsLang = lang;
 
-    // Sync all locale selectors to correct value
+    // Sync all locale selectors
     document.querySelectorAll('select[name="locale_code"]').forEach(function (s) {
       s.value = lang;
     });
