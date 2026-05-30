@@ -66,5 +66,11 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   // Strip floating WhatsApp / iMessage chat widget scraped from Shopify
   html = html.replace(/<style>\s*\.ohs-chat[\s\S]*?<\/style>\s*<div class="ohs-chat-wrap"[\s\S]*?<\/div>/g, '');
 
+  // Inject global German translation + currency engine (runs on every page)
+  const i18nScript = `<script src="/js/ohs-i18n.js"></script>`;
+  html = html.includes("</body>")
+    ? html.replace("</body>", i18nScript + "</body>")
+    : html + i18nScript;
+
   return html;
 }
