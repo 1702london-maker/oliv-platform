@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580" role="img" aria-label="OlivHairSupply order tracking parcel with premium hair">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#15120F"/>
+      <stop offset="34%" stop-color="#2D2924"/>
+      <stop offset="66%" stop-color="#5B554D"/>
+      <stop offset="100%" stop-color="#24201C"/>
+    </linearGradient>
+    <radialGradient id="key" cx="74%" cy="42%" r="45%">
+      <stop offset="0%" stop-color="#A6947B" stop-opacity="0.55"/>
+      <stop offset="58%" stop-color="#6A6256" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#17130F" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="floorGlow" cx="74%" cy="86%" r="38%">
+      <stop offset="0%" stop-color="#C9A96E" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leftShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0E0B08" stop-opacity="0.84"/>
+      <stop offset="44%" stop-color="#15110D" stop-opacity="0.36"/>
+      <stop offset="100%" stop-color="#15110D" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="boxTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF4DD"/>
+      <stop offset="100%" stop-color="#E7D7BC"/>
+    </linearGradient>
+    <linearGradient id="boxLeft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A58F70"/>
+      <stop offset="100%" stop-color="#7F6D54"/>
+    </linearGradient>
+    <linearGradient id="boxRight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#927C5E"/>
+      <stop offset="100%" stop-color="#6F5C44"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9D7328"/>
+      <stop offset="48%" stop-color="#D0A756"/>
+      <stop offset="100%" stop-color="#A8792F"/>
+    </linearGradient>
+    <linearGradient id="hairDark" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#201811"/>
+      <stop offset="50%" stop-color="#4A3421"/>
+      <stop offset="100%" stop-color="#8A6338"/>
+    </linearGradient>
+    <filter id="softShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#080604" flood-opacity="0.35"/>
+    </filter>
+    <filter id="smallShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#080604" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="580" fill="url(#bg)"/>
+  <rect width="1440" height="580" fill="url(#key)"/>
+  <rect width="1440" height="580" fill="url(#floorGlow)"/>
+
+  <g opacity="0.42" fill="none" stroke-linecap="round">
+    <path d="M-34 452 C218 398 430 432 640 344 S1002 160 1458 178" stroke="#C9A96E" stroke-width="8"/>
+    <path d="M-30 459 C225 404 436 440 650 352 S1005 170 1456 187" stroke="#F1D18A" stroke-width="2" opacity="0.55"/>
+    <path d="M238 540 C472 472 668 454 854 382 S1130 294 1468 320" stroke="#BFA56D" stroke-width="3" opacity="0.58"/>
+    <path d="M288 506 C514 462 696 430 880 358 S1130 262 1420 236" stroke="#8B7854" stroke-width="2" opacity="0.7"/>
+  </g>
+
+  <g opacity="0.46" fill="none" stroke="#B99855" stroke-linecap="round">
+    <path d="M116 164 C248 122 430 134 544 188" stroke-width="1.1" stroke-dasharray="13 24"/>
+    <path d="M162 196 C302 166 472 174 616 248" stroke-width="0.9" stroke-dasharray="17 27" opacity="0.55"/>
+    <circle cx="118" cy="164" r="4" fill="#B99855" stroke="none"/>
+    <circle cx="536" cy="188" r="4" fill="#B99855" stroke="none"/>
+    <circle cx="616" cy="248" r="3.5" fill="#B99855" stroke="none"/>
+  </g>
+
+  <g opacity="0.34" stroke="#C9A96E" stroke-width="1" stroke-linecap="round">
+    <line x1="1008" y1="79" x2="1188" y2="79"/>
+    <line x1="1008" y1="97" x2="1258" y2="97"/>
+    <line x1="1008" y1="116" x2="1318" y2="116"/>
+  </g>
+
+  <g transform="translate(840 204)" filter="url(#softShadow)">
+    <g opacity="0.96">
+      <path d="M0 66 L126 0 L270 74 L140 154 Z" fill="url(#boxTop)"/>
+      <path d="M0 66 L140 154 L140 318 L0 230 Z" fill="url(#boxLeft)"/>
+      <path d="M140 154 L270 74 L270 238 L140 318 Z" fill="url(#boxRight)"/>
+      <path d="M68 30 L196 104 L176 116 L48 42 Z" fill="url(#gold)"/>
+      <path d="M196 104 L226 86 L226 252 L196 270 Z" fill="url(#gold)"/>
+      <path d="M0 66 L140 154 L270 74" fill="none" stroke="#5A4D3B" stroke-opacity="0.35" stroke-width="2"/>
+      <path d="M140 154 L140 318" stroke="#5A4D3B" stroke-opacity="0.22" stroke-width="2"/>
+      <rect x="36" y="138" width="72" height="54" fill="#F7EBD4"/>
+      <line x1="52" y1="154" x2="94" y2="176" stroke="#9D7328" stroke-width="2"/>
+      <line x1="52" y1="170" x2="82" y2="186" stroke="#9D7328" stroke-width="2"/>
+      <text x="97" y="258" font-family="Cormorant Garamond, Georgia, serif" font-size="22" fill="#D0A756" opacity="0.72">OlivHairSupply</text>
+      <text x="126" y="275" font-family="Montserrat, Arial, sans-serif" font-size="8" letter-spacing="1.8" fill="#D0A756" opacity="0.58">PREMIUM DELIVERY</text>
+    </g>
+
+    <g fill="none" stroke-linecap="round">
+      <path d="M78 40 C70 3 88 -18 128 -26 C174 -36 212 -22 230 8" stroke="url(#hairDark)" stroke-width="8"/>
+      <path d="M92 48 C86 18 108 -2 146 -8 C182 -14 214 0 238 26" stroke="#6A4929" stroke-width="5" opacity="0.88"/>
+      <path d="M115 58 C118 24 148 10 180 14 C210 18 236 40 250 72" stroke="#2A1C12" stroke-width="4" opacity="0.95"/>
+      <path d="M48 56 C46 12 70 -16 116 -32 C154 -45 190 -42 222 -28" stroke="#B58B50" stroke-width="3.2" opacity="0.65"/>
+      <path d="M126 62 C138 28 168 25 204 46 C230 62 250 90 256 124" stroke="#1E1510" stroke-width="3.5" opacity="0.9"/>
+    </g>
+
+    <g transform="translate(216 38)" filter="url(#smallShadow)">
+      <path d="M40 0 L72 0 L104 36 L56 88 L8 36 Z" fill="#15120F"/>
+      <circle cx="56" cy="32" r="16" fill="none" stroke="#D0A756" stroke-width="6"/>
+      <path d="M56 51 L56 78" stroke="#D0A756" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <g opacity="0.25" fill="none" stroke="#C9A96E" stroke-linecap="round">
+    <path d="M1052 346 C1124 302 1228 284 1366 294" stroke-width="1.5"/>
+    <path d="M1072 370 C1188 348 1298 348 1408 360" stroke-width="1"/>
+  </g>
+
+  <rect width="1440" height="580" fill="url(#leftShade)"/>
+  <rect width="1440" height="580" fill="#0B0806" opacity="0.08"/>
+</svg>
