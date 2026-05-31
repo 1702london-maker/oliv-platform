@@ -22,6 +22,16 @@ function translateNode(node: Node, pairs: [string, string][]) {
   }
 }
 
+function removeSpanishLocaleOptions(root: ParentNode) {
+  root.querySelectorAll('select[name="locale_code"] option').forEach(option => {
+    const value = (option as HTMLOptionElement).value.trim().toLowerCase();
+    const label = (option.textContent || "").trim().toLowerCase();
+    if (value === "es" || label === "es" || label.includes("español") || label.includes("espanol")) {
+      option.remove();
+    }
+  });
+}
+
 export function ShopifyClonePageClient({ html }: { html: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -39,8 +49,8 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       oldScript.parentNode?.replaceChild(newScript, oldScript);
     });
 
-    // Remove Spanish locale option
-    ref.current.querySelectorAll('select[name="locale_code"] option[value="es"]').forEach(o => o.remove());
+    // Remove Spanish locale option from desktop and mobile selectors.
+    removeSpanishLocaleOptions(ref.current);
 
     // Remove onchange auto-submit from locale selects
     ref.current.querySelectorAll('select[name="locale_code"]').forEach(sel => {
@@ -117,6 +127,10 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       (s as HTMLSelectElement).value = savedLang === 'de' ? 'de' : 'en';
     });
 
+    const localeObserver = new MutationObserver(() => removeSpanishLocaleOptions(document.body));
+    localeObserver.observe(ref.current, { childList: true, subtree: true });
+    removeSpanishLocaleOptions(ref.current);
+
     // Bind language selector
     ref.current.querySelectorAll('select[name="locale_code"]').forEach(sel => {
       sel.addEventListener('change', () => {
@@ -176,6 +190,7 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       sel.closest('form')?.addEventListener('submit', e => e.preventDefault());
     });
 
+    return () => localeObserver.disconnect();
   }, []);
 
   return (

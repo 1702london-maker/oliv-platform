@@ -40,7 +40,7 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   );
 
   // Remove Spanish + form auto-submit server-side (client handles language switching)
-  html = html.replace(/<option[^>]*value="es"[^>]*>[\s\S]*?<\/option>/gi, '');
+  html = html.replace(/<option\b[^>]*\bvalue=(["'])es\1[^>]*>[\s\S]*?<\/option>/gi, '');
   html = html.replace(/(<select[^>]*name="locale_code"[^>]*)onchange="this\.form\.submit\(\)"([^>]*>)/g, '$1$2');
 
   if (page === "affiliate") {
