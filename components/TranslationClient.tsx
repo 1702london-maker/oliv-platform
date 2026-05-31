@@ -7,6 +7,10 @@ const SKIP: Record<string, boolean> = {
   SCRIPT: true, STYLE: true, NOSCRIPT: true, TEXTAREA: true, INPUT: true
 };
 
+function removeSpanishLocaleOptions(root: ParentNode) {
+  root.querySelectorAll('select[name="locale_code"] option[value="es"]').forEach(option => option.remove());
+}
+
 function translateNode(node: Node, pairs: [string, string][]) {
   if (node.nodeType === 3) {
     let v = (node as Text).nodeValue || "";
@@ -26,6 +30,8 @@ function translateNode(node: Node, pairs: [string, string][]) {
 
 export function TranslationClient() {
   useEffect(() => {
+    removeSpanishLocaleOptions(document);
+
     const savedLang = (() => {
       try { return localStorage.getItem("ohs-lang") || "de"; } catch { return "de"; }
     })();
