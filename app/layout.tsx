@@ -8,13 +8,13 @@ import "./shopify-clone.css";
 
 export const metadata: Metadata = {
   title: "OlivHairSupply",
-  description: "Luxury Hair. Premium Quality. Designed for You."
+  description: "Luxuriöses Haar. Premium-Qualität. Für dich gemacht."
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = (await cookies()).get("ohs_locale")?.value || "en";
+  const locale = (await cookies()).get("ohs_locale")?.value || "de";
   return (
-    <html lang="en">
+    <html lang={locale === "de" ? "de" : "en"}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
