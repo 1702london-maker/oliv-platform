@@ -169,6 +169,7 @@ type ManualPageOverride = {
   html?: string;
   attr?: (typeof TRANSLATABLE_ATTRIBUTES)[number];
   index?: number;
+  whenExists?: string;
 };
 
 const HOME_PAGE_DE_OVERRIDES: ManualPageOverride[] = [
@@ -1403,6 +1404,60 @@ const HOME_PAGE_DE_OVERRIDES: ManualPageOverride[] = [
   { selector: ".ocon-cta-sub", text: "Ob Buchung, Training oder Anfrage - unser Team unterstützt dich bei jedem Schritt." },
   { selector: ".ocon-cta-btn-gold", text: "Auf WhatsApp schreiben" },
   { selector: ".ocon-cta-btn-dark", text: "Termin buchen" },
+
+  { selector: ".oshp-promise-text", index: 0, html: "<strong>Kostenloser Versand</strong>Ab Bestellungen über 200 €", whenExists: ".oshp-intro" },
+  { selector: ".oshp-promise-text", index: 1, html: "<strong>14 Tage Rückgaberecht</strong>Für unbenutzte und versiegelte Produkte", whenExists: ".oshp-intro" },
+  { selector: ".oshp-promise-text", index: 2, html: "<strong>Persönliche Beratung</strong>Kostenlose Beratung buchen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-promise-text", index: 3, html: "<strong>Ethisch bezogen</strong>Garantierte Qualität", whenExists: ".oshp-intro" },
+  { selector: ".oshp-intro-eyebrow", text: "Unser Sortiment", whenExists: ".oshp-intro" },
+  { selector: ".oshp-intro-title", html: "Luxus-Haar, <em>definiert durch Details</em>", whenExists: ".oshp-intro" },
+  { selector: ".oshp-intro-text", text: "Jedes BiziLuxe Produkt wird nach gleichbleibender Qualität, Langlebigkeit und natürlicher Bewegung ausgewählt. Von Clip-in Extensions bis zu Tape-in Wefts ist unser Sortiment für Kundinnen gemacht, die nur das Beste erwarten.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-collections-title", html: "Nach <em>Kollektion</em> shoppen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-collections-all", text: "Alle Kollektionen ansehen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-card-name", index: 0, text: "Bizihair Extensions", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-card-name", index: 1, text: "BiziLuxe Extensions", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-card-name", index: 2, text: "BiziLuxe Accessoires", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-card-name", index: 3, text: "BiziLuxe Stylinggeräte", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-card-name", index: 4, text: "Bürsten & Kämme", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-card-name", index: 5, text: "Profi Friseurbedarf", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-card-cta", text: "Jetzt shoppen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-all-cols-eyebrow", text: "Alle Kollektionen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-all-cols-title", html: "Alles in <em>der Kollektion</em>", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-name", index: 0, text: "Bizihair Extensions", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-name", index: 1, text: "BiziLuxe Extensions", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-name", index: 2, text: "BiziLuxe Accessoires", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-name", index: 3, text: "BiziLuxe Stylinggeräte", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-name", index: 4, text: "Bürsten & Kämme", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-name", index: 5, text: "Profi Friseurbedarf", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-desc", index: 0, text: "Signature Haarverlängerungen, ausgewählt für natürliche Bewegung, langes Tragen und veredeltes Everyday Styling.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-desc", index: 1, text: "Luxuriöse Remy Echthaar-Extensions in Premium-Texturen, Längen und salonfertigen Finishes.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-desc", index: 2, text: "Finishing-Accessoires, Pflegeprodukte und raffinierte Essentials für deinen BiziLuxe Look.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-desc", index: 3, text: "Styling-Tools, ausgewählt für kontrollierte Hitze, polierte Ergebnisse und tägliche Pflege auf Salon-Niveau.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-desc", index: 4, text: "Bürsten und Kämme für sanftes Entwirren, Blending und extensionsichere tägliche Pflege.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-desc", index: 5, text: "Professioneller Bedarf und Geräte für Salonabläufe, Einarbeitung und präzises Finish.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-col-tile-link", text: "Kollektion shoppen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-featured-title", html: "Ausgewählte <em>Produkte</em>", whenExists: ".oshp-intro" },
+  { selector: ".oshp-featured-link", text: "Alle ansehen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-prod-quick", text: "Produkt ansehen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-prod-price-label", text: "Ab", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-eyebrow", text: "Warum BiziLuxe", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-title", html: "Qualität, die du <em>fühlst</em>", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-body", text: "BiziLuxe ist unsere kuratierte Linie aus Echthaar mit intakter Schuppenschicht, ausgewählt nach gleichbleibender Farbe, Fülle und Textur, bevor es dich erreicht. Das Ergebnis ist Haar, das sich nahtlos einfügt, natürlich bewegt und deutlich länger hält als minderwertige Alternativen.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-btn", text: "Unsere Geschichte", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-stat-label", index: 0, text: "Echthaar mit intakter Schuppenschicht", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-stat-label", index: 1, text: "Berliner Salons", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-stat-label", index: 2, text: "Kollektionen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-story-stat-label", index: 3, text: "Versand", whenExists: ".oshp-intro" },
+  { selector: ".oshp-cta-eyebrow", text: "Nicht sicher, wo du starten sollst?", whenExists: ".oshp-intro" },
+  { selector: ".oshp-cta-title", html: "Lass dich von uns <em>beraten</em>", whenExists: ".oshp-intro" },
+  { selector: ".oshp-cta-sub", text: "Unsere Spezialistinnen empfehlen dir die passenden Produkte und Methoden für deinen Haartyp, deinen Lifestyle und deine Ziele. Buche eine Beratung - im Salon oder online.", whenExists: ".oshp-intro" },
+  { selector: ".oshp-cta-btn-dark", text: "Beratung buchen", whenExists: ".oshp-intro" },
+  { selector: ".oshp-cta-btn-out", text: "BiziLuxe Hair shoppen", whenExists: ".oshp-intro" },
+  { selector: ".ohs-catalog-head p", text: "BiziLuxe Kollektionen", whenExists: ".ohs-catalog" },
+  { selector: ".ohs-catalog-head h1", text: "BiziLuxe Kollektionen", whenExists: ".ohs-catalog" },
+  { selector: ".ohs-category-nav a", index: 0, text: "Alle", whenExists: ".ohs-catalog" },
+  { selector: ".ohs-product-copy a", text: "Jetzt shoppen", whenExists: ".ohs-catalog" },
+  { selector: ".ohs-catalog-empty", text: "Produkte für diese Kollektion folgen in Kürze.", whenExists: ".ohs-catalog" },
 ];
 
 export function translateAttributes(element: Element, pairs: [string, string][]) {
@@ -1421,6 +1476,7 @@ export function applyManualPageOverrides(root: ParentNode, lang: "de" | "en") {
   const observerRoot = root instanceof HTMLElement ? root : null;
 
   for (const override of HOME_PAGE_DE_OVERRIDES) {
+    if (override.whenExists && !root.querySelector(override.whenExists)) continue;
     const matches = Array.from(root.querySelectorAll<HTMLElement>(override.selector));
     const elements = override.index === undefined ? matches : matches[override.index] ? [matches[override.index]] : [];
 
