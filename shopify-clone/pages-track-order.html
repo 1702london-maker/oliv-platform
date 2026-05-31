@@ -2225,7 +2225,11 @@ first.parentNode.insertBefore(script, first);
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .otrk-hero { height: 59vh; min-height: unset; max-height: none; overflow: hidden; }
-  .otrk-hero-img { object-position: 58% center; }
+  .otrk-hero-img {
+    object-position: 64% center;
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
   .otrk-hero-overlay { background: linear-gradient(to bottom, rgba(12,9,6,0.20) 0%, rgba(12,9,6,0.18) 42%, rgba(12,9,6,0.74) 100%); }
   .otrk-hero-inner {
     top: 0;
