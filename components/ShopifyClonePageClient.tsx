@@ -85,14 +85,14 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
           flex-shrink: 0;
         }
         @media (max-width: 1180px) {
-          .ohs-desktop { display: none !important; }
-          .ohs-mobile { display: flex !important; }
-          .ohs-drawer,
-          .ohs-overlay { display: flex; }
+          body[data-ohs-lang="de"] .ohs-desktop { display: none !important; }
+          body[data-ohs-lang="de"] .ohs-mobile { display: flex !important; }
+          body[data-ohs-lang="de"] .ohs-drawer,
+          body[data-ohs-lang="de"] .ohs-overlay { display: flex; }
         }
         @media (min-width: 1181px) {
-          .ohs-mobile { display: none !important; }
-          .ohs-desktop { display: flex; }
+          body[data-ohs-lang="de"] .ohs-mobile { display: none !important; }
+          body[data-ohs-lang="de"] .ohs-desktop { display: flex; }
         }
       `;
       document.head.appendChild(style);
