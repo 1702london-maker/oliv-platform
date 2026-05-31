@@ -1850,11 +1850,14 @@ first.parentNode.insertBefore(script, first);
 /* HERO */
 .oret-hero {
   position: relative;
-  height: 420px;
+  height: 100vh;
+  max-height: 860px;
+  min-height: 600px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #1A140E;
 }
 .oret-hero-img {
   position: absolute;
@@ -1862,7 +1865,7 @@ first.parentNode.insertBefore(script, first);
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center 48%;
   display: block;
 }
 .oret-hero-bg {
@@ -1873,14 +1876,16 @@ first.parentNode.insertBefore(script, first);
 .oret-hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(26,20,14,0.30);
+  background: linear-gradient(to right, rgba(12,9,6,0.76) 0%, rgba(12,9,6,0.46) 34%, rgba(12,9,6,0.14) 68%, rgba(12,9,6,0.22) 100%);
 }
 .oret-hero-inner {
-  position: relative;
+  position: absolute;
   z-index: 2;
-  text-align: center;
-  padding: 0 24px;
-  max-width: 680px;
+  top: 22%;
+  left: 4%;
+  max-width: 34%;
+  padding: 0;
+  text-align: left;
 }
 .oret-hero-eyebrow {
   font-family: 'Montserrat', sans-serif;
@@ -1894,11 +1899,11 @@ first.parentNode.insertBefore(script, first);
 }
 .oret-hero-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 56px;
+  font-size: clamp(30px, 3.6vw, 54px);
   font-weight: 300;
   color: #FFFFFF;
   line-height: 1.08;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 .oret-hero-title em { font-style: italic; color: #C9A96E; }
 .oret-hero-sub {
@@ -2190,9 +2195,28 @@ first.parentNode.insertBefore(script, first);
   .oret-overview-inner { padding: 0 24px; }
 }
 @media (max-width: 640px) {
-  .oret-hero { height: 360px; }
-  .oret-hero-title { font-size: 36px; }
-  .oret-hero-sub { font-size: 16px; }
+  .oret-hero { height: 59vh; min-height: unset; max-height: none; overflow: hidden; }
+  .oret-hero-img {
+    object-position: 78% center;
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+  .oret-hero-overlay { background: linear-gradient(to bottom, rgba(12,9,6,0.16) 0%, rgba(12,9,6,0.18) 42%, rgba(12,9,6,0.76) 100%); }
+  .oret-hero-inner {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    padding: 72px 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .oret-hero-eyebrow { margin-bottom: auto; font-size: 9px; letter-spacing: 4px; }
+  .oret-hero-title { margin-top: auto; margin-bottom: 42px; font-size: clamp(28px, 9vw, 44px); max-width: 285px; }
+  .oret-hero-sub { display: none; }
   .oret-title { font-size: 30px; }
   .oret-cta-title { font-size: 34px; }
   .oret-timeline-steps { grid-template-columns: 1fr; }
@@ -2213,12 +2237,11 @@ first.parentNode.insertBefore(script, first);
 <div class="oret">
 
   <div class="oret-hero">
-    <img class="oret-hero-img" src="/heroes/utility-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
+    <img class="oret-hero-img" src="/heroes/returns-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
     <div class="oret-hero-overlay"></div>
     <div class="oret-hero-inner">
       <span class="oret-hero-eyebrow">Returns</span>
       <h1 class="oret-hero-title">Simple, Transparent <em>Returns.</em></h1>
-      <p class="oret-hero-sub">We want you to feel confident in every OlivHairSupply purchase.</p>
     </div>
   </div>
 

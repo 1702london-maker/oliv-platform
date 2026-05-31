@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580" role="img" aria-label="Luxury returns packaging with sealed premium hair">
+  <defs>
+    <linearGradient id="rBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#15110D"/>
+      <stop offset="34%" stop-color="#302B25"/>
+      <stop offset="68%" stop-color="#5B554E"/>
+      <stop offset="100%" stop-color="#201B16"/>
+    </linearGradient>
+    <radialGradient id="rKey" cx="72%" cy="30%" r="52%">
+      <stop offset="0%" stop-color="#9B8C77" stop-opacity="0.52"/>
+      <stop offset="62%" stop-color="#5F574E" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#14100C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rLeftShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0D0A07" stop-opacity="0.88"/>
+      <stop offset="42%" stop-color="#14100C" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#14100C" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="rFloor" cx="72%" cy="84%" r="34%">
+      <stop offset="0%" stop-color="#C9A96E" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#A1762E"/>
+      <stop offset="48%" stop-color="#D1A95B"/>
+      <stop offset="100%" stop-color="#9A6D28"/>
+    </linearGradient>
+    <linearGradient id="rBoxTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F9ECD5"/>
+      <stop offset="100%" stop-color="#DCC8A8"/>
+    </linearGradient>
+    <linearGradient id="rBoxFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A38C6B"/>
+      <stop offset="100%" stop-color="#715E46"/>
+    </linearGradient>
+    <linearGradient id="rBoxSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B7659"/>
+      <stop offset="100%" stop-color="#5E4D38"/>
+    </linearGradient>
+    <linearGradient id="rHair" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1A120E"/>
+      <stop offset="50%" stop-color="#4C3423"/>
+      <stop offset="100%" stop-color="#8B633B"/>
+    </linearGradient>
+    <filter id="rShadow" x="-24%" y="-24%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#080604" flood-opacity="0.34"/>
+    </filter>
+    <filter id="rSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="580" fill="url(#rBg)"/>
+  <rect width="1440" height="580" fill="url(#rKey)"/>
+  <rect width="1440" height="580" fill="url(#rFloor)"/>
+
+  <g opacity="0.34" fill="none" stroke-linecap="round">
+    <path d="M-20 456 C188 404 394 418 588 356 S924 216 1448 224" stroke="#C9A96E" stroke-width="4"/>
+    <path d="M242 524 C462 466 676 444 860 378 S1148 286 1458 310" stroke="#BFA56D" stroke-width="2"/>
+    <path d="M166 178 C290 134 472 146 606 216" stroke="#B99855" stroke-width="1" stroke-dasharray="14 24"/>
+    <circle cx="166" cy="178" r="4" fill="#B99855" stroke="none"/>
+    <circle cx="606" cy="216" r="3.5" fill="#B99855" stroke="none"/>
+  </g>
+
+  <g transform="translate(805 150)" filter="url(#rShadow)">
+    <path d="M54 150 L188 76 L348 164 L208 248 Z" fill="url(#rBoxTop)"/>
+    <path d="M54 150 L208 248 L208 404 L54 306 Z" fill="url(#rBoxFace)"/>
+    <path d="M208 248 L348 164 L348 318 L208 404 Z" fill="url(#rBoxSide)"/>
+    <path d="M120 112 L274 202 L252 214 L98 124 Z" fill="url(#rGold)"/>
+    <path d="M274 202 L304 184 L304 330 L274 348 Z" fill="url(#rGold)"/>
+    <path d="M54 150 L208 248 L348 164" fill="none" stroke="#5A4D3B" stroke-opacity="0.32" stroke-width="2"/>
+    <path d="M208 248 L208 404" stroke="#5A4D3B" stroke-opacity="0.22" stroke-width="2"/>
+
+    <g transform="translate(72 178)">
+      <rect x="0" y="0" width="92" height="58" fill="#F7EBD4"/>
+      <line x1="16" y1="18" x2="68" y2="18" stroke="#9D7328" stroke-width="2"/>
+      <line x1="16" y1="34" x2="52" y2="34" stroke="#9D7328" stroke-width="2"/>
+      <text x="16" y="51" font-family="Montserrat, Arial, sans-serif" font-size="7" letter-spacing="1.4" fill="#7D684E">RETURN APPROVED</text>
+    </g>
+
+    <g transform="translate(170 18)">
+      <path d="M-38 88 C-16 24 48 -12 114 16 C168 40 196 94 178 148" fill="none" stroke="url(#rGold)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M178 148 L150 140 L166 116" fill="none" stroke="url(#rGold)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-18 104 C8 46 58 26 112 42 C150 54 174 82 184 124" fill="none" stroke="#E6C47A" stroke-opacity="0.38" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(122 48)">
+      <rect x="0" y="34" width="146" height="66" rx="8" fill="#18120E" opacity="0.88"/>
+      <path d="M10 66 C34 36 60 25 86 32 C116 40 130 64 136 92" fill="none" stroke="url(#rHair)" stroke-width="16" stroke-linecap="round"/>
+      <path d="M18 76 C44 52 72 42 98 48 C120 54 134 70 144 92" fill="none" stroke="#B4874E" stroke-width="4" stroke-linecap="round" opacity="0.78"/>
+      <path d="M34 86 C58 68 82 62 108 68 C126 72 140 84 150 102" fill="none" stroke="#2B1E16" stroke-width="6" stroke-linecap="round"/>
+      <rect x="-10" y="22" width="166" height="20" fill="#F3E5CA" opacity="0.92"/>
+      <text x="26" y="37" font-family="Montserrat, Arial, sans-serif" font-size="7" letter-spacing="1.8" fill="#8A6D3B">SEALED HYGIENE CHECK</text>
+    </g>
+
+    <text x="174" y="346" font-family="Cormorant Garamond, Georgia, serif" font-size="22" fill="#D0A756" opacity="0.7">OlivHairSupply</text>
+    <text x="206" y="363" font-family="Montserrat, Arial, sans-serif" font-size="8" letter-spacing="1.8" fill="#D0A756" opacity="0.55">RETURNS CARE</text>
+  </g>
+
+  <g opacity="0.26" stroke="#C9A96E" stroke-width="1" stroke-linecap="round">
+    <line x1="1010" y1="92" x2="1190" y2="92"/>
+    <line x1="1010" y1="112" x2="1270" y2="112"/>
+    <line x1="1010" y1="132" x2="1326" y2="132"/>
+  </g>
+
+  <g opacity="0.18" filter="url(#rSoft)">
+    <ellipse cx="1018" cy="526" rx="238" ry="34" fill="#080604"/>
+  </g>
+
+  <rect width="1440" height="580" fill="url(#rLeftShade)"/>
+  <rect width="1440" height="580" fill="#0B0806" opacity="0.07"/>
+</svg>
