@@ -47,6 +47,57 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       sel.removeAttribute('onchange');
     });
 
+    // German nav labels are longer, so keep the language/currency controls visible
+    // and use the mobile drawer earlier on tablet widths.
+    if (!document.getElementById('ohs-de-header-fit')) {
+      const style = document.createElement('style');
+      style.id = 'ohs-de-header-fit';
+      style.textContent = `
+        body[data-ohs-lang="de"] .ohs-desktop {
+          max-width: min(1440px, 100vw);
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+        body[data-ohs-lang="de"] .ohs-logo-wrap {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        body[data-ohs-lang="de"] .ohs-logo-wrap img {
+          width: 160px;
+        }
+        body[data-ohs-lang="de"] .ohs-nav-left li a,
+        body[data-ohs-lang="de"] .ohs-nav-right li a.ohs-nav-link {
+          font-size: 8.5px !important;
+          letter-spacing: 0.7px !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
+        }
+        body[data-ohs-lang="de"] .ohs-nav-left li:first-child a {
+          padding-left: 0 !important;
+        }
+        body[data-ohs-lang="de"] .ohs-nav-right .ohs-divider {
+          margin-left: 6px;
+          margin-right: 6px;
+        }
+        body[data-ohs-lang="de"] .ohs-locale-form,
+        body[data-ohs-lang="de"] .ohs-sel-wrap,
+        body[data-ohs-lang="de"] .ohs-locale-sel {
+          flex-shrink: 0;
+        }
+        @media (max-width: 1180px) {
+          .ohs-desktop { display: none !important; }
+          .ohs-mobile { display: flex !important; }
+          .ohs-drawer,
+          .ohs-overlay { display: flex; }
+        }
+        @media (min-width: 1181px) {
+          .ohs-mobile { display: none !important; }
+          .ohs-desktop { display: flex; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     // Apply saved language — TranslationClient (runs first) already translated the body,
     // so DE_PAIRS translation here is a safe no-op on German text (English keys won't match).
     const savedLang = (() => { try { return localStorage.getItem('ohs-lang') || 'de'; } catch { return 'de'; } })();
