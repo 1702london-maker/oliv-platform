@@ -178,16 +178,15 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       sel.removeAttribute('onchange');
     });
 
-    // Apply saved language
+    // Apply saved language — TranslationClient (runs first) already translated the body,
+    // so DE_PAIRS translation here is a safe no-op on German text (English keys won't match).
     const savedLang = (() => { try { return localStorage.getItem('ohs-lang') || 'en'; } catch { return 'en'; } })();
-    // Only translate if neither this nor TranslationClient has run yet
-    const alreadyDE = document.body.dataset.ohsLang === 'de' || document.body.dataset.globalLang === 'de';
-    if (savedLang === 'de' && !alreadyDE) {
+    if (savedLang === 'de') {
       translateNode(document.body, DE_PAIRS);
       document.body.dataset.ohsLang = 'de';
       document.body.dataset.globalLang = 'de';
-    } else if (savedLang === 'de') {
-      document.body.dataset.ohsLang = 'de';
+    } else {
+      document.body.dataset.ohsLang = 'en';
     }
 
     // Always sync selector display to match actual language (HTML hardcodes EN as selected)

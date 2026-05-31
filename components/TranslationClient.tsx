@@ -162,11 +162,13 @@ export function TranslationClient() {
       try { return localStorage.getItem("ohs-lang") || "en"; } catch { return "en"; }
     })();
 
-    // Skip if ShopifyClonePageClient already translated (ohsLang set by it)
-    const alreadyTranslated = document.body.dataset.globalLang === "de" || document.body.dataset.ohsLang === "de";
-    if (savedLang === "de" && !alreadyTranslated) {
+    // Always translate — removing the alreadyTranslated guard that caused
+    // client-side navigation to skip translation (body.dataset persists across pages)
+    if (savedLang === "de") {
       translateNode(document.body, DE_PAIRS);
       document.body.dataset.globalLang = "de";
+    } else {
+      document.body.dataset.globalLang = "en";
     }
 
     // Always sync selector display to match actual language (HTML hardcodes EN as selected)
