@@ -248,7 +248,7 @@ const HOME_PAGE_DE_OVERRIDES: ManualPageOverride[] = [
 
   { selector: ".oab-tl-header .oab-eyebrow", text: "Unser Weg" },
   { selector: ".oab-tl-title", html: "Wachsen mit <em>Anspruch.</em>" },
-  { selector: ".oab-tl-name", index: 0, text: "Das Fundament" },
+  { selector: ".oab-tl-name", index: 0, text: "Die Gründung" },
   { selector: ".oab-tl-body", index: 0, text: "OlivHairSupply startet als Online-Shop mit klarem Fokus: hochwertige Haarverlängerungen für Kundinnen in ganz Deutschland zu sourcen und verfügbar zu machen." },
   { selector: ".oab-tl-name", index: 1, text: "Online-Shop Launch" },
   { selector: ".oab-tl-body", index: 1, text: "Wir launchen olivhairsupply.de und bringen unsere kuratierten BiziHair- und Olivhairlux-Kollektionen zu Kundinnen in ganz Europa." },
