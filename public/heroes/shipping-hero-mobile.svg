@@ -84,29 +84,29 @@
   <rect x="0" y="430" width="390" height="90" fill="url(#mFloor)"/>
   <rect x="0" y="428" width="390" height="4"  fill="#14100C" opacity="0.38"/>
 
-  <!-- ── MIRROR — centre x:195, narrower for portrait ── -->
-  <rect x="124" y="14" width="142" height="296" rx="8" fill="#1A1612" opacity="0.28" filter="url(#mSb)"/>
-  <rect x="126" y="12" width="138" height="296" rx="8" fill="url(#mMirFrame)"/>
-  <rect x="133" y="19" width="124" height="282" rx="6" fill="#1A1612" opacity="0.50"/>
-  <rect x="137" y="23" width="116" height="274" rx="4" fill="url(#mMirSurf)"/>
-  <rect x="137" y="23" width="116" height="274" rx="4" fill="url(#mMirSheen)"/>
+  <!-- ── MIRROR — centre x:195, moved down 35px ── -->
+  <rect x="124" y="49" width="142" height="296" rx="8" fill="#1A1612" opacity="0.28" filter="url(#mSb)"/>
+  <rect x="126" y="47" width="138" height="296" rx="8" fill="url(#mMirFrame)"/>
+  <rect x="133" y="54" width="124" height="282" rx="6" fill="#1A1612" opacity="0.50"/>
+  <rect x="137" y="58" width="116" height="274" rx="4" fill="url(#mMirSurf)"/>
+  <rect x="137" y="58" width="116" height="274" rx="4" fill="url(#mMirSheen)"/>
   <!-- Mirror shimmer -->
-  <path d="M 148 42 Q 195 28 240 42" stroke="#FFF" stroke-width="0.5" fill="none" opacity="0.09"/>
+  <path d="M 148 77 Q 195 63 240 77" stroke="#FFF" stroke-width="0.5" fill="none" opacity="0.09"/>
   <!-- Corner jewels -->
-  <circle cx="135" cy="20"  r="4" fill="url(#mGoldH)" opacity="0.92"/>
-  <circle cx="255" cy="20"  r="4" fill="url(#mGoldH)" opacity="0.92"/>
-  <circle cx="135" cy="299" r="4" fill="url(#mGoldH)" opacity="0.92"/>
-  <circle cx="255" cy="299" r="4" fill="url(#mGoldH)" opacity="0.92"/>
+  <circle cx="135" cy="55"  r="4" fill="url(#mGoldH)" opacity="0.92"/>
+  <circle cx="255" cy="55"  r="4" fill="url(#mGoldH)" opacity="0.92"/>
+  <circle cx="135" cy="334" r="4" fill="url(#mGoldH)" opacity="0.92"/>
+  <circle cx="255" cy="334" r="4" fill="url(#mGoldH)" opacity="0.92"/>
   <!-- Side jewels -->
-  <circle cx="126" cy="160" r="3.5" fill="url(#mGoldH)" opacity="0.88"/>
-  <circle cx="264" cy="160" r="3.5" fill="url(#mGoldH)" opacity="0.88"/>
+  <circle cx="126" cy="195" r="3.5" fill="url(#mGoldH)" opacity="0.88"/>
+  <circle cx="264" cy="195" r="3.5" fill="url(#mGoldH)" opacity="0.88"/>
 
-  <!-- Brand placard inside mirror -->
-  <rect x="148" y="30" width="94" height="42" rx="3" fill="#12100D" opacity="0.75"/>
-  <line x1="152" y1="43"  x2="238" y2="43"  stroke="#C9A96E" stroke-width="0.7" opacity="0.55"/>
-  <line x1="152" y1="65"  x2="238" y2="65"  stroke="#C9A96E" stroke-width="0.7" opacity="0.55"/>
-  <text x="195" y="57" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="9" fill="url(#mGoldT)" letter-spacing="2.5" opacity="0.95">OLIVHAIRSUPPLY</text>
-  <text x="195" y="68" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="6" font-style="italic" fill="#D4B87A" letter-spacing="2" opacity="0.82">Berlin · Premium Hair</text>
+  <!-- Brand placard inside mirror — full glass width, text sized to fit -->
+  <rect x="141" y="65" width="108" height="46" rx="3" fill="#12100D" opacity="0.75"/>
+  <line x1="145" y1="79"  x2="245" y2="79"  stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
+  <line x1="145" y1="103" x2="245" y2="103" stroke="#C9A96E" stroke-width="0.8" opacity="0.55"/>
+  <text x="195" y="94" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="11" fill="url(#mGoldT)" letter-spacing="1.5" opacity="0.95">OLIVHAIRSUPPLY</text>
+  <text x="195" y="107" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="7" font-style="italic" fill="#D4B87A" letter-spacing="2" opacity="0.82">Berlin · Premium Hair</text>
 
   <!-- ── LEFT TABLE + BOX ── -->
   <!-- Table shadow -->
