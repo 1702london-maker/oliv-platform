@@ -190,6 +190,11 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       document.body.dataset.ohsLang = 'de';
     }
 
+    // Always sync selector display to match actual language (HTML hardcodes EN as selected)
+    document.querySelectorAll('select[name="locale_code"]').forEach(s => {
+      (s as HTMLSelectElement).value = savedLang === 'de' ? 'de' : 'en';
+    });
+
     // Bind language selector
     ref.current.querySelectorAll('select[name="locale_code"]').forEach(sel => {
       sel.addEventListener('change', () => {

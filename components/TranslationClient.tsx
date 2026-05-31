@@ -169,6 +169,11 @@ export function TranslationClient() {
       document.body.dataset.globalLang = "de";
     }
 
+    // Always sync selector display to match actual language (HTML hardcodes EN as selected)
+    document.querySelectorAll('select[name="locale_code"]').forEach(s => {
+      (s as HTMLSelectElement).value = savedLang === "de" ? "de" : "en";
+    });
+
     // Language selector binding (for non-ShopifyClone pages)
     document.querySelectorAll('select[name="locale_code"]').forEach(sel => {
       if ((sel as HTMLElement).dataset.bound) return;
