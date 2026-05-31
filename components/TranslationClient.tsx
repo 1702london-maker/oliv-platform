@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { GERMAN_COPY_PAIRS, translateAttributes } from "./germanCopy";
+import { GERMAN_COPY_PAIRS, applyManualPageOverrides, translateAttributes } from "./germanCopy";
 
 const SKIP: Record<string, boolean> = {
   SCRIPT: true, STYLE: true, NOSCRIPT: true, TEXTAREA: true, INPUT: true
@@ -33,9 +33,12 @@ export function TranslationClient() {
     // Always translate — removing the alreadyTranslated guard that caused
     // client-side navigation to skip translation (body.dataset persists across pages)
     if (savedLang === "de") {
+      applyManualPageOverrides(document.body, "en");
       translateNode(document.body, GERMAN_COPY_PAIRS);
+      applyManualPageOverrides(document.body, "de");
       document.body.dataset.globalLang = "de";
     } else {
+      applyManualPageOverrides(document.body, "en");
       document.body.dataset.globalLang = "en";
     }
 
@@ -54,11 +57,16 @@ export function TranslationClient() {
           (s as HTMLSelectElement).value = lang
         );
         if (lang === "de" && document.body.dataset.globalLang !== "de") {
+          applyManualPageOverrides(document.body, "en");
           translateNode(document.body, GERMAN_COPY_PAIRS);
+          applyManualPageOverrides(document.body, "de");
           document.body.dataset.globalLang = "de";
         } else if (lang === "en" && document.body.dataset.globalLang === "de") {
           translateNode(document.body, GERMAN_COPY_PAIRS.map(([a, b]) => [b, a] as [string, string]));
+          applyManualPageOverrides(document.body, "en");
           document.body.dataset.globalLang = "en";
+        } else {
+          applyManualPageOverrides(document.body, lang);
         }
         try { localStorage.setItem("ohs-lang", lang); } catch { /* */ }
       });

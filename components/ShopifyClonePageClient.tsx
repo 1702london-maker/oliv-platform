@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { GERMAN_COPY_PAIRS, translateAttributes } from "./germanCopy";
+import { GERMAN_COPY_PAIRS, applyManualPageOverrides, translateAttributes } from "./germanCopy";
 
 const SKIP: Record<string, boolean> = { SCRIPT: true, STYLE: true, NOSCRIPT: true, TEXTAREA: true, INPUT: true };
 
@@ -51,10 +51,13 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
     // so DE_PAIRS translation here is a safe no-op on German text (English keys won't match).
     const savedLang = (() => { try { return localStorage.getItem('ohs-lang') || 'de'; } catch { return 'de'; } })();
     if (savedLang === 'de') {
+      applyManualPageOverrides(document.body, 'en');
       translateNode(document.body, GERMAN_COPY_PAIRS);
+      applyManualPageOverrides(document.body, 'de');
       document.body.dataset.ohsLang = 'de';
       document.body.dataset.globalLang = 'de';
     } else {
+      applyManualPageOverrides(document.body, 'en');
       document.body.dataset.ohsLang = 'en';
     }
 
@@ -69,12 +72,17 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
         const lang = (sel as HTMLSelectElement).value === 'de' ? 'de' : 'en';
         document.querySelectorAll('select[name="locale_code"]').forEach(s => (s as HTMLSelectElement).value = lang);
         if (lang === 'de' && document.body.dataset.ohsLang !== 'de') {
+          applyManualPageOverrides(document.body, 'en');
           translateNode(document.body, GERMAN_COPY_PAIRS);
+          applyManualPageOverrides(document.body, 'de');
           document.body.dataset.ohsLang = 'de';
           document.body.dataset.globalLang = 'de';
         } else if (lang === 'en' && document.body.dataset.ohsLang === 'de') {
           translateNode(document.body, GERMAN_COPY_PAIRS.map(([a, b]) => [b, a] as [string, string]));
+          applyManualPageOverrides(document.body, 'en');
           document.body.dataset.ohsLang = 'en';
+        } else {
+          applyManualPageOverrides(document.body, lang);
         }
         try { localStorage.setItem('ohs-lang', lang); } catch { /* */ }
       });
