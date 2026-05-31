@@ -2194,7 +2194,7 @@ first.parentNode.insertBefore(script, first);
   }
   .oshp-hero-img {
     object-fit: cover !important;
-    object-position: 50% 25% !important;
+    object-position: 50% 30% !important;
   }
   .oshp-hero-inner {
     position: absolute !important;
@@ -2237,7 +2237,10 @@ first.parentNode.insertBefore(script, first);
 <div class="oshp">
 
   <div class="oshp-hero">
-    <img class="oshp-hero-img" src="/heroes/shipping-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
+    <picture>
+      <source srcset="/heroes/shipping-hero-mobile.svg" media="(max-width: 768px)">
+      <img class="oshp-hero-img" src="/heroes/shipping-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
+    </picture>
     <div class="oshp-hero-overlay"></div>
     <div class="oshp-hero-inner">
       <span class="oshp-hero-eyebrow">Shipping</span>
