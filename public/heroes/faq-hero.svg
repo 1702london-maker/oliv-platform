@@ -1,75 +1,129 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMid slice" width="1440" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" width="1440" height="580" role="img" aria-label="Luxury FAQ knowledge archive with illuminated answer cards">
   <defs>
-    <!-- Warm dark base — slightly softer than other heroes -->
-    <linearGradient id="baseBg" x1="0" y1="0" x2="0.5" y2="1">
-      <stop offset="0%" stop-color="#1E1408"/>
-      <stop offset="50%" stop-color="#2C1C0A"/>
-      <stop offset="100%" stop-color="#160F06"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#100D0A"/>
+      <stop offset="36%" stop-color="#2D2822"/>
+      <stop offset="68%" stop-color="#615A51"/>
+      <stop offset="100%" stop-color="#17130F"/>
     </linearGradient>
-    <!-- Central warm top glow -->
-    <radialGradient id="topGlow" cx="50%" cy="0%" r="55%">
-      <stop offset="0%" stop-color="#7A5020" stop-opacity="0.45"/>
-      <stop offset="70%" stop-color="#3A2210" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#1E1408" stop-opacity="0"/>
+    <radialGradient id="key" cx="74%" cy="28%" r="52%">
+      <stop offset="0%" stop-color="#B8AA94" stop-opacity="0.46"/>
+      <stop offset="60%" stop-color="#645B50" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#120E0A" stop-opacity="0"/>
     </radialGradient>
-    <!-- Soft central highlight -->
-    <radialGradient id="centerGlow" cx="50%" cy="55%" r="40%">
-      <stop offset="0%" stop-color="#5C3810" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#1E1408" stop-opacity="0"/>
+    <radialGradient id="lens" cx="74%" cy="42%" r="28%">
+      <stop offset="0%" stop-color="#D6B56D" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#D6B56D" stop-opacity="0"/>
     </radialGradient>
-    <!-- Edge vignette -->
-    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
-      <stop offset="45%" stop-color="#1E1408" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#0A0603" stop-opacity="0.88"/>
-    </radialGradient>
+    <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#090604" stop-opacity="0.92"/>
+      <stop offset="42%" stop-color="#100D0A" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#100D0A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9C7029"/>
+      <stop offset="44%" stop-color="#D8B568"/>
+      <stop offset="100%" stop-color="#946624"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF3DC"/>
+      <stop offset="100%" stop-color="#D8C19B"/>
+    </linearGradient>
+    <linearGradient id="folio" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2B241D"/>
+      <stop offset="64%" stop-color="#120D09"/>
+      <stop offset="100%" stop-color="#3B3024"/>
+    </linearGradient>
+    <linearGradient id="hairGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#16100B"/>
+      <stop offset="48%" stop-color="#7F5732"/>
+      <stop offset="100%" stop-color="#D2A45D"/>
+    </linearGradient>
+    <filter id="shadow" x="-26%" y="-26%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="26" stdDeviation="26" flood-color="#050403" flood-opacity="0.42"/>
+    </filter>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
   </defs>
 
-  <!-- Base -->
-  <rect width="1440" height="420" fill="url(#baseBg)"/>
-  <rect width="1440" height="420" fill="url(#topGlow)"/>
-  <rect width="1440" height="420" fill="url(#centerGlow)"/>
+  <rect width="1440" height="580" fill="url(#bg)"/>
+  <rect width="1440" height="580" fill="url(#key)"/>
+  <rect width="1440" height="580" fill="url(#lens)"/>
 
-  <!-- Left decorative element — abstract hair or fabric -->
-  <g opacity="0.1" fill="#C9A96E">
-    <ellipse cx="120" cy="210" rx="80" ry="350"/>
-    <ellipse cx="80" cy="210" rx="40" ry="350"/>
+  <g opacity="0.28" fill="none" stroke="#C9A96E" stroke-linecap="round">
+    <path d="M-40 460 C210 398 420 428 632 350 S988 214 1466 238" stroke-width="3"/>
+    <path d="M226 526 C470 464 684 450 878 378 S1162 304 1460 322" stroke-width="1.5"/>
+    <path d="M118 166 C274 124 448 144 596 212" stroke-width="1" stroke-dasharray="14 25"/>
   </g>
 
-  <!-- Right decorative element -->
-  <g opacity="0.1" fill="#C9A96E">
-    <ellipse cx="1320" cy="210" rx="80" ry="350"/>
-    <ellipse cx="1360" cy="210" rx="40" ry="350"/>
+  <g transform="translate(760 78)" filter="url(#shadow)">
+    <ellipse cx="280" cy="420" rx="278" ry="42" fill="#080604" opacity="0.32" filter="url(#glow)"/>
+
+    <!-- Open knowledge folio -->
+    <path d="M72 210 C142 148 236 132 306 172 L286 404 C208 358 134 374 64 422 Z" fill="url(#folio)"/>
+    <path d="M306 172 C382 126 480 144 540 214 L548 422 C476 374 396 358 286 404 Z" fill="#1A130E"/>
+    <path d="M96 218 C158 174 226 166 278 190 L264 352 C198 326 138 334 86 370 Z" fill="url(#paper)" opacity="0.94"/>
+    <path d="M330 190 C396 164 466 178 516 224 L522 370 C462 334 398 326 312 352 Z" fill="url(#paper)" opacity="0.92"/>
+    <path d="M286 404 L306 172" stroke="#C9A96E" stroke-width="3" opacity="0.62"/>
+
+    <!-- Answer lines -->
+    <g stroke="#8B6A32" stroke-width="2" opacity="0.68">
+      <line x1="126" y1="232" x2="226" y2="212"/>
+      <line x1="120" y1="260" x2="246" y2="236"/>
+      <line x1="116" y1="288" x2="224" y2="270"/>
+      <line x1="354" y1="226" x2="474" y2="246"/>
+      <line x1="350" y1="254" x2="490" y2="278"/>
+      <line x1="346" y1="284" x2="462" y2="304"/>
+    </g>
+
+    <!-- Floating answer cards -->
+    <g transform="translate(64 54) rotate(-9)">
+      <rect x="0" y="0" width="184" height="96" rx="5" fill="#17110D"/>
+      <rect x="14" y="14" width="156" height="68" rx="2" fill="#F7E8CC"/>
+      <text x="28" y="43" font-family="Cormorant Garamond, Georgia, serif" font-size="30" fill="#2B2620">Q</text>
+      <text x="54" y="42" font-family="Montserrat, Arial, sans-serif" font-size="8" letter-spacing="1.7" fill="#8B6A32">SHADE MATCH</text>
+      <line x1="54" y1="58" x2="140" y2="58" stroke="#B68A45" stroke-width="2"/>
+    </g>
+    <g transform="translate(376 62) rotate(8)">
+      <rect x="0" y="0" width="188" height="100" rx="5" fill="#17110D"/>
+      <rect x="14" y="14" width="160" height="72" rx="2" fill="#F7E8CC"/>
+      <text x="28" y="47" font-family="Cormorant Garamond, Georgia, serif" font-size="30" fill="#2B2620">A</text>
+      <text x="56" y="43" font-family="Montserrat, Arial, sans-serif" font-size="8" letter-spacing="1.7" fill="#8B6A32">CARE ROUTINE</text>
+      <path d="M56 61 L86 72 L138 48" fill="none" stroke="#B68A45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Hair strand question mark -->
+    <g fill="none" stroke-linecap="round">
+      <path d="M244 126 C252 74 306 38 366 52 C430 68 466 126 442 182 C420 232 358 238 348 294" stroke="url(#hairGold)" stroke-width="13"/>
+      <path d="M284 128 C302 86 346 76 384 94 C420 112 436 146 422 180 C406 220 354 222 340 270" stroke="#E4C27B" stroke-width="3.2" opacity="0.52"/>
+      <circle cx="338" cy="334" r="10" fill="#D0A756"/>
+    </g>
+
+    <!-- Gold pins / category markers -->
+    <g fill="#C9A96E" opacity="0.78">
+      <circle cx="86" cy="166" r="5"/>
+      <circle cx="536" cy="162" r="4"/>
+      <circle cx="548" cy="318" r="5"/>
+      <circle cx="66" cy="336" r="4"/>
+    </g>
+    <g stroke="#C9A96E" stroke-width="1" opacity="0.42">
+      <line x1="86" y1="166" x2="138" y2="190"/>
+      <line x1="536" y1="162" x2="500" y2="220"/>
+      <line x1="548" y1="318" x2="512" y2="332"/>
+      <line x1="66" y1="336" x2="112" y2="324"/>
+    </g>
+
+    <text x="206" y="470" font-family="Cormorant Garamond, Georgia, serif" font-size="23" fill="#D0A756" opacity="0.7">OlivHairSupply</text>
+    <text x="235" y="488" font-family="Montserrat, Arial, sans-serif" font-size="8" letter-spacing="2" fill="#D0A756" opacity="0.56">ANSWER ATELIER</text>
   </g>
 
-  <!-- Flowing hair strands — subtle, both sides -->
-  <g opacity="0.1" stroke="#D4B07A" stroke-width="1" fill="none">
-    <!-- Left side -->
-    <path d="M 60 0 Q 80 100 70 210 Q 65 320 85 420"/>
-    <path d="M 90 0 Q 110 120 100 230 Q 95 340 115 420"/>
-    <path d="M 120 0 Q 140 100 130 200 Q 125 310 145 420"/>
-    <!-- Right side -->
-    <path d="M 1380 0 Q 1360 100 1370 210 Q 1375 320 1355 420"/>
-    <path d="M 1350 0 Q 1330 120 1340 230 Q 1345 340 1325 420"/>
-    <path d="M 1320 0 Q 1300 100 1310 200 Q 1315 310 1295 420"/>
+  <g opacity="0.3" stroke="#C9A96E" stroke-width="1" stroke-linecap="round">
+    <line x1="1010" y1="84" x2="1190" y2="84"/>
+    <line x1="1010" y1="104" x2="1276" y2="104"/>
+    <line x1="1010" y1="124" x2="1328" y2="124"/>
   </g>
 
-  <!-- Central text area brightening (very subtle) -->
-  <rect x="360" y="80" width="720" height="260" rx="4" fill="#3A2410" opacity="0.06"/>
-
-  <!-- Gold horizontal rule (above and below conceptual text space) -->
-  <line x1="560" y1="100" x2="880" y2="100" stroke="#C9A96E" stroke-width="0.8" opacity="0.2"/>
-  <line x1="560" y1="320" x2="880" y2="320" stroke="#C9A96E" stroke-width="0.8" opacity="0.2"/>
-
-  <!-- Vignette -->
-  <rect width="1440" height="420" fill="url(#vignette)"/>
-
-  <!-- Top gold shimmer line -->
-  <linearGradient id="shimmer" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0%" stop-color="#C9A96E" stop-opacity="0"/>
-    <stop offset="40%" stop-color="#C9A96E" stop-opacity="0.3"/>
-    <stop offset="60%" stop-color="#C9A96E" stop-opacity="0.3"/>
-    <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
-  </linearGradient>
-  <rect x="0" y="0" width="1440" height="2" fill="url(#shimmer)"/>
-  <rect x="0" y="418" width="1440" height="2" fill="url(#shimmer)"/>
+  <rect width="1440" height="580" fill="url(#leftFade)"/>
+  <rect width="1440" height="580" fill="#080604" opacity="0.07"/>
 </svg>

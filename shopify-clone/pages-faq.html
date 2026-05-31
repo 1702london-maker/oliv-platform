@@ -1850,12 +1850,15 @@ first.parentNode.insertBefore(script, first);
 /* HERO */
 .ofaq-hero {
   position: relative;
-  height: 420px;
+  height: 100vh;
+  max-height: 860px;
+  min-height: 600px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  text-align: left;
+  background: #1A140E;
 }
 .ofaq-hero-img {
   position: absolute;
@@ -1863,20 +1866,22 @@ first.parentNode.insertBefore(script, first);
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center 48%;
   display: block;
 }
 .ofaq-hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center top, rgba(30,20,8,0.42) 0%, rgba(10,7,3,0.78) 100%);
+  background: linear-gradient(to right, rgba(12,9,6,0.78) 0%, rgba(12,9,6,0.48) 34%, rgba(12,9,6,0.14) 68%, rgba(12,9,6,0.22) 100%);
 }
 .ofaq-hero-inner {
-  position: relative;
+  position: absolute;
   z-index: 2;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 40px;
+  top: 18%;
+  left: 4%;
+  max-width: 38%;
+  margin: 0;
+  padding: 0;
 }
 .ofaq-eyebrow {
   font-family: 'Montserrat', sans-serif;
@@ -1890,11 +1895,11 @@ first.parentNode.insertBefore(script, first);
 }
 .ofaq-hero-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 52px;
+  font-size: clamp(31px, 3.7vw, 56px);
   font-weight: 300;
   color: #F6F0E4;
   line-height: 1.1;
-  margin-bottom: 14px;
+  margin-bottom: 24px;
 }
 .ofaq-hero-title em { font-style: italic; color: #C9A96E; }
 .ofaq-hero-sub {
@@ -1909,7 +1914,7 @@ first.parentNode.insertBefore(script, first);
 /* SEARCH */
 .ofaq-search-wrap {
   max-width: 480px;
-  margin: 0 auto;
+  margin: 0;
   position: relative;
 }
 .ofaq-search {
@@ -2173,10 +2178,29 @@ first.parentNode.insertBefore(script, first);
   .ofaq-a { padding-right: 0; }
 }
 @media (max-width: 640px) {
-  .ofaq-hero { height: 360px; }
-  .ofaq-hero-inner { padding: 0 24px; }
-  .ofaq-hero-title { font-size: 36px; }
-  .ofaq-hero-sub { font-size: 14px; }
+  .ofaq-hero { height: 59vh; min-height: unset; max-height: none; overflow: hidden; }
+  .ofaq-hero-img {
+    object-position: 78% center;
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+  .ofaq-hero-overlay { background: linear-gradient(to bottom, rgba(12,9,6,0.16) 0%, rgba(12,9,6,0.20) 38%, rgba(12,9,6,0.82) 100%); }
+  .ofaq-hero-inner {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    padding: 72px 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .ofaq-eyebrow { margin-bottom: auto; font-size: 9px; letter-spacing: 4px; }
+  .ofaq-hero-title { margin-top: auto; margin-bottom: 18px; font-size: clamp(28px, 9vw, 44px); max-width: 310px; }
+  .ofaq-hero-sub { display: none; }
+  .ofaq-search-wrap { width: 100%; max-width: 342px; margin-bottom: 34px; }
   .ofaq-layout { padding: 36px 24px; }
   .ofaq-cta { padding: 32px 24px; }
   .ofaq-cta-btn-dark,
@@ -2194,7 +2218,6 @@ first.parentNode.insertBefore(script, first);
     <div class="ofaq-hero-inner">
       <span class="ofaq-eyebrow">Help Centre</span>
       <h1 class="ofaq-hero-title">Frequently Asked <em>Questions</em></h1>
-      <p class="ofaq-hero-sub">Everything you need to know about OlivHairSupply, our products, services and training.</p>
       <div class="ofaq-search-wrap">
         <input class="ofaq-search" type="text" id="ofaq-search-input" placeholder="Search questions...">
         <div class="ofaq-search-icon"></div>
