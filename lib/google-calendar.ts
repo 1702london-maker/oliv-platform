@@ -54,20 +54,21 @@ export async function createCalendarEvent(input: CalendarEventInput): Promise<st
   try {
     const calendar = google.calendar({ version: "v3", auth });
 
-    const attendees = input.attendeeEmail
+    const sendCustomerInvites = process.env.GOOGLE_CALENDAR_SEND_INVITES === "true";
+    const attendees = sendCustomerInvites && input.attendeeEmail
       ? [{ email: input.attendeeEmail, displayName: "Customer" }]
-      : [];
+      : undefined;
 
     const event = await calendar.events.insert({
       calendarId,
-      sendUpdates: "all",   // sends Google Calendar invite to attendee
+      sendUpdates: sendCustomerInvites ? "all" : "none",
       requestBody: {
         summary: input.summary,
         description: input.description,
         location: input.location,
         start: { dateTime: input.startIso, timeZone: "Europe/Berlin" },
         end:   { dateTime: input.endIso,   timeZone: "Europe/Berlin" },
-        attendees,
+        ...(attendees ? { attendees } : {}),
         colorId: "5",  // banana yellow — stands out for bookings
         extendedProperties: {
           private: { source: input.source || "website" }
