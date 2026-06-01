@@ -1873,14 +1873,18 @@ first.parentNode.insertBefore(script, first);
 .ocon-hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(26,20,14,0.30) 0%, rgba(10,7,4,0.72) 100%);
+  background: linear-gradient(to bottom, rgba(15,10,6,0.12) 0%, rgba(15,10,6,0.32) 100%);
 }
 .ocon-hero-inner {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 4%;
+  bottom: auto;
+  transform: translateY(-50%);
   z-index: 2;
-  text-align: center;
-  padding: 0 24px;
-  max-width: 700px;
+  text-align: left;
+  padding: 0;
+  max-width: 30%;
 }
 .ocon-hero-eyebrow {
   font-family: 'Montserrat', sans-serif;
@@ -1894,11 +1898,11 @@ first.parentNode.insertBefore(script, first);
 }
 .ocon-hero-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 58px;
+  font-size: clamp(26px, 3.4vw, 50px);
   font-weight: 300;
   color: #FFFFFF;
   line-height: 1.08;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 .ocon-hero-title em { font-style: italic; color: #C9A96E; }
 .ocon-hero-sub {
@@ -2335,13 +2339,38 @@ first.parentNode.insertBefore(script, first);
   .ocon-locations-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
-  .ocon-hero { height: 380px; }
+  .ocon-hero {
+    height: 84vh;
+    min-height: 520px;
+    overflow: hidden;
+  }
   .ocon-hero-img {
-    width: 112%;
-    left: -6%;
+    width: 100%;
+    left: 0;
     object-position: center center;
   }
-  .ocon-hero-title { font-size: 38px; }
+  .ocon-hero-inner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    max-width: 100%;
+    padding: 72px 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .ocon-hero-eyebrow { margin-bottom: auto; }
+  .ocon-hero-title {
+    font-size: 38px;
+    margin-top: auto;
+    margin-bottom: 80px;
+    max-width: 330px;
+  }
   .ocon-hero-sub { font-size: 16px; }
   .ocon-options-grid { grid-template-columns: 1fr; }
   .ocon-options-inner,
