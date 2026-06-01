@@ -3654,6 +3654,31 @@ function oapptFormatDate(str) {
   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return parseInt(parts[2]) + ' ' + months[parseInt(parts[1]) - 1] + ' ' + parts[0];
 }
+function oapptLastSunday(year, monthIndex) {
+  var date = new Date(Date.UTC(year, monthIndex + 1, 0));
+  date.setUTCDate(date.getUTCDate() - date.getUTCDay());
+  return date.getUTCDate();
+}
+function oapptBerlinOffset(dateStr) {
+  var parts = dateStr.split('-').map(function(p) { return parseInt(p, 10); });
+  var marker = (parts[1] * 100) + parts[2];
+  var dstStart = 300 + oapptLastSunday(parts[0], 2);
+  var dstEnd = 1000 + oapptLastSunday(parts[0], 9);
+  return marker > dstStart && marker < dstEnd ? '+02:00' : '+01:00';
+}
+function oapptLocalIso(dateStr, timeStr, addMinutes) {
+  var dateParts = dateStr.split('-').map(function(p) { return parseInt(p, 10); });
+  var timeParts = (timeStr || '10:00').split(':').map(function(p) { return parseInt(p, 10); });
+  var date = new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2], timeParts[0], timeParts[1] || 0, 0));
+  date.setUTCMinutes(date.getUTCMinutes() + (addMinutes || 0));
+  var localDate = [
+    date.getUTCFullYear(),
+    String(date.getUTCMonth() + 1).padStart(2, '0'),
+    String(date.getUTCDate()).padStart(2, '0')
+  ].join('-');
+  var localTime = String(date.getUTCHours()).padStart(2, '0') + ':' + String(date.getUTCMinutes()).padStart(2, '0');
+  return localDate + 'T' + localTime + ':00' + oapptBerlinOffset(localDate);
+}
 
 function oapptRenderSlots() {
   var grid = document.getElementById('oappt-slots-grid');
@@ -3730,6 +3755,7 @@ function oapptSubmitBooking(event) {
   msg += 'Service: '  + (svc ? svc.name : '') + '\n';
   msg += (svc ? svc.optionLabel : 'Option') + ': ' + oapptState.serviceOption + '\n';
   msg += 'Stylist: '  + (stylist ? stylist.name : '') + '\n';
+  msg += 'Date ISO: ' + oapptState.selectedDate + '\n';
   msg += 'Date: '     + oapptFormatDate(oapptState.selectedDate) + '\n';
   msg += 'Time: '     + oapptState.selectedTime + '\n\n';
   if (oapptState.hairPurchase) {
@@ -3792,17 +3818,13 @@ function oapptSubmitBooking(event) {
     : 'Kurfürstendamm 115B, 10711 Berlin-Halensee';
 
   var timeStr = oapptState.selectedTime || '10:00';
-  var startHour = parseInt(timeStr.split(':')[0], 10);
-  var startMin  = parseInt(timeStr.split(':')[1] || '0', 10);
-  var d = new Date(oapptState.selectedDate);
-  d.setHours(startHour, startMin, 0, 0);
-  var startsAt = d.toISOString();
-  var endD = new Date(d.getTime() + 90 * 60000);
-  var endsAt = endD.toISOString();
+  var startsAt = oapptLocalIso(oapptState.selectedDate, timeStr, 0);
+  var endsAt = oapptLocalIso(oapptState.selectedDate, timeStr, 90);
 
   // Build end time label from start time
-  var endHour = endD.getHours().toString().padStart(2,'0');
-  var endMin  = endD.getMinutes().toString().padStart(2,'0');
+  var endTime = endsAt.substring(11, 16);
+  var endHour = endTime.substring(0, 2);
+  var endMin  = endTime.substring(3, 5);
   var timeLabel = timeStr + ' – ' + endHour + ':' + endMin;
 
   // Detect source from URL param (?source=whatsapp / facebook / instagram)

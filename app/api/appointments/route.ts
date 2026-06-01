@@ -7,6 +7,8 @@ import {
   type AppointmentEmailData,
 } from "@/lib/email/resend";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -35,7 +37,6 @@ export async function POST(request: Request) {
 
     const supabase = createSupabaseAdminClient();
 
-    // Get default service if no serviceId passed
     let dbServiceId = serviceId;
     if (!dbServiceId) {
       const { data: svc } = await supabase
@@ -51,7 +52,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "no_service" }, { status: 500 });
     }
 
-    // Save booking to Supabase
     const { data: appt, error: dbError } = await supabase
       .from("appointments")
       .insert({
@@ -86,7 +86,6 @@ export async function POST(request: Request) {
 
     const bookingId = appt.id;
 
-    // Create Google Calendar event
     const calDescription = [
       `Service: ${serviceName}`,
       `Stylist: ${stylistName}`,
@@ -100,10 +99,10 @@ export async function POST(request: Request) {
       `Estimated Price: ${estimatedPrice}`,
       `Channel: ${source}`,
       `Booking ID: ${bookingId}`,
-    ].filter(v => v !== null).join("\n");
+    ].filter((value) => value !== null).join("\n");
 
     const googleEventId = await createCalendarEvent({
-      summary: `${serviceName} — ${customerName}`,
+      summary: `${serviceName} - ${customerName}`,
       description: calDescription,
       location: locationAddress || locationName,
       startIso: startsAt,
@@ -119,7 +118,6 @@ export async function POST(request: Request) {
         .eq("id", bookingId);
     }
 
-    // Send confirmation emails in parallel
     const emailData: AppointmentEmailData = {
       customerName,
       customerEmail,
@@ -142,7 +140,6 @@ export async function POST(request: Request) {
     ]);
 
     return NextResponse.json({ success: true, bookingId });
-
   } catch (err) {
     console.error("[Appointments] Error:", err);
     return NextResponse.json({ error: "server_error" }, { status: 500 });
