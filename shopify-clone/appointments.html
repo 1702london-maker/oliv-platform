@@ -3785,23 +3785,70 @@ function oapptSubmitBooking(event) {
     detailsEl.innerHTML = html;
   }
 
-  var waMsg = 'BOOKING REQUEST%0A%0A';
+  // Build ISO timestamps from selected date + time slot
+  var locName = oapptState.location === 'a' ? 'Salon A — Schöneberg' : 'Salon B — Kurfürstendamm';
+  var locAddr = oapptState.location === 'a'
+    ? 'Winterfeldtstrasse 7, 10781 Berlin-Schöneberg'
+    : 'Kurfürstendamm 115B, 10711 Berlin-Halensee';
+
+  var timeStr = oapptState.selectedTime || '10:00';
+  var startHour = parseInt(timeStr.split(':')[0], 10);
+  var startMin  = parseInt(timeStr.split(':')[1] || '0', 10);
+  var d = new Date(oapptState.selectedDate);
+  d.setHours(startHour, startMin, 0, 0);
+  var startsAt = d.toISOString();
+  var endD = new Date(d.getTime() + 90 * 60000);
+  var endsAt = endD.toISOString();
+
+  // Build end time label from start time
+  var endHour = endD.getHours().toString().padStart(2,'0');
+  var endMin  = endD.getMinutes().toString().padStart(2,'0');
+  var timeLabel = timeStr + ' – ' + endHour + ':' + endMin;
+
+  // Detect source from URL param (?source=whatsapp / facebook / instagram)
+  var urlParams = new URLSearchParams(window.location.search);
+  var source = urlParams.get('source') || 'website';
+
+  // POST to new JSON API
+  fetch('/api/appointments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      customerName:    oapptState.customerName,
+      customerEmail:   oapptState.customerEmail,
+      customerPhone:   oapptState.customerPhone,
+      notes:           oapptState.customerNotes || '',
+      serviceName:     svc ? (svc.name + (oapptState.serviceOption ? ' (' + oapptState.serviceOption + ')' : '')) : '',
+      stylistName:     stylist ? stylist.name : '',
+      locationName:    locName,
+      locationAddress: locAddr,
+      dateLabel:       oapptFormatDate(oapptState.selectedDate),
+      timeLabel:       timeLabel,
+      startsAt:        startsAt,
+      endsAt:          endsAt,
+      estimatedPrice:  '€' + total,
+      source:          source,
+    })
+  }).catch(function(err) { console.warn('[OHS Booking] API error:', err); });
+
+  // Notify salon team via WhatsApp (sends in background)
+  var waMsg = 'NEW BOOKING REQUEST%0A%0A';
   waMsg += 'Name: ' + encodeURIComponent(oapptState.customerName) + '%0A';
-  waMsg += 'Location: ' + encodeURIComponent(oapptState.location === 'a' ? 'Salon A - Schoneberg' : 'Salon B - Kurfurstendamm') + '%0A';
   waMsg += 'Service: ' + encodeURIComponent(svc ? svc.name : '') + '%0A';
-  waMsg += 'Option: ' + encodeURIComponent(oapptState.serviceOption) + '%0A';
+  waMsg += 'Location: ' + encodeURIComponent(locName) + '%0A';
   waMsg += 'Stylist: ' + encodeURIComponent(stylist ? stylist.name : '') + '%0A';
   waMsg += 'Date: ' + encodeURIComponent(oapptFormatDate(oapptState.selectedDate)) + '%0A';
-  waMsg += 'Time: ' + encodeURIComponent(oapptState.selectedTime) + '%0A';
+  waMsg += 'Time: ' + encodeURIComponent(timeStr) + '%0A';
   waMsg += 'Phone: ' + encodeURIComponent(oapptState.customerPhone) + '%0A';
   waMsg += 'Email: ' + encodeURIComponent(oapptState.customerEmail) + '%0A';
-  waMsg += 'Total: EUR ' + encodeURIComponent(total);
+  waMsg += 'Total: %E2%82%AC' + encodeURIComponent(total);
   if (oapptState.customerNotes) waMsg += '%0ANotes: ' + encodeURIComponent(oapptState.customerNotes);
-
-  window.open('https://wa.me/447493099125?text=' + waMsg, '_blank');
+  // Open WhatsApp only if booking came from WhatsApp channel
+  if (source === 'whatsapp') {
+    window.open('https://wa.me/4915786283439?text=' + waMsg, '_blank');
+  }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(function() { form.submit(); }, 800);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
