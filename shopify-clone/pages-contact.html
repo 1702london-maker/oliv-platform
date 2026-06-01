@@ -1862,7 +1862,7 @@ first.parentNode.insertBefore(script, first);
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center center;
   display: block;
 }
 .ocon-hero-bg {
@@ -2336,6 +2336,11 @@ first.parentNode.insertBefore(script, first);
 }
 @media (max-width: 768px) {
   .ocon-hero { height: 380px; }
+  .ocon-hero-img {
+    width: 112%;
+    left: -6%;
+    object-position: center center;
+  }
   .ocon-hero-title { font-size: 38px; }
   .ocon-hero-sub { font-size: 16px; }
   .ocon-options-grid { grid-template-columns: 1fr; }
@@ -2368,7 +2373,6 @@ first.parentNode.insertBefore(script, first);
     <div class="ocon-hero-inner">
       <span class="ocon-hero-eyebrow">Contact</span>
       <h1 class="ocon-hero-title">Visit Us or <em>Get in Touch</em></h1>
-      <p class="ocon-hero-sub">Experience luxury hair services at our salon or speak directly with our team.</p>
     </div>
   </div>
 
