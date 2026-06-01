@@ -30,8 +30,11 @@ function getAuth() {
 
   if (!email || !rawKey) return null;
 
-  // Vercel stores the key as a single-line string with literal \n
-  const privateKey = rawKey.replace(/\\n/g, "\n");
+  // Clean the key — strip surrounding quotes (pasted from JSON), convert literal \n
+  const privateKey = rawKey
+    .trim()
+    .replace(/^["']/, "").replace(/["']$/, "")  // strip surrounding quotes
+    .replace(/\\n/g, "\n");                       // literal \n → real newlines
 
   return new google.auth.GoogleAuth({
     credentials: { client_email: email, private_key: privateKey },
@@ -80,8 +83,10 @@ export async function createCalendarEvent(input: CalendarEventInput): Promise<st
     });
 
     return event.data.id ?? null;
-  } catch (err) {
-    console.error("[GoogleCalendar] Failed to create event:", err);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    const detail = (err as { response?: { data?: unknown } })?.response?.data;
+    console.error("[GoogleCalendar] Failed to create event:", msg, detail ? JSON.stringify(detail) : "");
     return null;
   }
 }
