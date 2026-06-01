@@ -2347,7 +2347,7 @@ first.parentNode.insertBefore(script, first);
   .ocon-hero-img {
     width: 100%;
     left: 0;
-    object-position: center center;
+    object-position: 80% center;
   }
   .ocon-hero-inner {
     position: absolute;
@@ -2384,6 +2384,7 @@ first.parentNode.insertBefore(script, first);
   .ocon-locations { padding: 64px 0; }
   .ocon-form-section { padding: 64px 0; }
   .ocon-cta { padding: 64px 0; }
+  .ocon-map iframe { height: 360px; }
   .ocon-cta-btns { flex-direction: column; align-items: center; }
   .ocon-cta-btn-gold,
   .ocon-cta-btn-dark { width: 100%; justify-content: center; font-size: 15px; }
@@ -2517,15 +2518,6 @@ first.parentNode.insertBefore(script, first);
     </div>
   </div>
 
-  <div class="ocon-map">
-    
-      <div class="ocon-map-placeholder">
-        <div class="ocon-map-placeholder-icon">M</div>
-        <div class="ocon-map-placeholder-text">Add Google Maps embed in Customiser</div>
-      </div>
-    
-  </div>
-
   <div class="ocon-form-section">
     <div class="ocon-form-inner">
 
@@ -2583,6 +2575,15 @@ first.parentNode.insertBefore(script, first);
         <a href="/pages/appointment" class="ocon-cta-btn-dark">Book Appointment</a>
       </div>
     </div>
+  </div>
+
+  <div class="ocon-map">
+    <iframe
+      title="OlivHairSupply Berlin map"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=OlivHairSupply%20Winterfeldtstrasse%207%2010781%20Berlin&output=embed"
+    ></iframe>
   </div>
 
 </div>
