@@ -46,7 +46,7 @@ export async function createCalendarEvent(input: CalendarEventInput): Promise<st
     return null;
   }
 
-  const calendarId = process.env.GOOGLE_CALENDAR_ID || "primary";
+  const calendarId = process.env.GOOGLE_CALENDAR_ID || "olivhairbooking@gmail.com";
 
   try {
     const calendar = google.calendar({ version: "v3", auth });
@@ -90,7 +90,7 @@ export async function createCalendarEvent(input: CalendarEventInput): Promise<st
 export async function deleteCalendarEvent(googleEventId: string): Promise<void> {
   const auth = getAuth();
   if (!auth) return;
-  const calendarId = process.env.GOOGLE_CALENDAR_ID || "primary";
+  const calendarId = process.env.GOOGLE_CALENDAR_ID || "olivhairbooking@gmail.com";
   try {
     const calendar = google.calendar({ version: "v3", auth });
     await calendar.events.delete({ calendarId, eventId: googleEventId });

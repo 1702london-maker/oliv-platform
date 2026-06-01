@@ -4,7 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
 const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsupply.de";
-const BOOKING_TEAM_EMAIL = process.env.BOOKING_TEAM_EMAIL || TEAM_EMAIL;
+const BOOKING_TEAM_EMAIL = process.env.BOOKING_TEAM_EMAIL || "olivhairbooking@gmail.com";
 
 /* ══════════════════════════════════════════════════════════════
    APPOINTMENTS — customer confirmation + team notification
