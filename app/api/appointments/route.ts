@@ -42,7 +42,6 @@ export async function POST(request: Request) {
         .from("appointment_services")
         .select("id")
         .eq("active", true)
-        .order("created_at", { ascending: true })
         .limit(1)
         .maybeSingle();
       dbServiceId = svc?.id;
