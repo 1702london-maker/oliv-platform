@@ -142,6 +142,13 @@ function mapCollection(product) {
   };
 }
 
+function wooPriceCents(product, key = "price") {
+  const raw = product.prices?.[key];
+  if (!raw) return 0;
+  const minorUnit = Number(product.prices?.currency_minor_unit ?? 2);
+  return Math.round(Number(raw) * Math.pow(10, 2 - minorUnit));
+}
+
 function extractVariations(html) {
   const marker = 'data-product_variations="';
   const start = html.indexOf(marker);
@@ -241,6 +248,8 @@ async function main() {
       proposedCollectionSlug: collection.collectionSlug,
       proposedCollectionTitle: collection.collectionTitle,
       description: stripHtml(product.description || product.short_description || ""),
+      priceCents: wooPriceCents(product, "price"),
+      regularPriceCents: wooPriceCents(product, "regular_price") || wooPriceCents(product, "price"),
       imageUrl: productImages[0] || null,
       images: productImages,
       attributes: (product.attributes || []).map((attribute) => ({

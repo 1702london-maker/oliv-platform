@@ -104,8 +104,8 @@ async function upsertVariants(supabase, product, productId) {
           title: "Standard",
           color: null,
           length: null,
-          retailPriceCents: 0,
-          regularPriceCents: 0,
+          retailPriceCents: product.priceCents || 0,
+          regularPriceCents: product.regularPriceCents || product.priceCents || 0,
           imageUrl: product.imageUrl,
           sku: `woo-${product.oldProductId}`,
           position: 1
