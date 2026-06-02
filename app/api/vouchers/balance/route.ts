@@ -8,11 +8,16 @@ export async function GET(req: Request) {
   }
 
   const admin = createSupabaseAdminClient();
-  const { data: voucher } = await admin
+  const { data: voucher, error } = await admin
     .from("vouchers")
     .select("code, amount_cents, balance_cents, status, activated_at, expires_at")
     .eq("code", code.toUpperCase().trim())
     .maybeSingle();
+
+  if (error) {
+    console.error("[vouchers/balance] Supabase error:", error);
+    return NextResponse.json({ error: "Database error: " + error.message }, { status: 500 });
+  }
 
   if (!voucher) {
     return NextResponse.json({ error: "Voucher code not found." }, { status: 404 });
