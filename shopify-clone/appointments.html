@@ -3272,8 +3272,8 @@ var OAPPT_STYLISTS = [
     id: 'stylist-1',
     name: 'Stylist 1',
     badge: 'Seat 1',
-    specialty: 'Hair Extension Seat',
-    bio: 'Available for Store A and Store B appointments.',
+    specialty: 'Stylist Seat',
+    bio: 'Available',
     surcharge: 0,
     workingDays: [1,2,3,4,5,6],
     bookedSlots: {}
@@ -3282,8 +3282,8 @@ var OAPPT_STYLISTS = [
     id: 'stylist-2',
     name: 'Stylist 2',
     badge: 'Seat 2',
-    specialty: 'Hair Extension Seat',
-    bio: 'Available for Store A and Store B appointments.',
+    specialty: 'Stylist Seat',
+    bio: 'Available',
     surcharge: 0,
     workingDays: [1,2,3,4,5,6],
     bookedSlots: {}
@@ -3292,15 +3292,15 @@ var OAPPT_STYLISTS = [
     id: 'stylist-3',
     name: 'Stylist 3',
     badge: 'Seat 3',
-    specialty: 'Hair Extension Seat',
-    bio: 'Available for Store A and Store B appointments.',
+    specialty: 'Stylist Seat',
+    bio: 'Available',
     surcharge: 0,
     workingDays: [1,2,3,4,5,6],
     bookedSlots: {}
   }
 ];
 
-var OAPPT_ALL_SLOTS = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+var OAPPT_ALL_SLOTS = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
 
 var oapptState = {
   currentStep: 1,
@@ -4239,9 +4239,9 @@ OAPPT_SERVICES = [
 ];
 
 OAPPT_STYLISTS = [
-  { id: 'stylist-1', name: 'Stylist 1', deName: 'Stylistin 1', badge: 'Seat 1', deBadge: 'Platz 1', specialty: 'Hair Extension Seat', deSpecialty: 'Platz fuer Haarverlaengerungen', bio: 'Available for Store A and Store B appointments.', deBio: 'Verfuegbar fuer Termine in Store A und Store B.', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} },
-  { id: 'stylist-2', name: 'Stylist 2', deName: 'Stylistin 2', badge: 'Seat 2', deBadge: 'Platz 2', specialty: 'Hair Extension Seat', deSpecialty: 'Platz fuer Haarverlaengerungen', bio: 'Available for Store A and Store B appointments.', deBio: 'Verfuegbar fuer Termine in Store A und Store B.', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} },
-  { id: 'stylist-3', name: 'Stylist 3', deName: 'Stylistin 3', badge: 'Seat 3', deBadge: 'Platz 3', specialty: 'Hair Extension Seat', deSpecialty: 'Platz fuer Haarverlaengerungen', bio: 'Available for Store A and Store B appointments.', deBio: 'Verfuegbar fuer Termine in Store A und Store B.', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} }
+  { id: 'stylist-1', name: 'Stylist 1', deName: 'Stylistin 1', badge: 'Stylist Seat', deBadge: 'Stylistinnen-Platz', specialty: 'Stylist Seat', deSpecialty: 'Stylistinnen-Platz', bio: 'Available', deBio: 'Verfuegbar', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} },
+  { id: 'stylist-2', name: 'Stylist 2', deName: 'Stylistin 2', badge: 'Stylist Seat', deBadge: 'Stylistinnen-Platz', specialty: 'Stylist Seat', deSpecialty: 'Stylistinnen-Platz', bio: 'Available', deBio: 'Verfuegbar', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} },
+  { id: 'stylist-3', name: 'Stylist 3', deName: 'Stylistin 3', badge: 'Stylist Seat', deBadge: 'Stylistinnen-Platz', specialty: 'Stylist Seat', deSpecialty: 'Stylistinnen-Platz', bio: 'Available', deBio: 'Verfuegbar', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} }
 ];
 
 var OAPPT_EXTENSIONS = {
@@ -4328,6 +4328,22 @@ function oapptDurationLabel(minutes) {
   if (h) return h + 'h';
   return m + 'm';
 }
+function oapptTimeToMinutes(timeStr) {
+  var parts = (timeStr || '00:00').split(':').map(function(p) { return parseInt(p, 10) || 0; });
+  return (parts[0] * 60) + parts[1];
+}
+function oapptMinutesToTime(totalMinutes) {
+  var h = Math.floor(totalMinutes / 60);
+  var m = totalMinutes % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+function oapptSlotRunsPastClosing(slot) {
+  return oapptTimeToMinutes(slot) + oapptServiceDurationMinutes() > (19 * 60);
+}
+function oapptSelectedTimeLabel() {
+  if (!oapptState.selectedTime) return '';
+  return oapptState.selectedTime + ' - ' + oapptMinutesToTime(oapptTimeToMinutes(oapptState.selectedTime) + oapptServiceDurationMinutes());
+}
 function oapptStoreName() {
   var loc = OAPPT_STORE_LABELS[oapptState.location] || OAPPT_STORE_LABELS.a;
   return oapptLang() === 'de' ? loc.de : loc.en;
@@ -4396,7 +4412,8 @@ function oapptUpdateSummary() {
   }
   if (oapptState.selectedStylist) lines.push({ label: oapptLang() === 'de' ? 'Stylistin' : 'Stylist', val: oapptText(oapptState.selectedStylist, 'name') });
   if (oapptState.selectedDate) lines.push({ label: oapptLang() === 'de' ? 'Datum' : 'Date', val: oapptFormatDate(oapptState.selectedDate) });
-  if (oapptState.selectedTime) lines.push({ label: oapptLang() === 'de' ? 'Uhrzeit' : 'Time', val: oapptState.selectedTime });
+  if (oapptState.selectedTime) lines.push({ label: oapptLang() === 'de' ? 'Uhrzeit' : 'Time', val: oapptSelectedTimeLabel() });
+  if (oapptGetTotal() > 0) lines.push({ label: oapptLang() === 'de' ? 'Preis' : 'Price', val: '&euro;' + oapptMoney(oapptGetTotal()) });
   if (lines.length === 0) {
     body.innerHTML = '<p class="oappt-summary-empty">' + (oapptLang() === 'de' ? 'Waehle einen Store, um zu beginnen.' : 'Select a store to begin.') + '</p>';
     if (totalWrap) totalWrap.style.display = 'none';
@@ -4493,7 +4510,7 @@ function oapptBuildConfigurator() {
   html += '<div><label class="oappt-field-label">' + (oapptLang() === 'de' ? 'Haarlaenge' : 'Hair Length') + '</label><select class="oappt-select" onchange="oapptSetHairLength(this.value)"><option value="">' + (oapptLang() === 'de' ? 'Auswaehlen...' : 'Select...') + '</option>';
   ['40','45','50','55','60','65'].forEach(function(len) {
     var price = oapptState.extensionType ? OAPPT_EXTENSIONS[oapptState.extensionType].prices[len] : 0;
-    html += '<option value="' + len + '"' + (oapptState.hairLength === len ? ' selected' : '') + '>' + len + 'cm' + (price ? ' - &euro;' + oapptMoney(price) + ' ' + (oapptLang() === 'de' ? 'Basis' : 'base') : '') + '</option>';
+    html += '<option value="' + len + '"' + (oapptState.hairLength === len ? ' selected' : '') + '>' + len + 'cm' + (price ? ' - &euro;' + oapptMoney(price) : '') + '</option>';
   });
   html += '</select></div></div>';
   html += '<div class="oappt-field-row">';
@@ -4562,7 +4579,7 @@ function oapptBuildStylists() {
   if (!grid) return;
   grid.innerHTML = OAPPT_STYLISTS.map(function(s) {
     var sel = oapptState.selectedStylist && oapptState.selectedStylist.id === s.id ? 'selected' : '';
-    return '<div class="oappt-stylist-card ' + sel + '" data-id="' + s.id + '" onclick="oapptSelectStylist(\'' + s.id + '\')"><div class="oappt-stylist-tick"></div><div class="oappt-stylist-img"><div class="oappt-stylist-img-ph">' + s.name.replace('Stylist ', '') + '</div></div><div class="oappt-stylist-body"><span class="oappt-stylist-badge">' + oapptText(s, 'badge') + '</span><div class="oappt-stylist-name">' + oapptText(s, 'name') + '</div><div class="oappt-stylist-specialty">' + oapptText(s, 'specialty') + '</div><p class="oappt-stylist-bio">' + oapptText(s, 'bio') + '</p></div></div>';
+    return '<div class="oappt-stylist-card ' + sel + '" data-id="' + s.id + '" onclick="oapptSelectStylist(\'' + s.id + '\')"><div class="oappt-stylist-tick"></div><div class="oappt-stylist-img"><div class="oappt-stylist-img-ph">' + s.name.replace('Stylist ', '') + '</div></div><div class="oappt-stylist-body"><div class="oappt-stylist-name">' + oapptText(s, 'name') + '</div><div class="oappt-stylist-specialty">' + oapptText(s, 'specialty') + '</div><p class="oappt-stylist-bio">' + oapptText(s, 'bio') + '</p></div></div>';
   }).join('');
 }
 
@@ -4617,17 +4634,18 @@ function oapptRenderSlotsFromCounts() {
   if (!grid) return;
   var html = '';
   OAPPT_ALL_SLOTS.forEach(function(slot) {
-    var isBooked = !!(oapptState.slotFull && oapptState.slotFull[slot]);
+    var isClosed = oapptSlotRunsPastClosing(slot);
+    var isBooked = isClosed || !!(oapptState.slotFull && oapptState.slotFull[slot]);
     var isSel = oapptState.selectedTime === slot;
     var cls = 'oappt-slot' + (isBooked ? ' booked' : '') + (isSel ? ' selected' : '');
-    if (isBooked) html += '<div class="' + cls + '">' + slot + '<br><small>' + (oapptLang() === 'de' ? 'Voll' : 'Full') + '</small></div>';
-    else html += '<div class="' + cls + '" onclick="oapptSelectTime(\'' + slot + '\')">' + slot + '</div>';
+    if (isBooked) html += '<div class="' + cls + '">' + slot + '<br><small>' + (isClosed ? (oapptLang() === 'de' ? 'Geschlossen' : 'Closed') : (oapptLang() === 'de' ? 'Voll' : 'Full')) + '</small></div>';
+    else html += '<div class="' + cls + '" onclick="oapptSelectTime(\'' + slot + '\')">' + slot + '<br><small>' + oapptMinutesToTime(oapptTimeToMinutes(slot) + oapptServiceDurationMinutes()) + '</small></div>';
   });
   grid.innerHTML = html;
 }
 
 function oapptSelectTime(slot) {
-  if (oapptState.slotFull && oapptState.slotFull[slot]) return;
+  if ((oapptState.slotFull && oapptState.slotFull[slot]) || oapptSlotRunsPastClosing(slot)) return;
   oapptState.selectedTime = slot;
   oapptRenderSlots();
   oapptUpdateSummary();
@@ -4662,7 +4680,7 @@ function oapptBuildBookingRows() {
     rows.push({ label: 'Extension Price Total', val: '&euro;' + oapptMoney(oapptExtensionTotal()) });
   }
   rows.push({ label: 'Date', val: oapptFormatDate(oapptState.selectedDate) });
-  rows.push({ label: 'Time', val: oapptState.selectedTime });
+  rows.push({ label: 'Time', val: oapptSelectedTimeLabel() });
   rows.push({ label: 'Name', val: oapptState.customerName });
   rows.push({ label: 'Email', val: oapptState.customerEmail });
   rows.push({ label: 'Phone', val: oapptState.customerPhone });
@@ -4678,6 +4696,7 @@ function oapptBuildBookingSummary() {
     if (!r.val) return;
     html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">' + r.label + '</span><span class="oappt-confirm-row-val">' + r.val + '</span></div>';
   });
+  html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">Price</span><span class="oappt-confirm-row-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
   html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Estimated Total</span><span class="oappt-confirm-total-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
   wrap.innerHTML = html;
 }
@@ -4711,7 +4730,7 @@ function oapptSubmitBooking(event) {
   var timeStr = oapptState.selectedTime || '10:00';
   var startsAt = oapptLocalIso(oapptState.selectedDate, timeStr, 0);
   var endsAt = oapptLocalIso(oapptState.selectedDate, timeStr, oapptServiceDurationMinutes());
-  var timeLabel = timeStr + ' - ' + endsAt.substring(11, 16);
+  var timeLabel = oapptSelectedTimeLabel();
   var urlParams = new URLSearchParams(window.location.search);
   var source = urlParams.get('source') || 'website';
   var submitBtn = document.getElementById('oappt-submit-btn');

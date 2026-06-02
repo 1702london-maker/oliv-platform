@@ -41,6 +41,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "no_show_terms_required" }, { status: 400 });
     }
 
+    if (isBerlinSunday(String(startsAt))) {
+      return NextResponse.json({ error: "sunday_closed" }, { status: 409 });
+    }
+
+    if (runsPastBerlinClosing(String(endsAt))) {
+      return NextResponse.json({ error: "outside_opening_hours" }, { status: 409 });
+    }
+
     const supabase = createSupabaseAdminClient();
 
     let dbServiceId = serviceId;
@@ -188,4 +196,23 @@ export async function POST(request: Request) {
     console.error("[Appointments] Error:", err);
     return NextResponse.json({ error: "server_error" }, { status: 500 });
   }
+}
+
+function isBerlinSunday(iso: string) {
+  const day = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Berlin",
+    weekday: "short",
+  }).format(new Date(iso));
+  return day === "Sun";
+}
+
+function runsPastBerlinClosing(iso: string) {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Berlin",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date(iso)).map((part) => [part.type, part.value]));
+  const minutes = Number(parts.hour || 0) * 60 + Number(parts.minute || 0);
+  return minutes > 19 * 60;
 }

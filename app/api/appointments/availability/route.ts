@@ -14,6 +14,19 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "missing_date" }, { status: 400 });
   }
 
+  const slots = Array.from({ length: 10 }, (_, index) => `${String(index + 9).padStart(2, "0")}:00`);
+  const dayOfWeek = new Date(`${date}T00:00:00.000Z`).getUTCDay();
+  if (dayOfWeek === 0) {
+    return NextResponse.json({
+      date,
+      locationName,
+      stylistName,
+      durationMinutes,
+      full: slots,
+      bookings: 0,
+    });
+  }
+
   const start = new Date(`${date}T00:00:00.000Z`);
   const end = new Date(`${date}T23:59:59.999Z`);
   start.setUTCDate(start.getUTCDate() - 1);
@@ -53,13 +66,14 @@ export async function GET(request: Request) {
   }
 
   const full: string[] = [];
-  for (let hour = 9; hour <= 19; hour++) {
-    const time = `${String(hour).padStart(2, "0")}:00`;
+  for (const time of slots) {
     const startIso = localIso(date, time);
     const candidateStart = new Date(startIso);
     const candidateEnd = new Date(candidateStart.getTime() + durationMinutes * 60_000);
+    const closingTime = new Date(localIso(date, "19:00"));
+    const outsideHours = candidateEnd > closingTime;
     const overlaps = bookings.some((booking) => candidateStart < booking.end && candidateEnd > booking.start);
-    if (overlaps) full.push(time);
+    if (outsideHours || overlaps) full.push(time);
   }
 
   return NextResponse.json({
