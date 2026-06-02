@@ -1,278 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-308 -124 2057 829" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" width="1440" height="580" preserveAspectRatio="xMidYMid slice">
   <defs>
-    <!-- Exact wholesale background palette -->
-    <linearGradient id="sBg" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#424040"/>
-      <stop offset="28%"  stop-color="#555250"/>
-      <stop offset="54%"  stop-color="#5E5A56"/>
-      <stop offset="78%"  stop-color="#575350"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#424040"/>
+      <stop offset="28%" stop-color="#555250"/>
+      <stop offset="54%" stop-color="#5E5A56"/>
+      <stop offset="78%" stop-color="#575350"/>
       <stop offset="100%" stop-color="#4A4744"/>
     </linearGradient>
-    <linearGradient id="sTopS" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.52"/>
-      <stop offset="38%"  stop-color="#1C1810" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#100C08" stop-opacity="0.38"/>
-    </linearGradient>
-    <radialGradient id="sKey" cx="72%" cy="14%" r="55%">
-      <stop offset="0%"   stop-color="#807060" stop-opacity="0.58"/>
+    <radialGradient id="key" cx="74%" cy="18%" r="58%">
+      <stop offset="0%" stop-color="#807060" stop-opacity="0.56"/>
       <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="sFloor" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#363230"/>
+    <linearGradient id="topShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1C1810" stop-opacity="0.52"/>
+      <stop offset="40%" stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.36"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#363230"/>
       <stop offset="100%" stop-color="#242018"/>
     </linearGradient>
-    <!-- Hair — rich dark brown, exact wholesale hair palette -->
-    <linearGradient id="hDark" x1="0.1" y1="0" x2="0.1" y2="1">
-      <stop offset="0%"   stop-color="#180E04"/>
-      <stop offset="40%"  stop-color="#281808"/>
-      <stop offset="100%" stop-color="#1C1008"/>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8A6418"/>
+      <stop offset="30%" stop-color="#C9A96E"/>
+      <stop offset="58%" stop-color="#E8CB85"/>
+      <stop offset="82%" stop-color="#C9A040"/>
+      <stop offset="100%" stop-color="#8A6418"/>
     </linearGradient>
-    <linearGradient id="hShine" x1="0.08" y1="0" x2="0.2" y2="1">
-      <stop offset="0%"   stop-color="#C09050" stop-opacity="0"/>
-      <stop offset="25%"  stop-color="#D8A860" stop-opacity="0.65"/>
-      <stop offset="60%"  stop-color="#B08040" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#885020" stop-opacity="0"/>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F2F2F0"/>
+      <stop offset="45%" stop-color="#96999C"/>
+      <stop offset="100%" stop-color="#4A4C4E"/>
     </linearGradient>
-    <!-- Skin — same warm mid-tone as wholesale figures -->
-    <linearGradient id="skinG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#C8926A"/>
-      <stop offset="100%" stop-color="#9A6840"/>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#161410"/>
+      <stop offset="35%" stop-color="#4A4A46"/>
+      <stop offset="70%" stop-color="#76746F"/>
+      <stop offset="100%" stop-color="#1F1E1C"/>
     </linearGradient>
-    <!-- Dress / garment dark -->
-    <linearGradient id="dressG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#201C14"/>
-      <stop offset="100%" stop-color="#121008"/>
-    </linearGradient>
-    <!-- Mirror frame gold -->
-    <linearGradient id="frameG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#8A7A5A"/>
-      <stop offset="100%" stop-color="#5A4A30"/>
-    </linearGradient>
-    <!-- Gold accent (brand #C9A96E) -->
-    <linearGradient id="goldT" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#B8900A"/>
-      <stop offset="50%"  stop-color="#E8C858"/>
-      <stop offset="100%" stop-color="#C09828"/>
-    </linearGradient>
-    <!-- Comb metal -->
-    <linearGradient id="combG" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#9898A4"/>
-      <stop offset="40%"  stop-color="#D8D8E0"/>
-      <stop offset="70%"  stop-color="#C0C0C8"/>
-      <stop offset="100%" stop-color="#888890"/>
-    </linearGradient>
-    <!-- Exact wholesale vignettes -->
-    <linearGradient id="vigL" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="vigR" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0.35"/>
-    </linearGradient>
-    <linearGradient id="vigB" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#D0D0D0" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#D0D0D0" stop-opacity="0.30"/>
-    </linearGradient>
-    <linearGradient id="vigT" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.42"/>
-      <stop offset="28%"  stop-color="#1C1810" stop-opacity="0"/>
-    </linearGradient>
-    <filter id="blur3"><feGaussianBlur stdDeviation="3"/></filter>
-    <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
-    <clipPath id="sc">
-      <rect x="-308" y="-124" width="2057" height="829"/>
-    </clipPath>
+    <filter id="softShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="cardShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
   </defs>
 
-  <g clip-path="url(#sc)">
+  <rect width="1440" height="580" fill="url(#bg)"/>
+  <rect width="1440" height="580" fill="url(#key)"/>
+  <rect y="430" width="1440" height="150" fill="url(#floor)"/>
+  <rect y="428" width="1440" height="4" fill="#14100C" opacity="0.36"/>
+  <rect width="1440" height="580" fill="url(#topShade)"/>
 
-    <!-- Background — wholesale colours -->
-    <rect x="-308" y="-124" width="2057" height="829" fill="url(#sBg)"/>
-    <rect x="-308" y="-124" width="2057" height="829" fill="url(#sKey)"/>
-    <rect x="-308" y="-124" width="2057" height="829" fill="url(#sTopS)"/>
+  <g opacity="0.22">
+    <path d="M565 92 C720 46 870 46 1035 91" fill="none" stroke="#C9A96E" stroke-width="1"/>
+    <path d="M590 482 C760 448 980 454 1238 493" fill="none" stroke="#C9A96E" stroke-width="1"/>
+    <circle cx="620" cy="92" r="3" fill="#C9A96E"/>
+    <circle cx="1188" cy="492" r="3" fill="#C9A96E"/>
+  </g>
 
-    <!-- Floor -->
-    <rect x="-308" y="530" width="2057" height="175" fill="url(#sFloor)"/>
-    <rect x="-308" y="528" width="2057" height="5" fill="#1C1810"/>
+  <g transform="translate(580 116)" filter="url(#cardShadow)">
+    <rect x="0" y="0" width="760" height="316" rx="18" fill="#0E0C09" opacity="0.26"/>
+    <rect x="18" y="18" width="158" height="280" rx="8" fill="#F7F5F0" opacity="0.96"/>
+    <rect x="200" y="18" width="158" height="280" rx="8" fill="#F7F5F0" opacity="0.96"/>
+    <rect x="382" y="18" width="158" height="280" rx="8" fill="#F7F5F0" opacity="0.96"/>
+    <rect x="564" y="18" width="158" height="280" rx="8" fill="#F7F5F0" opacity="0.96"/>
+    <path d="M188 26 V290 M370 26 V290 M552 26 V290" stroke="#0B0A08" stroke-width="5" opacity="0.9"/>
 
-    <!-- Subtle wall panels -->
-    <line x1="350"  y1="-124" x2="350"  y2="530" stroke="#4A4640" stroke-width="0.8" opacity="0.35"/>
-    <line x1="800"  y1="-124" x2="800"  y2="530" stroke="#4A4640" stroke-width="0.8" opacity="0.28"/>
-    <line x1="1250" y1="-124" x2="1250" y2="530" stroke="#4A4640" stroke-width="0.8" opacity="0.35"/>
-    <line x1="-308" y1="240"  x2="1749" y2="240" stroke="#3C3830" stroke-width="0.6" opacity="0.22"/>
+    <g transform="translate(44 62)">
+      <path d="M28 116 L94 24" stroke="url(#steel)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M100 116 L38 24" stroke="url(#steel)" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="26" cy="124" r="23" fill="none" stroke="url(#gold)" stroke-width="8"/>
+      <circle cx="100" cy="124" r="23" fill="none" stroke="url(#gold)" stroke-width="8"/>
+      <circle cx="64" cy="76" r="7" fill="url(#gold)" stroke="#4A3A18" stroke-width="2"/>
+      <path d="M78 126 Q95 142 118 146" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+    </g>
 
-    <!-- ── LARGE MIRROR, centre-right ── -->
-    <rect x="700" y="-50" width="460" height="475" rx="5" fill="#1E1A12" opacity="0.55"/>
-    <rect x="703" y="-47" width="454" height="469" rx="4" fill="#26221A" opacity="0.40"/>
-    <!-- Warm reflection glow -->
-    <ellipse cx="930" cy="195" rx="185" ry="210" fill="#C9A96E" opacity="0.04" filter="url(#blur6)"/>
-    <!-- Mirror frame -->
-    <rect x="693" y="-58" width="474" height="491" rx="8" fill="none" stroke="url(#frameG)" stroke-width="5"/>
-    <rect x="689" y="-62" width="482" height="499" rx="9" fill="none" stroke="#3A3020" stroke-width="2" opacity="0.45"/>
-    <!-- Frame top gleam -->
-    <path d="M699 -52 L880 -52" stroke="#C9A96E" stroke-width="1.5" opacity="0.22"/>
-    <!-- Blurred silhouette in mirror -->
-    <ellipse cx="928" cy="122" rx="75" ry="82" fill="#2A2218" opacity="0.50" filter="url(#blur3)"/>
-    <path d="M854 210 Q862 172 928 160 Q994 172 1002 210 L1018 425 L838 425 Z"
-          fill="#222018" opacity="0.42" filter="url(#blur3)"/>
-    <ellipse cx="928" cy="295" rx="115" ry="170" fill="#1C1A10" opacity="0.38" filter="url(#blur3)"/>
+    <g transform="translate(226 48)" filter="url(#softShadow)">
+      <path d="M72 0 C30 44 34 88 78 118 C116 146 108 182 54 218 C86 204 134 172 114 126 C102 98 62 91 62 56 C62 36 76 16 96 0 C88 6 80 12 72 0Z" fill="url(#hair)"/>
+      <path d="M86 4 C60 58 128 92 106 146 C96 170 70 190 42 212" fill="none" stroke="#C9A96E" stroke-width="4" opacity="0.78"/>
+      <path d="M50 42 C16 74 14 130 52 154" fill="none" stroke="#C9A96E" stroke-width="2" opacity="0.48"/>
+      <circle cx="34" cy="94" r="3" fill="#C9A96E"/>
+      <circle cx="120" cy="114" r="3" fill="#C9A96E"/>
+    </g>
 
-    <!-- ── FIGURE: woman from behind, hair being combed ── -->
+    <g transform="translate(418 50)">
+      <rect x="44" y="34" width="56" height="150" rx="25" fill="#E8E0D2" stroke="#4A4A46" stroke-width="4"/>
+      <rect x="56" y="176" width="34" height="64" rx="12" fill="#C9A96E"/>
+      <rect x="60" y="210" width="26" height="78" rx="8" fill="#B6B6B4" stroke="#4A4A46" stroke-width="3"/>
+      <circle cx="73" cy="268" r="6" fill="none" stroke="#4A4A46" stroke-width="3"/>
+      <g stroke="#4A4A46" stroke-width="3" stroke-linecap="round">
+        <path d="M44 48 H12"/><path d="M44 62 H8"/><path d="M44 76 H12"/><path d="M44 90 H8"/><path d="M44 104 H12"/><path d="M44 118 H8"/><path d="M44 132 H12"/><path d="M44 146 H8"/>
+        <path d="M100 48 H132"/><path d="M100 62 H136"/><path d="M100 76 H132"/><path d="M100 90 H136"/><path d="M100 104 H132"/><path d="M100 118 H136"/><path d="M100 132 H132"/><path d="M100 146 H136"/>
+      </g>
+      <path d="M20 36 C64 0 104 4 126 34" fill="none" stroke="#C9A96E" stroke-width="4" opacity="0.8"/>
+    </g>
 
-    <!-- Floor shadow -->
-    <ellipse cx="928" cy="538" rx="155" ry="16" fill="#0E0C06" opacity="0.45" filter="url(#blur3)"/>
-
-    <!-- Dress silhouette — fitted, dark -->
-    <path d="M838 390
-             Q820 368 816 335
-             Q810 296 814 258
-             Q818 228 833 213
-             L862 202
-             Q892 194 928 194
-             Q964 194 994 202
-             L1023 213
-             Q1038 228 1042 258
-             Q1046 296 1040 335
-             Q1036 368 1018 390
-             Q978 418 928 424
-             Q878 418 838 390 Z"
-          fill="url(#dressG)"/>
-    <!-- Dress seam / fold lines -->
-    <path d="M862 202 Q858 268 850 348 Q846 378 844 408" stroke="#2E2A1E" stroke-width="1.2" fill="none" opacity="0.5"/>
-    <path d="M994 202 Q998 268 1006 348 Q1010 378 1012 408" stroke="#2E2A1E" stroke-width="1.2" fill="none" opacity="0.5"/>
-    <!-- Shoulder blades -->
-    <ellipse cx="876" cy="238" rx="26" ry="18" fill="#2C2818" opacity="0.40"/>
-    <ellipse cx="980" cy="238" rx="26" ry="18" fill="#2C2818" opacity="0.40"/>
-
-    <!-- Neck -->
-    <rect x="910" y="144" width="36" height="56" rx="14" fill="url(#skinG)"/>
-    <rect x="910" y="180" width="36" height="20" rx="8" fill="#7A5030" opacity="0.22"/>
-
-    <!-- Head -->
-    <ellipse cx="928" cy="102" rx="72" ry="76" fill="url(#skinG)"/>
-    <!-- Ear (right, slight 3/4 view) -->
-    <ellipse cx="996" cy="108" rx="10" ry="15" fill="#B07848" opacity="0.65"/>
-    <ellipse cx="997" cy="108" rx="6"  ry="10" fill="#9A6438" opacity="0.35"/>
-
-    <!-- ── HAIR — the centrepiece ── -->
-    <!-- Top of head / crown -->
-    <path d="M862 42
-             Q856 22 862 2
-             Q870 -20 894 -32
-             Q914 -42 936 -40
-             Q960 -38 978 -24
-             Q996 -8 998 18
-             Q1000 40 994 62
-             Q980 50 964 43
-             Q946 36 928 36
-             Q910 36 892 43
-             Q876 50 862 42 Z"
-          fill="url(#hDark)"/>
-
-    <!-- Left hair fall -->
-    <path d="M862 46
-             Q840 76 830 118
-             Q818 165 815 216
-             Q812 265 814 316
-             Q814 374 820 424
-             Q828 472 832 526
-             L836 538
-             Q866 490 874 440
-             Q882 390 882 336
-             Q882 282 880 232
-             Q876 185 876 146
-             Q874 108 876 76
-             Q870 62 862 46 Z"
-          fill="url(#hDark)"/>
-
-    <!-- Right hair fall -->
-    <path d="M994 46
-             Q1016 76 1026 118
-             Q1038 165 1041 216
-             Q1044 265 1042 316
-             Q1042 374 1036 424
-             Q1028 472 1024 526
-             L1020 538
-             Q990 490 982 440
-             Q974 390 974 336
-             Q974 282 976 232
-             Q980 185 980 146
-             Q982 108 980 76
-             Q986 62 994 46 Z"
-          fill="url(#hDark)"/>
-
-    <!-- Central back hair -->
-    <path d="M876 80
-             Q882 108 882 148
-             Q882 196 880 248
-             Q876 318 870 388
-             Q864 448 858 516
-             L862 538
-             Q888 508 908 466
-             Q924 434 928 394
-             Q932 434 948 466
-             Q968 508 994 538
-             L998 516
-             Q992 448 986 388
-             Q980 318 976 248
-             Q974 196 974 148
-             Q974 108 980 80
-             Q956 70 928 68
-             Q900 70 876 80 Z"
-          fill="url(#hDark)" opacity="0.94"/>
-
-    <!-- Hair sheen overlay -->
-    <path d="M876 46
-             Q840 120 830 240 Q820 360 824 470
-             L836 538 L1020 538 L1032 470
-             Q1036 360 1026 240 Q1016 120 980 46
-             Q956 36 928 36 Q900 36 876 46 Z"
-          fill="url(#hShine)"/>
-
-    <!-- Individual hair strand lines for texture -->
-    <path d="M884 56 Q868 130 866 230 Q864 330 868 440" stroke="#D8A860" stroke-width="1.5" fill="none" opacity="0.10" stroke-linecap="round"/>
-    <path d="M928 40 Q920 130 918 250 Q916 370 920 490"  stroke="#D8A860" stroke-width="2"   fill="none" opacity="0.09" stroke-linecap="round"/>
-    <path d="M972 56 Q988 130 990 230 Q992 330 988 440" stroke="#D8A860" stroke-width="1.5" fill="none" opacity="0.10" stroke-linecap="round"/>
-
-    <!-- ── STYLIST HAND + COMB from right ── -->
-    <!-- Arm entering from right -->
-    <path d="M1188 152 Q1162 165 1140 182 Q1116 200 1100 222 Q1082 246 1076 268 Q1070 285 1074 298"
-          fill="none" stroke="#C8926A" stroke-width="36" stroke-linecap="round"/>
-    <!-- Hand -->
-    <ellipse cx="1080" cy="304" rx="28" ry="20" fill="#C8926A" transform="rotate(-18 1080 304)"/>
-    <!-- Fingers lifted into hair -->
-    <path d="M1068 294 Q1062 306 1066 318 Q1070 324 1078 322" stroke="#A87040" stroke-width="5.5" fill="none" stroke-linecap="round"/>
-    <path d="M1076 302 Q1073 315 1077 326" stroke="#A87040" stroke-width="5"   fill="none" stroke-linecap="round"/>
-    <path d="M1086 306 Q1084 318 1088 330" stroke="#A87040" stroke-width="5"   fill="none" stroke-linecap="round"/>
-    <path d="M1094 303 Q1094 315 1100 325" stroke="#A87040" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-
-    <!-- Fine-tooth comb -->
-    <rect x="1088" y="230" width="7" height="72" rx="2.5" fill="url(#combG)" transform="rotate(-28 1091 266)"/>
-    <!-- Comb teeth -->
-    <path d="M1080 248 L1075 263 M1086 242 L1082 257 M1092 237 L1088 252 M1098 232 L1094 247 M1104 228 L1100 243 M1110 225 L1106 240 M1116 222 L1112 237"
-          stroke="#9898A4" stroke-width="1.8" stroke-linecap="round"/>
-
-    <!-- ── PRODUCT SHELF right wall ── -->
-    <rect x="1290" y="215" width="165" height="10" rx="2" fill="#3A3020" opacity="0.88"/>
-    <rect x="1290" y="225" width="165" height="3"  fill="#2A2015" opacity="0.65"/>
-    <rect x="1300" y="170" width="20" height="45" rx="5" fill="#9A8A72" opacity="0.9"/>
-    <rect x="1300" y="170" width="20" height="11" rx="3" fill="#7A6A52"/>
-    <rect x="1304" y="157" width="12" height="15" rx="3" fill="#8A7A62"/>
-    <rect x="1328" y="178" width="18" height="37" rx="4" fill="#C9A96E" opacity="0.85"/>
-    <rect x="1328" y="178" width="18" height="10" rx="3" fill="#A88A4E"/>
-    <rect x="1332" y="166" width="10" height="14" rx="3" fill="#B89A5E"/>
-    <rect x="1354" y="174" width="22" height="41" rx="5" fill="#787060" opacity="0.88"/>
-    <rect x="1354" y="174" width="22" height="11" rx="3" fill="#585040"/>
-    <rect x="1359" y="160" width="12" height="16" rx="3" fill="#686050"/>
-    <rect x="1384" y="182" width="15" height="33" rx="4" fill="#D8CCBA" opacity="0.72"/>
-    <rect x="1386" y="170" width="11" height="14" rx="3" fill="#C8BCAA"/>
-
-    <!-- ── VIGNETTES — exact wholesale values ── -->
-    <rect x="-308" y="-124" width="2057" height="829" fill="url(#vigL)"/>
-    <rect x="-308" y="-124" width="2057" height="829" fill="url(#vigR)"/>
-    <rect x="-308" y="-124" width="2057" height="829" fill="url(#vigT)"/>
-    <rect x="-308" y="-124" width="2057" height="829" fill="url(#vigB)"/>
-
+    <g transform="translate(594 54)">
+      <rect x="10" y="0" width="112" height="160" fill="#F7F5F0" stroke="#5E5A56" stroke-width="4"/>
+      <path d="M22 20 Q22 10 32 10 H100 Q110 10 110 20" fill="none" stroke="#C9A96E" stroke-width="3"/>
+      <text x="66" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#C9A96E">CERTIFIED</text>
+      <text x="66" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#C9A96E">EXPERT</text>
+      <line x1="34" y1="112" x2="98" y2="112" stroke="#5E5A56" stroke-width="3"/>
+      <line x1="34" y1="124" x2="80" y2="124" stroke="#5E5A56" stroke-width="2"/>
+      <circle cx="100" cy="144" r="24" fill="url(#gold)"/>
+      <circle cx="100" cy="144" r="16" fill="none" stroke="#F7F5F0" stroke-width="3" opacity="0.7"/>
+      <path d="M88 164 L78 204 L100 184 L122 204 L112 164" fill="url(#gold)"/>
+    </g>
   </g>
 </svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 709" width="390" height="709" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#424040"/>
+      <stop offset="38%" stop-color="#555250"/>
+      <stop offset="72%" stop-color="#4A4744"/>
+      <stop offset="100%" stop-color="#1C1810"/>
+    </linearGradient>
+    <radialGradient id="key" cx="52%" cy="34%" r="74%">
+      <stop offset="0%" stop-color="#807060" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8A6418"/>
+      <stop offset="34%" stop-color="#C9A96E"/>
+      <stop offset="62%" stop-color="#E8CB85"/>
+      <stop offset="100%" stop-color="#8A6418"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F2F2F0"/>
+      <stop offset="48%" stop-color="#96999C"/>
+      <stop offset="100%" stop-color="#4A4C4E"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#161410"/>
+      <stop offset="45%" stop-color="#5E5A56"/>
+      <stop offset="100%" stop-color="#1F1E1C"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#000" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <rect width="390" height="709" fill="url(#bg)"/>
+  <rect width="390" height="709" fill="url(#key)"/>
+  <rect y="566" width="390" height="143" fill="#19140F" opacity="0.72"/>
+  <rect y="563" width="390" height="3" fill="#C9A96E" opacity="0.16"/>
+
+  <g transform="translate(28 118)" filter="url(#shadow)">
+    <rect x="0" y="0" width="334" height="374" rx="10" fill="#070605" opacity="0.95"/>
+    <rect x="14" y="14" width="152" height="172" rx="3" fill="#F7F5F0"/>
+    <rect x="180" y="14" width="152" height="172" rx="3" fill="#F7F5F0"/>
+    <rect x="14" y="200" width="152" height="172" rx="3" fill="#F7F5F0"/>
+    <rect x="180" y="200" width="152" height="172" rx="3" fill="#F7F5F0"/>
+
+    <g transform="translate(41 38)">
+      <path d="M18 84 L82 18" stroke="url(#steel)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M84 84 L24 18" stroke="url(#steel)" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="18" cy="91" r="17" fill="none" stroke="url(#gold)" stroke-width="6"/>
+      <circle cx="84" cy="91" r="17" fill="none" stroke="url(#gold)" stroke-width="6"/>
+      <circle cx="52" cy="55" r="5" fill="url(#gold)" stroke="#4A3A18" stroke-width="1.5"/>
+      <text x="52" y="148" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#3F3F3F">CUTS</text>
+    </g>
+
+    <g transform="translate(218 20) scale(0.82)">
+      <path d="M58 0 C28 32 30 66 62 88 C94 110 88 138 44 168 C70 158 112 134 94 94 C84 72 54 68 54 40 C54 24 66 10 82 0 C72 10 64 12 58 0Z" fill="url(#hair)"/>
+      <path d="M70 4 C48 44 100 72 84 112 C76 132 56 148 34 164" fill="none" stroke="#C9A96E" stroke-width="3"/>
+      <path d="M32 42 C8 64 8 104 34 122" fill="none" stroke="#C9A96E" stroke-width="1.5" opacity="0.7"/>
+      <circle cx="28" cy="78" r="2" fill="#C9A96E"/>
+      <text x="62" y="200" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#3F3F3F">EXTENSIONS</text>
+    </g>
+
+    <g transform="translate(42 216) scale(0.86)">
+      <rect x="42" y="78" width="24" height="50" rx="8" fill="url(#gold)"/>
+      <rect x="36" y="108" width="36" height="42" rx="8" fill="#B6B6B4" stroke="#4A4A46" stroke-width="2"/>
+      <rect x="27" y="22" width="54" height="94" rx="24" fill="#E8E0D2" stroke="#4A4A46" stroke-width="3"/>
+      <g stroke="#4A4A46" stroke-width="2" stroke-linecap="round">
+        <path d="M27 34 H2"/><path d="M27 46 H0"/><path d="M27 58 H3"/><path d="M27 70 H0"/><path d="M27 82 H3"/>
+        <path d="M81 34 H106"/><path d="M81 46 H108"/><path d="M81 58 H105"/><path d="M81 70 H108"/><path d="M81 82 H105"/>
+      </g>
+      <path d="M12 18 C50 -6 92 0 112 22" fill="none" stroke="#C9A96E" stroke-width="3"/>
+      <text x="54" y="174" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#3F3F3F">STYLING</text>
+    </g>
+
+    <g transform="translate(214 220) scale(0.9)">
+      <rect x="12" y="0" width="88" height="116" fill="#F7F5F0" stroke="#5E5A56" stroke-width="3"/>
+      <path d="M22 16 Q22 8 30 8 H82 Q90 8 90 16" fill="none" stroke="#C9A96E" stroke-width="2"/>
+      <text x="56" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#C9A96E">CERTIFIED</text>
+      <text x="56" y="64" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#C9A96E">EXPERT</text>
+      <line x1="28" y1="82" x2="84" y2="82" stroke="#5E5A56" stroke-width="2"/>
+      <circle cx="82" cy="108" r="18" fill="url(#gold)"/>
+      <path d="M72 120 L64 150 L82 136 L100 150 L92 120" fill="url(#gold)"/>
+      <text x="56" y="162" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#3F3F3F">EXPERTISE</text>
+    </g>
+  </g>
+
+  <rect width="390" height="709" fill="none" stroke="#C9A96E" stroke-width="1" opacity="0.08"/>
+</svg>
