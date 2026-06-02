@@ -1908,7 +1908,8 @@ first.parentNode.insertBefore(script, first);
 
 /* Mobile — wholesale mobile pattern */
 @media (max-width: 768px) {
-  .ojnl-hero { height: 84vh !important; min-height: 520px !important; }
+  .ojnl-hero { height: 84vh !important; min-height: 520px !important; overflow: hidden !important; background: #1C1810 !important; }
+  .ojnl-hero-img { object-fit: none !important; object-position: 48% 50% !important; transform: none !important; }
   .ojnl-hero-inner {
     position: absolute !important;
     top: 0 !important; bottom: 0 !important;
@@ -1922,7 +1923,7 @@ first.parentNode.insertBefore(script, first);
     justify-content: flex-start !important;
   }
   .ojnl-hero-eyebrow { margin-bottom: auto !important; }
-  .ojnl-hero-title { margin-top: auto !important; margin-bottom: 80px !important; font-size: 36px !important; }
+  .ojnl-hero-title { margin-top: auto !important; margin-bottom: 80px !important; }
 }
 
 /* SHARED */
