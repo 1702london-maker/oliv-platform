@@ -1583,7 +1583,7 @@
 .otrn-btn-dark{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:#2B2620;color:#fff;border:none;padding:18px 35px;cursor:pointer;transition:background 0.2s;}
 .otrn-btn-dark:hover{background:#1a0f08;}
 @media(max-width:768px){
-  .otr-hero{height:84vh!important;max-height:none!important;min-height:520px!important;background-image:url('/heroes/training-hero-mobile.svg')!important;background-size:cover!important;background-position:center center!important;}
+  .otr-hero{height:84vh!important;max-height:none!important;min-height:520px!important;background-image:url('/heroes/training-hero.svg')!important;background-size:200%!important;background-position:50% center!important;background-repeat:no-repeat!important;}
   .otr-hero-img{display:none!important;}
   .otr-hero-inner{position:absolute!important;top:0!important;bottom:0!important;left:0!important;right:0!important;transform:none!important;max-width:100%!important;padding:72px 24px 0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;}
   .otr-eyebrow{margin-bottom:auto!important;}
@@ -1612,8 +1612,8 @@
       </div>
     </div>
     <div class="otrn-hero-btns">
-      <a href="/pages/training" class="otrn-btn-gold">Enroll Now</a>
-      <a href="/appointments" class="otrn-btn-dark">Book Training Consultation</a>
+      <button class="otrn-btn-gold" onclick="otrgOpenApply()">Enroll Now</button>
+      <a href="https://wa.me/message/OLIVHAIRSUPPLY" target="_blank" rel="noopener" class="otrn-btn-dark">Book Training Consultation</a>
     </div>
   </div>
 
@@ -1738,65 +1738,85 @@
         <h2 class="otr-section-title" style="color:#F6F1E8;">Invest in Your <em>Future</em></h2>
         <p class="otr-section-sub" style="color:rgba(246,241,232,0.80);">Three structured programmes designed to take you from foundation to mastery.</p>
       </div>
-      <div class="otr-programmes-grid">
+      <div class="otr-programmes-grid" style="grid-template-columns:repeat(2,1fr);">
 
         <div class="otr-prog-card">
-          <div class="otr-prog-badge">Foundation</div>
+          <div class="otr-prog-badge">1 Day</div>
           <div class="otr-prog-body">
-            <span class="otr-prog-level">Foundation</span>
-            <div class="otr-prog-name">Beginner Foundation</div>
-            <div class="otr-prog-duration">1 Day Intensive</div>
-            <div class="otr-prog-price">From &euro;500</div>
-            <span class="otr-prog-price-label">All materials included</span>
+            <span class="otr-prog-level">Weaving Intensive</span>
+            <div class="otr-prog-name">1 Day Training</div>
+            <div class="otr-prog-duration">Hands-On Weaving</div>
+            <div class="otr-prog-price">&euro;1,000</div>
+            <span class="otr-prog-price-label">Practice hair &amp; tools included</span>
             <div class="otr-prog-divider"></div>
-            <p class="otr-prog-desc">Start your journey in luxury hair installation with strong foundations, expert guidance and the confidence to deliver results from day one.</p>
+            <p class="otr-prog-desc">A focused hands-on intensive covering weaving technique from start to finish. Build the foundation with expert guidance.</p>
             <ul class="otr-prog-includes">
-              <li>Introduction to hair extensions</li>
-              <li>Basic installation techniques</li>
-              <li>Client consultation skills</li>
-              <li>Aftercare systems</li>
+              <li>Weaving technique — full day</li>
+              <li>Hands-on practice</li>
+              <li>Practice hair provided</li>
+              <li>Professional tools included</li>
             </ul>
-            <a href="/pages/training" class="otr-prog-cta">Enroll Now</a>
+            <a href="/pages/training" class="otr-prog-cta" onclick="otrgOpenApply();return false;">Enroll Now</a>
           </div>
         </div>
 
         <div class="otr-prog-card featured">
-          <div class="otr-prog-badge">Most Popular</div>
+          <div class="otr-prog-badge">2 Days ⭐</div>
           <div class="otr-prog-body">
-            <span class="otr-prog-level">Advanced</span>
-            <div class="otr-prog-name">Advanced Installation</div>
-            <div class="otr-prog-duration">2 Day Masterclass</div>
-            <div class="otr-prog-price">From &euro;1200</div>
-            <span class="otr-prog-price-label">All materials included</span>
+            <span class="otr-prog-level">Weaving + Tape</span>
+            <div class="otr-prog-name">2 Day Training</div>
+            <div class="otr-prog-duration">More Practice &amp; Technique Confidence</div>
+            <div class="otr-prog-price">&euro;1,500</div>
+            <span class="otr-prog-price-label">Practice hair &amp; tools included</span>
             <div class="otr-prog-divider"></div>
-            <p class="otr-prog-desc">Master seamless installations across multiple systems and elevate your professional standard to serve the luxury market.</p>
+            <p class="otr-prog-desc">Weaving plus Tape Extensions over two full days. Build real technique confidence across two of the most in-demand methods.</p>
             <ul class="otr-prog-includes">
-              <li>Tape-ins mastery</li>
-              <li>Hand-tied wefts</li>
-              <li>Blending and styling</li>
-              <li>Advanced techniques</li>
+              <li>Weaving technique</li>
+              <li>Tape Extensions mastery</li>
+              <li>Extended hands-on practice</li>
+              <li>Practice hair &amp; tools included</li>
             </ul>
-            <a href="/pages/training" class="otr-prog-cta">Enroll Now</a>
+            <a href="/pages/training" class="otr-prog-cta" onclick="otrgOpenApply();return false;">Enroll Now</a>
           </div>
         </div>
 
         <div class="otr-prog-card">
-          <div class="otr-prog-badge">Master</div>
+          <div class="otr-prog-badge">3 Days 🔥</div>
           <div class="otr-prog-body">
-            <span class="otr-prog-level">Master</span>
-            <div class="otr-prog-name">Master Business and Brand</div>
-            <div class="otr-prog-duration">2 to 3 Days</div>
-            <div class="otr-prog-price">From &euro;2500</div>
-            <span class="otr-prog-price-label">All materials included</span>
+            <span class="otr-prog-level">Complete Training</span>
+            <div class="otr-prog-name">3 Day Training</div>
+            <div class="otr-prog-duration">Weaving + Tape + Brazilian Knots</div>
+            <div class="otr-prog-price">&euro;2,000</div>
+            <span class="otr-prog-price-label">Practice hair &amp; tools included</span>
             <div class="otr-prog-divider"></div>
-            <p class="otr-prog-desc">For professionals ready to scale into a luxury brand and build a high-income business that attracts premium clients.</p>
+            <p class="otr-prog-desc">The complete training — all three core methods. Day 3 includes live model practice (student provides model).</p>
             <ul class="otr-prog-includes">
-              <li>Premium client experience</li>
-              <li>Pricing strategy</li>
-              <li>Branding and positioning</li>
-              <li>Client acquisition and retention</li>
+              <li>Weaving technique</li>
+              <li>Tape Extensions</li>
+              <li>Brazilian Knots</li>
+              <li>Day 3 — live model practice</li>
             </ul>
-            <a href="/pages/training" class="otr-prog-cta">Enroll Now</a>
+            <a href="/pages/training" class="otr-prog-cta" onclick="otrgOpenApply();return false;">Enroll Now</a>
+          </div>
+        </div>
+
+        <div class="otr-prog-card">
+          <div class="otr-prog-badge">4 Days 💎</div>
+          <div class="otr-prog-body">
+            <span class="otr-prog-level">Masterclass</span>
+            <div class="otr-prog-name">4 Day Masterclass</div>
+            <div class="otr-prog-duration">All Methods + Colour Matching</div>
+            <div class="otr-prog-price">&euro;2,500</div>
+            <span class="otr-prog-price-label">Practice hair &amp; tools included</span>
+            <div class="otr-prog-divider"></div>
+            <p class="otr-prog-desc">All methods plus extension colour matching &amp; blending training and live model practice. The ultimate programme.</p>
+            <ul class="otr-prog-includes">
+              <li>All methods — Weaving, Tape, Brazilian Knots</li>
+              <li>Colour matching &amp; blending</li>
+              <li>Live model practice</li>
+              <li>Complete professional toolkit</li>
+            </ul>
+            <a href="/pages/training" class="otr-prog-cta" onclick="otrgOpenApply();return false;">Enroll Now</a>
           </div>
         </div>
 
@@ -1847,7 +1867,7 @@
           <h2 class="otr-cert-title">Earn Your <em>Certification</em></h2>
           <p class="otr-cert-text">Receive an official OlivHairSupply Certification on completion of your programme, recognising your expertise in luxury hair systems and premium service delivery.</p>
           <p class="otr-cert-text">Your certificate is a mark of quality. It signals to clients and employers that you have been trained to the OlivHairSupply standard.</p>
-          <a href="/pages/training" class="otr-btn-gold" style="margin-top:8px;">Enroll Now</a>
+          <button class="otr-btn-gold" style="margin-top:8px;border:none;cursor:pointer;" onclick="otrgOpenApply()">Enroll Now</button>
         </div>
         <div class="otr-cert-right">
           <div class="otr-cert-badge">
@@ -1884,7 +1904,7 @@
       <p class="otr-cta-sub">Limited spaces available. Secure your place today and begin your journey to becoming a certified luxury hair specialist.</p>
       <div class="otr-cta-btns">
         <button class="otr-btn-cta-primary" onclick="otrgOpenApply()">Apply Now</button>
-        <a href="/appointments" class="otr-btn-cta-outline">Book Training Consultation</a>
+        <a href="https://wa.me/message/OLIVHAIRSUPPLY" target="_blank" rel="noopener" class="otr-btn-cta-outline">Book Training Consultation</a>
       </div>
     </div>
   </div>
@@ -1899,7 +1919,7 @@
       <span class="otrg-modal-eyebrow">Training Application</span>
       <h2 class="otrg-modal-title">Apply for <em>Certification</em></h2>
       <p class="otrg-modal-sub">Complete the form below. Our team reviews all applications personally and will contact you within 3 to 5 business days.</p>
-      <form class="otrg-form" action="/contact#contact_form" method="post" accept-charset="UTF-8">
+      <form class="otrg-form" action="/api/applications/training" method="post" accept-charset="UTF-8" id="otrg-enroll-form">
         <input type="hidden" name="form_type" value="contact">
         <input type="hidden" name="utf8" value="true">
         <input type="hidden" name="contact[tags]" value="training-application">
@@ -1919,9 +1939,10 @@
           <label class="otrg-form-label" for="otrg-programme">Programme of Interest</label>
           <select class="otrg-form-select" id="otrg-programme" name="contact[programme]">
             <option value="">Select a programme</option>
-            <option value="foundation">Beginner Foundation — From €500</option>
-            <option value="advanced">Advanced Installation — From €1,200</option>
-            <option value="master">Master Business & Brand — From €2,500</option>
+            <option value="1day">1 Day — €1,000 (Weaving Intensive)</option>
+            <option value="2days">2 Days — €1,500 (Weaving + Tape Extensions)</option>
+            <option value="3days">3 Days — €2,000 (Weaving + Tape + Brazilian Knots)</option>
+            <option value="4days">4 Days — €2,500 (Masterclass — All Methods)</option>
           </select>
         </div>
         <div class="otrg-form-field">
