@@ -1237,7 +1237,17 @@
     justify-content: flex-start !important;
   }
   .oaff-hero { background: #555250 !important; }
-  .oaff-hero-img { object-fit: contain !important; object-position: center center !important; transform: none !important; }
+  .oaff-hero-img { display: none !important; }
+  .oaff-hero::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: url('/heroes/affiliate-hero-mobile.svg') center center / cover no-repeat !important;
+    z-index: 0 !important;
+  }
+  .oaff-hero-overlay { z-index: 1 !important; }
+  .oaff-hero-inner { z-index: 2 !important; }
+  .oaff-whl-btns { z-index: 3 !important; }
   .oaff-hero-eyebrow { margin-bottom: auto !important; }
   .oaff-hero-title { margin-top: auto !important; margin-bottom: 80px !important; }
   .oaff-whl-btns {
