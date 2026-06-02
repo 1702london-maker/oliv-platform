@@ -1156,16 +1156,13 @@
 <style>
 .oaff * { box-sizing: border-box; }
 
-/* HERO */
+/* HERO — wholesale structure */
 .oaff-hero {
   position: relative;
   height: 100vh;
-  min-height: 640px;
+  min-height: 600px;
   max-height: 920px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .oaff-hero-img {
   position: absolute;
@@ -1176,22 +1173,21 @@
   object-position: center 30%;
   display: block;
 }
-.oaff-hero-bg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #1A140E 0%, #2C2118 100%);
-}
+.oaff-hero-bg { display: none; }
 .oaff-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(15,10,6,0.4) 0%, rgba(15,10,6,0.72) 100%);
+  background: linear-gradient(to bottom, rgba(15,10,6,0.12) 0%, rgba(15,10,6,0.32) 100%);
 }
 .oaff-hero-inner {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 4%;
   z-index: 2;
-  text-align: center;
+  text-align: left;
   padding: 0 24px;
-  max-width: 860px;
+  max-width: 30%;
 }
 .oaff-hero-eyebrow {
   font-family: 'Montserrat', sans-serif;
@@ -1205,30 +1201,47 @@
 }
 .oaff-hero-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 96px;
+  font-size: clamp(26px, 3.4vw, 50px);
   font-weight: 300;
   color: #FFFFFF;
-  line-height: 1.0;
-  margin-bottom: 24px;
-  letter-spacing: -1px;
+  line-height: 1.04;
+  margin-bottom: 0;
+  letter-spacing: 0;
 }
 .oaff-hero-title em { font-style: italic; color: #C9A96E; }
-.oaff-hero-sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  color: #FFFFFF;
-  line-height: 1.85;
-  margin-bottom: 44px;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.oaff-hero-btns {
+.oaff-hero-sub { display: none; }
+.oaff-hero-btns { display: none; }
+/* Buttons — absolute bottom-centred like wholesale */
+.oaff-whl-btns {
+  position: absolute;
+  bottom: 44px;
+  left: 0; right: 0;
   display: flex;
-  gap: 14px;
   justify-content: center;
-  flex-wrap: wrap;
+  gap: 20px;
+  z-index: 5;
+}
+/* Mobile — exact wholesale pattern */
+@media (max-width: 768px) {
+  .oaff-hero { height: 84vh !important; min-height: 520px !important; overflow: hidden !important; }
+  .oaff-hero-inner {
+    position: absolute !important;
+    top: 0 !important; bottom: 0 !important;
+    left: 0 !important; right: 0 !important;
+    transform: none !important;
+    max-width: 100% !important;
+    padding: 72px 24px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+  .oaff-hero-eyebrow { margin-bottom: auto !important; }
+  .oaff-hero-title { margin-top: auto !important; margin-bottom: 80px !important; }
+  .oaff-whl-btns {
+    bottom: 28px !important;
+    gap: 8px !important;
+  }
 }
 
 /* BUTTONS */
@@ -2426,8 +2439,6 @@
 }
 @media (max-width: 768px) {
   .oaff-hero { max-height: none; }
-  .oaff-hero-title { font-size: 52px; }
-  .oaff-hero-sub { font-size: 16px; }
   .oaff-inner { padding: 0 24px; }
   .oaff-who-inner { padding: 0 24px; }
   .oaff-states-inner { padding: 0 24px; }
@@ -2473,22 +2484,22 @@
 <div class="oaff">
 
   <div class="oaff-hero">
-    
-      <div class="oaff-hero-bg"></div>
-    
+    <img class="oaff-hero-img"
+      src="/heroes/affiliate-hero.svg"
+      alt="OlivHairSupply Affiliate Programme"
+      loading="eager"
+      fetchpriority="high"
+    >
     <div class="oaff-hero-overlay"></div>
     <div class="oaff-hero-inner">
-      <span class="oaff-hero-eyebrow">OlivHairSupply Affiliate-Programm</span>
+      <span class="oaff-hero-eyebrow">Affiliate</span>
       <h1 class="oaff-hero-title">
         Earn. Influence. <em>Elevate.</em>
       </h1>
-      <p class="oaff-hero-sub">
-        Turn your influence into income with the OlivHairSupply Affiliate Programme.
-      </p>
-      <div class="oaff-hero-btns">
-        <button class="oaff-btn-gold" onclick="openApply()">Become an Affiliate</button>
-        <button class="oaff-btn-dark" onclick="openDash()">Log in to Dashboard</button>
-      </div>
+    </div>
+    <div class="oaff-whl-btns">
+      <button class="oaff-btn-gold" onclick="openApply()">Become an Affiliate</button>
+      <button class="oaff-btn-dark" onclick="openDash()">Log in to Dashboard</button>
     </div>
   </div>
 
