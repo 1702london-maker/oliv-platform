@@ -11,6 +11,16 @@ const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend
 const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsupply.de";
 const BOOKING_TEAM_EMAIL = process.env.BOOKING_TEAM_EMAIL || "olivhairbooking@gmail.com";
 
+function bookingManageUrls(data: AppointmentEmailData) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const lang = data.language === "de" ? "de" : "en";
+  const query = `booking=${encodeURIComponent(data.bookingId)}&email=${encodeURIComponent(data.customerEmail)}&lang=${lang}`;
+  return {
+    cancelUrl: `${siteUrl}/appointments/cancel?${query}`,
+    rescheduleUrl: `${siteUrl}/appointments/reschedule?${query}`,
+  };
+}
+
 /* ══════════════════════════════════════════════════════════════
    APPOINTMENTS — customer confirmation + team notification
 ══════════════════════════════════════════════════════════════ */
@@ -28,12 +38,15 @@ export interface AppointmentEmailData {
   estimatedPrice: string; // e.g. "€95"
   notes?: string;
   source: string;      // website | whatsapp | facebook | instagram
+  language?: "en" | "de";
   bookingId: string;
 }
 
 /** Sent to the customer immediately on submission */
 export async function sendAppointmentConfirmationEmail(data: AppointmentEmailData) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const lang = data.language === "de" ? "de" : "en";
+  const isDe = lang === "de";
+  const { cancelUrl, rescheduleUrl } = bookingManageUrls(data);
   const sourceLabel: Record<string, string> = {
     website: "Website",
     whatsapp: "WhatsApp",
@@ -44,39 +57,41 @@ export async function sendAppointmentConfirmationEmail(data: AppointmentEmailDat
   const { error } = await getResend().emails.send({
     from: FROM,
     to: data.customerEmail,
-    subject: `Appointment Confirmed - OlivHairSupply`,
+    subject: isDe ? "Termin bestätigt - OlivHairSupply" : "Appointment Confirmed - OlivHairSupply",
     html: `
 <!DOCTYPE html>
-<html>
+<html lang="${lang}">
 <head><meta charset="utf-8"></head>
 <body style="font-family:'Montserrat',Arial,sans-serif;background:#F5F0E8;margin:0;padding:40px 20px;">
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">Appointment <em>Confirmed</em></h1>
+      <h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">${isDe ? "Termin <em>bestätigt</em>" : "Appointment <em>Confirmed</em>"}</h1>
     </div>
     <div style="padding:36px 40px;">
-      <p style="color:#2B2620;font-size:14px;margin:0 0 6px;">Hi <strong>${data.customerName}</strong>,</p>
+      <p style="color:#2B2620;font-size:14px;margin:0 0 6px;">${isDe ? "Hallo" : "Hi"} <strong>${data.customerName}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        Your appointment is confirmed. Please keep this email for your booking details and arrive 5 minutes before your appointment.
+        ${isDe
+          ? "Dein Termin ist bestätigt. Bitte bewahre diese E-Mail mit deinen Buchungsdetails auf und sei 5 Minuten vor deinem Termin da."
+          : "Your appointment is confirmed. Please keep this email for your booking details and arrive 5 minutes before your appointment."}
       </p>
 
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
-        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Booking Summary</p>
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">${isDe ? "Buchungsübersicht" : "Booking Summary"}</p>
         <table style="width:100%;border-collapse:collapse;">
           <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;width:130px;">Service</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.serviceName}</td></tr>
-          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Stylist</td>
+          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Stylistin" : "Stylist"}</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.stylistName}</td></tr>
-          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Location</td>
+          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Store</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.locationName}</td></tr>
-          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Date</td>
+          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Datum" : "Date"}</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.dateLabel}</td></tr>
-          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Time</td>
-              <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.timeLabel} (Berlin time)</td></tr>
-          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Est. Price</td>
+          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Uhrzeit" : "Time"}</td>
+              <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.timeLabel} (${isDe ? "Berliner Zeit" : "Berlin time"})</td></tr>
+          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Geschätzter Preis" : "Est. Price"}</td>
               <td style="font-size:14px;font-weight:700;color:#B68A45;padding:7px 0;">${data.estimatedPrice}</td></tr>
-          ${data.notes ? `<tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Notes</td>
+          ${data.notes ? `<tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Hinweise" : "Notes"}</td>
               <td style="font-size:12px;color:#6B5C4E;padding:7px 0;">${data.notes}</td></tr>` : ""}
         </table>
       </div>
@@ -84,28 +99,36 @@ export async function sendAppointmentConfirmationEmail(data: AppointmentEmailDat
       <div style="background:#EDE5D8;padding:16px 20px;margin-bottom:24px;border-left:3px solid #B68A45;">
         <p style="font-size:12px;color:#2B2620;margin:0;line-height:1.6;">
           📍 <strong>${data.locationAddress}</strong>
-          <br>Please arrive 5 minutes before your appointment.
+          <br>${isDe ? "Bitte sei 5 Minuten vor deinem Termin da." : "Please arrive 5 minutes before your appointment."}
         </p>
       </div>
 
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 24px;">
-        Questions? WhatsApp us at <strong>+49 157 86283439</strong> or reply to this email.
+        ${isDe ? "Fragen? Schreib uns auf WhatsApp unter" : "Questions? WhatsApp us at"} <strong>+49 157 86283439</strong>${isDe ? " oder antworte direkt auf diese E-Mail." : " or reply to this email."}
       </p>
 
       <p style="color:#6B5C4E;font-size:11px;line-height:1.7;margin:0 0 24px;">
-        By submitting this booking, you agreed that if you miss your appointment or do not attend without prior notice, you will pay a missed-appointment fee equal to 50% of the estimated appointment value.
+        ${isDe
+          ? "Mit dieser Buchung hast du zugestimmt, dass bei Nichterscheinen oder einem verpassten Termin ohne vorherige Absage eine Ausfallgebühr in Höhe von 50 % des geschätzten Terminwerts fällig wird."
+          : "By submitting this booking, you agreed that if you miss your appointment or do not attend without prior notice, you will pay a missed-appointment fee equal to 50% of the estimated appointment value."}
       </p>
 
       <a href="https://wa.me/4915786283439" style="display:inline-block;background:#25D366;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;margin-right:8px;">
-        Message on WhatsApp
+        ${isDe ? "WhatsApp senden" : "Message on WhatsApp"}
+      </a>
+      <a href="${rescheduleUrl}" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;margin-right:8px;margin-top:10px;">
+        ${isDe ? "Termin verschieben" : "Reschedule"}
+      </a>
+      <a href="${cancelUrl}" style="display:inline-block;background:#8B3535;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;margin-top:10px;">
+        ${isDe ? "Termin stornieren" : "Cancel"}
       </a>
 
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:32px 0 16px;">
       <p style="color:#9B8878;font-size:10px;margin:0;line-height:1.6;">
         OlivHairSupply &mdash; Berlin &mdash;
         <a href="mailto:appointments@olivhairsupply.de" style="color:#9B8878;">appointments@olivhairsupply.de</a>
-        <br>Booking ref: <code style="background:#F0E8DA;padding:1px 4px;">${data.bookingId}</code>
-        &nbsp;·&nbsp; Booked via ${sourceLabel[data.source] || data.source}
+        <br>${isDe ? "Buchungsreferenz" : "Booking ref"}: <code style="background:#F0E8DA;padding:1px 4px;">${data.bookingId}</code>
+        &nbsp;&middot;&nbsp; ${isDe ? "Gebucht über" : "Booked via"} ${sourceLabel[data.source] || data.source}
       </p>
     </div>
   </div>

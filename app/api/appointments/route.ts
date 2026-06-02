@@ -29,6 +29,7 @@ export async function POST(request: Request) {
       endsAt,
       estimatedPrice,
       source = "website",
+      language = "en",
       noShowFeeAgreed,
       noShowFeeTerms,
     } = body as Record<string, unknown>;
@@ -183,6 +184,7 @@ export async function POST(request: Request) {
       estimatedPrice: String(estimatedPrice || ""),
       notes: String(notes || ""),
       source: String(source || "website"),
+      language: String(language || "en") === "de" ? "de" : "en",
       bookingId,
     };
 

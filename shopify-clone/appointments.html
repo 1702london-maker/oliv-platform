@@ -4328,6 +4328,14 @@ function oapptDurationLabel(minutes) {
   if (h) return h + 'h';
   return m + 'm';
 }
+function oapptFormatDate(str) {
+  if (!str) return '';
+  var parts = str.split('-');
+  var monthsEn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var monthsDe = ['Jan','Feb','Maerz','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+  var months = oapptLang() === 'de' ? monthsDe : monthsEn;
+  return parseInt(parts[2]) + ' ' + months[parseInt(parts[1]) - 1] + ' ' + parts[0];
+}
 function oapptTimeToMinutes(timeStr) {
   var parts = (timeStr || '00:00').split(':').map(function(p) { return parseInt(p, 10) || 0; });
   return (parts[0] * 60) + parts[1];
@@ -4744,7 +4752,7 @@ function oapptSubmitBooking(event) {
       customerEmail: oapptState.customerEmail,
       customerPhone: oapptState.customerPhone,
       notes: [oapptState.customerNotes || '', oapptBookingNoteText()].filter(Boolean).join('\n\n'),
-      serviceName: svc ? (svc.name + (opt ? ' (' + opt.label + ')' : '')) : '',
+      serviceName: svc ? (oapptText(svc, 'name') + (opt ? ' (' + oapptText(opt, 'label') + ')' : '')) : '',
       stylistName: stylist ? stylist.name : '',
       locationName: locName,
       locationAddress: loc.address,
@@ -4754,6 +4762,7 @@ function oapptSubmitBooking(event) {
       endsAt: endsAt,
       estimatedPrice: 'EUR ' + oapptMoney(total),
       source: source,
+      language: oapptLang() === 'de' ? 'de' : 'en',
       noShowFeeAgreed: true,
       noShowFeeTerms: termsText
     })
