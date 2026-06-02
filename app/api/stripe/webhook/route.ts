@@ -25,10 +25,85 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "checkout.session.completed") {
-    await completeCheckout(event.data.object as Stripe.Checkout.Session);
+    const session = event.data.object as Stripe.Checkout.Session;
+    if (session.metadata?.voucher === "true") {
+      await completeVoucherPurchase(session);
+    } else {
+      await completeCheckout(session);
+    }
   }
 
   return NextResponse.json({ received: true });
+}
+
+async function completeVoucherPurchase(session: Stripe.Checkout.Session) {
+  const meta = session.metadata || {};
+  const amount_cents = parseInt(meta.amount_cents || "0", 10);
+  if (!amount_cents) return;
+
+  // Generate a unique 16-char voucher code: OLIV-XXXX-XXXX-XXXX
+  function makeCode() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let s = "";
+    for (let i = 0; i < 12; i++) {
+      if (i > 0 && i % 4 === 0) s += "-";
+      s += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return "OLIV-" + s;
+  }
+
+  const supabase = createSupabaseAdminClient();
+  let code = makeCode();
+  // Retry on collision (extremely unlikely)
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const { error } = await supabase.from("vouchers").insert({
+      code,
+      amount_cents,
+      balance_cents: amount_cents,
+      status: "pending",
+      purchaser_email: meta.purchaser_email || session.customer_email || null,
+      purchaser_name:  meta.purchaser_name  || null,
+      recipient_email: meta.recipient_email || null,
+      recipient_name:  meta.recipient_name  || null,
+      message:         meta.message         || null,
+      stripe_session_id: session.id,
+    });
+    if (!error) break;
+    code = makeCode();
+  }
+
+  // Send voucher code email via Resend
+  const purchaserEmail = meta.purchaser_email || session.customer_email;
+  if (purchaserEmail) {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://oliv-platform.vercel.app";
+    try {
+      const { Resend } = await import("resend");
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const euroAmount = (amount_cents / 100).toFixed(0);
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || "noreply@olivhairsupply.de",
+        to: purchaserEmail,
+        subject: `Your OlivHairSupply Gift Voucher — €${euroAmount}`,
+        html: `
+          <div style="font-family:'Gill Sans',Optima,sans-serif;background:#1C1810;padding:48px 0;">
+            <div style="max-width:520px;margin:0 auto;background:#F6F1E8;padding:52px 44px;">
+              <p style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#B68A45;margin:0 0 20px;">OlivHairSupply</p>
+              <h1 style="font-family:Georgia,serif;font-size:36px;font-weight:300;color:#2B2620;margin:0 0 8px;line-height:1.1;">Your Gift <em>Voucher</em></h1>
+              <p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;margin:0 0 36px;">Thank you for your purchase, ${meta.purchaser_name || ""}.</p>
+              <div style="background:#2B2620;border:1px solid #B68A45;padding:32px;text-align:center;margin:0 0 32px;">
+                <p style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B68A45;margin:0 0 12px;">Voucher Code</p>
+                <p style="font-family:monospace;font-size:22px;font-weight:700;letter-spacing:4px;color:#F6F1E8;margin:0 0 16px;">${code}</p>
+                <p style="font-family:Georgia,serif;font-size:32px;font-weight:300;color:#C9A96E;margin:0;">€${euroAmount}</p>
+              </div>
+              ${meta.recipient_name ? `<p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;margin:0 0 8px;">For: <strong>${meta.recipient_name}</strong></p>` : ""}
+              ${meta.message ? `<p style="font-family:Georgia,serif;font-size:14px;font-style:italic;color:#6B5C4E;margin:0 0 24px;">"${meta.message}"</p>` : ""}
+              <p style="font-family:Montserrat,sans-serif;font-size:10px;color:#A0907E;line-height:1.7;margin:0 0 24px;">To use this voucher, visit <a href="${siteUrl}/pages/vouchers" style="color:#B68A45;">${siteUrl}/pages/vouchers</a>, enter your code and activate it. Valid for 3 years from date of purchase.</p>
+              <p style="font-family:Montserrat,sans-serif;font-size:9px;color:#C0B0A0;letter-spacing:1px;text-transform:uppercase;margin:0;">OlivHairSupply · Berlin · Premium Hair</p>
+            </div>
+          </div>`,
+      });
+    } catch { /* non-fatal */ }
+  }
 }
 
 async function completeCheckout(session: Stripe.Checkout.Session) {

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
-    <link rel="canonical" href="https://olivhairsupply-2.myshopify.com/pages/press"><link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin><title>
+    <link rel="canonical" href="https://olivhairsupply-2.myshopify.com/pages/vouchers"><link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin><title>
       Press
  &ndash; OlivHairSupply</title>
 
@@ -33,8 +33,8 @@
     <script src="//olivhairsupply-2.myshopify.com/cdn/shop/t/3/assets/search-form.js?v=133129549252120666541777809607" defer="defer"></script><script src="//olivhairsupply-2.myshopify.com/cdn/shop/t/3/assets/animations.js?v=88693664871331136111777809607" defer="defer"></script><script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/107248910674/digital_wallets/dialog">
 <meta name="shopify-checkout-api-token" content="ad93cc49ac4409215e36f84abbfd63ad">
 <meta id="in-context-paypal-metadata" data-shop-id="107248910674" data-venmo-supported="false" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-currency="EUR">
-<link rel="alternate" hreflang="x-default" href="https://olivhairsupply-2.myshopify.com/pages/press">
-<link rel="alternate" hreflang="en" href="https://olivhairsupply-2.myshopify.com/pages/press">
+<link rel="alternate" hreflang="x-default" href="https://olivhairsupply-2.myshopify.com/pages/vouchers">
+<link rel="alternate" hreflang="en" href="https://olivhairsupply-2.myshopify.com/pages/vouchers">
 <link rel="alternate" hreflang="de" href="https://olivhairsupply-2.myshopify.com/de/pages/press">
 <link rel="alternate" hreflang="es" href="https://olivhairsupply-2.myshopify.com/es/pages/press">
 <script async="async" src="/checkouts/internal/preloads.js?locale=en-GB"></script>
@@ -1838,880 +1838,578 @@ first.parentNode.insertBefore(script, first);
 <!-- END sections: header-group -->
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-      <div id="shopify-section-template--30023486308690__main" class="shopify-section">
+<div id="shopify-section-vouchers__main" class="shopify-section">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-.oprs * { box-sizing: border-box; }
+.ovch * { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* HERO */
-.oprs-hero {
+.ovch-hero {
   position: relative;
-  height: 520px;
+  background: linear-gradient(135deg, #0F0A06 0%, #1C1810 55%, #241C10 100%);
+  min-height: 400px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; padding: 80px 24px 64px; text-align: center;
+}
+.ovch-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(182,138,69,0.12) 0%, transparent 60%);
+}
+.ovch-hero-inner { position: relative; z-index: 2; max-width: 640px; }
+.ovch-hero-rule { width: 40px; height: 1px; background: #B68A45; margin: 0 auto 24px; opacity: 0.6; }
+.ovch-hero-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase;
+  color: #B68A45; display: block; margin-bottom: 18px;
+}
+.ovch-hero-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(44px, 7vw, 72px); font-weight: 300;
+  color: #F6F1E8; line-height: 1.0; margin-bottom: 18px;
+}
+.ovch-hero-title em { font-style: italic; color: #C9A96E; }
+.ovch-hero-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; color: rgba(246,241,232,0.55);
+  line-height: 1.9; max-width: 440px; margin: 0 auto;
+}
+
+/* TABS */
+.ovch-tabs-wrap {
+  background: #F6F1E8; border-bottom: 1px solid #E3D6C5;
+  position: sticky; top: 0; z-index: 10;
+}
+.ovch-tabs { display: flex; max-width: 900px; margin: 0 auto; }
+.ovch-tab {
+  flex: 1; font-family: 'Montserrat', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+  color: #A0907E; padding: 18px 8px;
+  border: none; border-bottom: 2px solid transparent;
+  background: none; cursor: pointer; transition: color 0.2s, border-color 0.2s;
+}
+.ovch-tab.active { color: #2B2620; border-bottom-color: #B68A45; }
+.ovch-tab:hover:not(.active) { color: #2B2620; }
+
+/* PANELS */
+.ovch-body { background: #FDFAF6; min-height: 500px; padding: 60px 24px 96px; }
+.ovch-panel { display: none; max-width: 900px; margin: 0 auto; }
+.ovch-panel.active { display: block; }
+
+/* TYPOGRAPHY */
+.ovch-section-label {
+  font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: #B68A45;
+  margin-bottom: 22px; display: block;
+}
+.ovch-section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 36px; font-weight: 300; color: #2B2620;
+  margin-bottom: 10px; line-height: 1.1;
+}
+.ovch-section-title em { font-style: italic; }
+.ovch-section-sub {
+  font-family: 'Montserrat', sans-serif; font-size: 11px;
+  color: #6B5C4E; line-height: 1.8; margin-bottom: 44px; max-width: 520px;
+}
+
+/* VOUCHER CARD PREVIEW */
+.ovch-card-preview-wrap { margin-bottom: 52px; }
+.ovch-card {
+  width: 100%; max-width: 460px; aspect-ratio: 1.586;
+  position: relative; margin: 0 auto;
+  background: linear-gradient(135deg, #1A140E 0%, #2C2118 60%, #1A140E 100%);
+  border: 1px solid #B68A45;
+  box-shadow: 0 2px 0 #B68A45 inset, 0 -2px 0 #B68A45 inset,
+              2px 0 0 #B68A45 inset, -2px 0 0 #B68A45 inset,
+              0 28px 80px rgba(0,0,0,0.5);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-.oprs-hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 35%;
-  display: block;
+.ovch-card::before, .ovch-card::after {
+  content: ''; position: absolute;
+  width: 20px; height: 20px;
+  border-color: #B68A45; border-style: solid; opacity: 0.7;
 }
-.oprs-hero-bg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, #1A140E 0%, #2C2118 100%);
+.ovch-card::before { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+.ovch-card::after  { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+.ovch-card-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(182,138,69,0.1) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(182,138,69,0.07) 0%, transparent 55%);
 }
-.oprs-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(10,7,4,0.72) 0%, rgba(10,7,4,0.40) 50%, rgba(10,7,4,0.65) 100%);
+.ovch-card-inner {
+  position: absolute; inset: 0; padding: 26px 30px;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
-.oprs-hero-inner {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 0 24px;
-  max-width: 760px;
-}
-.oprs-hero-eyebrow {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 18px;
-  display: block;
-}
-.oprs-hero-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 76px;
-  font-weight: 300;
-  color: #FFFFFF;
-  line-height: 1.04;
-  margin-bottom: 18px;
-}
-.oprs-hero-title em { font-style: italic; color: #C9A96E; }
-.oprs-hero-sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  color: #FFFFFF;
-  line-height: 1.85;
-  max-width: 560px;
-  margin: 0 auto;
-}
+.ovch-card-top { display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 2; }
+.ovch-card-brand { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px; font-weight: 300; color: #F6F1E8; letter-spacing: 1px; }
+.ovch-card-brand span { font-weight: 600; letter-spacing: 2px; }
+.ovch-card-gift-label { font-family: 'Montserrat', sans-serif; font-size: 7px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #B68A45; text-align: right; line-height: 1.5; }
+.ovch-card-mid { position: relative; z-index: 2; text-align: center; }
+.ovch-card-amount-label { font-family: 'Montserrat', sans-serif; font-size: 7px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(182,138,69,0.65); margin-bottom: 6px; display: block; }
+.ovch-card-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(36px, 9vw, 56px); font-weight: 300; color: #C9A96E; line-height: 1; }
+.ovch-card-bottom { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; }
+.ovch-card-line { width: 50px; height: 1px; background: linear-gradient(to right, transparent, #B68A45, transparent); }
+.ovch-card-tagline { font-family: 'Montserrat', sans-serif; font-size: 6.5px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(246,241,232,0.35); }
+.ovch-card-validity { font-family: 'Montserrat', sans-serif; font-size: 7px; color: rgba(182,138,69,0.5); text-align: right; letter-spacing: 0.5px; }
 
-/* SHARED */
-.oprs-inner { max-width: 1100px; margin: 0 auto; padding: 0 80px; }
-.oprs-eyebrow {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 3.5px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 12px;
-  display: block;
+/* DENOMINATION GRID */
+.ovch-denom-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 52px; }
+.ovch-denom-btn {
+  border: 1.5px solid #E3D6C5; background: #FFFDFB;
+  padding: 16px 6px; text-align: center; cursor: pointer;
+  transition: all 0.2s; font-family: 'Cormorant Garamond', Georgia, serif;
 }
-.oprs-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 52px;
-  font-weight: 300;
-  color: #1F1F1F;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-.oprs-title em { font-style: italic; }
-.oprs-body {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
-  font-weight: 500;
-  color: #555555;
-  line-height: 1.95;
-  margin-bottom: 18px;
-}
-.oprs-body:last-child { margin-bottom: 0; }
+.ovch-denom-btn:hover { border-color: #B68A45; background: #F6F1E8; }
+.ovch-denom-btn.selected { border-color: #2B2620; background: #2B2620; }
+.ovch-denom-eur { display: block; font-size: 9px; font-weight: 700; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px; color: #B68A45; margin-bottom: 3px; }
+.ovch-denom-btn.selected .ovch-denom-eur { color: #C9A96E; }
+.ovch-denom-amount { display: block; font-size: 20px; font-weight: 300; color: #2B2620; line-height: 1; }
+.ovch-denom-btn.selected .ovch-denom-amount { color: #F6F1E8; }
 
-/* INTRO */
-.oprs-intro { background: #F6F1E8; padding: 96px 0; border-bottom: 1px solid #E3D6C5; }
-.oprs-intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.oprs-intro-rule { width: 40px; height: 1px; background: #B68A45; margin-bottom: 32px; }
-.oprs-intro-lead {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 28px;
-  font-weight: 400;
-  font-style: italic;
-  color: #1F1F1F;
-  line-height: 1.6;
-  margin-bottom: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #E3D6C5;
+/* FORM */
+.ovch-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.ovch-form-full { grid-column: 1 / -1; }
+.ovch-field { display: flex; flex-direction: column; gap: 6px; }
+.ovch-label { font-family: 'Montserrat', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #6B5C4E; }
+.ovch-input, .ovch-textarea {
+  border: 1px solid #E3D6C5; background: #FFFDFB;
+  padding: 11px 14px; font-family: 'Montserrat', sans-serif;
+  font-size: 12px; color: #2B2620; outline: none; transition: border-color 0.2s;
 }
-.oprs-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 36px; }
-.oprs-stat { background: #EDE5D8; border: 1px solid #E3D6C5; padding: 24px 20px; text-align: center; }
-.oprs-stat-val {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 40px;
-  font-weight: 300;
-  color: #1F1F1F;
-  line-height: 1;
-  margin-bottom: 6px;
-  display: block;
+.ovch-input:focus, .ovch-textarea:focus { border-color: #B68A45; }
+.ovch-textarea { resize: vertical; min-height: 80px; }
+.ovch-input::placeholder, .ovch-textarea::placeholder { color: #C0B0A0; }
+.ovch-form-note { font-family: 'Montserrat', sans-serif; font-size: 10px; color: #A0907E; line-height: 1.7; margin: 20px 0 32px; }
+.ovch-btn-gold {
+  background: #B68A45; color: #FFFDFB; font-family: 'Montserrat', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+  border: none; padding: 16px 44px; cursor: pointer; transition: background 0.2s;
+  width: 100%; max-width: 360px; display: block;
 }
-.oprs-stat-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #7A6A5A;
-}
-.oprs-intro-img-wrap {
-  aspect-ratio: 4/5;
-  overflow: hidden;
-  background: #DDD0C0;
-  position: relative;
-}
-.oprs-intro-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-.oprs-intro-img-wrap:hover img { transform: scale(1.02); }
-.oprs-intro-img-ph {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #D8CCB8 0%, #C4B49C 100%);
-}
-.oprs-intro-img-ph span { font-family: 'Montserrat', sans-serif; font-size: 9px; color: #9A8A7A; letter-spacing: 3px; text-transform: uppercase; }
-.oprs-intro-img-label {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: rgba(43,38,32,0.75);
-  padding: 14px 18px;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 18px;
-  font-style: italic;
-  color: #F6F1E8;
-}
+.ovch-btn-gold:hover { background: #9A7538; }
+.ovch-btn-gold:disabled { background: #C0B0A0; cursor: not-allowed; }
 
-/* FEATURED IN */
-.oprs-featured { background: #2B2620; padding: 96px 0; }
-.oprs-featured-header { text-align: center; margin-bottom: 64px; }
-.oprs-featured-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 52px;
-  font-weight: 300;
-  color: #F6F1E8;
-  line-height: 1.1;
-  margin-bottom: 12px;
+/* SUCCESS */
+.ovch-success {
+  background: #2B2620; border: 1px solid #B68A45;
+  padding: 48px 44px; text-align: center;
+  max-width: 520px; margin: 0 auto; display: none;
 }
-.oprs-featured-title em { font-style: italic; color: #C9A96E; }
-.oprs-featured-sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
-  font-weight: 500;
-  color: rgba(246,241,232,0.85);
-  line-height: 1.8;
-}
-.oprs-press-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-.oprs-press-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(182,138,69,0.12);
-  overflow: hidden;
-  transition: background 0.3s;
-}
-.oprs-press-card:hover { background: rgba(182,138,69,0.05); }
-.oprs-press-card-img {
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  background: rgba(255,255,255,0.04);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.oprs-press-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
-.oprs-press-card:hover .oprs-press-card-img img { transform: scale(1.04); }
-.oprs-press-logo-ph {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px;
-}
-.oprs-press-logo-name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 28px;
-  font-weight: 300;
-  color: rgba(182,138,69,0.35);
-  letter-spacing: 4px;
-  text-align: center;
-}
-.oprs-press-logo-type {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(182,138,69,0.2);
-}
-.oprs-press-card-body { padding: 24px 26px; }
-.oprs-press-card-tag {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 8px;
-  display: block;
-}
-.oprs-press-card-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 22px;
-  color: #F6F1E8;
-  line-height: 1.25;
-  margin-bottom: 10px;
-}
-.oprs-press-card-desc {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(246,241,232,0.85);
-  line-height: 1.8;
-}
-.oprs-coming-soon-strip { text-align: center; margin-top: 40px; padding-top: 40px; border-top: 1px solid rgba(182,138,69,0.1); }
-.oprs-coming-soon-text {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(182,138,69,0.5);
-}
+.ovch-success.visible { display: block; }
+.ovch-success-tick { width: 48px; height: 48px; border-radius: 50%; background: #B68A45; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 20px; color: #fff; }
+.ovch-success-eye { font-family: 'Montserrat', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #B68A45; margin-bottom: 12px; }
+.ovch-success-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; font-weight: 300; color: #F6F1E8; margin-bottom: 16px; }
+.ovch-success-msg { font-family: 'Montserrat', sans-serif; font-size: 11px; color: #A0907E; line-height: 1.8; }
 
-/* COLLABORATIONS */
-.oprs-collabs { background: #EDE5D8; padding: 96px 0; }
-.oprs-collabs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.oprs-collab-list { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
-.oprs-collab-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  background: #F6F1E8;
-  border: 1px solid #E3D6C5;
-  padding: 22px 22px;
-  transition: border-color 0.2s;
+/* ACTIVATE / BALANCE */
+.ovch-action-wrap { max-width: 520px; margin: 0 auto; }
+.ovch-code-row { display: flex; gap: 0; margin-bottom: 20px; }
+.ovch-code-input {
+  flex: 1; border: 1.5px solid #E3D6C5; border-right: none;
+  background: #FFFDFB; padding: 14px 18px;
+  font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase; color: #2B2620;
+  outline: none; transition: border-color 0.2s;
 }
-.oprs-collab-item:hover { border-color: #B68A45; }
-.oprs-collab-dot { width: 10px; height: 10px; border-radius: 50%; background: #B68A45; flex-shrink: 0; margin-top: 6px; }
-.oprs-collab-item-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; color: #1F1F1F; margin-bottom: 6px; }
-.oprs-collab-item-text { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; color: #555555; line-height: 1.75; }
-.oprs-collabs-img-wrap { aspect-ratio: 1; overflow: hidden; background: #DDD0C0; }
-.oprs-collabs-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.oprs-collabs-img-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #D8CCB8 0%, #C4B49C 100%); }
-.oprs-collabs-img-ph span { font-family: 'Montserrat', sans-serif; font-size: 9px; color: #9A8A7A; letter-spacing: 3px; text-transform: uppercase; }
+.ovch-code-input:focus { border-color: #B68A45; }
+.ovch-code-input::placeholder { font-size: 11px; letter-spacing: 2px; color: #C0B0A0; font-weight: 400; }
+.ovch-code-btn {
+  background: #2B2620; color: #F6F1E8; font-family: 'Montserrat', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  border: 1.5px solid #2B2620; padding: 14px 24px; cursor: pointer;
+  transition: background 0.2s; white-space: nowrap;
+}
+.ovch-code-btn:hover { background: #B68A45; border-color: #B68A45; }
+.ovch-code-btn:disabled { background: #A0907E; border-color: #A0907E; cursor: not-allowed; }
 
-/* MEDIA KIT */
-.oprs-kit { background: #F6F1E8; padding: 96px 0; border-top: 1px solid #E3D6C5; }
-.oprs-kit-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.oprs-kit-contact { background: #2B2620; padding: 44px; }
-.oprs-kit-contact-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 10px;
-  display: block;
-}
-.oprs-kit-contact-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; color: #F6F1E8; line-height: 1.2; margin-bottom: 20px; }
-.oprs-kit-contact-title em { font-style: italic; color: #C9A96E; }
-.oprs-kit-contact-row { display: flex; flex-direction: column; gap: 12px; }
-.oprs-kit-contact-item { display: flex; align-items: center; gap: 14px; }
-.oprs-kit-contact-item-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(246,241,232,0.4);
-  flex-shrink: 0;
-  width: 60px;
-}
-.oprs-kit-contact-item-val { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; color: #F6F1E8; }
-.oprs-kit-contact-item-val a { color: #B68A45; text-decoration: none; }
-.oprs-kit-contact-item-val a:hover { text-decoration: underline; }
-.oprs-kit-assets { display: flex; flex-direction: column; gap: 14px; }
-.oprs-kit-asset {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: #EDE5D8;
-  border: 1px solid #E3D6C5;
-  padding: 18px 20px;
-  transition: border-color 0.2s;
-}
-.oprs-kit-asset:hover { border-color: #B68A45; }
-.oprs-kit-asset-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 300; color: rgba(182,138,69,0.3); flex-shrink: 0; width: 32px; }
-.oprs-kit-asset-info { flex: 1; }
-.oprs-kit-asset-title { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 600; color: #1F1F1F; margin-bottom: 3px; }
-.oprs-kit-asset-desc { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 500; color: #555555; }
-.oprs-kit-asset-tag {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #7A6A5A;
-  border: 1px solid #E3D6C5;
-  padding: 4px 10px;
-  flex-shrink: 0;
-}
+.ovch-result { border: 1px solid #E3D6C5; padding: 32px; background: #FFFDFB; display: none; margin-top: 24px; }
+.ovch-result.visible { display: block; }
+.ovch-result-ok  { border-color: #5A8A50; background: #F4FBF0; }
+.ovch-result-err { border-color: #C0504D; background: #FDF4F4; }
+.ovch-result-label { font-family: 'Montserrat', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #6B5C4E; margin-bottom: 10px; display: block; }
+.ovch-result-ok  .ovch-result-label { color: #4A7A40; }
+.ovch-result-err .ovch-result-label { color: #A04040; }
+.ovch-result-code { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 300; color: #2B2620; margin-bottom: 4px; }
+.ovch-result-amount { font-family: 'Montserrat', sans-serif; font-size: 11px; color: #6B5C4E; line-height: 1.7; }
+.ovch-result-err-msg { font-family: 'Montserrat', sans-serif; font-size: 12px; color: #A04040; }
 
-/* EDITORIAL SPREAD */
-.oprs-editorial { background: #FDFAF6; padding: 96px 0; border-top: 1px solid #E3D6C5; }
-.oprs-editorial-header { text-align: center; margin-bottom: 56px; }
-.oprs-editorial-grid { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; gap: 3px; }
-.oprs-ed-main { grid-row: 1 / 3; position: relative; overflow: hidden; background: #DDD0C0; min-height: 560px; }
-.oprs-ed-main img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-.oprs-ed-main:hover img { transform: scale(1.02); }
-.oprs-ed-main-ph { width: 100%; height: 100%; min-height: 560px; display: flex; align-items: center; justify-content: center; background: linear-gradient(160deg, #D8CCB8 0%, #BFB09A 100%); }
-.oprs-ed-main-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,20,14,0.65) 0%, transparent 50%); }
-.oprs-ed-main-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 30px; }
-.oprs-ed-main-tag { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #B68A45; display: block; margin-bottom: 6px; }
-.oprs-ed-main-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; font-style: italic; color: #F6F1E8; line-height: 1.3; }
-.oprs-ed-side { position: relative; overflow: hidden; background: #DDD0C0; min-height: 275px; }
-.oprs-ed-side img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
-.oprs-ed-side:hover img { transform: scale(1.04); }
-.oprs-ed-side-ph { width: 100%; height: 100%; min-height: 275px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #CEC0AC 0%, #BFB09A 100%); }
-.oprs-ed-text { background: #2B2620; min-height: 275px; display: flex; flex-direction: column; justify-content: center; padding: 36px; }
-.oprs-ed-text-tag { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #B68A45; display: block; margin-bottom: 12px; }
-.oprs-ed-text-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; font-weight: 300; color: #F6F1E8; line-height: 1.3; margin-bottom: 14px; }
-.oprs-ed-text-title em { font-style: italic; color: #C9A96E; }
-.oprs-ed-text-body { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; color: rgba(246,241,232,0.85); line-height: 1.8; }
-.oprs-ph-label { font-family: 'Montserrat', sans-serif; font-size: 9px; color: #9A8A7A; letter-spacing: 3px; text-transform: uppercase; }
+/* BALANCE CARD */
+.ovch-balance-card { background: linear-gradient(135deg, #1A140E, #2C2118); border: 1px solid #B68A45; padding: 36px; text-align: center; margin-bottom: 16px; }
+.ovch-balance-label { font-family: 'Montserrat', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #B68A45; display: block; margin-bottom: 8px; }
+.ovch-balance-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 52px; font-weight: 300; color: #C9A96E; line-height: 1; }
+.ovch-balance-meta { font-family: 'Montserrat', sans-serif; font-size: 10px; color: rgba(246,241,232,0.5); margin-top: 10px; }
+.ovch-status-pill { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; margin-top: 8px; }
+.ovch-status-active   { background: #DCFEE9; color: #1A7A44; }
+.ovch-status-pending  { background: #FEF3DC; color: #9A6A1A; }
+.ovch-status-redeemed { background: #F0E8DC; color: #6B5C4E; }
+.ovch-status-expired  { background: #F5F0E8; color: #9B8878; }
 
-/* FINAL CTA */
-.oprs-cta { background: #2B2620; padding: 96px 0; text-align: center; }
-.oprs-cta-inner { max-width: 680px; margin: 0 auto; padding: 0 40px; }
-.oprs-cta-eyebrow {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 16px;
-  display: block;
-}
-.oprs-cta-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 64px; font-weight: 300; color: #F6F1E8; line-height: 1.06; margin-bottom: 16px; }
-.oprs-cta-title em { font-style: italic; color: #C9A96E; }
-.oprs-cta-sub { font-family: 'Montserrat', sans-serif; font-size: 17px; font-weight: 500; color: rgba(246,241,232,0.85); line-height: 1.9; margin-bottom: 40px; }
-.oprs-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.oprs-btn-gold {
-  display: inline-flex;
-  align-items: center;
-  background: #B68A45;
-  color: #FFFFFF;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 16px 40px;
-  text-decoration: none;
-  transition: background 0.25s;
-  white-space: nowrap;
-}
-.oprs-btn-gold:hover { background: #9A7538; color: #FFFFFF; }
-.oprs-btn-dark {
-  display: inline-flex;
-  align-items: center;
-  background: #3D3028;
-  color: #FFFFFF;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 16px 40px;
-  text-decoration: none;
-  transition: background 0.25s;
-  white-space: nowrap;
-}
-.oprs-btn-dark:hover { background: #B68A45; color: #FFFFFF; }
+/* HOW IT WORKS */
+.ovch-how { background: #2B2620; padding: 64px 24px; }
+.ovch-how-inner { max-width: 900px; margin: 0 auto; }
+.ovch-how-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 38px; font-weight: 300; color: #F6F1E8; text-align: center; margin-bottom: 8px; }
+.ovch-how-title em { font-style: italic; color: #C9A96E; }
+.ovch-how-sub { font-family: 'Montserrat', sans-serif; font-size: 11px; color: rgba(246,241,232,0.4); text-align: center; margin-bottom: 48px; }
+.ovch-how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.ovch-how-step { background: rgba(255,255,255,0.04); border: 1px solid rgba(182,138,69,0.15); padding: 36px 28px; text-align: center; }
+.ovch-how-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 40px; font-weight: 300; color: rgba(182,138,69,0.2); display: block; margin-bottom: 16px; }
+.ovch-how-step-title { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #B68A45; margin-bottom: 10px; }
+.ovch-how-step-text { font-family: 'Montserrat', sans-serif; font-size: 11px; color: rgba(246,241,232,0.45); line-height: 1.8; }
 
-/* RESPONSIVE */
-@media (max-width: 1100px) { .oprs-inner { padding: 0 40px; } }
-@media (max-width: 900px) {
-  .oprs-intro-grid { grid-template-columns: 1fr; gap: 48px; }
-  .oprs-collabs-grid { grid-template-columns: 1fr; gap: 48px; }
-  .oprs-kit-inner { grid-template-columns: 1fr; gap: 40px; }
-  .oprs-press-grid { grid-template-columns: repeat(2, 1fr); }
-  .oprs-editorial-grid { grid-template-columns: 1fr; }
-  .oprs-ed-main { min-height: 420px; }
-  .oprs-ed-main-ph { min-height: 420px; }
-  .oprs-stat-row { grid-template-columns: repeat(3, 1fr); }
-}
 @media (max-width: 768px) {
-  .oprs-hero { height: 420px; }
-  .oprs-hero-title { font-size: 48px; }
-  .oprs-hero-sub { font-size: 16px; }
-  .oprs-title { font-size: 36px; }
-  .oprs-inner { padding: 0 24px; }
-  .oprs-press-grid { grid-template-columns: 1fr; }
-  .oprs-featured-title { font-size: 36px; }
-  .oprs-cta-title { font-size: 44px; }
-  .oprs-cta-inner { padding: 0 24px; }
-  .oprs-intro { padding: 64px 0; }
-  .oprs-featured { padding: 64px 0; }
-  .oprs-collabs { padding: 64px 0; }
-  .oprs-kit { padding: 64px 0; }
-  .oprs-editorial { padding: 64px 0; }
-  .oprs-cta { padding: 72px 0; }
-  .oprs-stat-row { grid-template-columns: 1fr 1fr; }
-  .oprs-btn-gold,
-  .oprs-btn-dark { width: 100%; justify-content: center; font-size: 15px; }
-  .oprs-cta-btns { flex-direction: column; align-items: center; }
+  .ovch-denom-grid { grid-template-columns: repeat(3, 1fr); }
+  .ovch-form-grid  { grid-template-columns: 1fr; }
+  .ovch-how-steps  { grid-template-columns: 1fr; }
+  .ovch-tab { font-size: 8px; letter-spacing: 1.5px; padding: 16px 6px; }
+}
+@media (max-width: 480px) {
+  .ovch-denom-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 
-<div class="oprs">
+<div class="ovch">
 
-  <div class="oprs-hero">
-    <img class="oprs-hero-img" src="/heroes/press-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
-    <div class="oprs-hero-overlay"></div>
-    <div class="oprs-hero-inner">
-      <span class="oprs-hero-eyebrow">Press and Media</span>
-      <h1 class="oprs-hero-title">In the <em>Spotlight.</em></h1>
-      <p class="oprs-hero-sub">OlivHairSupply is a growing luxury hair brand shaping the future of premium beauty and hair experiences.</p>
+  <div class="ovch-hero">
+    <div class="ovch-hero-inner">
+      <div class="ovch-hero-rule"></div>
+      <span class="ovch-hero-eyebrow">OlivHairSupply</span>
+      <h1 class="ovch-hero-title">Gift <em>Vouchers</em></h1>
+      <p class="ovch-hero-sub">The perfect gift for someone who deserves the finest in luxury hair. Choose your denomination, personalise your message, and we deliver the code instantly.</p>
     </div>
   </div>
 
-  <div class="oprs-intro">
-    <div class="oprs-inner">
-      <div class="oprs-intro-grid">
-        <div>
-          <span class="oprs-eyebrow">About the Brand</span>
-          <h2 class="oprs-title">A Brand Worth <em>Noticing</em></h2>
-          <div class="oprs-intro-rule"></div>
-          <p class="oprs-intro-lead">OlivHairSupply is redefining the luxury hair space through premium BiziLux products, expert services and a growing community.</p>
-          <p class="oprs-body">As our brand evolves, we continue to attract attention from media, influencers and industry professionals across Europe and beyond. Our presence spans two Berlin salons, an international e-commerce operation and a training academy producing certified professionals.</p>
-          <p class="oprs-body">We are building a luxury hair brand with purpose — rooted in quality, community and the belief that beauty can be both aspirational and accessible.</p>
-          <div class="oprs-stat-row">
-            <div class="oprs-stat"><span class="oprs-stat-val">2</span><span class="oprs-stat-label">Berlin Salons</span></div>
-            <div class="oprs-stat"><span class="oprs-stat-val">EU</span><span class="oprs-stat-label">Shipping Range</span></div>
-            <div class="oprs-stat"><span class="oprs-stat-val">100%</span><span class="oprs-stat-label">Remy Human Hair</span></div>
-          </div>
-        </div>
-        <div>
-          <div class="oprs-intro-img-wrap">
-            
-              <div class="oprs-intro-img-ph"><span>Brand Image</span></div>
-              <div class="oprs-intro-img-label">OlivHairSupply, Berlin</div>
-            
-          </div>
-        </div>
-      </div>
+  <div class="ovch-tabs-wrap">
+    <div class="ovch-tabs">
+      <button class="ovch-tab active" data-tab="buy">Purchase a Voucher</button>
+      <button class="ovch-tab" data-tab="activate">Activate</button>
+      <button class="ovch-tab" data-tab="balance">Check Balance</button>
     </div>
   </div>
 
-  <div class="oprs-featured">
-    <div class="oprs-inner">
-      <div class="oprs-featured-header">
-        <span class="oprs-eyebrow" style="color:#B68A45;display:block;text-align:center;">Press Coverage</span>
-        <h2 class="oprs-featured-title">Featured <em>In</em></h2>
-        <p class="oprs-featured-sub">Our story is being told. As coverage grows, this space will reflect every feature, interview and mention.</p>
+  <div class="ovch-body">
+
+    <!-- BUY -->
+    <div class="ovch-panel active" id="ovch-panel-buy">
+      <div class="ovch-card-preview-wrap">
+        <div class="ovch-card">
+          <div class="ovch-card-bg"></div>
+          <div class="ovch-card-inner">
+            <div class="ovch-card-top">
+              <div class="ovch-card-brand"><span>OLIV</span>HairSupply</div>
+              <div class="ovch-card-gift-label">Gift<br>Voucher</div>
+            </div>
+            <div class="ovch-card-mid">
+              <span class="ovch-card-amount-label">Value</span>
+              <div class="ovch-card-amount" id="ovch-card-amount-display">Select Amount</div>
+            </div>
+            <div class="ovch-card-bottom">
+              <div class="ovch-card-line"></div>
+              <div class="ovch-card-tagline">Berlin · Premium Hair</div>
+              <div class="ovch-card-validity">Valid 3 Years</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="oprs-press-grid">
 
-        <div class="oprs-press-card">
-          <div class="oprs-press-card-img">
-            
-              <div class="oprs-press-logo-ph">
-                <div class="oprs-press-logo-name">Publication</div>
-                <div class="oprs-press-logo-type">Feature</div>
-              </div>
-            
+      <span class="ovch-section-label">Select Amount</span>
+      <div class="ovch-denom-grid" id="ovch-denom-grid"></div>
+
+      <span class="ovch-section-label">Personalise Your Voucher</span>
+      <form id="ovch-buy-form">
+        <div class="ovch-form-grid">
+          <div class="ovch-field">
+            <label class="ovch-label" for="ovch-purchaser-name">Your Name *</label>
+            <input class="ovch-input" id="ovch-purchaser-name" type="text" placeholder="Jane Smith" required>
           </div>
-          <div class="oprs-press-card-body">
-            <span class="oprs-press-card-tag">Feature</span>
-            <div class="oprs-press-card-title">Coming Soon</div>
-            <p class="oprs-press-card-desc">We are actively building relationships with press and media. This space will be updated as coverage is published.</p>
+          <div class="ovch-field">
+            <label class="ovch-label" for="ovch-purchaser-email">Your Email *</label>
+            <input class="ovch-input" id="ovch-purchaser-email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="ovch-field">
+            <label class="ovch-label" for="ovch-recipient-name">Recipient Name</label>
+            <input class="ovch-input" id="ovch-recipient-name" type="text" placeholder="Optional">
+          </div>
+          <div class="ovch-field">
+            <label class="ovch-label" for="ovch-recipient-email">Recipient Email</label>
+            <input class="ovch-input" id="ovch-recipient-email" type="email" placeholder="Optional">
+          </div>
+          <div class="ovch-field ovch-form-full">
+            <label class="ovch-label" for="ovch-message">Personal Message</label>
+            <textarea class="ovch-textarea" id="ovch-message" placeholder="A personal note to accompany the voucher..."></textarea>
           </div>
         </div>
+        <p class="ovch-form-note">Your voucher code is emailed immediately after payment. Valid for 3 years and redeemable in-store or on any appointment. Vouchers are non-refundable once issued.</p>
+        <button class="ovch-btn-gold" type="submit" id="ovch-buy-btn" disabled>Select an Amount to Continue</button>
+      </form>
 
-        <div class="oprs-press-card">
-          <div class="oprs-press-card-img">
-            
-              <div class="oprs-press-logo-ph">
-                <div class="oprs-press-logo-name">Publication</div>
-                <div class="oprs-press-logo-type">Interview</div>
-              </div>
-            
-          </div>
-          <div class="oprs-press-card-body">
-            <span class="oprs-press-card-tag">Interview</span>
-            <div class="oprs-press-card-title">Coming Soon</div>
-            <p class="oprs-press-card-desc">Media enquiries and feature requests are welcome. Use the contact details below to get in touch with our press team.</p>
-          </div>
-        </div>
-
-        <div class="oprs-press-card">
-          <div class="oprs-press-card-img">
-            
-              <div class="oprs-press-logo-ph">
-                <div class="oprs-press-logo-name">Publication</div>
-                <div class="oprs-press-logo-type">Brand Story</div>
-              </div>
-            
-          </div>
-          <div class="oprs-press-card-body">
-            <span class="oprs-press-card-tag">Brand Story</span>
-            <div class="oprs-press-card-title">Coming Soon</div>
-            <p class="oprs-press-card-desc">OlivHairSupply is a story worth telling. Reach out if you would like to be part of telling it.</p>
-          </div>
-        </div>
-
-      </div>
-      <div class="oprs-coming-soon-strip">
-        <p class="oprs-coming-soon-text">More coverage coming. Check back regularly as our media presence grows.</p>
+      <div class="ovch-success" id="ovch-buy-success">
+        <div class="ovch-success-tick">&#10003;</div>
+        <p class="ovch-success-eye">Purchase Complete</p>
+        <h2 class="ovch-success-title">Your Voucher Is On Its Way</h2>
+        <p class="ovch-success-msg">We have emailed your unique voucher code. Please check your inbox — and your spam folder. The recipient will also receive a copy if their email was provided.<br><br><strong>OlivHairSupply Team</strong></p>
       </div>
     </div>
-  </div>
 
-  <div class="oprs-collabs">
-    <div class="oprs-inner">
-      <div class="oprs-collabs-grid">
-        <div>
-          <div class="oprs-collabs-img-wrap">
-            
-              <div class="oprs-collabs-img-ph"><span>Collaborations</span></div>
-            
-          </div>
+    <!-- ACTIVATE -->
+    <div class="ovch-panel" id="ovch-panel-activate">
+      <div class="ovch-action-wrap">
+        <span class="ovch-section-label">Activate Voucher</span>
+        <h2 class="ovch-section-title">Make It <em>Live</em></h2>
+        <p class="ovch-section-sub">Enter the unique code from your voucher email. Once activated, the full balance is immediately available to redeem.</p>
+        <div class="ovch-code-row">
+          <input class="ovch-code-input" id="ovch-activate-code" type="text" placeholder="OLIV-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off" spellcheck="false">
+          <button class="ovch-code-btn" id="ovch-activate-btn" type="button">Activate</button>
         </div>
-        <div>
-          <span class="oprs-eyebrow">Partnerships</span>
-          <h2 class="oprs-title">Collaborations and <em>Partnerships</em></h2>
-          <p class="oprs-body">We work with creators, influencers and professionals who align with our vision of luxury, quality and impact. Our partnerships are selective, intentional and built for mutual growth.</p>
-          <div class="oprs-collab-list">
-            <div class="oprs-collab-item">
-              <div class="oprs-collab-dot"></div>
-              <div>
-                <div class="oprs-collab-item-title">Influencer Partnerships</div>
-                <p class="oprs-collab-item-text">We collaborate with hair, beauty and lifestyle content creators who have authentic audiences and a genuine love for premium products.</p>
+        <div class="ovch-result" id="ovch-activate-result">
+          <span class="ovch-result-label" id="ovch-activate-result-label"></span>
+          <div class="ovch-result-code" id="ovch-activate-result-code"></div>
+          <div class="ovch-result-amount" id="ovch-activate-result-msg"></div>
+          <p class="ovch-result-err-msg" id="ovch-activate-result-err"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BALANCE -->
+    <div class="ovch-panel" id="ovch-panel-balance">
+      <div class="ovch-action-wrap">
+        <span class="ovch-section-label">Check Balance</span>
+        <h2 class="ovch-section-title">Your <em>Balance</em></h2>
+        <p class="ovch-section-sub">Enter your voucher code to see your remaining balance, status and expiry date.</p>
+        <div class="ovch-code-row">
+          <input class="ovch-code-input" id="ovch-balance-code" type="text" placeholder="OLIV-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off" spellcheck="false">
+          <button class="ovch-code-btn" id="ovch-balance-btn" type="button">Check</button>
+        </div>
+        <div class="ovch-result" id="ovch-balance-result">
+          <div id="ovch-balance-ok" style="display:none;">
+            <div class="ovch-balance-card">
+              <span class="ovch-balance-label">Remaining Balance</span>
+              <div class="ovch-balance-amount" id="ovch-balance-display">&#8364;0</div>
+              <div class="ovch-balance-meta">
+                of <span id="ovch-balance-original"></span> original value
+                <br><span class="ovch-status-pill" id="ovch-balance-status"></span>
               </div>
             </div>
-            <div class="oprs-collab-item">
-              <div class="oprs-collab-dot"></div>
-              <div>
-                <div class="oprs-collab-item-title">Brand Collaborations</div>
-                <p class="oprs-collab-item-text">We are open to brand partnerships with complementary businesses in fashion, beauty, wellness and luxury lifestyle.</p>
-              </div>
-            </div>
-            <div class="oprs-collab-item">
-              <div class="oprs-collab-dot"></div>
-              <div>
-                <div class="oprs-collab-item-title">Creative Campaigns</div>
-                <p class="oprs-collab-item-text">From editorial shoots to content campaigns, we work with photographers, stylists and creatives to produce imagery that represents the brand at its best.</p>
-              </div>
-            </div>
+            <div class="ovch-result-amount" id="ovch-balance-expiry" style="margin-top:12px;"></div>
+          </div>
+          <div id="ovch-balance-err" style="display:none;">
+            <p class="ovch-result-err-msg" id="ovch-balance-err-msg"></p>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="oprs-kit">
-    <div class="oprs-inner">
-      <div class="oprs-kit-inner">
-        <div>
-          <span class="oprs-eyebrow">Media Team</span>
-          <h2 class="oprs-title">Press and Media <em>Enquiries</em></h2>
-          <p class="oprs-body">For press features, interviews, brand collaborations or access to our media assets, please contact our press team directly. We aim to respond to all media enquiries within 48 hours.</p>
-          <div class="oprs-kit-contact">
-            <span class="oprs-kit-contact-label">Contact Our Press Team</span>
-            <h3 class="oprs-kit-contact-title">Get in <em>Touch</em></h3>
-            <div class="oprs-kit-contact-row">
-              <div class="oprs-kit-contact-item">
-                <span class="oprs-kit-contact-item-label">Press</span>
-                <span class="oprs-kit-contact-item-val"><a href="mailto:press@olivhairsupply.de">press@olivhairsupply.de</a></span>
-              </div>
-              <div class="oprs-kit-contact-item">
-                <span class="oprs-kit-contact-item-label">General</span>
-                <span class="oprs-kit-contact-item-val"><a href="mailto:info@olivhairsupply.de">info@olivhairsupply.de</a></span>
-              </div>
-              <div class="oprs-kit-contact-item">
-                <span class="oprs-kit-contact-item-label">WhatsApp</span>
-                <span class="oprs-kit-contact-item-val"><a href="https://wa.me/4915786283439">+49 157 862 83439</a></span>
-              </div>
-              <div class="oprs-kit-contact-item">
-                <span class="oprs-kit-contact-item-label">Location</span>
-                <span class="oprs-kit-contact-item-val">Berlin, Germany</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <span class="oprs-eyebrow">Available Assets</span>
-          <h3 class="oprs-title" style="font-size:36px;">What We <em>Provide</em></h3>
-          <div class="oprs-kit-assets">
-            <div class="oprs-kit-asset">
-              <span class="oprs-kit-asset-num">01</span>
-              <div class="oprs-kit-asset-info">
-                <div class="oprs-kit-asset-title">Brand Logo Pack</div>
-                <div class="oprs-kit-asset-desc">PNG, SVG and EPS formats in full colour and mono</div>
-              </div>
-              <span class="oprs-kit-asset-tag">On Request</span>
-            </div>
-            <div class="oprs-kit-asset">
-              <span class="oprs-kit-asset-num">02</span>
-              <div class="oprs-kit-asset-info">
-                <div class="oprs-kit-asset-title">Product Photography</div>
-                <div class="oprs-kit-asset-desc">High-resolution product and lifestyle imagery</div>
-              </div>
-              <span class="oprs-kit-asset-tag">On Request</span>
-            </div>
-            <div class="oprs-kit-asset">
-              <span class="oprs-kit-asset-num">03</span>
-              <div class="oprs-kit-asset-info">
-                <div class="oprs-kit-asset-title">Brand Guidelines</div>
-                <div class="oprs-kit-asset-desc">Typography, colour palette and usage rules</div>
-              </div>
-              <span class="oprs-kit-asset-tag">On Request</span>
-            </div>
-            <div class="oprs-kit-asset">
-              <span class="oprs-kit-asset-num">04</span>
-              <div class="oprs-kit-asset-info">
-                <div class="oprs-kit-asset-title">Founder Interviews</div>
-                <div class="oprs-kit-asset-desc">Available for press interviews and features</div>
-              </div>
-              <span class="oprs-kit-asset-tag">By Appointment</span>
-            </div>
-            <div class="oprs-kit-asset">
-              <span class="oprs-kit-asset-num">05</span>
-              <div class="oprs-kit-asset-info">
-                <div class="oprs-kit-asset-title">BiziLux Product Samples</div>
-                <div class="oprs-kit-asset-desc">Available to verified press and media contacts</div>
-              </div>
-              <span class="oprs-kit-asset-tag">On Request</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </div><!-- /body -->
 
-  <div class="oprs-editorial">
-    <div class="oprs-inner">
-      <div class="oprs-editorial-header">
-        <span class="oprs-eyebrow" style="display:block;text-align:center;">Editorial</span>
-        <h2 class="oprs-title" style="text-align:center;">The OlivHairSupply <em>Aesthetic</em></h2>
-      </div>
-      <div class="oprs-editorial-grid">
-        <div class="oprs-ed-main">
-          
-            <div class="oprs-ed-main-ph"><span class="oprs-ph-label">Editorial Image</span></div>
-          
-          <div class="oprs-ed-main-overlay"></div>
-          <div class="oprs-ed-main-caption">
-            <span class="oprs-ed-main-tag">Campaign</span>
-            <div class="oprs-ed-main-title">Luxury defined by intention, not excess.</div>
-          </div>
+  <div class="ovch-how">
+    <div class="ovch-how-inner">
+      <h2 class="ovch-how-title">How It <em>Works</em></h2>
+      <p class="ovch-how-sub">Three simple steps to gift luxury hair.</p>
+      <div class="ovch-how-steps">
+        <div class="ovch-how-step">
+          <span class="ovch-how-num">01</span>
+          <div class="ovch-how-step-title">Choose &amp; Purchase</div>
+          <p class="ovch-how-step-text">Select your denomination from &euro;100 to &euro;2,000. Complete payment securely by card. Your unique code arrives by email within seconds.</p>
         </div>
-        <div class="oprs-ed-side">
-          
-            <div class="oprs-ed-side-ph"><span class="oprs-ph-label">Campaign Image</span></div>
-          
+        <div class="ovch-how-step">
+          <span class="ovch-how-num">02</span>
+          <div class="ovch-how-step-title">Activate</div>
+          <p class="ovch-how-step-text">When ready to use, return here and activate your code. The full balance becomes available instantly.</p>
         </div>
-        <div class="oprs-ed-text">
-          <span class="oprs-ed-text-tag">Our Standard</span>
-          <div class="oprs-ed-text-title">Premium in every detail.</div>
-          <p class="oprs-ed-text-body">OlivHairSupply is built on a standard of excellence that runs through every product, every service and every experience we deliver.</p>
+        <div class="ovch-how-step">
+          <span class="ovch-how-num">03</span>
+          <div class="ovch-how-step-title">Redeem</div>
+          <p class="ovch-how-step-text">Present your code at any OlivHairSupply appointment or in-store visit. Valid for 3 years from date of purchase.</p>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="oprs-cta">
-    <div class="oprs-cta-inner">
-      <span class="oprs-cta-eyebrow">Media and Press</span>
-      <h2 class="oprs-cta-title">Work With <em>Us</em></h2>
-      <p class="oprs-cta-sub">We are open to meaningful collaborations and media opportunities. If you represent a publication, brand or platform and would like to work with OlivHairSupply, we would love to hear from you.</p>
-      <div class="oprs-cta-btns">
-        <a href="/pages/contact" class="oprs-btn-gold">Contact Us</a>
-        <a href="mailto:press@olivhairsupply.de" class="oprs-btn-dark">Email Press Team</a>
       </div>
     </div>
   </div>
 
 </div>
 
-</div><div id="shopify-section-template--30023486308690__newsletter" class="shopify-section">
+<script>
+(function(){
+  'use strict';
+  var AMOUNTS = [10000,15000,20000,25000,30000,35000,40000,45000,50000,60000,70000,80000,90000,100000,125000,150000,175000,200000];
+  var selectedAmount = 0;
+  function fmtEur(c){ var n=c/100; return '€'+(n%1===0?n.toFixed(0):n.toFixed(2)); }
+  function fmtDate(iso){ if(!iso)return''; var d=new Date(iso); return d.getDate().toString().padStart(2,'0')+'.'+(d.getMonth()+1).toString().padStart(2,'0')+'.'+d.getFullYear(); }
 
-<style>
-.ohs-nl-section {
-  background: #2B2620;
-  padding: 88px 0;
-}
-.ohs-nl-section-inner {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0 20px;
-  text-align: center;
-}
-.ohs-nl-section-eyebrow {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 3.5px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 14px;
-  display: block;
-}
-.ohs-nl-section-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 48px;
-  font-weight: 400;
-  color: #F6F1E8;
-  line-height: 1.1;
-  margin-bottom: 14px;
-}
-.ohs-nl-section-title em { font-style: italic; color: #C9A96E; }
-.ohs-nl-section-sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
-  font-weight: 500;
-  color: rgba(246,241,232,0.85);
-  line-height: 1.85;
-  margin-bottom: 40px;
-  letter-spacing: 0.3px;
-}
-.ohs-nl-section-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 440px;
-  margin: 0 auto;
-}
-.ohs-nl-section-input {
-  width: 100%;
-  background: rgba(246,241,232,0.07);
-  border: 1px solid rgba(182,138,69,0.3);
-  padding: 14px 18px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  color: #F6F1E8;
-  outline: none;
-  transition: border-color 0.2s;
-  border-radius: 0;
-  -webkit-appearance: none;
-}
-.ohs-nl-section-input::placeholder { color: rgba(246,241,232,0.55); }
-.ohs-nl-section-input:focus { border-color: #B68A45; }
-.ohs-nl-section-btn {
-  width: 100%;
-  background: #B68A45;
-  color: #FFFFFF;
-  border: none;
-  padding: 16px 24px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.25s;
-  border-radius: 0;
-}
-.ohs-nl-section-btn:hover { background: #9A7538; }
-.ohs-nl-section-note {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(246,241,232,0.55);
-  margin-top: 8px;
-  letter-spacing: 0.5px;
-}
-.ohs-nl-section-success {
-  display: none;
-  background: rgba(182,138,69,0.12);
-  border: 1px solid rgba(182,138,69,0.3);
-  padding: 14px 20px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: #B68A45;
-  margin-top: 8px;
-}
+  /* Tabs */
+  document.addEventListener('click',function(e){
+    var tab=e.target.closest('.ovch-tab'); if(!tab)return;
+    document.querySelectorAll('.ovch-tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.ovch-panel').forEach(function(p){p.classList.remove('active');});
+    tab.classList.add('active');
+    var panel=document.getElementById('ovch-panel-'+tab.dataset.tab);
+    if(panel)panel.classList.add('active');
+  });
 
-@media (max-width: 600px) {
-  .ohs-nl-section-title { font-size: 36px; }
-  .ohs-nl-section { padding: 64px 0; }
-  .ohs-nl-section-sub { font-size: 16px; }
-  .ohs-nl-section-btn { font-size: 15px; }
-}
-</style>
+  /* Build denomination grid */
+  var grid=document.getElementById('ovch-denom-grid');
+  if(grid){
+    AMOUNTS.forEach(function(cents){
+      var btn=document.createElement('button');
+      btn.className='ovch-denom-btn'; btn.dataset.cents=cents; btn.type='button';
+      btn.innerHTML='<span class="ovch-denom-eur">EUR</span><span class="ovch-denom-amount">'+fmtEur(cents)+'</span>';
+      grid.appendChild(btn);
+    });
+    grid.addEventListener('click',function(e){
+      var btn=e.target.closest('.ovch-denom-btn'); if(!btn)return;
+      grid.querySelectorAll('.ovch-denom-btn').forEach(function(b){b.classList.remove('selected');});
+      btn.classList.add('selected');
+      selectedAmount=parseInt(btn.dataset.cents,10);
+      var disp=document.getElementById('ovch-card-amount-display');
+      if(disp)disp.textContent=fmtEur(selectedAmount);
+      var buyBtn=document.getElementById('ovch-buy-btn');
+      if(buyBtn){buyBtn.disabled=false;buyBtn.textContent='Purchase '+fmtEur(selectedAmount)+' Voucher';}
+    });
+  }
 
-<section class="ohs-nl-section">
-  <div class="ohs-nl-section-inner">
+  /* Purchase */
+  var buyForm=document.getElementById('ovch-buy-form');
+  if(buyForm){
+    buyForm.addEventListener('submit',function(e){
+      e.preventDefault(); if(!selectedAmount)return;
+      var btn=document.getElementById('ovch-buy-btn');
+      btn.disabled=true; btn.textContent='Redirecting to payment…';
+      fetch('/api/vouchers/purchase',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          amount_cents:selectedAmount,
+          purchaser_name:document.getElementById('ovch-purchaser-name').value.trim(),
+          purchaser_email:document.getElementById('ovch-purchaser-email').value.trim(),
+          recipient_name:document.getElementById('ovch-recipient-name').value.trim(),
+          recipient_email:document.getElementById('ovch-recipient-email').value.trim(),
+          message:document.getElementById('ovch-message').value.trim()
+        })
+      }).then(function(r){return r.json();}).then(function(d){
+        if(d.url){window.location.href=d.url;}
+        else{alert(d.error||'Something went wrong.');btn.disabled=false;btn.textContent='Purchase '+fmtEur(selectedAmount)+' Voucher';}
+      }).catch(function(){alert('Network error.');btn.disabled=false;btn.textContent='Purchase '+fmtEur(selectedAmount)+' Voucher';});
+    });
+  }
 
-    <span class="ohs-nl-section-eyebrow">The OlivHairSupply Edit</span>
-    <h2 class="ohs-nl-section-title">
-      Join the OlivHairSupply <em>Edit</em>
-    </h2>
-    <p class="ohs-nl-section-sub">
-      Exclusive drops, expert hair tips, and luxury updates — straight to your inbox.
-    </p>
+  /* Post-Stripe redirect */
+  (function(){
+    var p=new URLSearchParams(window.location.search);
+    if(p.get('purchased')==='1'){
+      var f=document.getElementById('ovch-buy-form');
+      var s=document.getElementById('ovch-buy-success');
+      var pw=document.querySelector('.ovch-card-preview-wrap');
+      var dg=document.getElementById('ovch-denom-grid');
+      var sl=document.querySelector('.ovch-section-label');
+      if(f)f.style.display='none';
+      if(s)s.classList.add('visible');
+      if(pw)pw.style.display='none';
+      if(dg)dg.style.display='none';
+      document.querySelectorAll('.ovch-tab').forEach(function(t){t.classList.remove('active');});
+      document.querySelectorAll('.ovch-panel').forEach(function(p){p.classList.remove('active');});
+      var bp=document.getElementById('ovch-panel-buy');
+      if(bp)bp.classList.add('active');
+      var bt=document.querySelector('[data-tab="buy"]');
+      if(bt)bt.classList.add('active');
+      window.history.replaceState({},'',window.location.pathname);
+    }
+    if(p.get('cancelled')==='1'){window.history.replaceState({},'',window.location.pathname);}
+  })();
 
-    <form method="post" action="/contact#ohs-nl-section-form" id="ohs-nl-section-form" accept-charset="UTF-8" class="ohs-nl-section-form"><input type="hidden" name="form_type" value="customer" /><input type="hidden" name="utf8" value="✓" />
-      <input type="hidden" name="contact[tags]" value="newsletter">
-      <input type="hidden" name="contact[accepts_marketing]" value="true">
-      <input
-        type="text"
-        name="contact[first_name]"
-        class="ohs-nl-section-input"
-        placeholder="First name"
-        autocomplete="given-name"
-      >
-      <input
-        type="email"
-        name="contact[email]"
-        class="ohs-nl-section-input"
-        placeholder="Email address"
-        autocomplete="email"
-        required
-      >
-      <button type="submit" class="ohs-nl-section-btn">Subscribe &rarr;</button>
-      
-      
-      <p class="ohs-nl-section-note">No spam. Unsubscribe at any time.</p>
-    </form>
+  /* Code auto-format */
+  function autoFmt(input){
+    if(!input)return;
+    input.addEventListener('input',function(){
+      var v=input.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+      var parts=[];
+      if(v.startsWith('OLIV')){parts.push('OLIV');v=v.slice(4);}
+      for(var i=0;i<v.length;i+=4)parts.push(v.slice(i,i+4));
+      input.value=parts.filter(Boolean).join('-');
+    });
+  }
+  autoFmt(document.getElementById('ovch-activate-code'));
+  autoFmt(document.getElementById('ovch-balance-code'));
 
-  </div>
-</section>
+  /* Activate */
+  var aBtn=document.getElementById('ovch-activate-btn');
+  var aCode=document.getElementById('ovch-activate-code');
+  var aRes=document.getElementById('ovch-activate-result');
+  if(aBtn){
+    aBtn.addEventListener('click',function(){
+      var code=(aCode.value||'').toUpperCase().trim(); if(!code)return;
+      aBtn.disabled=true; aBtn.textContent='…';
+      aRes.className='ovch-result';
+      fetch('/api/vouchers/activate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:code})})
+      .then(function(r){return r.json();}).then(function(d){
+        aRes.classList.add('visible');
+        var lEl=document.getElementById('ovch-activate-result-label');
+        var cEl=document.getElementById('ovch-activate-result-code');
+        var mEl=document.getElementById('ovch-activate-result-msg');
+        var eEl=document.getElementById('ovch-activate-result-err');
+        if(d.ok){
+          aRes.classList.add('ovch-result-ok');
+          lEl.textContent=d.already_active?'Already Active':'Activated Successfully';
+          cEl.textContent=fmtEur(d.balance_cents);
+          mEl.textContent='Balance available · Original value '+fmtEur(d.amount_cents);
+          eEl.textContent='';
+        }else{
+          aRes.classList.add('ovch-result-err');
+          lEl.textContent='Unable to Activate'; cEl.textContent=''; mEl.textContent='';
+          eEl.textContent=d.error||'Please check your code and try again.';
+        }
+        aBtn.disabled=false; aBtn.textContent='Activate';
+      }).catch(function(){
+        aRes.classList.add('visible','ovch-result-err');
+        document.getElementById('ovch-activate-result-err').textContent='Network error.';
+        aBtn.disabled=false; aBtn.textContent='Activate';
+      });
+    });
+  }
+
+  /* Balance */
+  var bBtn=document.getElementById('ovch-balance-btn');
+  var bCode=document.getElementById('ovch-balance-code');
+  var bRes=document.getElementById('ovch-balance-result');
+  if(bBtn){
+    bBtn.addEventListener('click',function(){
+      var code=(bCode.value||'').toUpperCase().trim(); if(!code)return;
+      bBtn.disabled=true; bBtn.textContent='…';
+      bRes.className='ovch-result';
+      document.getElementById('ovch-balance-ok').style.display='none';
+      document.getElementById('ovch-balance-err').style.display='none';
+      fetch('/api/vouchers/balance?code='+encodeURIComponent(code))
+      .then(function(r){return r.json();}).then(function(d){
+        bRes.classList.add('visible');
+        if(d.balance_cents!==undefined){
+          document.getElementById('ovch-balance-ok').style.display='block';
+          document.getElementById('ovch-balance-display').textContent=fmtEur(d.balance_cents);
+          document.getElementById('ovch-balance-original').textContent=fmtEur(d.amount_cents);
+          var st=document.getElementById('ovch-balance-status');
+          st.textContent=d.status; st.className='ovch-status-pill ovch-status-'+d.status;
+          var ex=document.getElementById('ovch-balance-expiry');
+          if(ex)ex.textContent=d.expires_at?'Expires '+fmtDate(d.expires_at):'';
+        }else{
+          document.getElementById('ovch-balance-err').style.display='block';
+          document.getElementById('ovch-balance-err-msg').textContent=d.error||'Voucher not found.';
+        }
+        bBtn.disabled=false; bBtn.textContent='Check';
+      }).catch(function(){
+        bRes.classList.add('visible');
+        document.getElementById('ovch-balance-err').style.display='block';
+        document.getElementById('ovch-balance-err-msg').textContent='Network error.';
+        bBtn.disabled=false; bBtn.textContent='Check';
+      });
+    });
+  }
+})();
+</script>
 
 </div>
-    </main>
+</main>
 
-    <!-- BEGIN sections: footer-group -->
+<!-- BEGIN sections: footer-group -->
 <div id="shopify-section-sections--30011492958546__ohs_trust_strip_8cTNGq" class="shopify-section shopify-section-group-footer-group">
 
 <style>

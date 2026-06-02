@@ -79,7 +79,7 @@ export const GERMAN_COPY_PAIRS: [string, string][] = [
   ["Affiliate", "Affiliate"],
   ["About", "Über uns"],
   ["ABOUT", "ÜBER UNS"],
-  ["Press", "Presse"],
+  ["Vouchers", "Gutscheine"],
   ["More", "Mehr"],
   ["MORE", "MEHR"],
   ["Help", "Hilfe"],
