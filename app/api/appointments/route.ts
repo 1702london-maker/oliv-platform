@@ -61,7 +61,10 @@ export async function POST(request: Request) {
     const { count: slotCount, error: slotError } = await supabase
       .from("appointments")
       .select("id", { count: "exact", head: true })
-      .eq("starts_at", String(startsAt))
+      .eq("location_name", String(locationName || ""))
+      .eq("stylist_name", String(stylistName || ""))
+      .lt("starts_at", String(endsAt))
+      .gt("ends_at", String(startsAt))
       .neq("status", "cancelled");
 
     if (slotError) {
@@ -69,7 +72,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "availability_error" }, { status: 500 });
     }
 
-    if ((slotCount || 0) >= 4) {
+    if ((slotCount || 0) > 0) {
       return NextResponse.json({ error: "slot_full" }, { status: 409 });
     }
 
@@ -113,10 +116,13 @@ export async function POST(request: Request) {
     const { count: confirmedSlotCount } = await supabase
       .from("appointments")
       .select("id", { count: "exact", head: true })
-      .eq("starts_at", String(startsAt))
+      .eq("location_name", String(locationName || ""))
+      .eq("stylist_name", String(stylistName || ""))
+      .lt("starts_at", String(endsAt))
+      .gt("ends_at", String(startsAt))
       .neq("status", "cancelled");
 
-    if ((confirmedSlotCount || 0) > 4) {
+    if ((confirmedSlotCount || 0) > 1) {
       await supabase
         .from("appointments")
         .update({ status: "cancelled" })

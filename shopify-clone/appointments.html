@@ -2933,8 +2933,8 @@ first.parentNode.insertBefore(script, first);
             <div class="oappt-location-grid">
               <div class="oappt-location-card" data-loc="a" onclick="oapptSelectLocation('a')">
                 <div class="oappt-location-tick"></div>
-                <span class="oappt-location-eyebrow">Salon A</span>
-                <div class="oappt-location-name">Schoneberg</div>
+                <span class="oappt-location-eyebrow">Store A</span>
+                <div class="oappt-location-name">OlivHairSupply Store A</div>
                 <div class="oappt-location-address">
                   OlivHairSupply<br>
                   Winterfeldtstrasse 7<br>
@@ -2944,8 +2944,8 @@ first.parentNode.insertBefore(script, first);
               </div>
               <div class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')">
                 <div class="oappt-location-tick"></div>
-                <span class="oappt-location-eyebrow">Salon B</span>
-                <div class="oappt-location-name">Kurfurstendamm</div>
+                <span class="oappt-location-eyebrow">Store B</span>
+                <div class="oappt-location-name">OlivHairSupply Store B</div>
                 <div class="oappt-location-address">
                   OlivHairSupply<br>
                   Kurfurstendamm 115B<br>
@@ -3269,54 +3269,34 @@ var OAPPT_HAIR_COLOURS = [
 
 var OAPPT_STYLISTS = [
   {
-    id: 'olivia',
-    name: 'Olivia',
-    badge: 'Founder and Creative Director',
-    specialty: 'Advanced colour blending, all extension methods',
-    bio: 'Sets the OlivHairSupply standard. Limited appointments available.',
-    surcharge: 20,
-    workingDays: [1,2,3,4,5,6],
-    bookedSlots: { '2026-05-07': ['10:00','13:00'], '2026-05-08': ['09:00','11:00'] }
-  },
-  {
-    id: 'esther',
-    name: 'Esther',
-    badge: 'Extension and Wig Specialist',
-    specialty: 'Weaving, tape-ins, full weaves, wig installations',
-    bio: 'Delivers versatile, polished, long-lasting results.',
+    id: 'stylist-1',
+    name: 'Stylist 1',
+    badge: 'Seat 1',
+    specialty: 'Hair Extension Seat',
+    bio: 'Available for Store A and Store B appointments.',
     surcharge: 0,
     workingDays: [1,2,3,4,5,6],
-    bookedSlots: { '2026-05-07': ['09:00','14:00'], '2026-05-09': ['10:00','11:00'] }
+    bookedSlots: {}
   },
   {
-    id: 'aynur',
-    name: 'Aynur',
-    badge: 'Senior Extension Specialist',
-    specialty: 'Bondings, tape-ins and precision colour matching',
-    bio: 'Over 15 years of experience. Expert consultation and perfect matching.',
-    surcharge: 0,
-    workingDays: [2,3,4,5,6],
-    bookedSlots: { '2026-05-08': ['13:00','16:00'], '2026-05-10': ['09:00','10:00'] }
-  },
-  {
-    id: 'dami',
-    name: 'Dami',
-    badge: 'Senior Extension Specialist',
-    specialty: 'Weaving, Brazilian knots, tape-ins, keratin bondings',
-    bio: 'Trained to OlivHairSupply standards, delivering seamless, natural results.',
-    surcharge: 0,
-    workingDays: [1,2,3,4,5],
-    bookedSlots: { '2026-05-07': ['11:00','15:00'], '2026-05-09': ['09:00','14:00'] }
-  },
-  {
-    id: 'blessing',
-    name: 'Blessing',
-    badge: 'Senior Braiding and Extension Specialist',
-    specialty: 'Braids, cornrows, weaving and Brazilian knots',
-    bio: 'Over 15 years experience. Known for precision, neat finishes and client comfort.',
+    id: 'stylist-2',
+    name: 'Stylist 2',
+    badge: 'Seat 2',
+    specialty: 'Hair Extension Seat',
+    bio: 'Available for Store A and Store B appointments.',
     surcharge: 0,
     workingDays: [1,2,3,4,5,6],
-    bookedSlots: { '2026-05-08': ['10:00','14:00'], '2026-05-10': ['11:00','15:00'] }
+    bookedSlots: {}
+  },
+  {
+    id: 'stylist-3',
+    name: 'Stylist 3',
+    badge: 'Seat 3',
+    specialty: 'Hair Extension Seat',
+    bio: 'Available for Store A and Store B appointments.',
+    surcharge: 0,
+    workingDays: [1,2,3,4,5,6],
+    bookedSlots: {}
   }
 ];
 
@@ -3357,7 +3337,7 @@ function oapptGetTotal() {
       if (l.value === oapptState.hairLength) { total += l.price * oapptState.hairQty; }
     });
   }
-  if (oapptState.location === 'b') total += 30;
+  if (oapptState.location === 'b') total += 20;
   if (oapptState.selectedStylist && oapptState.selectedStylist.surcharge) { total += oapptState.selectedStylist.surcharge; }
   return total;
 }
@@ -3369,8 +3349,8 @@ function oapptUpdateSummary() {
   if (!body) return;
   var lines = [];
   if (oapptState.location) {
-    lines.push({ label: 'Location', val: oapptState.location === 'a' ? 'Salon A — Schoneberg' : 'Salon B — Kurfurstendamm' });
-    if (oapptState.location === 'b') lines.push({ label: 'Location Surcharge', val: '+&euro;30' });
+    lines.push({ label: 'Store', val: oapptState.location === 'a' ? 'Store A' : 'Store B' });
+    if (oapptState.location === 'b') lines.push({ label: 'Location Surcharge', val: '+&euro;20' });
   }
   if (oapptState.selectedService) lines.push({ label: 'Service', val: oapptState.selectedService.name });
   if (oapptState.serviceOption && oapptState.serviceOptionPrice > 0) {
@@ -3784,7 +3764,7 @@ function oapptBuildBookingSummary() {
   var stylist = oapptState.selectedStylist;
   var html    = '';
   var rows = [
-    { label: 'Location', val: oapptState.location === 'a' ? 'Salon A — Schoneberg' : 'Salon B — Kurfurstendamm' },
+    { label: 'Store', val: oapptState.location === 'a' ? 'Store A' : 'Store B' },
     { label: 'Service',  val: svc ? svc.name : '' },
     { label: svc ? svc.optionLabel : 'Option', val: oapptState.serviceOption + (oapptState.serviceOptionPrice ? ' (+&euro;' + oapptState.serviceOptionPrice + ')' : '') },
     { label: 'Stylist',  val: stylist ? stylist.name + (stylist.surcharge > 0 ? ' (+&euro;' + stylist.surcharge + ')' : '') : '' },
@@ -3794,7 +3774,7 @@ function oapptBuildBookingSummary() {
     { label: 'Email',    val: oapptState.customerEmail },
     { label: 'Phone',    val: oapptState.customerPhone }
   ];
-  if (oapptState.location === 'b') rows.push({ label: 'Location Surcharge', val: '+&euro;30' });
+  if (oapptState.location === 'b') rows.push({ label: 'Location Surcharge', val: '+&euro;20' });
   if (oapptState.hairPurchase) {
     var hairDesc = '';
     OAPPT_HAIR_TYPES.forEach(function(t) { if (t.value === oapptState.hairType) hairDesc = t.label; });
@@ -3821,7 +3801,7 @@ function oapptSubmitBooking(event) {
   msg += 'Name: '     + oapptState.customerName  + '\n';
   msg += 'Email: '    + oapptState.customerEmail + '\n';
   msg += 'Phone: '    + oapptState.customerPhone + '\n\n';
-  msg += 'Location: ' + (oapptState.location === 'a' ? 'Salon A — Schoneberg, Winterfeldtstrasse 7' : 'Salon B — Kurfurstendamm 115B') + '\n';
+  msg += 'Store: ' + (oapptState.location === 'a' ? 'Store A, Winterfeldtstrasse 7' : 'Store B, Kurfurstendamm 115B') + '\n';
   msg += 'Service: '  + (svc ? svc.name : '') + '\n';
   msg += (svc ? svc.optionLabel : 'Option') + ': ' + oapptState.serviceOption + '\n';
   msg += 'Stylist: '  + (stylist ? stylist.name : '') + '\n';
@@ -3835,7 +3815,7 @@ function oapptSubmitBooking(event) {
     OAPPT_HAIR_COLOURS.forEach(function(c) { if (c.value === oapptState.hairColour) hairDesc += ' / ' + c.label; });
     msg += 'BiziLux Hair: ' + hairDesc + '\n';
   }
-  if (oapptState.location === 'b') msg += 'Location Surcharge: +EUR 30\n';
+  if (oapptState.location === 'b') msg += 'Location Surcharge: +EUR 20\n';
   if (stylist && stylist.surcharge > 0) msg += 'Specialist Fee: +EUR ' + stylist.surcharge + '\n';
   msg += '\nESTIMATED TOTAL: EUR ' + total;
   if (oapptState.customerNotes) msg += '\n\nNotes: ' + oapptState.customerNotes;
@@ -3863,7 +3843,7 @@ function oapptSubmitBooking(event) {
   if (detailsEl) {
     var html = '';
     var rows = [
-      ['Location', oapptState.location === 'a' ? 'Salon A — Schoneberg' : 'Salon B — Kurfurstendamm'],
+      ['Store', oapptState.location === 'a' ? 'Store A' : 'Store B'],
       ['Service',  svc ? svc.name : ''],
       ['Stylist',  stylist ? stylist.name : ''],
       ['Date',     oapptFormatDate(oapptState.selectedDate)],
@@ -3882,7 +3862,7 @@ function oapptSubmitBooking(event) {
   }
 
   // Build ISO timestamps from selected date + time slot
-  var locName = oapptState.location === 'a' ? 'Salon A — Schöneberg' : 'Salon B — Kurfürstendamm';
+  var locName = oapptState.location === 'a' ? 'Store A' : 'Store B';
   var locAddr = oapptState.location === 'a'
     ? 'Winterfeldtstrasse 7, 10781 Berlin-Schöneberg'
     : 'Kurfürstendamm 115B, 10711 Berlin-Halensee';
@@ -3962,7 +3942,7 @@ function oapptSubmitBooking(event) {
   var svc     = oapptState.selectedService;
   var stylist = oapptState.selectedStylist;
   var total   = oapptGetTotal();
-  var locName = oapptState.location === 'a' ? 'Salon A - Schoneberg' : 'Salon B - Kurfurstendamm';
+  var locName = oapptState.location === 'a' ? 'Store A' : 'Store B';
   var locAddr = oapptState.location === 'a'
     ? 'Winterfeldtstrasse 7, 10781 Berlin-Schoneberg'
     : 'Kurfurstendamm 115B, 10711 Berlin-Halensee';
@@ -4064,7 +4044,7 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
   if (!detailsEl) return;
   var html = '';
   var rows = [
-    ['Location', oapptState.location === 'a' ? 'Salon A - Schoneberg' : 'Salon B - Kurfurstendamm'],
+    ['Store', oapptState.location === 'a' ? 'Store A' : 'Store B'],
     ['Service',  svc ? svc.name : ''],
     ['Stylist',  stylist ? stylist.name : ''],
     ['Date',     oapptFormatDate(oapptState.selectedDate)],
@@ -4081,6 +4061,745 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
   html += '</div>';
   detailsEl.innerHTML = html;
 }
+
+var OAPPT_STORE_B_SURCHARGE = 20;
+var OAPPT_STORE_LABELS = {
+  a: { en: 'Store A', de: 'Store A', address: 'Winterfeldtstrasse 7, 10781 Berlin-Schoneberg' },
+  b: { en: 'Store B', de: 'Store B', address: 'Kurfurstendamm 115B, 10711 Berlin-Halensee' }
+};
+
+OAPPT_SERVICES = [
+  {
+    id: 'weft-sewing',
+    name: 'Weft Sewing',
+    deName: 'Weft Einarbeitung',
+    desc: 'Classic weft sewing. Hair is calculated separately when extensions are added.',
+    deDesc: 'Klassische Weft-Einarbeitung. Haar wird separat berechnet, wenn Extensions hinzugefuegt werden.',
+    optionLabel: 'Rows',
+    deOptionLabel: 'Reihen',
+    options: [
+      { label: '1 Row', deLabel: '1 Reihe', value: '1-row', price: 40, durationMinutes: 30 },
+      { label: '2 Rows', deLabel: '2 Reihen', value: '2-rows', price: 70, durationMinutes: 60 },
+      { label: '3 Rows', deLabel: '3 Reihen', value: '3-rows', price: 95, durationMinutes: 60 },
+      { label: '4 Rows', deLabel: '4 Reihen', value: '4-rows', price: 120, durationMinutes: 90 },
+      { label: '5 Rows', deLabel: '5 Reihen', value: '5-rows', price: 140, durationMinutes: 120 }
+    ]
+  },
+  {
+    id: 'weft-sewing-knots',
+    name: 'Weft Sewing With Knots',
+    deName: 'Weft Einarbeitung mit Knots',
+    desc: 'Secure knot-based weft sewing for a polished extension finish.',
+    deDesc: 'Sichere Weft-Einarbeitung mit Knots fuer ein gepflegtes Extension-Finish.',
+    optionLabel: 'Rows',
+    deOptionLabel: 'Reihen',
+    options: [
+      { label: '1 Row', deLabel: '1 Reihe', value: '1-row', price: 35, durationMinutes: 30 },
+      { label: '2 Rows', deLabel: '2 Reihen', value: '2-rows', price: 70, durationMinutes: 60 },
+      { label: '3 Rows', deLabel: '3 Reihen', value: '3-rows', price: 105, durationMinutes: 30 },
+      { label: '4 Rows', deLabel: '4 Reihen', value: '4-rows', price: 140, durationMinutes: 90 }
+    ]
+  },
+  {
+    id: 'weft-sewing-microrings',
+    name: 'Weft Sewing With Microrings',
+    deName: 'Weft Einarbeitung mit Microrings',
+    desc: 'Microring weft placement for flexible, refined wear.',
+    deDesc: 'Microring-Weft-Einarbeitung fuer flexibles, raffiniertes Tragen.',
+    optionLabel: 'Rows',
+    deOptionLabel: 'Reihen',
+    options: [
+      { label: '1 Row', deLabel: '1 Reihe', value: '1-row', price: 35, durationMinutes: 30 },
+      { label: '2 Rows', deLabel: '2 Reihen', value: '2-rows', price: 70, durationMinutes: 60 },
+      { label: '3 Rows', deLabel: '3 Reihen', value: '3-rows', price: 105, durationMinutes: 30 },
+      { label: '4 Rows', deLabel: '4 Reihen', value: '4-rows', price: 140, durationMinutes: 90 }
+    ]
+  },
+  {
+    id: 'tapes-application',
+    name: 'Tapes Application',
+    deName: 'Tape Einarbeitung',
+    desc: 'Professional tape application. Hair is calculated separately when extensions are added.',
+    deDesc: 'Professionelle Tape-Einarbeitung. Haar wird separat berechnet, wenn Extensions hinzugefuegt werden.',
+    optionLabel: 'Pieces',
+    deOptionLabel: 'Tapes',
+    options: [
+      { label: '20 Pieces', deLabel: '20 Tapes', value: '20-pieces', price: 35, durationMinutes: 30 },
+      { label: '40 Pieces', deLabel: '40 Tapes', value: '40-pieces', price: 70, durationMinutes: 30 },
+      { label: '60 Pieces', deLabel: '60 Tapes', value: '60-pieces', price: 100, durationMinutes: 60 },
+      { label: '80 Pieces', deLabel: '80 Tapes', value: '80-pieces', price: 130, durationMinutes: 30 }
+    ]
+  },
+  {
+    id: 'tapes-renewal',
+    name: 'Tapes Renewal',
+    deName: 'Tape Hochsetzen',
+    desc: 'Renewal and repositioning for existing tape extensions.',
+    deDesc: 'Hochsetzen und Auffrischen bestehender Tape Extensions.',
+    optionLabel: 'Pieces',
+    deOptionLabel: 'Tapes',
+    options: [
+      { label: '20 Pieces', deLabel: '20 Tapes', value: '20-pieces', price: 70, durationMinutes: 120 },
+      { label: '40 Pieces', deLabel: '40 Tapes', value: '40-pieces', price: 130, durationMinutes: 150 },
+      { label: '60 Pieces', deLabel: '60 Tapes', value: '60-pieces', price: 175, durationMinutes: 180 },
+      { label: '80/100 Pieces', deLabel: '80/100 Tapes', value: '80-100-pieces', price: 220, durationMinutes: 240 }
+    ]
+  },
+  {
+    id: 'brazilian-method',
+    name: 'Brazilian Method',
+    deName: 'Brazilian Method',
+    desc: 'Premium Brazilian Method installation with weight-based pricing.',
+    deDesc: 'Premium-Einarbeitung mit der Brazilian Method und grammgenauer Preisstruktur.',
+    optionLabel: 'Hair Weight',
+    deOptionLabel: 'Haarmenge',
+    options: [
+      { label: '100g', deLabel: '100 g', value: '100g', price: 170, durationMinutes: 120 },
+      { label: '150g', deLabel: '150 g', value: '150g', price: 210, durationMinutes: 180 },
+      { label: '200g', deLabel: '200 g', value: '200g', price: 250, durationMinutes: 240 }
+    ]
+  },
+  {
+    id: 'bondings-application',
+    name: 'Bondings Application',
+    deName: 'Bondings Einarbeitung',
+    desc: 'Bonding installation for a precise strand-by-strand result.',
+    deDesc: 'Bonding-Einarbeitung fuer ein praezises Strang-fuer-Strang Ergebnis.',
+    optionLabel: 'Pieces',
+    deOptionLabel: 'Strahnen',
+    options: [
+      { label: '50 Pieces', deLabel: '50 Strahnen', value: '50-pieces', price: 90, durationMinutes: 60 },
+      { label: '100 Pieces', deLabel: '100 Strahnen', value: '100-pieces', price: 170, durationMinutes: 120 },
+      { label: '150 Pieces', deLabel: '150 Strahnen', value: '150-pieces', price: 240, durationMinutes: 180 },
+      { label: '200 Pieces', deLabel: '200 Strahnen', value: '200-pieces', price: 290, durationMinutes: 240 }
+    ]
+  },
+  {
+    id: 'microrings-single-strands',
+    name: 'Microrings Single Strands',
+    deName: 'Microrings Einzelstraehnen',
+    desc: 'Single-strand microring installation with premium placement.',
+    deDesc: 'Microring-Einarbeitung einzelner Straehnen mit Premium-Platzierung.',
+    optionLabel: 'Pieces',
+    deOptionLabel: 'Strahnen',
+    options: [
+      { label: '50 Pieces', deLabel: '50 Strahnen', value: '50-pieces', price: 90, durationMinutes: 60 },
+      { label: '100 Pieces', deLabel: '100 Strahnen', value: '100-pieces', price: 170, durationMinutes: 120 },
+      { label: '150 Pieces', deLabel: '150 Strahnen', value: '150-pieces', price: 240, durationMinutes: 180 },
+      { label: '200 Pieces', deLabel: '200 Strahnen', value: '200-pieces', price: 290, durationMinutes: 240 }
+    ]
+  },
+  {
+    id: 'braids-cornrows',
+    name: 'Braids & Cornrows',
+    deName: 'Braids und Cornrows',
+    desc: 'Braiding services including ponytail, feed-in, boxer braids and cornrows.',
+    deDesc: 'Braiding-Services inklusive Ponytail, Feed-In, Boxer Braids und Cornrows.',
+    optionLabel: 'Style',
+    deOptionLabel: 'Style',
+    options: [
+      { label: 'Braids', deLabel: 'Braids', value: 'braids', price: 290, durationMinutes: 360 },
+      { label: 'Open Braids', deLabel: 'Open Braids', value: 'open-braids', price: 290, durationMinutes: 240 },
+      { label: 'Thin Braids', deLabel: 'Thin Braids', value: 'thin-braids', price: 380, durationMinutes: 360 },
+      { label: 'Micro/Million Braids', deLabel: 'Micro/Million Braids', value: 'micro-million-braids', price: 600, durationMinutes: 540 },
+      { label: 'Braids for Kids up to 10 yrs', deLabel: 'Braids fuer Kinder bis 10 Jahre', value: 'kids-braids', price: 220, durationMinutes: 180 },
+      { label: 'Feed-In Ponytail', deLabel: 'Feed-In Ponytail', value: 'feed-in-ponytail', price: 230, durationMinutes: 240 },
+      { label: 'Feedin Braids With Rastas', deLabel: 'Feed-In Braids mit Rastas', value: 'feedin-rastas', price: 250, durationMinutes: 180 },
+      { label: 'Boxer Braids - 2 Pieces', deLabel: 'Boxer Braids - 2 Stueck', value: 'boxer-2', price: 60, durationMinutes: 45 },
+      { label: 'Boxer Braids - 4 Strands', deLabel: 'Boxer Braids - 4 Straehnen', value: 'boxer-4', price: 75, durationMinutes: 60 },
+      { label: 'Boxer Braids - 6 Strands', deLabel: 'Boxer Braids - 6 Straehnen', value: 'boxer-6', price: 95, durationMinutes: 60 },
+      { label: 'Cornrows', deLabel: 'Cornrows', value: 'cornrows', price: 50, durationMinutes: 45 }
+    ]
+  },
+  {
+    id: 'crochet',
+    name: 'Crochet',
+    deName: 'Crochet',
+    desc: 'Crochet services with or without hair included.',
+    deDesc: 'Crochet Services mit oder ohne Haar inklusive.',
+    optionLabel: 'Package',
+    deOptionLabel: 'Paket',
+    options: [
+      { label: 'All Inclusive', deLabel: 'All Inclusive', value: 'all-inclusive', price: 270, durationMinutes: 180 },
+      { label: 'Without Hair', deLabel: 'Ohne Haar', value: 'without-hair', price: 240, durationMinutes: 180 }
+    ]
+  },
+  {
+    id: 'full-weave',
+    name: 'Full Weave',
+    deName: 'Full Weave',
+    desc: 'Full weave installation with or without closure.',
+    deDesc: 'Full Weave Einarbeitung mit oder ohne Closure.',
+    optionLabel: 'Finish',
+    deOptionLabel: 'Finish',
+    options: [
+      { label: 'With or Without Closure', deLabel: 'Mit oder ohne Closure', value: 'closure', price: 140, durationMinutes: 150 }
+    ]
+  }
+];
+
+OAPPT_STYLISTS = [
+  { id: 'stylist-1', name: 'Stylist 1', deName: 'Stylistin 1', badge: 'Seat 1', deBadge: 'Platz 1', specialty: 'Hair Extension Seat', deSpecialty: 'Platz fuer Haarverlaengerungen', bio: 'Available for Store A and Store B appointments.', deBio: 'Verfuegbar fuer Termine in Store A und Store B.', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} },
+  { id: 'stylist-2', name: 'Stylist 2', deName: 'Stylistin 2', badge: 'Seat 2', deBadge: 'Platz 2', specialty: 'Hair Extension Seat', deSpecialty: 'Platz fuer Haarverlaengerungen', bio: 'Available for Store A and Store B appointments.', deBio: 'Verfuegbar fuer Termine in Store A und Store B.', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} },
+  { id: 'stylist-3', name: 'Stylist 3', deName: 'Stylistin 3', badge: 'Seat 3', deBadge: 'Platz 3', specialty: 'Hair Extension Seat', deSpecialty: 'Platz fuer Haarverlaengerungen', bio: 'Available for Store A and Store B appointments.', deBio: 'Verfuegbar fuer Termine in Store A und Store B.', surcharge: 0, workingDays: [1,2,3,4,5,6], bookedSlots: {} }
+];
+
+var OAPPT_EXTENSIONS = {
+  biziluxe: {
+    label: 'Biziluxe Extensions',
+    deLabel: 'Biziluxe Extensions',
+    grams: 25,
+    prices: { '40': 69.92, '45': 69.92, '50': 98.94, '55': 98.94, '60': 123.99, '65': 123.99 },
+    colours: [
+      { label: '1B#', value: '1b', extra: 0 },
+      { label: '1#', value: '1', extra: 0 },
+      { label: '2#', value: '2', extra: 0 },
+      { label: 'Highlight 8/22 with dark roots', value: 'highlight-8-22-dark-roots', extra: 10.74 },
+      { label: 'Highlight 18/60B with 8C', value: 'highlight-18-60b-8c', extra: 10.74 },
+      { label: 'ICE', value: 'ice', extra: 6.99 },
+      { label: 'Silver', value: 'silver', extra: 6.99 },
+      { label: '4 Light Brown', value: '4-light-brown', extra: 0 },
+      { label: '8 Dark Blonde', value: '8-dark-blonde', extra: 0 },
+      { label: '613 Platin Blonde', value: '613-platin-blonde', extra: 10.74 }
+    ]
+  },
+  bizihair: {
+    label: 'Bizihair Extensions',
+    deLabel: 'Bizihair Extensions',
+    grams: 50,
+    prices: { '40': 119, '45': 129, '50': 149, '55': 169, '60': 179, '65': 199 },
+    colours: [
+      { label: '1 Jet Black', value: '1-jet-black', extra: 0 },
+      { label: '1A Natural Black/Dark Brown', value: '1a-natural-black-dark-brown', extra: 0 },
+      { label: '1B Chocolate Brown', value: '1b-chocolate-brown', extra: 0 },
+      { label: '2 Medium Brown', value: '2-medium-brown', extra: 0 },
+      { label: '4 Light Brown', value: '4-light-brown', extra: 0 },
+      { label: '8 Dark Blonde', value: '8-dark-blonde', extra: 0 },
+      { label: 'Highlights 8/22', value: 'highlights-8-22', extra: 10 },
+      { label: 'Highlights 4/6/8', value: 'highlights-4-6-8', extra: 10 },
+      { label: 'SBH Highlights with dark roots', value: 'sbh-highlights-dark-roots', extra: 10 },
+      { label: 'Silver with Dark roots', value: 'silver-dark-roots', extra: 10 },
+      { label: 'Silver', value: 'silver', extra: 10 },
+      { label: '60A', value: '60a', extra: 10 },
+      { label: 'Mint', value: 'mint', extra: 10 },
+      { label: '613 Platin Blonde', value: '613-platin-blonde', extra: 10 }
+    ]
+  }
+};
+
+oapptState.hairRequirement = oapptState.hairRequirement || '';
+oapptState.extensionType = oapptState.extensionType || '';
+oapptState.hairLength = oapptState.hairLength || '';
+oapptState.hairQty = oapptState.hairQty || 1;
+oapptState.hairColour = oapptState.hairColour || '';
+oapptState.slotFull = {};
+
+function oapptLang() {
+  try { return localStorage.getItem('ohs-lang') || document.body.dataset.ohsLang || 'en'; }
+  catch (e) { return document.body.dataset.ohsLang || 'en'; }
+}
+function oapptText(item, key) {
+  if (!item) return '';
+  if (oapptLang() === 'de' && item['de' + key.charAt(0).toUpperCase() + key.slice(1)]) {
+    return item['de' + key.charAt(0).toUpperCase() + key.slice(1)];
+  }
+  return item[key] || '';
+}
+function oapptMoney(value) {
+  var n = Math.round((Number(value) || 0) * 100) / 100;
+  return n % 1 === 0 ? String(n.toFixed(0)) : String(n.toFixed(2));
+}
+function oapptSelectedServiceOption() {
+  var svc = oapptState.selectedService;
+  if (!svc || !svc.options) return null;
+  for (var i = 0; i < svc.options.length; i++) {
+    if (svc.options[i].label === oapptState.serviceOption) return svc.options[i];
+  }
+  return null;
+}
+function oapptServiceDurationMinutes() {
+  var opt = oapptSelectedServiceOption();
+  return opt && opt.durationMinutes ? opt.durationMinutes : 90;
+}
+function oapptDurationLabel(minutes) {
+  var h = Math.floor(minutes / 60);
+  var m = minutes % 60;
+  if (h && m) return h + 'h ' + m + 'm';
+  if (h) return h + 'h';
+  return m + 'm';
+}
+function oapptStoreName() {
+  var loc = OAPPT_STORE_LABELS[oapptState.location] || OAPPT_STORE_LABELS.a;
+  return oapptLang() === 'de' ? loc.de : loc.en;
+}
+function oapptExtensionConfig() {
+  return OAPPT_EXTENSIONS[oapptState.extensionType] || null;
+}
+function oapptExtensionColour() {
+  var cfg = oapptExtensionConfig();
+  if (!cfg) return null;
+  for (var i = 0; i < cfg.colours.length; i++) {
+    if (cfg.colours[i].value === oapptState.hairColour) return cfg.colours[i];
+  }
+  return null;
+}
+function oapptExtensionBasePrice() {
+  var cfg = oapptExtensionConfig();
+  return cfg && oapptState.hairLength ? (Number(cfg.prices[oapptState.hairLength]) || 0) : 0;
+}
+function oapptColourExtraPrice() {
+  var colour = oapptExtensionColour();
+  return colour ? Number(colour.extra || 0) : 0;
+}
+function oapptExtensionTotal() {
+  if (oapptState.hairRequirement !== 'add') return 0;
+  return (oapptExtensionBasePrice() + oapptColourExtraPrice()) * (Number(oapptState.hairQty) || 1);
+}
+function oapptHairRequirementLabel() {
+  if (oapptState.hairRequirement === 'add') return oapptLang() === 'de' ? 'Extensions hinzufuegen' : 'Add Extensions';
+  if (oapptState.hairRequirement === 'own') return oapptLang() === 'de' ? 'Eigene Extensions' : 'Own Extensions';
+  if (oapptState.hairRequirement === 'none') return oapptLang() === 'de' ? 'Nicht benoetigt' : 'Not Needed';
+  return '';
+}
+
+function oapptGetTotal() {
+  var total = 0;
+  total += Number(oapptState.serviceOptionPrice || 0);
+  if (oapptState.location === 'b') total += OAPPT_STORE_B_SURCHARGE;
+  total += oapptExtensionTotal();
+  return Math.round(total * 100) / 100;
+}
+
+function oapptUpdateSummary() {
+  var body = document.getElementById('oappt-summary-body');
+  var totalWrap = document.getElementById('oappt-summary-total');
+  var totalVal = document.getElementById('oappt-summary-total-val');
+  if (!body) return;
+  var lines = [];
+  if (oapptState.location) {
+    lines.push({ label: oapptLang() === 'de' ? 'Store' : 'Store', val: oapptStoreName() });
+    if (oapptState.location === 'b') lines.push({ label: oapptLang() === 'de' ? 'Luxury-Zuschlag' : 'Luxury Surcharge', val: '+&euro;' + OAPPT_STORE_B_SURCHARGE });
+  }
+  if (oapptState.selectedService) lines.push({ label: 'Service', val: oapptText(oapptState.selectedService, 'name') });
+  if (oapptState.serviceOption && oapptState.serviceOptionPrice > 0) {
+    var opt = oapptSelectedServiceOption();
+    lines.push({ label: oapptText(oapptState.selectedService, 'optionLabel'), val: oapptText(opt, 'label') + ' / ' + oapptDurationLabel(oapptServiceDurationMinutes()) + ' (+&euro;' + oapptMoney(oapptState.serviceOptionPrice) + ')' });
+  }
+  if (oapptState.hairRequirement) lines.push({ label: oapptLang() === 'de' ? 'Haaroption' : 'Hair Option', val: oapptHairRequirementLabel() });
+  if (oapptState.hairRequirement === 'add') {
+    var cfg = oapptExtensionConfig();
+    var colour = oapptExtensionColour();
+    if (cfg) lines.push({ label: oapptLang() === 'de' ? 'Extensions' : 'Extensions', val: oapptText(cfg, 'label') });
+    if (oapptState.hairLength) lines.push({ label: oapptLang() === 'de' ? 'Laenge' : 'Length', val: oapptState.hairLength + 'cm' });
+    if (oapptState.hairQty) lines.push({ label: oapptLang() === 'de' ? 'Bundles' : 'Bundles', val: String(oapptState.hairQty) });
+    if (colour) lines.push({ label: oapptLang() === 'de' ? 'Farbe' : 'Colour', val: colour.label });
+  }
+  if (oapptState.selectedStylist) lines.push({ label: oapptLang() === 'de' ? 'Stylistin' : 'Stylist', val: oapptText(oapptState.selectedStylist, 'name') });
+  if (oapptState.selectedDate) lines.push({ label: oapptLang() === 'de' ? 'Datum' : 'Date', val: oapptFormatDate(oapptState.selectedDate) });
+  if (oapptState.selectedTime) lines.push({ label: oapptLang() === 'de' ? 'Uhrzeit' : 'Time', val: oapptState.selectedTime });
+  if (lines.length === 0) {
+    body.innerHTML = '<p class="oappt-summary-empty">' + (oapptLang() === 'de' ? 'Waehle einen Store, um zu beginnen.' : 'Select a store to begin.') + '</p>';
+    if (totalWrap) totalWrap.style.display = 'none';
+    return;
+  }
+  body.innerHTML = lines.map(function(l) {
+    return '<div class="oappt-summary-line"><span class="oappt-summary-line-label">' + l.label + '</span><span class="oappt-summary-line-val">' + l.val + '</span></div>';
+  }).join('');
+  var total = oapptGetTotal();
+  if (total > 0) {
+    if (totalWrap) totalWrap.style.display = '';
+    if (totalVal) totalVal.innerHTML = '&euro;' + oapptMoney(total);
+  } else if (totalWrap) totalWrap.style.display = 'none';
+}
+
+function oapptBuildServices() {
+  var grid = document.getElementById('oappt-service-grid');
+  if (!grid) return;
+  grid.innerHTML = OAPPT_SERVICES.map(function(svc) {
+    var sel = oapptState.selectedService && oapptState.selectedService.id === svc.id ? 'selected' : '';
+    return '<div class="oappt-service-card ' + sel + '" data-id="' + svc.id + '" onclick="oapptSelectService(\'' + svc.id + '\')"><div class="oappt-service-tick"></div><div class="oappt-service-name">' + oapptText(svc, 'name') + '</div><div class="oappt-service-desc">' + oapptText(svc, 'desc') + '</div></div>';
+  }).join('');
+}
+
+function oapptSelectLocation(loc) {
+  oapptState.location = loc;
+  oapptState.selectedService = null;
+  oapptState.serviceOption = '';
+  oapptState.serviceOptionPrice = 0;
+  oapptState.hairRequirement = '';
+  oapptState.extensionType = '';
+  oapptState.hairLength = '';
+  oapptState.hairQty = 1;
+  oapptState.hairColour = '';
+  oapptState.selectedStylist = null;
+  oapptState.selectedDate = '';
+  oapptState.selectedTime = '';
+  oapptState.slotAvailabilityCache = {};
+  document.querySelectorAll('.oappt-location-card').forEach(function(c) {
+    c.classList.toggle('selected', c.dataset.loc === loc);
+  });
+  oapptUpdateSummary();
+}
+
+function oapptSelectService(id) {
+  OAPPT_SERVICES.forEach(function(s) { if (s.id === id) oapptState.selectedService = s; });
+  oapptState.serviceOption = '';
+  oapptState.serviceOptionPrice = 0;
+  oapptState.hairRequirement = '';
+  oapptState.extensionType = '';
+  oapptState.hairLength = '';
+  oapptState.hairQty = 1;
+  oapptState.hairColour = '';
+  oapptState.selectedDate = '';
+  oapptState.selectedTime = '';
+  oapptState.slotAvailabilityCache = {};
+  document.querySelectorAll('.oappt-service-card').forEach(function(c) {
+    c.classList.toggle('selected', c.dataset.id === id);
+  });
+  oapptUpdateSummary();
+}
+
+function oapptBuildConfigurator() {
+  var wrap = document.getElementById('oappt-configurator');
+  if (!wrap) return;
+  var svc = oapptState.selectedService;
+  if (!svc) return;
+  var html = '';
+  html += '<div class="oappt-config-section">';
+  html += '<span class="oappt-config-label">' + (oapptLang() === 'de' ? 'Service-Optionen' : 'Service Options') + '</span>';
+  html += '<div class="oappt-config-title">' + oapptText(svc, 'name') + '</div>';
+  html += '<label class="oappt-field-label">' + oapptText(svc, 'optionLabel') + '</label>';
+  html += '<select class="oappt-select" onchange="oapptSetServiceOption(this.value)"><option value="">' + (oapptLang() === 'de' ? 'Auswaehlen...' : 'Select...') + '</option>';
+  svc.options.forEach(function(o) {
+    html += '<option value="' + o.value + '" ' + (oapptState.serviceOption === o.label ? 'selected' : '') + '>' + oapptText(o, 'label') + ' - ' + oapptDurationLabel(o.durationMinutes) + ' - &euro;' + oapptMoney(o.price) + '</option>';
+  });
+  html += '</select></div>';
+  html += '<div class="oappt-config-section">';
+  html += '<span class="oappt-config-label">' + (oapptLang() === 'de' ? 'Haar' : 'Hair') + '</span>';
+  html += '<div class="oappt-config-title">' + (oapptLang() === 'de' ? 'Was brauchst du fuer diesen Termin?' : 'What hair do you need for this appointment?') + '</div>';
+  html += '<div class="oappt-radio-group">';
+  html += '<div class="oappt-radio-option ' + (oapptState.hairRequirement === 'add' ? 'selected' : '') + '" onclick="oapptSetHairRequirement(\'add\')">' + (oapptLang() === 'de' ? 'Extensions hinzufuegen' : 'Add Extensions') + '</div>';
+  html += '<div class="oappt-radio-option ' + (oapptState.hairRequirement === 'own' ? 'selected' : '') + '" onclick="oapptSetHairRequirement(\'own\')">' + (oapptLang() === 'de' ? 'Eigene Extensions' : 'Own Extensions') + '</div>';
+  html += '<div class="oappt-radio-option ' + (oapptState.hairRequirement === 'none' ? 'selected' : '') + '" onclick="oapptSetHairRequirement(\'none\')">' + (oapptLang() === 'de' ? 'Nicht benoetigt' : 'Not Needed') + '</div>';
+  html += '</div>';
+  html += '<div class="oappt-hair-options ' + (oapptState.hairRequirement === 'add' ? 'visible' : '') + '" id="oappt-hair-options">';
+  html += '<div class="oappt-field-row">';
+  html += '<div><label class="oappt-field-label">' + (oapptLang() === 'de' ? 'Extension-Typ' : 'Extension Type') + '</label><select class="oappt-select" onchange="oapptSetExtensionType(this.value)"><option value="">' + (oapptLang() === 'de' ? 'Auswaehlen...' : 'Select...') + '</option>';
+  Object.keys(OAPPT_EXTENSIONS).forEach(function(key) {
+    var cfg = OAPPT_EXTENSIONS[key];
+    html += '<option value="' + key + '"' + (oapptState.extensionType === key ? ' selected' : '') + '>' + oapptText(cfg, 'label') + ' (' + cfg.grams + 'g ' + (oapptLang() === 'de' ? 'pro Bundle' : 'per bundle') + ')</option>';
+  });
+  html += '</select></div>';
+  html += '<div><label class="oappt-field-label">' + (oapptLang() === 'de' ? 'Haarlaenge' : 'Hair Length') + '</label><select class="oappt-select" onchange="oapptSetHairLength(this.value)"><option value="">' + (oapptLang() === 'de' ? 'Auswaehlen...' : 'Select...') + '</option>';
+  ['40','45','50','55','60','65'].forEach(function(len) {
+    var price = oapptState.extensionType ? OAPPT_EXTENSIONS[oapptState.extensionType].prices[len] : 0;
+    html += '<option value="' + len + '"' + (oapptState.hairLength === len ? ' selected' : '') + '>' + len + 'cm' + (price ? ' - &euro;' + oapptMoney(price) + ' ' + (oapptLang() === 'de' ? 'Basis' : 'base') : '') + '</option>';
+  });
+  html += '</select></div></div>';
+  html += '<div class="oappt-field-row">';
+  html += '<div><label class="oappt-field-label">' + (oapptLang() === 'de' ? 'Anzahl Bundles' : 'Number of Bundles') + '</label><select class="oappt-select" onchange="oapptSetHairQty(this.value)">';
+  for (var q = 1; q <= 10; q++) html += '<option value="' + q + '"' + (Number(oapptState.hairQty) === q ? ' selected' : '') + '>' + q + ' bundle' + (q > 1 ? 's' : '') + '</option>';
+  html += '</select></div>';
+  html += '<div><label class="oappt-field-label">' + (oapptLang() === 'de' ? 'Haarfarbe' : 'Hair Colour') + '</label><select class="oappt-select" onchange="oapptSetHairColour(this.value)"><option value="">' + (oapptLang() === 'de' ? 'Auswaehlen...' : 'Select...') + '</option>';
+  var cfg = oapptExtensionConfig();
+  (cfg ? cfg.colours : []).forEach(function(c) {
+    html += '<option value="' + c.value + '"' + (oapptState.hairColour === c.value ? ' selected' : '') + '>' + c.label + (c.extra ? ' (+&euro;' + oapptMoney(c.extra) + ')' : '') + '</option>';
+  });
+  html += '</select></div></div></div></div>';
+  wrap.innerHTML = html;
+}
+
+function oapptSetServiceOption(value) {
+  var svc = oapptState.selectedService;
+  var selected = null;
+  if (svc && svc.options) {
+    svc.options.forEach(function(o) { if (o.value === value) selected = o; });
+  }
+  if (!selected) {
+    oapptState.serviceOption = '';
+    oapptState.serviceOptionPrice = 0;
+  } else {
+    oapptState.serviceOption = selected.label;
+    oapptState.serviceOptionPrice = Number(selected.price || 0);
+  }
+  oapptState.selectedDate = '';
+  oapptState.selectedTime = '';
+  oapptState.slotAvailabilityCache = {};
+  oapptUpdateSummary();
+}
+function oapptSetHairRequirement(value) {
+  oapptState.hairRequirement = value;
+  if (value !== 'add') {
+    oapptState.extensionType = '';
+    oapptState.hairLength = '';
+    oapptState.hairQty = 1;
+    oapptState.hairColour = '';
+  }
+  oapptBuildConfigurator();
+  oapptUpdateSummary();
+}
+function oapptSetExtensionType(value) {
+  oapptState.extensionType = value;
+  oapptState.hairLength = '';
+  oapptState.hairColour = '';
+  oapptBuildConfigurator();
+  oapptUpdateSummary();
+}
+function oapptSetHairLength(v) { oapptState.hairLength = v; oapptUpdateSummary(); }
+function oapptSetHairColour(v) { oapptState.hairColour = v; oapptUpdateSummary(); }
+function oapptSetHairQty(v) { oapptState.hairQty = Math.min(10, Math.max(1, parseInt(v, 10) || 1)); oapptUpdateSummary(); }
+
+function oapptValidateConfig() {
+  if (!oapptState.selectedService || !oapptState.serviceOption || !oapptState.hairRequirement) return false;
+  if (oapptState.hairRequirement === 'add') {
+    if (!oapptState.extensionType || !oapptState.hairLength || !oapptState.hairQty || !oapptState.hairColour) return false;
+  }
+  return true;
+}
+
+function oapptBuildStylists() {
+  var grid = document.getElementById('oappt-stylist-grid');
+  if (!grid) return;
+  grid.innerHTML = OAPPT_STYLISTS.map(function(s) {
+    var sel = oapptState.selectedStylist && oapptState.selectedStylist.id === s.id ? 'selected' : '';
+    return '<div class="oappt-stylist-card ' + sel + '" data-id="' + s.id + '" onclick="oapptSelectStylist(\'' + s.id + '\')"><div class="oappt-stylist-tick"></div><div class="oappt-stylist-img"><div class="oappt-stylist-img-ph">' + s.name.replace('Stylist ', '') + '</div></div><div class="oappt-stylist-body"><span class="oappt-stylist-badge">' + oapptText(s, 'badge') + '</span><div class="oappt-stylist-name">' + oapptText(s, 'name') + '</div><div class="oappt-stylist-specialty">' + oapptText(s, 'specialty') + '</div><p class="oappt-stylist-bio">' + oapptText(s, 'bio') + '</p></div></div>';
+  }).join('');
+}
+
+function oapptSelectStylist(id) {
+  OAPPT_STYLISTS.forEach(function(s) { if (s.id === id) oapptState.selectedStylist = s; });
+  oapptState.selectedDate = '';
+  oapptState.selectedTime = '';
+  oapptState.slotAvailabilityCache = {};
+  document.querySelectorAll('.oappt-stylist-card').forEach(function(c) { c.classList.toggle('selected', c.dataset.id === id); });
+  oapptUpdateSummary();
+}
+
+function oapptSelectDate(dateStr) {
+  oapptState.selectedDate = dateStr;
+  oapptState.selectedTime = '';
+  oapptState.slotFull = {};
+  oapptRenderCalendar();
+  oapptUpdateSummary();
+}
+
+function oapptLoadSlotAvailability(done) {
+  var date = oapptState.selectedDate;
+  var stylist = oapptState.selectedStylist;
+  if (!date || !stylist || !oapptState.location) { if (done) done(); return; }
+  var duration = oapptServiceDurationMinutes();
+  var cacheKey = [date, oapptStoreName(), stylist.name, duration].join('|');
+  if (oapptState.slotAvailabilityCache[cacheKey]) {
+    oapptState.slotFull = oapptState.slotAvailabilityCache[cacheKey];
+    if (done) done();
+    return;
+  }
+  var grid = document.getElementById('oappt-slots-grid');
+  if (grid) grid.innerHTML = '<div class="oappt-slots-note" style="grid-column:1/-1;margin-top:0;">' + (oapptLang() === 'de' ? 'Live-Verfuegbarkeit wird geprueft...' : 'Checking live availability...') + '</div>';
+  var qs = '?date=' + encodeURIComponent(date) + '&locationName=' + encodeURIComponent(oapptStoreName()) + '&stylistName=' + encodeURIComponent(stylist.name) + '&durationMinutes=' + encodeURIComponent(duration);
+  fetch('/api/appointments/availability' + qs)
+    .then(function(res) { return res.ok ? res.json() : { full: [] }; })
+    .then(function(data) {
+      var map = {};
+      (data.full || []).forEach(function(slot) { map[slot] = true; });
+      oapptState.slotFull = map;
+      oapptState.slotAvailabilityCache[cacheKey] = map;
+      if (done) done();
+    })
+    .catch(function() {
+      oapptState.slotFull = {};
+      if (done) done();
+    });
+}
+
+function oapptRenderSlotsFromCounts() {
+  var grid = document.getElementById('oappt-slots-grid');
+  if (!grid) return;
+  var html = '';
+  OAPPT_ALL_SLOTS.forEach(function(slot) {
+    var isBooked = !!(oapptState.slotFull && oapptState.slotFull[slot]);
+    var isSel = oapptState.selectedTime === slot;
+    var cls = 'oappt-slot' + (isBooked ? ' booked' : '') + (isSel ? ' selected' : '');
+    if (isBooked) html += '<div class="' + cls + '">' + slot + '<br><small>' + (oapptLang() === 'de' ? 'Voll' : 'Full') + '</small></div>';
+    else html += '<div class="' + cls + '" onclick="oapptSelectTime(\'' + slot + '\')">' + slot + '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+function oapptSelectTime(slot) {
+  if (oapptState.slotFull && oapptState.slotFull[slot]) return;
+  oapptState.selectedTime = slot;
+  oapptRenderSlots();
+  oapptUpdateSummary();
+}
+
+function oapptBuildBookingRows() {
+  var svc = oapptState.selectedService;
+  var opt = oapptSelectedServiceOption();
+  var stylist = oapptState.selectedStylist;
+  var rows = [
+    { label: 'Store', val: oapptStoreName() },
+    { label: 'Stylist', val: stylist ? stylist.name : '' },
+    { label: 'Service', val: svc ? oapptText(svc, 'name') : '' },
+    { label: 'Service Duration', val: oapptDurationLabel(oapptServiceDurationMinutes()) },
+    { label: 'Base Service Price', val: '&euro;' + oapptMoney(oapptState.serviceOptionPrice) },
+    { label: svc ? oapptText(svc, 'optionLabel') : 'Option', val: opt ? oapptText(opt, 'label') : '' }
+  ];
+  if (oapptState.location === 'b') rows.push({ label: 'Store B Luxury Surcharge', val: '+&euro;' + OAPPT_STORE_B_SURCHARGE });
+  rows.push({ label: 'Hair Option', val: oapptHairRequirementLabel() });
+  if (oapptState.hairRequirement === 'add') {
+    var cfg = oapptExtensionConfig();
+    var colour = oapptExtensionColour();
+    var bundles = Number(oapptState.hairQty) || 1;
+    var grams = cfg ? cfg.grams : 0;
+    rows.push({ label: 'Extension Type', val: cfg ? cfg.label : '' });
+    rows.push({ label: 'Length', val: oapptState.hairLength ? oapptState.hairLength + 'cm' : '' });
+    rows.push({ label: 'Grams per Bundle', val: grams ? grams + 'g' : '' });
+    rows.push({ label: 'Number of Bundles', val: String(bundles) });
+    rows.push({ label: 'Total Grams', val: grams ? grams + 'g x ' + bundles + ' bundles = ' + (grams * bundles) + 'g' : '' });
+    rows.push({ label: 'Selected Colour', val: colour ? colour.label : '' });
+    if (oapptColourExtraPrice()) rows.push({ label: 'Colour Extra Price', val: '+&euro;' + oapptMoney(oapptColourExtraPrice()) + ' per bundle' });
+    rows.push({ label: 'Extension Price Total', val: '&euro;' + oapptMoney(oapptExtensionTotal()) });
+  }
+  rows.push({ label: 'Date', val: oapptFormatDate(oapptState.selectedDate) });
+  rows.push({ label: 'Time', val: oapptState.selectedTime });
+  rows.push({ label: 'Name', val: oapptState.customerName });
+  rows.push({ label: 'Email', val: oapptState.customerEmail });
+  rows.push({ label: 'Phone', val: oapptState.customerPhone });
+  if (oapptState.customerNotes) rows.push({ label: 'Notes', val: oapptState.customerNotes });
+  return rows;
+}
+
+function oapptBuildBookingSummary() {
+  var wrap = document.getElementById('oappt-booking-summary');
+  if (!wrap) return;
+  var html = '';
+  oapptBuildBookingRows().forEach(function(r) {
+    if (!r.val) return;
+    html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">' + r.label + '</span><span class="oappt-confirm-row-val">' + r.val + '</span></div>';
+  });
+  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Estimated Total</span><span class="oappt-confirm-total-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
+  wrap.innerHTML = html;
+}
+
+function oapptBookingNoteText() {
+  return oapptBuildBookingRows().filter(function(r) { return r.val; }).map(function(r) {
+    return r.label + ': ' + String(r.val).replace(/&euro;/g, 'EUR ');
+  }).join('\n');
+}
+
+function oapptSubmitBooking(event) {
+  if (event && event.preventDefault) event.preventDefault();
+  if (oapptState.submitting) return;
+  var agreement = document.getElementById('oappt-no-show-agreement');
+  var err8 = document.getElementById('oappt-err-8');
+  var termsText = 'If I miss this appointment or do not attend without prior notice, I agree to pay a missed-appointment fee equal to 50% of the estimated appointment value.';
+  if (err8) err8.classList.remove('visible');
+  if (!agreement || !agreement.checked) {
+    if (err8) {
+      err8.textContent = 'Please accept the missed-appointment fee agreement before confirming.';
+      err8.classList.add('visible');
+    }
+    return;
+  }
+  var svc = oapptState.selectedService;
+  var opt = oapptSelectedServiceOption();
+  var stylist = oapptState.selectedStylist;
+  var total = oapptGetTotal();
+  var loc = OAPPT_STORE_LABELS[oapptState.location] || OAPPT_STORE_LABELS.a;
+  var locName = oapptStoreName();
+  var timeStr = oapptState.selectedTime || '10:00';
+  var startsAt = oapptLocalIso(oapptState.selectedDate, timeStr, 0);
+  var endsAt = oapptLocalIso(oapptState.selectedDate, timeStr, oapptServiceDurationMinutes());
+  var timeLabel = timeStr + ' - ' + endsAt.substring(11, 16);
+  var urlParams = new URLSearchParams(window.location.search);
+  var source = urlParams.get('source') || 'website';
+  var submitBtn = document.getElementById('oappt-submit-btn');
+  oapptState.submitting = true;
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Confirming...'; }
+  fetch('/api/appointments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      customerName: oapptState.customerName,
+      customerEmail: oapptState.customerEmail,
+      customerPhone: oapptState.customerPhone,
+      notes: [oapptState.customerNotes || '', oapptBookingNoteText()].filter(Boolean).join('\n\n'),
+      serviceName: svc ? (svc.name + (opt ? ' (' + opt.label + ')' : '')) : '',
+      stylistName: stylist ? stylist.name : '',
+      locationName: locName,
+      locationAddress: loc.address,
+      dateLabel: oapptFormatDate(oapptState.selectedDate),
+      timeLabel: timeLabel,
+      startsAt: startsAt,
+      endsAt: endsAt,
+      estimatedPrice: 'EUR ' + oapptMoney(total),
+      source: source,
+      noShowFeeAgreed: true,
+      noShowFeeTerms: termsText
+    })
+  }).then(function(res) {
+    if (!res.ok) return res.json().catch(function() { return {}; }).then(function(data) { throw new Error(data.error || 'booking_failed'); });
+    return res.json();
+  }).then(function() {
+    oapptShowConfirmedDetails(svc, stylist, total);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }).catch(function(err) {
+    console.warn('[OHS Booking] API error:', err);
+    if (err && err.message === 'slot_full') {
+      oapptState.slotAvailabilityCache = {};
+      oapptState.selectedTime = '';
+      oapptRenderSlots();
+      oapptGoStep(6);
+      var err6 = document.getElementById('oappt-err-6');
+      if (err6) {
+        err6.textContent = 'That time has just become fully booked. Please choose another time.';
+        err6.classList.add('visible');
+      }
+    } else if (err8) {
+      err8.textContent = 'We could not confirm this appointment. Please try again or contact us on WhatsApp.';
+      err8.classList.add('visible');
+    }
+  }).finally(function() {
+    oapptState.submitting = false;
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Confirm Appointment'; }
+  });
+}
+
+function oapptShowConfirmedDetails(svc, stylist, total) {
+  var stepsWrap = document.getElementById('oappt-steps-wrap');
+  var confirmWrap = document.getElementById('oappt-confirm-wrap');
+  var summaryPanel = document.getElementById('oappt-summary-panel');
+  var progress = document.getElementById('oappt-progress');
+  if (stepsWrap) stepsWrap.style.display = 'none';
+  if (progress) progress.style.display = 'none';
+  if (confirmWrap) confirmWrap.classList.add('visible');
+  if (summaryPanel) summaryPanel.style.display = 'none';
+  var detailsEl = document.getElementById('oappt-confirm-details');
+  if (!detailsEl) return;
+  var html = '';
+  oapptBuildBookingRows().forEach(function(r) {
+    if (!r.val || ['Name','Email','Phone','Notes'].indexOf(r.label) > -1) return;
+    html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r.label + '</span><span class="oappt-confirm-detail-val">' + r.val + '</span></div>';
+  });
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
+  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">Estimated Total</span>';
+  html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + oapptMoney(total) + '</span>';
+  html += '</div>';
+  detailsEl.innerHTML = html;
+}
+
+document.querySelectorAll('select[name="locale_code"]').forEach(function(sel) {
+  sel.addEventListener('change', function() {
+    setTimeout(function() {
+      if (document.getElementById('oappt-service-grid')) oapptBuildServices();
+      if (document.getElementById('oappt-configurator')) oapptBuildConfigurator();
+      if (document.getElementById('oappt-stylist-grid')) oapptBuildStylists();
+      oapptUpdateSummary();
+      if (document.getElementById('oappt-booking-summary')) oapptBuildBookingSummary();
+    }, 0);
+  });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   oapptRenderProgress();

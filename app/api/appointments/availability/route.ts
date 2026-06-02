@@ -3,11 +3,12 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
 
-const SLOT_LIMIT = 4;
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const date = searchParams.get("date");
+  const locationName = searchParams.get("locationName") || "";
+  const stylistName = searchParams.get("stylistName") || "";
+  const durationMinutes = Math.max(30, Number(searchParams.get("durationMinutes") || 90));
 
   if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return NextResponse.json({ error: "missing_date" }, { status: 400 });
@@ -21,9 +22,11 @@ export async function GET(request: Request) {
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .from("appointments")
-    .select("starts_at,status")
+    .select("starts_at,ends_at,status,location_name,stylist_name")
     .gte("starts_at", start.toISOString())
     .lte("starts_at", end.toISOString())
+    .eq("location_name", locationName)
+    .eq("stylist_name", stylistName)
     .neq("status", "cancelled");
 
   if (error) {
@@ -31,7 +34,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "availability_error" }, { status: 500 });
   }
 
-  const counts: Record<string, number> = {};
+  const bookings: Array<{ start: Date; end: Date }> = [];
   const formatter = new Intl.DateTimeFormat("en-GB", {
     timeZone: "Europe/Berlin",
     year: "numeric",
@@ -46,13 +49,43 @@ export async function GET(request: Request) {
     const parts = Object.fromEntries(formatter.formatToParts(new Date(row.starts_at)).map((part) => [part.type, part.value]));
     const localDate = `${parts.year}-${parts.month}-${parts.day}`;
     if (localDate !== date) continue;
-    const time = `${parts.hour}:${parts.minute}`;
-    counts[time] = (counts[time] || 0) + 1;
+    bookings.push({ start: new Date(row.starts_at), end: new Date(row.ends_at) });
   }
 
-  const full = Object.entries(counts)
-    .filter(([, count]) => count >= SLOT_LIMIT)
-    .map(([time]) => time);
+  const full: string[] = [];
+  for (let hour = 9; hour <= 19; hour++) {
+    const time = `${String(hour).padStart(2, "0")}:00`;
+    const startIso = localIso(date, time);
+    const candidateStart = new Date(startIso);
+    const candidateEnd = new Date(candidateStart.getTime() + durationMinutes * 60_000);
+    const overlaps = bookings.some((booking) => candidateStart < booking.end && candidateEnd > booking.start);
+    if (overlaps) full.push(time);
+  }
 
-  return NextResponse.json({ date, limit: SLOT_LIMIT, counts, full });
+  return NextResponse.json({
+    date,
+    locationName,
+    stylistName,
+    durationMinutes,
+    full,
+    bookings: bookings.length,
+  });
+}
+
+function localIso(date: string, time: string) {
+  return `${date}T${time}:00${berlinOffset(date)}`;
+}
+
+function berlinOffset(date: string) {
+  const [year, month, day] = date.split("-").map(Number);
+  const marker = month * 100 + day;
+  const dstStart = 300 + lastSunday(year, 2);
+  const dstEnd = 1000 + lastSunday(year, 9);
+  return marker > dstStart && marker < dstEnd ? "+02:00" : "+01:00";
+}
+
+function lastSunday(year: number, monthIndex: number) {
+  const date = new Date(Date.UTC(year, monthIndex + 1, 0));
+  date.setUTCDate(date.getUTCDate() - date.getUTCDay());
+  return date.getUTCDate();
 }
