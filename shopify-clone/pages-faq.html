@@ -2474,13 +2474,34 @@ first.parentNode.insertBefore(script, first);
     });
   });
 
-  document.querySelectorAll('.ofaq-q').forEach(function(q) {
-    q.addEventListener('click', function() {
-      var item = q.closest('.ofaq-item');
-      var isOpen = item.classList.contains('open');
-      document.querySelectorAll('.ofaq-item.open').forEach(function(i) { i.classList.remove('open'); });
-      if (!isOpen) item.classList.add('open');
+  function toggleFaqItem(question) {
+    var item = question && question.closest ? question.closest('.ofaq-item') : null;
+    if (!item) return;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.ofaq-item.open').forEach(function(i) {
+      if (i !== item) i.classList.remove('open');
     });
+    item.classList.toggle('open', !isOpen);
+  }
+
+  document.addEventListener('click', function(event) {
+    var question = event.target && event.target.closest ? event.target.closest('.ofaq-q') : null;
+    if (!question || !question.closest('.ofaq')) return;
+    event.preventDefault();
+    toggleFaqItem(question);
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    var question = event.target && event.target.closest ? event.target.closest('.ofaq-q') : null;
+    if (!question || !question.closest('.ofaq')) return;
+    event.preventDefault();
+    toggleFaqItem(question);
+  });
+
+  document.querySelectorAll('.ofaq-q').forEach(function(q) {
+    q.setAttribute('role', 'button');
+    q.setAttribute('tabindex', '0');
   });
 
   var searchInput = document.getElementById('ofaq-search-input');
