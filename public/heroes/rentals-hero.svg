@@ -1,0 +1,304 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-308 -124 2057 829" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+  <defs>
+    <linearGradient id="rBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#424040"/>
+      <stop offset="28%"  stop-color="#555250"/>
+      <stop offset="54%"  stop-color="#5E5A56"/>
+      <stop offset="78%"  stop-color="#575350"/>
+      <stop offset="100%" stop-color="#4A4744"/>
+    </linearGradient>
+    <linearGradient id="rTopS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.55"/>
+      <stop offset="40%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.42"/>
+    </linearGradient>
+    <radialGradient id="rKey" cx="50%" cy="14%" r="55%">
+      <stop offset="0%"   stop-color="#807060" stop-opacity="0.50"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#363230"/>
+      <stop offset="100%" stop-color="#242018"/>
+    </linearGradient>
+    <linearGradient id="rVigL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rVigR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="rVigB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#D0D0D0" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#D0D0D0" stop-opacity="0.28"/>
+    </linearGradient>
+    <linearGradient id="rGoldT" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#B8900A"/>
+      <stop offset="50%"  stop-color="#E8C858"/>
+      <stop offset="100%" stop-color="#C09828"/>
+    </linearGradient>
+    <linearGradient id="rBow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#F0D870"/>
+      <stop offset="30%"  stop-color="#D4A840"/>
+      <stop offset="65%"  stop-color="#E8C850"/>
+      <stop offset="100%" stop-color="#A47818"/>
+    </linearGradient>
+    <linearGradient id="rBowKnot" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#F8E888"/>
+      <stop offset="50%"  stop-color="#D4A838"/>
+      <stop offset="100%" stop-color="#A47818"/>
+    </linearGradient>
+    <radialGradient id="rHairTop" cx="50%" cy="38%" r="58%">
+      <stop offset="0%"   stop-color="#6B3D14"/>
+      <stop offset="48%"  stop-color="#3A1C08"/>
+      <stop offset="100%" stop-color="#1C0C04"/>
+    </radialGradient>
+    <linearGradient id="rHairHi" x1="0.08" y1="0" x2="0.22" y2="1">
+      <stop offset="0%"   stop-color="#C09050" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#D8A860" stop-opacity="0.70"/>
+      <stop offset="60%"  stop-color="#B08040" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#885020" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rHairBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#4A2C10"/>
+      <stop offset="50%"  stop-color="#281808"/>
+      <stop offset="100%" stop-color="#1A0E06"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── BACKGROUND ──────────────────────────────────── -->
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#rBg)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#rTopS)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#rKey)"/>
+  <rect x="-308" y="448"  width="2057" height="257" fill="url(#rFloor)"/>
+  <rect x="-308" y="445"  width="2057" height="5"   fill="#14100C" opacity="0.38"/>
+
+  <!-- ── GROUND SHADOW ─────────────────────────────────── -->
+  <ellipse cx="700" cy="660" rx="170" ry="14" fill="#060402" opacity="0.42"/>
+
+  <!-- ── HAIR — BACK DARK OUTER STRANDS ───────────────── -->
+  <path d="M628,-40 Q612,70 605,175 Q597,290 608,385 Q616,445 605,508 Q594,558 582,598"
+    fill="none" stroke="#180A02" stroke-width="30" opacity="0.88" stroke-linecap="round"/>
+  <path d="M772,-40 Q788,70 795,175 Q803,290 792,385 Q784,445 795,508 Q806,558 818,598"
+    fill="none" stroke="#180A02" stroke-width="28" opacity="0.85" stroke-linecap="round"/>
+
+  <!-- ── HAIR — TOP GATHERED MASS ─────────────────────── -->
+  <path d="M482,198 Q482,30 700,-38 Q918,30 918,198 Q918,358 824,398 Q762,418 700,423 Q638,418 576,398 Q482,358 482,198 Z"
+    fill="url(#rHairTop)"/>
+
+  <!-- Right sweep highlight -->
+  <path d="M700,-36 Q802,-16 872,56 Q925,128 920,222 Q912,294 882,344
+    Q872,304 882,232 Q888,162 848,102 Q804,42 700,-36 Z"
+    fill="#C4922A" opacity="0.36"/>
+  <!-- Left sweep highlight -->
+  <path d="M700,-36 Q598,-16 528,56 Q475,128 480,222 Q488,294 518,344
+    Q528,304 518,232 Q512,162 552,102 Q596,42 700,-36 Z"
+    fill="#C4922A" opacity="0.26"/>
+  <!-- Center crown shine -->
+  <path d="M700,-34 Q742,-22 764,8 Q742,-8 700,-14 Q658,-8 636,8 Q658,-22 700,-34 Z"
+    fill="#E8D090" opacity="0.52"/>
+
+  <!-- Hair strands giving texture on top section -->
+  <path d="M612,-18 Q597,80 590,178 Q583,282 593,364"
+    fill="none" stroke="url(#rHairHi)" stroke-width="9" opacity="0.56" stroke-linecap="round"/>
+  <path d="M654,-28 Q640,72 635,170 Q628,274 638,356"
+    fill="none" stroke="url(#rHairHi)" stroke-width="7" opacity="0.52" stroke-linecap="round"/>
+  <path d="M700,-38 Q692,62 690,160 Q688,265 695,348"
+    fill="none" stroke="#D0A850" stroke-width="4" opacity="0.32" stroke-linecap="round"/>
+  <path d="M746,-28 Q760,72 765,170 Q772,274 762,356"
+    fill="none" stroke="url(#rHairHi)" stroke-width="7" opacity="0.52" stroke-linecap="round"/>
+  <path d="M788,-18 Q803,80 810,178 Q817,282 807,364"
+    fill="none" stroke="url(#rHairHi)" stroke-width="9" opacity="0.56" stroke-linecap="round"/>
+  <!-- Fine gloss lines -->
+  <path d="M688,-32 Q682,68 680,165 Q678,268 684,350"
+    fill="none" stroke="#E0B868" stroke-width="2" opacity="0.20" stroke-linecap="round"/>
+  <path d="M712,-32 Q718,68 720,165 Q722,268 716,350"
+    fill="none" stroke="#D4A858" stroke-width="1.5" opacity="0.18" stroke-linecap="round"/>
+
+  <!-- ── GATHERING POINT INTO BOW ───────────────────────── -->
+  <path d="M642,408 Q662,422 682,427 Q700,430 718,427 Q738,422 758,408
+    Q738,420 700,424 Q662,420 642,408 Z" fill="#1C0C04" opacity="0.85"/>
+  <rect x="652" y="418" width="96" height="50" rx="7" fill="#1A0E06" opacity="0.80"/>
+
+  <!-- ── GOLD BOW ─────────────────────────────────────────── -->
+
+  <!-- Left wing -->
+  <path d="M578,460 Q545,432 532,403 Q522,376 538,358 Q557,344 586,355
+    Q617,368 643,396 Q656,418 658,462
+    Q640,446 619,439 Q596,433 578,444 Z"
+    fill="url(#rBow)"/>
+  <path d="M573,456 Q553,440 541,414 Q534,396 540,378 Q547,367 558,370
+    Q548,382 551,406 Q554,432 575,451 Z"
+    fill="#8B6914" opacity="0.52"/>
+  <path d="M610,368 Q632,382 650,410 Q638,396 618,382 Z"
+    fill="#F5E070" opacity="0.52"/>
+  <!-- Left wing glitter -->
+  <circle cx="562" cy="406" r="2.5" fill="#FFFFFF" opacity="0.92"/>
+  <circle cx="580" cy="426" r="2"   fill="#FFFFFF" opacity="0.78"/>
+  <circle cx="598" cy="396" r="1.8" fill="#FFFFFF" opacity="0.82"/>
+  <circle cx="546" cy="420" r="2"   fill="#FFFFFF" opacity="0.70"/>
+  <circle cx="618" cy="442" r="2.2" fill="#FFFFFF" opacity="0.80"/>
+  <circle cx="556" cy="385" r="1.5" fill="#FFFFFF" opacity="0.65"/>
+
+  <!-- Right wing -->
+  <path d="M822,460 Q855,432 868,403 Q878,376 862,358 Q843,344 814,355
+    Q783,368 757,396 Q744,418 742,462
+    Q760,446 781,439 Q804,433 822,444 Z"
+    fill="url(#rBow)"/>
+  <path d="M827,456 Q847,440 859,414 Q866,396 860,378 Q853,367 842,370
+    Q852,382 849,406 Q846,432 825,451 Z"
+    fill="#8B6914" opacity="0.52"/>
+  <path d="M790,368 Q768,382 750,410 Q762,396 782,382 Z"
+    fill="#F5E070" opacity="0.52"/>
+  <!-- Right wing glitter -->
+  <circle cx="838" cy="406" r="2.5" fill="#FFFFFF" opacity="0.92"/>
+  <circle cx="820" cy="426" r="2"   fill="#FFFFFF" opacity="0.78"/>
+  <circle cx="802" cy="396" r="1.8" fill="#FFFFFF" opacity="0.82"/>
+  <circle cx="854" cy="420" r="2"   fill="#FFFFFF" opacity="0.70"/>
+  <circle cx="782" cy="442" r="2.2" fill="#FFFFFF" opacity="0.80"/>
+  <circle cx="844" cy="385" r="1.5" fill="#FFFFFF" opacity="0.65"/>
+
+  <!-- Bow centre knot -->
+  <ellipse cx="700" cy="456" rx="36" ry="26" fill="#C9A030"/>
+  <ellipse cx="700" cy="454" rx="30" ry="20" fill="url(#rBowKnot)"/>
+  <path d="M682,446 Q700,438 718,446 Q700,442 682,446 Z" fill="#F8E888" opacity="0.58"/>
+  <ellipse cx="700" cy="454" rx="12" ry="7" fill="#F8E888" opacity="0.40"/>
+  <path d="M684,456 Q700,450 716,456" fill="none" stroke="#A47818" stroke-width="1.2" opacity="0.40"/>
+  <path d="M684,463 Q700,469 716,463" fill="none" stroke="#A47818" stroke-width="1"   opacity="0.30"/>
+  <!-- Knot glitter -->
+  <circle cx="696" cy="448" r="1.8" fill="#FFFFFF" opacity="0.82"/>
+  <circle cx="706" cy="462" r="1.2" fill="#FFFFFF" opacity="0.70"/>
+  <circle cx="700" cy="456" r="1"   fill="#FFFFFF" opacity="0.60"/>
+
+  <!-- Ribbon tails hanging below bow -->
+  <path d="M662,474 Q652,498 645,526 Q639,552 642,576 Q646,560 652,536 Q660,510 670,480 Z"
+    fill="#C9A030" opacity="0.72"/>
+  <path d="M738,474 Q748,498 755,526 Q761,552 758,576 Q754,560 748,536 Q740,510 730,480 Z"
+    fill="#C9A030" opacity="0.72"/>
+
+  <!-- ── LOWER PONYTAIL ─────────────────────────────────── -->
+
+  <!-- Dark outer silhouette strands (back) -->
+  <path d="M624,466 Q607,530 602,602 Q597,668 608,724 Q615,762 618,802
+    Q611,770 607,728 Q597,665 602,596 Q606,526 620,462 Z"
+    fill="#1A0A04" opacity="0.88"/>
+  <path d="M776,466 Q793,530 798,602 Q803,668 792,724 Q785,762 782,802
+    Q789,770 793,728 Q803,665 798,596 Q794,526 780,462 Z"
+    fill="#1A0A04" opacity="0.88"/>
+
+  <!-- Main tail body layers -->
+  <path d="M636,470 Q619,524 613,590 Q607,652 616,706 Q622,748 620,782
+    Q618,808 616,828 Q624,816 628,794 Q630,768 630,738 Q632,702 626,662
+    Q617,608 623,548 Q629,506 644,470 Z"
+    fill="#3A1C08"/>
+  <path d="M764,470 Q781,524 787,590 Q793,652 784,706 Q778,748 780,782
+    Q782,808 784,828 Q776,816 772,794 Q770,768 770,738 Q768,702 774,662
+    Q783,608 777,548 Q771,506 756,470 Z"
+    fill="#3A1C08"/>
+
+  <!-- Caramel highlight strands flowing down -->
+  <path d="M650,474 Q636,528 631,592 Q626,654 633,706 Q639,748 637,782 Q635,812 633,834"
+    fill="none" stroke="#C4922A" stroke-width="7" opacity="0.65" stroke-linecap="round"/>
+  <path d="M672,474 Q661,528 658,592 Q655,655 660,706 Q664,748 662,782 Q660,812 658,834"
+    fill="none" stroke="#D8A848" stroke-width="5" opacity="0.56" stroke-linecap="round"/>
+  <path d="M700,472 Q692,527 691,592 Q690,655 694,706 Q697,748 695,782 Q692,812 690,834"
+    fill="none" stroke="#C4922A" stroke-width="8" opacity="0.62" stroke-linecap="round"/>
+  <path d="M728,474 Q739,528 742,592 Q745,655 740,706 Q736,748 738,782 Q740,812 742,834"
+    fill="none" stroke="#D8A848" stroke-width="5" opacity="0.56" stroke-linecap="round"/>
+  <path d="M750,474 Q764,528 769,592 Q774,654 767,706 Q761,748 763,782 Q765,812 767,834"
+    fill="none" stroke="#C4922A" stroke-width="7" opacity="0.65" stroke-linecap="round"/>
+
+  <!-- Subtle wave texture -->
+  <path d="M634,548 Q658,540 678,546 Q698,552 716,546 Q734,540 752,546"
+    fill="none" stroke="#B08030" stroke-width="1.5" opacity="0.32" stroke-linecap="round"/>
+  <path d="M630,620 Q654,612 673,618 Q692,624 710,618 Q728,612 750,618"
+    fill="none" stroke="#B08030" stroke-width="1.5" opacity="0.28" stroke-linecap="round"/>
+  <path d="M632,692 Q656,684 675,690 Q695,696 713,690 Q731,684 753,690"
+    fill="none" stroke="#B08030" stroke-width="1.5" opacity="0.22" stroke-linecap="round"/>
+
+  <!-- Wispy tail ends -->
+  <path d="M622,818 Q618,793 622,762" fill="none" stroke="#4A2810" stroke-width="4.5" opacity="0.62" stroke-linecap="round"/>
+  <path d="M636,832 Q632,806 636,774" fill="none" stroke="#8B5020" stroke-width="3.5" opacity="0.52" stroke-linecap="round"/>
+  <path d="M650,840 Q648,812 652,780" fill="none" stroke="#C4922A" stroke-width="2.5" opacity="0.42" stroke-linecap="round"/>
+  <path d="M700,842 Q698,814 700,782" fill="none" stroke="#4A2810" stroke-width="4.5" opacity="0.58" stroke-linecap="round"/>
+  <path d="M750,840 Q752,812 748,780" fill="none" stroke="#C4922A" stroke-width="2.5" opacity="0.42" stroke-linecap="round"/>
+  <path d="M764,832 Q768,806 764,774" fill="none" stroke="#8B5020" stroke-width="3.5" opacity="0.52" stroke-linecap="round"/>
+  <path d="M778,818 Q782,793 778,762" fill="none" stroke="#4A2810" stroke-width="4.5" opacity="0.62" stroke-linecap="round"/>
+
+  <!-- ── CALENDAR ICON ────────────────────────────────────── -->
+  <g transform="translate(175,285)">
+    <circle cx="0" cy="0" r="84" fill="#1E1810" opacity="0.72"/>
+    <circle cx="0" cy="0" r="82" fill="none" stroke="#C9A96E" stroke-width="1.8" opacity="0.80"/>
+    <!-- Calendar body -->
+    <rect x="-30" y="-28" width="60" height="54" rx="5" fill="none" stroke="#C9A96E" stroke-width="2" opacity="0.88"/>
+    <!-- Header fill -->
+    <rect x="-30" y="-28" width="60" height="16" rx="5" fill="#C9A96E" opacity="0.18"/>
+    <rect x="-30" y="-12" width="60" height="2"  fill="#C9A96E" opacity="0.14"/>
+    <!-- Ring hooks -->
+    <line x1="-11" y1="-34" x2="-11" y2="-22" stroke="#C9A96E" stroke-width="3"   stroke-linecap="round" opacity="0.92"/>
+    <line x1=" 11" y1="-34" x2=" 11" y2="-22" stroke="#C9A96E" stroke-width="3"   stroke-linecap="round" opacity="0.92"/>
+    <!-- Grid lines -->
+    <line x1="-24" y1="-4" x2="24" y2="-4" stroke="#C9A96E" stroke-width="0.8" opacity="0.28"/>
+    <line x1="-24" y1=" 6" x2="24" y2=" 6" stroke="#C9A96E" stroke-width="0.8" opacity="0.28"/>
+    <line x1="-24" y1="16" x2="24" y2="16" stroke="#C9A96E" stroke-width="0.8" opacity="0.28"/>
+    <!-- Checkmark -->
+    <path d="M -16,6 L -5,19 L 20,-10"
+      stroke="#C9A96E" stroke-width="4" fill="none"
+      stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+  </g>
+  <text x="175" y="408"
+    font-family="'Montserrat',sans-serif" font-size="10" font-weight="700"
+    letter-spacing="3.5" fill="#C9A96E" text-anchor="middle" opacity="0.72">BOOK NOW</text>
+
+  <!-- ── CLOCK / RETURN ICON ────────────────────────────── -->
+  <g transform="translate(1225,285)">
+    <circle cx="0" cy="0" r="84" fill="#1E1810" opacity="0.72"/>
+    <circle cx="0" cy="0" r="82" fill="none" stroke="#C9A96E" stroke-width="1.8" opacity="0.80"/>
+    <!-- Clock face -->
+    <circle cx="0" cy="0" r="38" fill="none" stroke="#C9A96E" stroke-width="2" opacity="0.88"/>
+    <!-- Tick marks -->
+    <line x1=" 0"  y1="-38" x2=" 0"  y2="-31" stroke="#C9A96E" stroke-width="2.2" opacity="0.72"/>
+    <line x1=" 38" y1="  0" x2=" 31" y2="  0" stroke="#C9A96E" stroke-width="2.2" opacity="0.72"/>
+    <line x1=" 0"  y1=" 38" x2=" 0"  y2=" 31" stroke="#C9A96E" stroke-width="2.2" opacity="0.72"/>
+    <line x1="-38" y1="  0" x2="-31" y2="  0" stroke="#C9A96E" stroke-width="2.2" opacity="0.72"/>
+    <!-- Hour hand -->
+    <line x1="0" y1="0" x2="0"  y2="-24" stroke="#C9A96E" stroke-width="3.2" stroke-linecap="round" opacity="0.96"/>
+    <!-- Minute hand -->
+    <line x1="0" y1="0" x2="18" y2=" 13" stroke="#C9A96E" stroke-width="2.5" stroke-linecap="round" opacity="0.96"/>
+    <!-- Circular refresh arrow -->
+    <path d="M 37,-11 A 38 38 0 1 0 38,9"
+      stroke="#C9A96E" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.72"/>
+    <path d="M 31,-2 L 38,9 L 45,2"
+      stroke="#C9A96E" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.72"/>
+    <!-- Centre dot -->
+    <circle cx="0" cy="0" r="4.5" fill="#C9A96E" opacity="0.92"/>
+  </g>
+  <text x="1225" y="408"
+    font-family="'Montserrat',sans-serif" font-size="10" font-weight="700"
+    letter-spacing="3.5" fill="#C9A96E" text-anchor="middle" opacity="0.72">RETURN</text>
+
+  <!-- ── GOLD SPARKLES ──────────────────────────────────── -->
+  <g fill="#C9A96E">
+    <path d="M862,-65 L866,-50 L881,-45 L866,-40 L862,-25 L858,-40 L843,-45 L858,-50 Z" opacity="0.75"/>
+    <path d="M902,  5 L904, 14 L913, 17 L904, 20 L902, 29 L900, 20 L891, 17 L900, 14 Z" opacity="0.55"/>
+    <path d="M536,-55 L540,-40 L555,-35 L540,-30 L536,-15 L532,-30 L517,-35 L532,-40 Z" opacity="0.70"/>
+    <path d="M497, 15 L499, 24 L508, 27 L499, 30 L497, 39 L495, 30 L486, 27 L495, 24 Z" opacity="0.50"/>
+    <path d="M455,358 L458,372 L472,377 L458,382 L455,396 L452,382 L438,377 L452,372 Z" opacity="0.65"/>
+    <path d="M952,364 L955,378 L969,383 L955,388 L952,402 L949,388 L935,383 L949,378 Z" opacity="0.65"/>
+    <path d="M410,552 L413,562 L423,565 L413,568 L410,578 L407,568 L397,565 L407,562 Z" opacity="0.45"/>
+    <path d="M986,558 L989,568 L999,571 L989,574 L986,584 L983,574 L973,571 L983,568 Z" opacity="0.45"/>
+  </g>
+  <g fill="#C8C4BC">
+    <path d="M822,-45 L824,-38 L831,-35 L824,-32 L822,-25 L820,-32 L813,-35 L820,-38 Z" opacity="0.38"/>
+    <path d="M572,-35 L574,-28 L581,-25 L574,-22 L572,-15 L570,-22 L563,-25 L570,-28 Z" opacity="0.34"/>
+    <path d="M432,462 L434,469 L441,472 L434,475 L432,482 L430,475 L423,472 L430,469 Z" opacity="0.28"/>
+    <path d="M966,475 L968,482 L975,485 L968,488 L966,495 L964,488 L957,485 L964,482 Z" opacity="0.28"/>
+    <path d="M355,295 L357,303 L365,306 L357,309 L355,317 L353,309 L345,306 L353,303 Z" opacity="0.24"/>
+    <path d="M1045,308 L1047,316 L1055,319 L1047,322 L1045,330 L1043,322 L1035,319 L1043,316 Z" opacity="0.24"/>
+  </g>
+
+  <!-- ── VIGNETTE ────────────────────────────────────────── -->
+  <rect x="-308" y="-124" width="508"  height="829" fill="url(#rVigL)"/>
+  <rect x="1240" y="-124" width="509"  height="829" fill="url(#rVigR)"/>
+  <rect x="-308" y="370"  width="2057" height="335" fill="url(#rVigB)"/>
+</svg>
