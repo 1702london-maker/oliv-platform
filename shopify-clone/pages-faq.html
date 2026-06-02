@@ -2463,7 +2463,7 @@ first.parentNode.insertBefore(script, first);
     var sections = document.querySelectorAll('.ofaq-section');
 
     /* ── Category tabs — event delegation on parent ── */
-    var catBar = document.querySelector('.ofaq-cats');
+    var catBar = document.querySelector('.ofaq-sidebar-cats');
     if (catBar && !catBar._ofaqCatBound) {
       catBar._ofaqCatBound = true;
       catBar.addEventListener('click', function(e) {
