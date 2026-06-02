@@ -29,10 +29,16 @@ export async function POST(request: Request) {
       endsAt,
       estimatedPrice,
       source = "website",
-    } = body as Record<string, string>;
+      noShowFeeAgreed,
+      noShowFeeTerms,
+    } = body as Record<string, unknown>;
 
     if (!customerEmail || !customerName || !startsAt || !endsAt) {
       return NextResponse.json({ error: "missing_fields" }, { status: 400 });
+    }
+
+    if (noShowFeeAgreed !== true && noShowFeeAgreed !== "true") {
+      return NextResponse.json({ error: "no_show_terms_required" }, { status: 400 });
     }
 
     const supabase = createSupabaseAdminClient();
@@ -52,14 +58,30 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "no_service" }, { status: 500 });
     }
 
+    const { count: slotCount, error: slotError } = await supabase
+      .from("appointments")
+      .select("id", { count: "exact", head: true })
+      .eq("starts_at", String(startsAt))
+      .neq("status", "cancelled");
+
+    if (slotError) {
+      console.error("[Appointments] Slot count error:", slotError);
+      return NextResponse.json({ error: "availability_error" }, { status: 500 });
+    }
+
+    if ((slotCount || 0) >= 4) {
+      return NextResponse.json({ error: "slot_full" }, { status: 409 });
+    }
+
     const { data: appt, error: dbError } = await supabase
       .from("appointments")
       .insert({
         service_id: dbServiceId,
-        email: customerEmail.toLowerCase(),
-        starts_at: startsAt,
-        ends_at: endsAt,
-        status: "pending",
+        email: String(customerEmail).toLowerCase(),
+        starts_at: String(startsAt),
+        ends_at: String(endsAt),
+        status: "confirmed",
+        confirmed_at: new Date().toISOString(),
         notes: [
           `Name: ${customerName}`,
           customerPhone && `Phone: ${customerPhone}`,
@@ -68,13 +90,15 @@ export async function POST(request: Request) {
           `Stylist: ${stylistName}`,
           `Location: ${locationName}`,
           `Source: ${source}`,
+          "Status: Automatically confirmed",
+          `No-show fee agreement: ${noShowFeeTerms || "Customer agreed to pay 50% of the estimated appointment value if they miss the appointment without notice."}`,
         ].filter(Boolean).join("\n"),
         source,
-        service_label: serviceName,
-        stylist_name: stylistName,
-        location_name: locationName,
-        customer_name: customerName,
-        customer_phone: customerPhone,
+        service_label: String(serviceName || ""),
+        stylist_name: String(stylistName || ""),
+        location_name: String(locationName || ""),
+        customer_name: String(customerName),
+        customer_phone: String(customerPhone || ""),
       })
       .select("id")
       .single();
@@ -85,6 +109,20 @@ export async function POST(request: Request) {
     }
 
     const bookingId = appt.id;
+
+    const { count: confirmedSlotCount } = await supabase
+      .from("appointments")
+      .select("id", { count: "exact", head: true })
+      .eq("starts_at", String(startsAt))
+      .neq("status", "cancelled");
+
+    if ((confirmedSlotCount || 0) > 4) {
+      await supabase
+        .from("appointments")
+        .update({ status: "cancelled" })
+        .eq("id", bookingId);
+      return NextResponse.json({ error: "slot_full" }, { status: 409 });
+    }
 
     const calDescription = [
       `Service: ${serviceName}`,
@@ -104,11 +142,11 @@ export async function POST(request: Request) {
     const googleEventId = await createCalendarEvent({
       summary: `${serviceName} - ${customerName}`,
       description: calDescription,
-      location: locationAddress || locationName,
-      startIso: startsAt,
-      endIso: endsAt,
-      attendeeEmail: customerEmail,
-      source,
+      location: String(locationAddress || locationName || ""),
+      startIso: String(startsAt),
+      endIso: String(endsAt),
+      attendeeEmail: String(customerEmail),
+      source: String(source || "website"),
     });
 
     if (googleEventId) {
@@ -119,18 +157,18 @@ export async function POST(request: Request) {
     }
 
     const emailData: AppointmentEmailData = {
-      customerName,
-      customerEmail,
-      customerPhone,
-      serviceName,
-      stylistName,
-      locationName,
-      locationAddress: locationAddress || locationName,
-      dateLabel,
-      timeLabel,
-      estimatedPrice,
-      notes,
-      source,
+      customerName: String(customerName),
+      customerEmail: String(customerEmail),
+      customerPhone: String(customerPhone || ""),
+      serviceName: String(serviceName || ""),
+      stylistName: String(stylistName || ""),
+      locationName: String(locationName || ""),
+      locationAddress: String(locationAddress || locationName || ""),
+      dateLabel: String(dateLabel || ""),
+      timeLabel: String(timeLabel || ""),
+      estimatedPrice: String(estimatedPrice || ""),
+      notes: String(notes || ""),
+      source: String(source || "website"),
       bookingId,
     };
 

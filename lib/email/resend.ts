@@ -44,7 +44,7 @@ export async function sendAppointmentConfirmationEmail(data: AppointmentEmailDat
   const { error } = await getResend().emails.send({
     from: FROM,
     to: data.customerEmail,
-    subject: `Booking Request Received — OlivHairSupply`,
+    subject: `Appointment Confirmed - OlivHairSupply`,
     html: `
 <!DOCTYPE html>
 <html>
@@ -53,12 +53,12 @@ export async function sendAppointmentConfirmationEmail(data: AppointmentEmailDat
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">Booking Request <em>Received</em></h1>
+      <h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">Appointment <em>Confirmed</em></h1>
     </div>
     <div style="padding:36px 40px;">
       <p style="color:#2B2620;font-size:14px;margin:0 0 6px;">Hi <strong>${data.customerName}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        We have received your appointment request. Our team will confirm your booking within <strong>24 hours</strong> via email or WhatsApp.
+        Your appointment is confirmed. Please keep this email for your booking details and arrive 5 minutes before your appointment.
       </p>
 
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
@@ -90,6 +90,10 @@ export async function sendAppointmentConfirmationEmail(data: AppointmentEmailDat
 
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 24px;">
         Questions? WhatsApp us at <strong>+49 157 86283439</strong> or reply to this email.
+      </p>
+
+      <p style="color:#6B5C4E;font-size:11px;line-height:1.7;margin:0 0 24px;">
+        By submitting this booking, you agreed that if you miss your appointment or do not attend without prior notice, you will pay a missed-appointment fee equal to 50% of the estimated appointment value.
       </p>
 
       <a href="https://wa.me/4915786283439" style="display:inline-block;background:#25D366;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;margin-right:8px;">
@@ -124,7 +128,7 @@ export async function sendAppointmentTeamNotification(data: AppointmentEmailData
   const { error } = await getResend().emails.send({
     from: FROM,
     to: BOOKING_TEAM_EMAIL,
-    subject: `New Booking — ${data.customerName} — ${data.dateLabel} ${data.timeLabel}`,
+    subject: `Confirmed Booking - ${data.customerName} - ${data.dateLabel} ${data.timeLabel}`,
     html: `
 <!DOCTYPE html>
 <html>
@@ -133,7 +137,7 @@ export async function sendAppointmentTeamNotification(data: AppointmentEmailData
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:24px 36px;">
       <p style="color:#B68A45;font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 4px;">OlivHairSupply — Bookings</p>
-      <h1 style="color:#fff;font-size:22px;font-weight:300;margin:0;font-family:Georgia,serif;">New Appointment Request</h1>
+      <h1 style="color:#fff;font-size:22px;font-weight:300;margin:0;font-family:Georgia,serif;">Confirmed Appointment</h1>
     </div>
     <div style="padding:28px 36px;">
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:20px 24px;margin-bottom:20px;">
