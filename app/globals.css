@@ -205,11 +205,23 @@ a {
   max-width: 480px;
 }
 
+.ohs-product-thumbs button {
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ohs-product-thumbs button.active {
+  border-color: #2a211b;
+}
+
 .ohs-product-thumbs img {
   aspect-ratio: 1 / 1;
   width: 100%;
   object-fit: cover;
   background: #eee4d5;
+  display: block;
 }
 
 .ohs-product-detail-copy > p {

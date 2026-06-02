@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatMoney } from "@/lib/catalog/money";
 
 type Variant = {
   id: string;
   title: string;
   color: string | null;
+  sku: string | null;
   retail_price_cents: number;
   wholesale_price_cents: number | null;
   image_url: string | null;
+  attributes?: Record<string, unknown>;
 };
 
 type AddToCartProps = {
@@ -22,6 +24,8 @@ type AddToCartProps = {
   variants: Variant[];
   priceMode?: "retail" | "wholesale";
   currency?: string;
+  onImageChange?: (imageUrl: string | null) => void;
+  onPriceChange?: (priceCents: number) => void;
 };
 
 type CartItem = {
@@ -37,45 +41,58 @@ type CartItem = {
 };
 
 const CART_KEY = "ohs-cart";
-const HAIR_COLOURS = [
-  "1 Tiefschwarz",
-  "1A Naturschwarz",
-  "2 Schokobraun",
-  "4 Mittelbraun",
-  "8 Dunkelblond",
-  "8/22 Highlights Silver",
-  "613",
-  "SB Highlights",
-  "4/6/8 Highlights",
-  "60A",
-  "Mint"
-];
-const HAIR_LENGTHS = ["40cm", "45cm", "50cm", "55cm", "60cm", "65cm"];
-const HAIR_TEXTURES = ["Glatt", "Wellig"];
 
-
-export function AddToCart({ product, variants, priceMode = "retail", currency = "EUR" }: AddToCartProps) {
+export function AddToCart({
+  product,
+  variants,
+  priceMode = "retail",
+  currency = "EUR",
+  onImageChange,
+  onPriceChange
+}: AddToCartProps) {
+  const optionValues = useMemo(() => buildOptionValues(variants), [variants]);
   const [variantId, setVariantId] = useState(variants[0]?.id || "");
-  const isHair = product.image_url?.includes("/biziluxe-extensions/") || product.image_url?.includes("/bizihair-extensions/");
-  const usesSimpleColours =
-    product.image_url?.includes("/biziluxe-accessoires/") || product.image_url?.includes("/profi-friseurbedarf/");
-  const [colour, setColour] = useState(HAIR_COLOURS[0]);
-  const [length, setLength] = useState(HAIR_LENGTHS[0]);
-  const [texture, setTexture] = useState(HAIR_TEXTURES[0]);
+  const [colour, setColour] = useState(optionValues.colours[0] || "");
+  const [length, setLength] = useState(optionValues.lengths[0] || "");
+  const [texture, setTexture] = useState(optionValues.textures[0] || "");
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
-  const selected = variants.find((variant) => variant.id === variantId) || variants[0];
+
+  useEffect(() => {
+    setColour((current) => current || optionValues.colours[0] || "");
+    setLength((current) => current || optionValues.lengths[0] || "");
+    setTexture((current) => current || optionValues.textures[0] || "");
+  }, [optionValues.colours, optionValues.lengths, optionValues.textures]);
+
+  const selected =
+    findBestVariant(variants, { colour, length, texture, variantId }) ||
+    variants.find((variant) => variant.id === variantId) ||
+    variants[0];
+
   const selectedPrice = selected
     ? priceMode === "wholesale"
       ? selected.wholesale_price_cents || selected.retail_price_cents
       : selected.retail_price_cents
     : 0;
 
+  const selectedImage = selected?.image_url || imageForColour(variants, colour) || product.image_url;
+  const usesStructuredOptions = Boolean(optionValues.colours.length || optionValues.lengths.length || optionValues.textures.length);
+
+  useEffect(() => {
+    if (!selected?.id || selected.id === variantId) return;
+    setVariantId(selected.id);
+  }, [selected, variantId]);
+
+  useEffect(() => {
+    onImageChange?.(selectedImage || null);
+    onPriceChange?.(selectedPrice);
+  }, [onImageChange, onPriceChange, selectedImage, selectedPrice]);
+
   function addToCart() {
     if (!selected) return;
 
     const existing = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]") as CartItem[];
-    const optionTitle = isHair ? `${colour} / ${length} / ${texture}` : selected.title;
+    const optionTitle = optionLabel(selected, { colour, length, texture });
     const cartKey = `${selected.id}:${optionTitle}`;
     const index = existing.findIndex((item) => (item.cartKey || item.variantId) === cartKey);
     if (index >= 0) {
@@ -89,7 +106,7 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
         variantTitle: optionTitle,
         priceCents: selectedPrice,
         priceMode,
-        imageUrl: product.image_url,
+        imageUrl: selectedImage,
         quantity
       });
     }
@@ -101,29 +118,19 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
 
   return (
     <div className="ohs-buy-box">
-      {isHair ? (
-        <>
-          <OptionGroup label="Colour" options={HAIR_COLOURS} value={colour} onChange={setColour} />
-          <OptionGroup label="Length" options={HAIR_LENGTHS} value={length} onChange={setLength} />
-          <OptionGroup label="Texture" options={HAIR_TEXTURES} value={texture} onChange={setTexture} />
-        </>
-      ) : usesSimpleColours && variants.length > 0 ? (
-        <fieldset className="ohs-option-group">
-          <legend>Colour</legend>
-          <div>
-            {variants.map((variant) => (
-              <button
-                key={variant.id}
-                type="button"
-                className={variant.id === variantId ? "active" : ""}
-                onClick={() => setVariantId(variant.id)}
-              >
-                {variant.color || variant.title}
-              </button>
-            ))}
-          </div>
-        </fieldset>
-      ) : (
+      {optionValues.colours.length ? (
+        <OptionGroup label="Colour" options={optionValues.colours} value={colour} onChange={setColour} />
+      ) : null}
+
+      {optionValues.lengths.length ? (
+        <OptionGroup label="Length" options={optionValues.lengths} value={length} onChange={setLength} />
+      ) : null}
+
+      {optionValues.textures.length ? (
+        <OptionGroup label="Texture" options={optionValues.textures} value={texture} onChange={setTexture} />
+      ) : null}
+
+      {!usesStructuredOptions ? (
         <label>
           <span>Option</span>
           <select value={variantId} onChange={(event) => setVariantId(event.target.value)}>
@@ -137,7 +144,7 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
             ))}
           </select>
         </label>
-      )}
+      ) : null}
 
       {priceMode === "wholesale" ? (
         <p className="ohs-buy-note">Wholesale pricing is active for this account.</p>
@@ -153,7 +160,7 @@ export function AddToCart({ product, variants, priceMode = "retail", currency = 
         />
       </label>
 
-      <button type="button" onClick={addToCart}>
+      <button type="button" onClick={addToCart} disabled={!selected}>
         Add to Cart
       </button>
 
@@ -190,4 +197,62 @@ function OptionGroup({
       </div>
     </fieldset>
   );
+}
+
+function buildOptionValues(variants: Variant[]) {
+  return {
+    colours: unique(variants.map((variant) => variant.color || readAttribute(variant, ["color", "colour", "farbe"]))),
+    lengths: unique(variants.map((variant) => readAttribute(variant, ["length", "lange", "laenge"]))),
+    textures: unique(variants.map((variant) => readAttribute(variant, ["texture", "struktur", "welle"])))
+  };
+}
+
+function findBestVariant(
+  variants: Variant[],
+  selected: { colour: string; length: string; texture: string; variantId: string }
+) {
+  if (!variants.length) return null;
+
+  const exact = variants.find((variant) => {
+    const colour = variant.color || readAttribute(variant, ["color", "colour", "farbe"]);
+    const length = readAttribute(variant, ["length", "lange", "laenge"]);
+    const texture = readAttribute(variant, ["texture", "struktur", "welle"]);
+    return (
+      (!selected.colour || colour === selected.colour) &&
+      (!selected.length || length === selected.length) &&
+      (!selected.texture || texture === selected.texture)
+    );
+  });
+  if (exact) return exact;
+
+  return (
+    variants.find((variant) => (variant.color || readAttribute(variant, ["color", "colour", "farbe"])) === selected.colour) ||
+    variants.find((variant) => variant.id === selected.variantId) ||
+    null
+  );
+}
+
+function imageForColour(variants: Variant[], colour: string) {
+  return variants.find((variant) => {
+    const variantColour = variant.color || readAttribute(variant, ["color", "colour", "farbe"]);
+    return variantColour === colour && variant.image_url;
+  })?.image_url;
+}
+
+function optionLabel(variant: Variant, selected: { colour: string; length: string; texture: string }) {
+  const parts = [selected.colour, selected.length, selected.texture].filter(Boolean);
+  return parts.length ? parts.join(" / ") : variant.title;
+}
+
+function readAttribute(variant: Variant, keys: string[]) {
+  const attributes = variant.attributes || {};
+  for (const key of keys) {
+    const value = attributes[key];
+    if (typeof value === "string" && value.trim()) return value.trim();
+  }
+  return "";
+}
+
+function unique(values: string[]) {
+  return Array.from(new Set(values.map((value) => value.trim()).filter(Boolean)));
 }

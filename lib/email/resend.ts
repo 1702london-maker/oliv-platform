@@ -1,6 +1,11 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend | null = null;
+
+function getResend() {
+  resend ||= new Resend(process.env.RESEND_API_KEY);
+  return resend;
+}
 
 const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
 const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsupply.de";
@@ -36,7 +41,7 @@ export async function sendAppointmentConfirmationEmail(data: AppointmentEmailDat
     instagram: "Instagram",
   };
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to: data.customerEmail,
     subject: `Booking Request Received — OlivHairSupply`,
@@ -116,7 +121,7 @@ export async function sendAppointmentTeamNotification(data: AppointmentEmailData
     instagram: "📸 Instagram",
   };
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to: BOOKING_TEAM_EMAIL,
     subject: `New Booking — ${data.customerName} — ${data.dateLabel} ${data.timeLabel}`,
@@ -190,7 +195,7 @@ export async function sendAffiliateApprovalEmail({
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
     "https://oliv-platform.vercel.app";
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to,
     subject: "Your OlivHairSupply Affiliate Account is Approved",
@@ -271,7 +276,7 @@ export async function sendWholesaleApprovalEmail({
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
     "https://oliv-platform.vercel.app";
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to,
     subject: "Your OlivHairSupply Wholesale Account is Approved",
@@ -357,7 +362,7 @@ export async function sendWholesaleOrderNotification({
       <td style="padding:10px 14px;font-size:12px;color:#2B2620;text-align:right;border-bottom:1px solid #F0E8DA;">${fmt(item.price * item.qty)}</td>
     </tr>`).join("");
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to: TEAM_EMAIL,
     subject: `New Wholesale Order — ${businessName}`,
@@ -443,7 +448,7 @@ export async function sendWholesaleOrderConfirmation({
       <td style="padding:10px 14px;font-size:12px;color:#2B2620;text-align:right;border-bottom:1px solid #F0E8DA;">${fmt(item.price * item.qty)}</td>
     </tr>`).join("");
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to,
     subject: "Your Wholesale Order Request — OlivHairSupply",
