@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" preserveAspectRatio="xMidYMid slice" width="1440" height="480">
+  <defs>
+
+    <!-- ── BACKGROUND — exact home page dark palette ── -->
+    <linearGradient id="jBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#2C2118"/>
+      <stop offset="45%"  stop-color="#221A10"/>
+      <stop offset="100%" stop-color="#130D07"/>
+    </linearGradient>
+    <radialGradient id="jWarm" cx="50%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#4A3520" stop-opacity="0.45"/>
+      <stop offset="55%"  stop-color="#2C1E10" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#1A140E" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Edge vignette -->
+    <radialGradient id="jVig" cx="50%" cy="50%" r="72%">
+      <stop offset="38%"  stop-color="#1A140E" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#080502" stop-opacity="0.88"/>
+    </radialGradient>
+
+    <!-- ── GOLD gradients ── -->
+    <linearGradient id="jGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#8A6418"/>
+      <stop offset="28%"  stop-color="#C9A96E"/>
+      <stop offset="55%"  stop-color="#E8CB85"/>
+      <stop offset="100%" stop-color="#9A7420"/>
+    </linearGradient>
+    <linearGradient id="jShimmer" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C9A96E" stop-opacity="0"/>
+      <stop offset="28%"  stop-color="#C9A96E" stop-opacity="0.55"/>
+      <stop offset="50%"  stop-color="#E8CB85" stop-opacity="0.85"/>
+      <stop offset="72%"  stop-color="#C9A96E" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="jShimmerFaint" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C9A96E" stop-opacity="0"/>
+      <stop offset="35%"  stop-color="#C9A96E" stop-opacity="0.22"/>
+      <stop offset="65%"  stop-color="#C9A96E" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#C9A96E" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Soft glow filter for ornaments -->
+    <filter id="jGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="jSoftGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" flood-color="#C9A96E"/>
+    </filter>
+
+    <!-- Grain texture -->
+    <pattern id="jGrain" width="90" height="90" patternUnits="userSpaceOnUse">
+      <rect width="90" height="90" fill="transparent"/>
+      <circle cx="12" cy="18" r="0.7" fill="#fff" opacity="0.022"/>
+      <circle cx="64" cy="42" r="0.7" fill="#000" opacity="0.055"/>
+      <circle cx="34" cy="76" r="0.7" fill="#fff" opacity="0.016"/>
+      <circle cx="82" cy="60" r="0.7" fill="#000" opacity="0.038"/>
+    </pattern>
+  </defs>
+
+  <!-- ── BACKDROP ── -->
+  <rect width="1440" height="480" fill="url(#jBg)"/>
+  <rect width="1440" height="480" fill="url(#jGrain)" opacity="0.75"/>
+  <rect width="1440" height="480" fill="url(#jWarm)"/>
+
+  <!-- ── ATMOSPHERIC GOLD HAIR CURVES (left to right) ── -->
+  <g opacity="0.08" stroke="#C9A96E" stroke-width="1.2" fill="none">
+    <path d="M 0 220 Q 360 180 720 230 Q 1080 278 1440 220"/>
+    <path d="M 0 240 Q 360 202 720 248 Q 1080 295 1440 238"/>
+    <path d="M 0 200 Q 360 164 720 212 Q 1080 260 1440 202"/>
+    <path d="M 0 260 Q 360 224 720 268 Q 1080 310 1440 258"/>
+    <path d="M 0 180 Q 360 148 720 192 Q 1080 238 1440 182"/>
+  </g>
+
+  <!-- ── OPEN BOOK SILHOUETTE — centre-right decorative ── -->
+  <g opacity="0.12" transform="translate(820 88)">
+    <!-- Book spine -->
+    <rect x="196" y="0" width="8" height="300" rx="4" fill="url(#jGold)"/>
+    <!-- Left page -->
+    <path d="M 196 10 Q 100 40 20 120 Q 0 148 0 200 L 0 290 Q 0 298 8 298 Q 80 272 150 240 Q 185 224 196 218 Z"
+          fill="#C9A96E" opacity="0.18"/>
+    <!-- Left page lines (text simulation) -->
+    <g stroke="#C9A96E" stroke-width="1" opacity="0.4">
+      <line x1="48"  y1="130" x2="168" y2="106"/>
+      <line x1="44"  y1="148" x2="170" y2="122"/>
+      <line x1="40"  y1="166" x2="172" y2="138"/>
+      <line x1="36"  y1="184" x2="174" y2="156"/>
+      <line x1="32"  y1="202" x2="176" y2="174"/>
+      <line x1="28"  y1="220" x2="178" y2="194"/>
+      <line x1="24"  y1="238" x2="180" y2="212"/>
+      <line x1="20"  y1="256" x2="182" y2="230"/>
+    </g>
+    <!-- Right page -->
+    <path d="M 204 10 Q 300 40 380 120 Q 400 148 400 200 L 400 290 Q 400 298 392 298 Q 320 272 250 240 Q 215 224 204 218 Z"
+          fill="#C9A96E" opacity="0.12"/>
+    <!-- Right page lines -->
+    <g stroke="#C9A96E" stroke-width="1" opacity="0.3">
+      <line x1="352" y1="130" x2="232" y2="106"/>
+      <line x1="356" y1="148" x2="230" y2="122"/>
+      <line x1="360" y1="166" x2="228" y2="138"/>
+      <line x1="364" y1="184" x2="226" y2="156"/>
+      <line x1="368" y1="202" x2="224" y2="174"/>
+    </g>
+  </g>
+
+  <!-- ── EDITORIAL CORNER ORNAMENTS ── -->
+  <!-- Top-left bracket -->
+  <g opacity="0.3" stroke="#C9A96E" stroke-width="1.2" fill="none">
+    <path d="M 80 60 L 80 44 L 96 44"/>
+    <path d="M 280 60 L 280 44 L 264 44"/>
+    <line x1="80" y1="52" x2="280" y2="52" stroke-width="0.5" opacity="0.5"/>
+  </g>
+  <!-- Top-right bracket -->
+  <g opacity="0.3" stroke="#C9A96E" stroke-width="1.2" fill="none">
+    <path d="M 1160 60 L 1160 44 L 1176 44"/>
+    <path d="M 1360 60 L 1360 44 L 1344 44"/>
+    <line x1="1160" y1="52" x2="1360" y2="52" stroke-width="0.5" opacity="0.5"/>
+  </g>
+  <!-- Bottom-left bracket -->
+  <g opacity="0.3" stroke="#C9A96E" stroke-width="1.2" fill="none">
+    <path d="M 80 420 L 80 436 L 96 436"/>
+    <path d="M 280 420 L 280 436 L 264 436"/>
+    <line x1="80" y1="428" x2="280" y2="428" stroke-width="0.5" opacity="0.5"/>
+  </g>
+  <!-- Bottom-right bracket -->
+  <g opacity="0.3" stroke="#C9A96E" stroke-width="1.2" fill="none">
+    <path d="M 1160 420 L 1160 436 L 1176 436"/>
+    <path d="M 1360 420 L 1360 436 L 1344 436"/>
+    <line x1="1160" y1="428" x2="1360" y2="428" stroke-width="0.5" opacity="0.5"/>
+  </g>
+
+  <!-- ── CENTRE GOLD DIAMOND ORNAMENT ── -->
+  <g filter="url(#jGlow)" opacity="0.6" transform="translate(720 240)">
+    <polygon points="0,-14 8,0 0,14 -8,0" fill="none" stroke="#C9A96E" stroke-width="1"/>
+    <polygon points="0,-6 3,0 0,6 -3,0" fill="#C9A96E"/>
+  </g>
+  <!-- Ornament flanking lines -->
+  <g opacity="0.25">
+    <line x1="560" y1="240" x2="700" y2="240" stroke="url(#jShimmerFaint)" stroke-width="0.8"/>
+    <line x1="740" y1="240" x2="880" y2="240" stroke="url(#jShimmerFaint)" stroke-width="0.8"/>
+  </g>
+
+  <!-- ── LEFT SIDE QUILL / PEN ACCENT ── -->
+  <g opacity="0.14" transform="translate(68 110)" fill="#C9A96E">
+    <!-- Quill feather body -->
+    <path d="M 2 0 Q 24 40 8 120 Q 0 160 2 200" stroke="#C9A96E" stroke-width="1.5" fill="none"/>
+    <!-- Feather barbs left -->
+    <g stroke="#C9A96E" stroke-width="0.8" opacity="0.6">
+      <path d="M 5 28 Q -8 18 -18 14"/>
+      <path d="M 9 50 Q -4 42 -16 40"/>
+      <path d="M 10 72 Q -2 66 -14 66"/>
+      <path d="M 10 94 Q -2 90 -12 92"/>
+    </g>
+    <!-- Feather barbs right -->
+    <g stroke="#C9A96E" stroke-width="0.8" opacity="0.5">
+      <path d="M 5 28 Q 16 20 24 18"/>
+      <path d="M 9 50 Q 20 44 28 44"/>
+      <path d="M 10 72 Q 20 68 28 70"/>
+    </g>
+  </g>
+
+  <!-- ── SHIMMER RULES ── -->
+  <rect x="0" y="0"   width="1440" height="1.5" fill="url(#jShimmer)" opacity="0.6"/>
+  <rect x="0" y="478" width="1440" height="1.5" fill="url(#jShimmer)" opacity="0.6"/>
+  <!-- Thin gold rule below eyebrow area -->
+  <rect x="520" y="148" width="400" height="0.8" fill="url(#jShimmerFaint)" opacity="0.8"/>
+
+  <!-- ── VIGNETTE ── -->
+  <rect width="1440" height="480" fill="url(#jVig)"/>
+
+</svg>
