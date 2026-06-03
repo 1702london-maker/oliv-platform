@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1080" preserveAspectRatio="xMidYMid slice" width="1080" height="1080">
+  <defs>
+    <linearGradient id="wBgM" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#424040"/>
+      <stop offset="28%"  stop-color="#555250"/>
+      <stop offset="54%"  stop-color="#5E5A56"/>
+      <stop offset="78%"  stop-color="#575350"/>
+      <stop offset="100%" stop-color="#4A4744"/>
+    </linearGradient>
+    <linearGradient id="wTopSM" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.52"/>
+      <stop offset="38%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.38"/>
+    </linearGradient>
+    <radialGradient id="wKeyM" cx="50%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#807060" stop-opacity="0.50"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ── WHOLESALE BACKGROUND ── -->
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#wBgM)"/>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#wTopSM)"/>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#wKeyM)"/>
+
+  <!-- ── EXACT PNG — centred, natural proportions ── -->
+  <image
+    href="./social-responsibility-hero-mobile.png"
+    x="0" y="0"
+    width="1080" height="1080"
+    preserveAspectRatio="xMidYMid meet"
+  />
+</svg>
