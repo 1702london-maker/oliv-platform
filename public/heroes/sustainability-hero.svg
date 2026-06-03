@@ -12,17 +12,9 @@
       <stop offset="38%"  stop-color="#1C1810" stop-opacity="0"/>
       <stop offset="100%" stop-color="#100C08" stop-opacity="0.45"/>
     </linearGradient>
-    <radialGradient id="sCentre" cx="62%" cy="52%" r="42%">
-      <stop offset="0%"   stop-color="#0C0A06" stop-opacity="0.72"/>
-      <stop offset="100%" stop-color="#0C0A06" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="sWarmL" cx="0%" cy="90%" r="50%">
-      <stop offset="0%"   stop-color="#6B4810" stop-opacity="0.58"/>
-      <stop offset="100%" stop-color="#6B4810" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="sWarmR" cx="95%" cy="80%" r="48%">
-      <stop offset="0%"   stop-color="#6B4810" stop-opacity="0.48"/>
-      <stop offset="100%" stop-color="#6B4810" stop-opacity="0"/>
+    <radialGradient id="sKey" cx="72%" cy="14%" r="55%">
+      <stop offset="0%"   stop-color="#807060" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="sFlare" cx="50%" cy="50%" r="50%">
       <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.95"/>
@@ -57,9 +49,7 @@
   <!-- ── BACKGROUND ──────────────────────────────────────── -->
   <rect x="-308" y="-124" width="2057" height="829" fill="url(#sBg)"/>
   <rect x="-308" y="-124" width="2057" height="829" fill="url(#sTopS)"/>
-  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sCentre)"/>
-  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sWarmL)"/>
-  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sWarmR)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sKey)"/>
   <rect x="-308" y="448"  width="2057" height="257" fill="url(#sFloor)"/>
   <rect x="-308" y="445"  width="2057" height="5"   fill="#14100C" opacity="0.38"/>
 
