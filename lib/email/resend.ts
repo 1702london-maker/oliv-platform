@@ -392,11 +392,13 @@ export async function sendApplicationTeamNotification({
   name,
   email,
   details,
+  approveUrl,
 }: {
   type: "Affiliate" | "Wholesale" | "Training";
   name: string;
   email: string;
   details: Array<[string, string]>;
+  approveUrl?: string;
 }) {
   const { error } = await getResend().emails.send({
     from: FROM,
@@ -408,9 +410,43 @@ export async function sendApplicationTeamNotification({
       greeting: name,
       body: "A new application has been submitted from the website.",
       details: [["Email", email], ...details],
-      buttonLabel: "Email Applicant",
-      buttonUrl: `mailto:${email}`,
-      footer: "Review the application in Supabase/admin before approval."
+      buttonLabel: approveUrl ? `Approve ${type}` : "Email Applicant",
+      buttonUrl: approveUrl || `mailto:${email}`,
+      footer: approveUrl
+        ? "Click approve only after reviewing the application. Approval sends the applicant confirmation/access email."
+        : "Review the application before approval."
+    }),
+  });
+  if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
+}
+
+export async function sendTrainingApprovalEmail({
+  to,
+  fullName,
+  programme,
+}: {
+  to: string;
+  fullName: string;
+  programme: string;
+}) {
+  const siteUrl = getEmailSiteUrl();
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: "Training Application Approved - OlivHairSupply Academy",
+    html: applicationEmailTemplate({
+      eyebrow: "OlivHairSupply Academy",
+      title: "Training Approved",
+      greeting: `Hi ${fullName},`,
+      body: "Your training application has been approved. Our team will contact you with the next available dates, final placement details and invoice/payment instructions.",
+      details: [
+        ["Email", to],
+        ["Programme", programme || "To be confirmed"],
+        ["Status", "Approved"],
+      ],
+      buttonLabel: "View Training Page",
+      buttonUrl: `${siteUrl}/training`,
+      footer: "Please keep this email for your records. Your place is confirmed after invoice/payment instructions are completed."
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);

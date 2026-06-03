@@ -4,6 +4,7 @@ import {
   sendApplicationTeamNotification,
   sendTrainingApplicationReceivedEmail,
 } from "@/lib/email/resend";
+import { buildApplicationApprovalUrl } from "@/lib/applications/approval-url";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -17,15 +18,19 @@ export async function POST(request: Request) {
   const supabase = createSupabaseAdminClient();
   const programme = value(formData, "contact[programme]");
   const experience = value(formData, "contact[experience]");
-  const { error } = await supabase.from("training_applications").insert({
-    email,
-    full_name: fullName,
-    phone: value(formData, "contact[phone]"),
-    programme,
-    experience,
-    message: value(formData, "contact[body]"),
-    status: "pending"
-  });
+  const { data, error } = await supabase
+    .from("training_applications")
+    .insert({
+      email,
+      full_name: fullName,
+      phone: value(formData, "contact[phone]"),
+      programme,
+      experience,
+      message: value(formData, "contact[body]"),
+      status: "pending"
+    })
+    .select("id")
+    .single();
 
   if (error) {
     console.error("[Training application] Insert error:", error);
@@ -47,6 +52,7 @@ export async function POST(request: Request) {
         ["Programme", programme],
         ["Experience", experience],
       ],
+      approveUrl: buildApplicationApprovalUrl("training", data.id),
     }),
   ]);
 

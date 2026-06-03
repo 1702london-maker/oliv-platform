@@ -4,6 +4,7 @@ import {
   sendAffiliateApplicationReceivedEmail,
   sendApplicationTeamNotification,
 } from "@/lib/email/resend";
+import { buildApplicationApprovalUrl } from "@/lib/applications/approval-url";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -16,16 +17,20 @@ export async function POST(request: Request) {
 
   const supabase = createSupabaseAdminClient();
   const code = generateAffiliateCode(fullName, email);
-  const { error } = await supabase.from("affiliates").upsert(
-    {
-      email,
-      display_name: fullName,
-      status: "pending",
-      code,
-      tier: "Tier 1 Affiliate"
-    },
-    { onConflict: "email" }
-  );
+  const { data, error } = await supabase
+    .from("affiliates")
+    .upsert(
+      {
+        email,
+        display_name: fullName,
+        status: "pending",
+        code,
+        tier: "Tier 1 Affiliate"
+      },
+      { onConflict: "email" }
+    )
+    .select("id")
+    .single();
 
   if (error) {
     console.error("[Affiliate application] Save error:", error);
@@ -44,6 +49,7 @@ export async function POST(request: Request) {
       name: fullName,
       email,
       details: [["Generated Code", code]],
+      approveUrl: buildApplicationApprovalUrl("affiliate", data.id),
     }),
   ]);
 

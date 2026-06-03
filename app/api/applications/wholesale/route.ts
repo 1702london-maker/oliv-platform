@@ -4,6 +4,7 @@ import {
   sendApplicationTeamNotification,
   sendWholesaleApplicationReceivedEmail,
 } from "@/lib/email/resend";
+import { buildApplicationApprovalUrl } from "@/lib/applications/approval-url";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -15,13 +16,17 @@ export async function POST(request: Request) {
   }
 
   const supabase = createSupabaseAdminClient();
-  const { error } = await supabase.from("wholesale_accounts").insert({
-    email,
-    business_name: businessName,
-    status: "pending",
-    tier: "Verified",
-    lifetime_spend_cents: 0
-  });
+  const { data, error } = await supabase
+    .from("wholesale_accounts")
+    .insert({
+      email,
+      business_name: businessName,
+      status: "pending",
+      tier: "Verified",
+      lifetime_spend_cents: 0
+    })
+    .select("id")
+    .single();
 
   if (error) {
     console.error("[Wholesale application] Save error:", error);
@@ -39,6 +44,7 @@ export async function POST(request: Request) {
       name: businessName,
       email,
       details: [["Business", businessName]],
+      approveUrl: buildApplicationApprovalUrl("wholesale", data.id),
     }),
   ]);
 
