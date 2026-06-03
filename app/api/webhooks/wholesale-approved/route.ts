@@ -36,11 +36,12 @@ export async function POST(request: Request) {
 
   const { record, old_record } = payload;
 
-  // Only act when status just changed to "approved" and no password exists yet
+  // Act whenever the account transitions into approved. If a previous email
+  // failed after storing a password hash, approving again generates a fresh
+  // access code instead of getting stuck forever.
   const justApproved =
     record.status === "approved" &&
-    old_record?.status !== "approved" &&
-    !record.password_hash;
+    old_record?.status !== "approved";
 
   if (!justApproved) {
     return NextResponse.json({ ok: true, skipped: true });

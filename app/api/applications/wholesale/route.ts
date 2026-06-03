@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   }
 
   const supabase = createSupabaseAdminClient();
-  await supabase.from("wholesale_accounts").insert({
+  const { error } = await supabase.from("wholesale_accounts").insert({
     email,
     business_name: businessName,
     status: "pending",
@@ -23,11 +23,17 @@ export async function POST(request: Request) {
     lifetime_spend_cents: 0
   });
 
+  if (error) {
+    console.error("[Wholesale application] Save error:", error);
+    redirect("/wholesale?application=failed");
+  }
+
+  await sendWholesaleApplicationReceivedEmail({
+    to: email,
+    businessName,
+  });
+
   await Promise.allSettled([
-    sendWholesaleApplicationReceivedEmail({
-      to: email,
-      businessName,
-    }),
     sendApplicationTeamNotification({
       type: "Wholesale",
       name: businessName,

@@ -172,6 +172,7 @@ export default async function LoginPage({
 
           <div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
             <h1 className="ohs-auth-title">Sign In</h1>
+            {message === "registered" && <div className="ohs-auth-alert-info">Account created. Please sign in with your email and password.</div>}
             <LoginBox next={next} error={error} detail={detail} />
             <div className="ohs-auth-row-end">
               <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Forgot password?</button>

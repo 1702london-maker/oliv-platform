@@ -29,14 +29,16 @@ export async function POST(request: Request) {
 
   if (error) {
     console.error("[Training application] Insert error:", error);
+    redirect("/training?application=failed");
   }
 
+  await sendTrainingApplicationReceivedEmail({
+    to: email,
+    fullName,
+    programme,
+  });
+
   await Promise.allSettled([
-    sendTrainingApplicationReceivedEmail({
-      to: email,
-      fullName,
-      programme,
-    }),
     sendApplicationTeamNotification({
       type: "Training",
       name: fullName,

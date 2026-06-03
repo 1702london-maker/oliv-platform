@@ -15,28 +15,35 @@ export async function POST(request: Request) {
   }
 
   const supabase = createSupabaseAdminClient();
-  await supabase.from("affiliates").upsert(
+  const code = generateAffiliateCode(fullName, email);
+  const { error } = await supabase.from("affiliates").upsert(
     {
       email,
       display_name: fullName,
       status: "pending",
-      code: generateAffiliateCode(fullName, email),
+      code,
       tier: "Tier 1 Affiliate"
     },
     { onConflict: "email" }
   );
 
+  if (error) {
+    console.error("[Affiliate application] Save error:", error);
+    redirect("/affiliate?application=failed");
+  }
+
+  await sendAffiliateApplicationReceivedEmail({
+    to: email,
+    displayName: fullName,
+    code,
+  });
+
   await Promise.allSettled([
-    sendAffiliateApplicationReceivedEmail({
-      to: email,
-      displayName: fullName,
-      code: generateAffiliateCode(fullName, email),
-    }),
     sendApplicationTeamNotification({
       type: "Affiliate",
       name: fullName,
       email,
-      details: [["Generated Code", generateAffiliateCode(fullName, email)]],
+      details: [["Generated Code", code]],
     }),
   ]);
 

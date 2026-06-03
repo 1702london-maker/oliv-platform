@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { APP_SESSION_COOKIE } from "@/lib/auth/app-session";
 import { ensureProfile } from "@/lib/auth/ensure-profile";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function loginAction(formData: FormData) {
@@ -40,24 +41,14 @@ export async function registerAction(formData: FormData) {
     redirect("/register?error=missing");
   }
 
-  const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
-  const siteUrl =
-    rawUrl && !rawUrl.includes("localhost") && !rawUrl.includes("127.0.0.1")
-      ? rawUrl
-      : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "https://oliv-platform.vercel.app";
-
-  const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase.auth.signUp({
+  const admin = createSupabaseAdminClient();
+  const { data, error } = await admin.auth.admin.createUser({
     email,
     password,
-    options: {
-      emailRedirectTo: `${siteUrl}/auth/callback`,
-      data: {
-        first_name: firstName,
-        last_name: lastName
-      }
+    email_confirm: true,
+    user_metadata: {
+      first_name: firstName,
+      last_name: lastName
     }
   });
 
@@ -79,11 +70,7 @@ export async function registerAction(formData: FormData) {
     });
   }
 
-  if (!data.session) {
-    redirect("/register?message=check-email");
-  }
-
-  redirect("/account");
+  redirect("/login?message=registered");
 }
 
 export async function logoutAction() {
