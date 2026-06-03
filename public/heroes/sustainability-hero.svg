@@ -1,69 +1,193 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" preserveAspectRatio="xMidYMid slice" width="1440" height="480">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-308 -124 2057 829" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
   <defs>
-    <!-- Slightly warmer, earthy base — sustainability theme -->
-    <linearGradient id="baseBg" x1="0" y1="0" x2="0.5" y2="1">
-      <stop offset="0%" stop-color="#0F1008"/>
-      <stop offset="45%" stop-color="#1C1C0A"/>
-      <stop offset="100%" stop-color="#0A0B05"/>
+    <linearGradient id="sBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#424040"/>
+      <stop offset="28%"  stop-color="#555250"/>
+      <stop offset="54%"  stop-color="#5E5A56"/>
+      <stop offset="78%"  stop-color="#575350"/>
+      <stop offset="100%" stop-color="#4A4744"/>
     </linearGradient>
-    <!-- Warm green-amber centre glow -->
-    <radialGradient id="earthGlow" cx="50%" cy="45%" r="50%">
-      <stop offset="0%" stop-color="#4A5010" stop-opacity="0.45"/>
-      <stop offset="50%" stop-color="#2A2C08" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#0F1008" stop-opacity="0"/>
+    <linearGradient id="sTopS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.58"/>
+      <stop offset="38%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.45"/>
+    </linearGradient>
+    <radialGradient id="sCentre" cx="62%" cy="52%" r="42%">
+      <stop offset="0%"   stop-color="#0C0A06" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#0C0A06" stop-opacity="0"/>
     </radialGradient>
-    <!-- Golden highlight from above -->
-    <radialGradient id="sunlight" cx="50%" cy="0%" r="50%">
-      <stop offset="0%" stop-color="#7A6018" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#0F1008" stop-opacity="0"/>
+    <radialGradient id="sWarmL" cx="0%" cy="90%" r="50%">
+      <stop offset="0%"   stop-color="#6B4810" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#6B4810" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="vignette" cx="50%" cy="50%" r="68%">
-      <stop offset="40%" stop-color="#0F1008" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#050603" stop-opacity="0.92"/>
+    <radialGradient id="sWarmR" cx="95%" cy="80%" r="48%">
+      <stop offset="0%"   stop-color="#6B4810" stop-opacity="0.48"/>
+      <stop offset="100%" stop-color="#6B4810" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="shimmer" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#B8A050" stop-opacity="0"/>
-      <stop offset="40%" stop-color="#B8A050" stop-opacity="0.28"/>
-      <stop offset="60%" stop-color="#B8A050" stop-opacity="0.28"/>
-      <stop offset="100%" stop-color="#B8A050" stop-opacity="0"/>
+    <radialGradient id="sFlare" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="18%"  stop-color="#F8F0D0" stop-opacity="0.62"/>
+      <stop offset="50%"  stop-color="#D8C090" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#D8C090" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#363230"/>
+      <stop offset="100%" stop-color="#242018"/>
+    </linearGradient>
+    <linearGradient id="sVigL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="sVigR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="sVigB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#D0D0D0" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#D0D0D0" stop-opacity="0.28"/>
+    </linearGradient>
+    <linearGradient id="sHairHi" x1="0.08" y1="0" x2="0.2" y2="1">
+      <stop offset="0%"   stop-color="#C09050" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#C09050" stop-opacity="0.18"/>
+      <stop offset="70%"  stop-color="#C09050" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#C09050" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
-  <rect width="1440" height="480" fill="url(#baseBg)"/>
-  <rect width="1440" height="480" fill="url(#sunlight)"/>
-  <rect width="1440" height="480" fill="url(#earthGlow)"/>
+  <!-- ── BACKGROUND ──────────────────────────────────────── -->
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sBg)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sTopS)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sCentre)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sWarmL)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#sWarmR)"/>
+  <rect x="-308" y="448"  width="2057" height="257" fill="url(#sFloor)"/>
+  <rect x="-308" y="445"  width="2057" height="5"   fill="#14100C" opacity="0.38"/>
 
-  <!-- Organic branch/leaf suggestion (abstract) -->
-  <g opacity="0.1" stroke="#B8A050" stroke-width="1.5" fill="none">
-    <!-- Main branch -->
-    <path d="M 1100 480 Q 1080 360 1050 280 Q 1020 200 980 140 Q 950 80 920 0"/>
-    <!-- Sub branches left -->
-    <path d="M 1040 300 Q 980 260 920 280 Q 870 298 830 320"/>
-    <path d="M 1020 240 Q 960 200 900 210 Q 855 218 820 240"/>
-    <path d="M 1000 185 Q 942 148 888 155 Q 844 160 810 178"/>
-    <!-- Sub branches right -->
-    <path d="M 1055 290 Q 1100 255 1130 260 Q 1155 264 1170 280"/>
-    <path d="M 1038 225 Q 1080 192 1110 196 Q 1135 200 1150 214"/>
+  <!-- ── ORGANIC BLOB SHAPES (cream / ivory outlines) ──────── -->
+  <!-- Bottom-left large blob -->
+  <path d="M -308,829 Q -180,680 -60,650 Q 80,618 110,700 Q 140,775 20,815 Q -100,850 -220,835 Z"
+    fill="rgba(170,148,118,0.07)" stroke="#D8CEB8" stroke-width="1.6" opacity="0.38"/>
+  <!-- Secondary bottom-left blob (slightly inward) -->
+  <path d="M -308,680 Q -130,560 20,588 Q 140,612 155,700 Q 168,785 40,808 Q -90,832 -220,812 Z"
+    fill="rgba(150,130,100,0.05)" stroke="#C8C0A8" stroke-width="1.1" opacity="0.28"/>
+  <!-- Top-right partial blob -->
+  <path d="M 1430,-124 Q 1620,20 1710,130 Q 1800,240 1749,390 Q 1700,520 1540,490 Q 1380,460 1370,320 Q 1360,180 1430,-124 Z"
+    fill="rgba(150,130,100,0.06)" stroke="#D0C6AC" stroke-width="1.6" opacity="0.32"/>
+  <!-- Right edge oval -->
+  <ellipse cx="1730" cy="650" rx="185" ry="145"
+    fill="rgba(130,112,88,0.05)" stroke="#C8BEA8" stroke-width="1.2" opacity="0.25"/>
+  <!-- Small decorative blob, right centre -->
+  <path d="M 1310,160 Q 1400,80 1470,150 Q 1540,220 1500,310 Q 1460,400 1370,375 Q 1280,350 1310,255 Z"
+    fill="none" stroke="#C0B8A0" stroke-width="1" opacity="0.20"/>
+
+  <!-- ── WAVY DECORATIVE LINES ──────────────────────────────── -->
+  <path d="M -308,280 Q 200,228 520,268 Q 780,302 960,258 Q 1140,214 1340,242 Q 1550,272 1749,222"
+    fill="none" stroke="#D8CEB8" stroke-width="0.9" opacity="0.16"/>
+  <path d="M -308,530 Q 80,482 360,512 Q 620,540 830,494 Q 1040,448 1250,476 Q 1500,508 1749,458"
+    fill="none" stroke="#D8CEB8" stroke-width="0.9" opacity="0.14"/>
+
+  <!-- ── LENS FLARE / GLOW POINTS ──────────────────────────── -->
+  <!-- Bottom-left flare (warm light) -->
+  <ellipse cx="-100" cy="640" rx="30" ry="30" fill="url(#sFlare)" opacity="0.78"/>
+  <line x1="-140" y1="640" x2="-60"  y2="640" stroke="#FFFFFF" stroke-width="0.9" opacity="0.32"/>
+  <line x1="-100" y1="600" x2="-100" y2="680" stroke="#FFFFFF" stroke-width="0.9" opacity="0.32"/>
+  <ellipse cx="-55" cy="625" rx="9" ry="9" fill="url(#sFlare)" opacity="0.45"/>
+  <!-- Right flare -->
+  <ellipse cx="1595" cy="490" rx="24" ry="24" fill="url(#sFlare)" opacity="0.68"/>
+  <line x1="1562" y1="490" x2="1628" y2="490" stroke="#FFFFFF" stroke-width="0.8" opacity="0.28"/>
+  <line x1="1595" y1="457" x2="1595" y2="523" stroke="#FFFFFF" stroke-width="0.8" opacity="0.28"/>
+  <ellipse cx="1634" cy="510" rx="8"  ry="8"  fill="url(#sFlare)" opacity="0.40"/>
+
+  <!-- ── SUBTLE HAIR STRAND TEXTURE ────────────────────────── -->
+  <path d="M 380,-124 Q 415,60 408,180 Q 400,306 406,410"
+    fill="none" stroke="url(#sHairHi)" stroke-width="10" opacity="0.9" stroke-linecap="round"/>
+  <path d="M 408,-124 Q 440,60 434,180 Q 426,306 432,410"
+    fill="none" stroke="url(#sHairHi)" stroke-width="8"  opacity="0.9" stroke-linecap="round"/>
+
+  <!-- ── GOLD SUSTAINABILITY ICONS ──────────────────────────── -->
+  <!-- Each icon ~95 tall, gold line-art, no fill -->
+  <!-- Positions: Leaf x=510, Drop x=700, Recycle x=898, Hand x=1090 -->
+
+  <!-- 1 ── LEAF (double leaf + stem) ── -->
+  <g transform="translate(510,310)" fill="none" stroke="#C9A96E" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Stem -->
+    <line x1="0" y1="58" x2="0" y2="5" stroke-width="2.8"/>
+    <!-- Left leaf -->
+    <path d="M 0,5 C -48,2 -72,-38 -62,-78 C -38,-96 -10,-80 0,5 Z" stroke-width="2.6"/>
+    <!-- Left main vein -->
+    <path d="M 0,5 C -30,-22 -50,-58 -60,-76" stroke-width="1.4" opacity="0.65"/>
+    <!-- Left side veins -->
+    <path d="M -18,-22 C -34,-36 -42,-56" stroke-width="1.1" opacity="0.48"/>
+    <!-- Right leaf -->
+    <path d="M 0,5 C 48,2 72,-38 62,-78 C 38,-96 10,-80 0,5 Z" stroke-width="2.6"/>
+    <!-- Right main vein -->
+    <path d="M 0,5 C 30,-22 50,-58 60,-76" stroke-width="1.4" opacity="0.65"/>
+    <!-- Right side veins -->
+    <path d="M 18,-22 C 34,-36 42,-56" stroke-width="1.1" opacity="0.48"/>
   </g>
 
-  <!-- Leaf dots -->
-  <g opacity="0.1" fill="#B8A050">
-    <ellipse cx="825" cy="325" rx="5" ry="8" transform="rotate(-15,825,325)"/>
-    <ellipse cx="812" cy="243" rx="4" ry="7" transform="rotate(-20,812,243)"/>
-    <ellipse cx="804" cy="181" rx="5" ry="8" transform="rotate(-12,804,181)"/>
-    <ellipse cx="1172" cy="284" rx="4" ry="7" transform="rotate(18,1172,284)"/>
-    <ellipse cx="1154" cy="218" rx="4" ry="6" transform="rotate(15,1154,218)"/>
+  <!-- 2 ── WATER DROP ── -->
+  <g transform="translate(700,310)" fill="none" stroke="#C9A96E" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Drop outline -->
+    <path d="M 0,-88 C 50,-22 56,25 48,50 C 36,82 -36,82 -48,50 C -56,25 -50,-22 0,-88 Z" stroke-width="2.8"/>
+    <!-- Inner reflection curve -->
+    <path d="M -16,-38 C -28,8 -26,36" stroke-width="1.4" opacity="0.50"/>
   </g>
 
-  <!-- Left text overlay -->
-  <linearGradient id="textOverlay" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0%" stop-color="#0A0B05" stop-opacity="0.88"/>
-    <stop offset="45%" stop-color="#141508" stop-opacity="0.6"/>
-    <stop offset="72%" stop-color="#0F1008" stop-opacity="0.18"/>
-    <stop offset="100%" stop-color="#0F1008" stop-opacity="0"/>
-  </linearGradient>
-  <rect width="1440" height="480" fill="url(#textOverlay)"/>
-  <rect width="1440" height="480" fill="url(#vignette)"/>
-  <rect x="0" y="0" width="1440" height="2" fill="url(#shimmer)"/>
-  <rect x="0" y="478" width="1440" height="2" fill="url(#shimmer)"/>
+  <!-- 3 ── RECYCLE / CIRCULAR ARROWS ── -->
+  <g transform="translate(898,310)" fill="none" stroke="#C9A96E" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Arrow 1: top-right arc, arrowhead at bottom-right -->
+    <path d="M -8,-72 Q 72,-55 68,32"/>
+    <polyline points="50,18 68,32 54,46"/>
+    <!-- Arrow 2: bottom arc, arrowhead at bottom-left -->
+    <path d="M 68,32 Q 22,84 -62,36"/>
+    <polyline points="-44,52 -62,36 -66,18"/>
+    <!-- Arrow 3: top-left arc, arrowhead at top -->
+    <path d="M -62,36 Q -82,-48 -8,-72"/>
+    <polyline points="-22,-84 -8,-72 10,-82"/>
+  </g>
+
+  <!-- 4 ── HAND HOLDING PLANT ── -->
+  <g transform="translate(1090,310)" fill="none" stroke="#C9A96E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Fingers (left to right) -->
+    <path d="M -50,62 Q -66,38 -58,8 Q -50,-8 -36,-8 L -36,28"/>
+    <path d="M -36,-8 Q -30,-26 -18,-24 Q -6,-22 -6,0 L -6,26"/>
+    <path d="M -6,-24 Q 0,-44 14,-42 Q 26,-38 24,-18 L 24,22"/>
+    <path d="M 24,-18 Q 28,-36 42,-34 Q 56,-30 52,0 L 52,32"/>
+    <!-- Palm base connecting all fingers -->
+    <path d="M -58,8 Q -56,58 -28,66 Q 0,74 28,66 Q 52,58 52,32"/>
+    <!-- Pot on palm -->
+    <path d="M -14,-12 L -10,6 L 26,6 L 30,-12 Z" stroke-width="2.4"/>
+    <line x1="-16" y1="-12" x2="32" y2="-12" stroke-width="2.4"/>
+    <!-- Plant stem -->
+    <line x1="8" y1="-12" x2="8" y2="-62" stroke-width="2.4"/>
+    <!-- Left leaf -->
+    <path d="M 8,-46 C -22,-52 -26,-76 -10,-80 C -2,-82 8,-66 8,-46"/>
+    <!-- Right leaf -->
+    <path d="M 8,-46 C 38,-52 42,-76 26,-80 C 18,-82 8,-66 8,-46"/>
+    <!-- Top sprout tip -->
+    <path d="M 8,-62 Q 8,-76 8,-84" stroke-width="2"/>
+  </g>
+
+  <!-- ── GOLD SPARKLES ──────────────────────────────────────── -->
+  <g fill="#C9A96E">
+    <path d="M 290,-80 L 294,-62 L 312,-58 L 294,-54 L 290,-36 L 286,-54 L 268,-58 L 286,-62 Z" opacity="0.70"/>
+    <path d="M 1460,-90 L 1464,-72 L 1482,-68 L 1464,-64 L 1460,-46 L 1456,-64 L 1438,-68 L 1456,-72 Z" opacity="0.65"/>
+    <path d="M 1520, 80 L 1523, 90 L 1533, 93 L 1523, 96 L 1520,106 L 1517, 96 L 1507, 93 L 1517, 90 Z" opacity="0.50"/>
+    <path d="M 250, 550 L 254, 564 L 268, 568 L 254, 572 L 250, 586 L 246, 572 L 232, 568 L 246, 564 Z" opacity="0.55"/>
+    <path d="M 1440, 600 L 1443, 612 L 1455, 615 L 1443, 618 L 1440, 630 L 1437, 618 L 1425, 615 L 1437, 612 Z" opacity="0.50"/>
+    <path d="M 380, 540 L 382, 548 L 390, 550 L 382, 552 L 380, 560 L 378, 552 L 370, 550 L 378, 548 Z" opacity="0.40"/>
+    <path d="M 1200,  60 L 1202,  68 L 1210,  70 L 1202,  72 L 1200,  80 L 1198,  72 L 1190,  70 L 1198,  68 Z" opacity="0.42"/>
+  </g>
+  <g fill="#C8C4BC">
+    <path d="M 340,-50 L 342,-44 L 348,-42 L 342,-40 L 340,-34 L 338,-40 L 332,-42 L 338,-44 Z" opacity="0.35"/>
+    <path d="M 1400, 50 L 1402, 56 L 1408, 58 L 1402, 60 L 1400, 66 L 1398, 60 L 1392, 58 L 1398, 56 Z" opacity="0.30"/>
+    <path d="M 230, 450 L 232, 457 L 239, 459 L 232, 461 L 230, 468 L 228, 461 L 221, 459 L 228, 457 Z" opacity="0.28"/>
+    <path d="M 1520, 350 L 1522, 357 L 1529, 359 L 1522, 361 L 1520, 368 L 1518, 361 L 1511, 359 L 1518, 357 Z" opacity="0.28"/>
+  </g>
+
+  <!-- ── VIGNETTE EDGES ─────────────────────────────────────── -->
+  <rect x="-308" y="-124" width="508"  height="829" fill="url(#sVigL)"/>
+  <rect x="1240" y="-124" width="509"  height="829" fill="url(#sVigR)"/>
+  <rect x="-308" y="370"  width="2057" height="335" fill="url(#sVigB)"/>
 </svg>
