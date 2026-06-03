@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { APP_SESSION_COOKIE } from "@/lib/auth/app-session";
 import { ensureProfile } from "@/lib/auth/ensure-profile";
+import { sendAccountCreatedEmail } from "@/lib/email/resend";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -69,6 +70,11 @@ export async function registerAction(formData: FormData) {
       last_name: lastName
     });
   }
+
+  await sendAccountCreatedEmail({
+    to: email,
+    firstName,
+  });
 
   redirect("/login?message=registered");
 }

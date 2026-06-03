@@ -452,6 +452,36 @@ export async function sendTrainingApprovalEmail({
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
 }
 
+export async function sendAccountCreatedEmail({
+  to,
+  firstName,
+}: {
+  to: string;
+  firstName?: string;
+}) {
+  const siteUrl = getEmailSiteUrl();
+  const greetingName = firstName?.trim() || "there";
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: "Your OlivHairSupply Account is Ready",
+    html: applicationEmailTemplate({
+      eyebrow: "OlivHairSupply Account",
+      title: "Account Created",
+      greeting: `Hi ${greetingName},`,
+      body: "Your OlivHairSupply account has been created. You can now sign in to view your account details, appointments, orders and saved information.",
+      details: [
+        ["Email", to],
+        ["Status", "Active"],
+      ],
+      buttonLabel: "Sign In",
+      buttonUrl: `${siteUrl}/login`,
+      footer: "If you did not create this account, please contact OlivHairSupply support."
+    }),
+  });
+  if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
+}
+
 function applicationEmailTemplate({
   eyebrow,
   title,
