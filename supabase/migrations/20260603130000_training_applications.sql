@@ -12,3 +12,5 @@ create table if not exists training_applications (
 
 create index if not exists training_applications_email_idx on training_applications (email);
 create index if not exists training_applications_status_idx on training_applications (status);
+
+grant select, insert, update, delete on training_applications to service_role;
