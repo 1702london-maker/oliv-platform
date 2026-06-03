@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 580" preserveAspectRatio="xMidYMid slice" width="400" height="580">
+  <defs>
+    <linearGradient id="mb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#484644"/>
+      <stop offset="50%"  stop-color="#555250"/>
+      <stop offset="100%" stop-color="#4A4744"/>
+    </linearGradient>
+    <radialGradient id="mGlow" cx="50%" cy="50%" r="52%">
+      <stop offset="0%"   stop-color="#706858" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#555250" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mTopFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.55"/>
+      <stop offset="35%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="70%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#1C1810" stop-opacity="0.65"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="580" fill="url(#mb)"/>
+  <rect width="400" height="580" fill="url(#mGlow)"/>
+  <rect width="400" height="580" fill="url(#mTopFade)"/>
+
+  <!-- ── 2×2 GRID — centred y=160→385 ── -->
+  <rect x="50" y="160" width="300" height="225" rx="3"
+    fill="none" stroke="#C9A96E" stroke-width="1.2" opacity="0.48"/>
+  <line x1="200" y1="160" x2="200" y2="385" stroke="#C9A96E" stroke-width="1.2" opacity="0.48"/>
+  <line x1="50"  y1="272" x2="350" y2="272" stroke="#C9A96E" stroke-width="1.2" opacity="0.48"/>
+
+  <!-- TOP-LEFT: BRIEFCASE → cx=125, cy=214 -->
+  <g transform="translate(125,213)" fill="none" stroke="#C9A96E" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="-26" y="-17" width="52" height="38" rx="4" stroke-width="2"/>
+    <line x1="-26" y1="4" x2="26" y2="4" stroke-width="1.5" opacity="0.65"/>
+    <path d="M -11,-17 L -11,-26 Q -11,-33 -5,-33 L 5,-33 Q 11,-33 11,-26 L 11,-17" stroke-width="2"/>
+    <rect x="-6" y="0" width="12" height="10" rx="2" stroke-width="1.4"/>
+  </g>
+
+  <!-- TOP-RIGHT: SCISSORS → cx=275, cy=214 -->
+  <g transform="translate(275,213)" fill="none" stroke="#C9A96E" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M -5,-44 Q -3,-10 15,25" stroke-width="2"/>
+    <path d="M 5,-44 Q 3,-10 -15,25" stroke-width="2"/>
+    <circle cx="0" cy="-6" r="4.5" stroke-width="1.8"/>
+    <path d="M 15,25 Q 24,36 19,44 Q 14,50 7,46 Q 2,41 5,33 Q 8,27 15,25 Z" stroke-width="1.8"/>
+    <path d="M -15,25 Q -24,36 -19,44 Q -14,50 -7,46 Q -2,41 -5,33 Q -8,27 -15,25 Z" stroke-width="1.8"/>
+  </g>
+
+  <!-- BOTTOM-LEFT: STAR → cx=125, cy=328 -->
+  <g transform="translate(125,327)" fill="none" stroke="#C9A96E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 0,-42 L 10,-13 L 40,-13 L 16,5 L 24,33 L 0,16 L -24,33 L -16,5 L -40,-13 L -10,-13 Z"/>
+  </g>
+
+  <!-- BOTTOM-RIGHT: TEAM → cx=275, cy=326 -->
+  <g transform="translate(275,325)" fill="none" stroke="#C9A96E" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="-17" cy="-27" r="12" stroke-width="1.8"/>
+    <path d="M -37,22 Q -35,4 -25,-2 Q -20,-6 -17,-6 Q -14,-6 -9,-2 Q 1,4 3,22" stroke-width="1.8"/>
+    <circle cx="17" cy="-27" r="12" stroke-width="1.8"/>
+    <path d="M -3,22 Q -1,4 9,-2 Q 14,-6 17,-6 Q 20,-6 25,-2 Q 35,4 37,22" stroke-width="1.8"/>
+  </g>
+
+  <!-- Sparkles -->
+  <g fill="#C9A96E">
+    <path d="M 20,100 L 22,107 L 29,109 L 22,111 L 20,118 L 18,111 L 11,109 L 18,107 Z" opacity="0.42"/>
+    <path d="M 370,95 L 372,102 L 379,104 L 372,106 L 370,113 L 368,106 L 361,104 L 368,102 Z" opacity="0.42"/>
+    <path d="M 20,418 L 22,424 L 28,426 L 22,428 L 20,434 L 18,428 L 12,426 L 18,424 Z" opacity="0.35"/>
+    <path d="M 370,420 L 372,426 L 378,428 L 372,430 L 370,436 L 368,430 L 362,428 L 368,426 Z" opacity="0.35"/>
+  </g>
+  <g fill="#C8C4BC">
+    <path d="M 195,136 L 197,141 L 202,142 L 197,143 L 195,148 L 193,143 L 188,142 L 193,141 Z" opacity="0.28"/>
+    <path d="M 195,400 L 197,405 L 202,406 L 197,407 L 195,412 L 193,407 L 188,406 L 193,405 Z" opacity="0.28"/>
+  </g>
+</svg>

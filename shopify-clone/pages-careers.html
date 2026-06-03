@@ -2395,9 +2395,32 @@ first.parentNode.insertBefore(script, first);
   .ocar-benefits-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .ocar-hero { height: 420px; }
-  .ocar-hero-title { font-size: 38px; }
-  .ocar-hero-sub { font-size: 16px; }
+  .ocar-hero {
+    height: 84vh !important;
+    min-height: 520px !important;
+    background-image: url('/heroes/careers-hero-mobile.svg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+  .ocar-hero-img { display: none !important; }
+  .ocar-hero-overlay {
+    background: linear-gradient(to bottom, rgba(15,10,6,0.38) 0%, rgba(15,10,6,0.08) 42%, rgba(15,10,6,0.58) 100%) !important;
+  }
+  .ocar-hero-inner {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    padding: 72px 24px 40px !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+  .ocar-hero-eyebrow { margin-bottom: auto !important; font-size: 9px !important; letter-spacing: 4px !important; }
+  .ocar-hero-title { font-size: 36px !important; line-height: 1.08 !important; max-width: 260px !important; margin-top: auto !important; margin-bottom: 0 !important; }
+  .ocar-hero-sub { display: none !important; }
   .ocar-section-inner { padding: 0 24px; }
   .ocar-title { font-size: 36px; }
   .ocar-benefits-grid { grid-template-columns: 1fr; }
