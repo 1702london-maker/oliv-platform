@@ -173,6 +173,80 @@ type ManualPageOverride = {
 };
 
 const HOME_PAGE_DE_OVERRIDES: ManualPageOverride[] = [
+  { selector: ".ohp-hero-eyebrow", text: "BiziLuxe Kollektion" },
+  { selector: ".ohp-hero-headline", html: "Premium-Haar. <em>Mühelose</em> Eleganz." },
+  { selector: ".ohp-hero-sub", text: "Luxuriöse Extensions für Frauen, die keine Kompromisse eingehen." },
+  { selector: ".ohp-hero-btns .ohp-btn-primary", text: "BiziLuxe Hair shoppen" },
+  { selector: ".ohp-hero-btns .ohp-btn-dark", text: "Termin buchen" },
+
+  { selector: ".oshp-hero-eyebrow", text: "BiziLuxe von OlivHairSupply", whenExists: ".oshp-hero-meta" },
+  { selector: ".oshp-hero-title", html: "Das BiziLuxe <em>Edit</em>", whenExists: ".oshp-hero-meta" },
+  { selector: ".oshp-hero-meta-label", index: 0, text: "Echthaar mit intakter Schuppenschicht", whenExists: ".oshp-hero-meta" },
+  { selector: ".oshp-hero-meta-label", index: 1, text: "Kollektionen", whenExists: ".oshp-hero-meta" },
+  { selector: ".oshp-hero-meta-label", index: 2, text: "Weltweiter Versand", whenExists: ".oshp-hero-meta" },
+
+  { selector: ".ojnl-hero-eyebrow", text: "Journal" },
+  { selector: ".ojnl-hero-title", html: "Das OlivHairSupply <em>Edit</em>" },
+
+  { selector: ".ocar-hero-eyebrow", text: "Karriere" },
+  { selector: ".ocar-hero-title", html: "Werde Teil des OlivHairSupply <em>Teams</em>" },
+  { selector: ".ocar-hero-sub", text: "Werde Teil einer wachsenden Luxus-Haarmarke, die auf Exzellenz, Kreativität und Community aufgebaut ist." },
+
+  { selector: ".ocon-hero-eyebrow", text: "Kontakt" },
+  { selector: ".ocon-hero-title", html: "Besuche uns oder <em>kontaktiere uns</em>" },
+
+  { selector: ".ofaq-eyebrow", text: "Hilfe-Center", whenExists: ".ofaq-hero" },
+  { selector: ".ofaq-hero-title", html: "Häufig gestellte <em>Fragen</em>" },
+  { selector: "#ofaq-search-input", attr: "placeholder", text: "Fragen suchen..." },
+
+  { selector: ".oprs-hero-eyebrow", text: "Presse und Medien" },
+  { selector: ".oprs-hero-title", html: "Im <em>Rampenlicht.</em>" },
+  { selector: ".oprs-hero-sub", text: "OlivHairSupply ist eine wachsende Luxus-Haarmarke, die die Zukunft von Premium-Beauty und hochwertigen Haarerlebnissen prägt." },
+
+  { selector: ".osus-hero-eyebrow", text: "Nachhaltigkeit" },
+  { selector: ".osus-hero-title", html: "Mit <em>Intention</em> geschaffen." },
+  { selector: ".osus-hero-sub", text: "Bei OlivHairSupply priorisieren wir Qualität, Langlebigkeit und verantwortungsvolles Sourcing in allem, was wir kreieren." },
+
+  { selector: ".osr-hero-eyebrow", text: "OlivFoundation" },
+  { selector: ".osr-hero-title", html: "Schönheit mit <em>Wirkung.</em>" },
+  { selector: ".osr-hero-sub", text: "Bei OlivHairSupply glauben wir, dass wahre Schönheit über das Äußere hinausgeht - es geht um Wirkung, Empowerment und neue Chancen." },
+
+  { selector: ".oshp-hero-eyebrow", text: "Versand", whenExists: ".oshp-overview" },
+  { selector: ".oshp-hero-title", html: "Weltweite <em>Lieferung.</em>", whenExists: ".oshp-overview" },
+
+  { selector: ".oret-hero-eyebrow", text: "Rücksendungen" },
+  { selector: ".oret-hero-title", html: "Einfach, transparent <em>zurückgeben.</em>" },
+
+  { selector: ".otrk-hero-eyebrow", text: "Bestellung verfolgen" },
+  { selector: ".otrk-hero-title", html: "Verfolge deine <em>Bestellung</em>" },
+  { selector: ".otrk-hero-sub", text: "Bleib in Echtzeit über deine Lieferung informiert." },
+
+  { selector: ".ovch-hero-eyebrow", text: "OlivHairSupply" },
+  { selector: ".ovch-hero-title", html: "Geschenk<em>gutscheine</em>" },
+  { selector: ".ovch-hero-sub", text: "Das perfekte Geschenk für jemanden, der feinsten Luxus im Haar verdient. Wähle den Betrag, personalisiere deine Nachricht, und wir liefern den Code sofort." },
+
+  { selector: ".oprv-hero-eyebrow", text: "Rechtliches" },
+  { selector: ".oprv-hero-title", html: "Datenschutz<em>erklärung</em>" },
+  { selector: ".oprv-hero-sub", text: "Wir schützen deine persönlichen Daten und erklären transparent, wie wir sie erfassen, nutzen und speichern. Diese Richtlinie fasst alles klar zusammen." },
+  { selector: ".oprv-hero-meta-label", index: 0, text: "Zuletzt aktualisiert" },
+  { selector: ".oprv-hero-meta-label", index: 1, text: "Geltungsbereich" },
+  { selector: ".oprv-hero-meta-label", index: 2, text: "Regelung" },
+  { selector: ".oprv-hero-meta-val", index: 0, text: "Mai 2026" },
+  { selector: ".oprv-hero-meta-val", index: 2, text: "DSGVO-konform" },
+
+  { selector: ".otcs-hero-eyebrow", text: "Rechtliches" },
+  { selector: ".otcs-hero-title", html: "Allgemeine <em>Geschäftsbedingungen</em>" },
+  { selector: ".otcs-hero-sub", text: "Bitte lies diese Bedingungen sorgfältig, bevor du unsere Website nutzt oder unsere Produkte und Services kaufst. Mit der Nutzung unserer Seite stimmst du diesen Bedingungen zu." },
+  { selector: ".otcs-hero-meta-label", index: 0, text: "Zuletzt aktualisiert" },
+  { selector: ".otcs-hero-meta-label", index: 1, text: "Geltungsbereich" },
+  { selector: ".otcs-hero-meta-label", index: 2, text: "Geltendes Recht" },
+  { selector: ".otcs-hero-meta-val", index: 0, text: "Mai 2026" },
+  { selector: ".otcs-hero-meta-val", index: 2, text: "Deutsches Recht" },
+
+  { selector: ".oimp-hero-eyebrow", text: "Rechtliches" },
+  { selector: ".oimp-hero-title", text: "Impressum" },
+  { selector: ".oimp-hero-sub", text: "Angaben gemäß §5 TMG" },
+
   { selector: ".ohp-collections-header .ohp-eyebrow", text: "BiziLuxe Kollektion" },
   { selector: ".ohp-collections-header .ohp-col-title", html: "Nach Kategorie <em>entdecken</em>" },
   { selector: '.ohp-col-card[href="/collections/bizihair-extensions"] .ohp-col-tag', text: "BiziHair Haarverlängerungen" },
