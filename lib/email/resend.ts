@@ -10,9 +10,14 @@ function getResend() {
 const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
 const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsupply.de";
 const BOOKING_TEAM_EMAIL = process.env.BOOKING_TEAM_EMAIL || "olivhairbooking@gmail.com";
+const DEFAULT_EMAIL_SITE_URL = "https://oliv-platform.vercel.app";
+
+function getEmailSiteUrl() {
+  return (process.env.EMAIL_SITE_URL || process.env.NEXT_PUBLIC_EMAIL_SITE_URL || DEFAULT_EMAIL_SITE_URL).replace(/\/$/, "");
+}
 
 function bookingManageUrls(data: AppointmentEmailData) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const siteUrl = getEmailSiteUrl();
   const lang = data.language === "de" ? "de" : "en";
   const query = `booking=${encodeURIComponent(data.bookingId)}&email=${encodeURIComponent(data.customerEmail)}&lang=${lang}`;
   return {
@@ -218,9 +223,7 @@ export async function sendAffiliateApprovalEmail({
   code: string;
   password: string;
 }) {
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-    "https://oliv-platform.vercel.app";
+  const siteUrl = getEmailSiteUrl();
 
   const { error } = await getResend().emails.send({
     from: FROM,
@@ -299,7 +302,7 @@ export async function sendAffiliateApplicationReceivedEmail({
   displayName: string;
   code: string;
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const siteUrl = getEmailSiteUrl();
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
@@ -329,7 +332,7 @@ export async function sendWholesaleApplicationReceivedEmail({
   to: string;
   businessName: string;
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const siteUrl = getEmailSiteUrl();
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
@@ -361,7 +364,7 @@ export async function sendTrainingApplicationReceivedEmail({
   fullName: string;
   programme: string;
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const siteUrl = getEmailSiteUrl();
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
@@ -473,9 +476,7 @@ export async function sendWholesaleApprovalEmail({
   businessName: string;
   password: string;
 }) {
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-    "https://oliv-platform.vercel.app";
+  const siteUrl = getEmailSiteUrl();
 
   const { error } = await getResend().emails.send({
     from: FROM,
@@ -639,7 +640,7 @@ export async function sendWholesaleOrderConfirmation({
   totalWholesaleCents: number;
 }) {
   const fmt = (cents: number) => `€${(cents / 100).toFixed(2).replace(".", ",")}`;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const siteUrl = getEmailSiteUrl();
 
   const itemRows = items.map(item => `
     <tr>

@@ -6,6 +6,12 @@ import { formatEuro } from "@/lib/catalog/money";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe";
 
+const DEFAULT_EMAIL_SITE_URL = "https://oliv-platform.vercel.app";
+
+function getEmailSiteUrl() {
+  return (process.env.EMAIL_SITE_URL || process.env.NEXT_PUBLIC_EMAIL_SITE_URL || DEFAULT_EMAIL_SITE_URL).replace(/\/$/, "");
+}
+
 export async function POST(request: Request) {
   if (!env.STRIPE_WEBHOOK_SECRET) {
     return NextResponse.json({ error: "Stripe webhook secret is not configured." }, { status: 503 });
@@ -75,7 +81,7 @@ async function completeVoucherPurchase(session: Stripe.Checkout.Session) {
   // Send voucher code email via Resend
   const purchaserEmail = meta.purchaser_email || session.customer_email;
   if (purchaserEmail) {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://oliv-platform.vercel.app";
+    const siteUrl = getEmailSiteUrl();
     try {
       const { Resend } = await import("resend");
       const resend = new Resend(process.env.RESEND_API_KEY);
