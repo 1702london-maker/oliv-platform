@@ -21101,3 +21101,24 @@ body[data-global-lang="de"] .ohs-nav-right li a.ohs-nav-link {
   background: linear-gradient(to right, rgba(15,10,6,0.80) 0%, rgba(15,10,6,0.45) 40%, rgba(15,10,6,0.08) 100%) !important;
 }
 
+
+/* ── CAREERS PAGE HERO ──────────────────────────────── */
+.ocar-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 880px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ocar-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+}
