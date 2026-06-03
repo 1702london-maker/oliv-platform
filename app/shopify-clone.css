@@ -21082,3 +21082,21 @@ body[data-global-lang="de"] .ohs-nav-right li a.ohs-nav-link {
   object-position: center 35%;
   display: block;
 }
+
+/* ── SUSTAINABILITY HERO TEXT LAYOUT ───────────────── */
+.osus-hero {
+  justify-content: flex-start !important;
+}
+.osus-hero-inner {
+  position: absolute !important;
+  top: 50% !important;
+  left: 80px !important;
+  transform: translateY(-50%) !important;
+  max-width: 480px !important;
+  padding: 0 !important;
+  text-align: left !important;
+  z-index: 3 !important;
+}
+.osus-hero-overlay {
+  background: linear-gradient(to right, rgba(15,10,6,0.80) 0%, rgba(15,10,6,0.45) 40%, rgba(15,10,6,0.08) 100%) !important;
+}
