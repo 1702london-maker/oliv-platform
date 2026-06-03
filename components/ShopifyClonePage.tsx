@@ -25,6 +25,10 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   let html = rawHtml
     .replaceAll('href="/collections"', 'href="/shop"')
     .replaceAll('href="/collections/all"', 'href="/shop"')
+    .replaceAll('href="/pages/appointment"', 'href="/appointments"')
+    .replaceAll('href="/pages/affiliate"', 'href="/affiliate"')
+    .replaceAll('href="/pages/wholesale"', 'href="/wholesale"')
+    .replaceAll('href="/search"', 'href="/shop"')
     .replaceAll('action="/localization"', 'action="/localization"')
     .replaceAll("EUR â‚¬", "EUR &euro;")
     .replaceAll("âœ“", "✓")
@@ -42,6 +46,7 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   // Remove Spanish + form auto-submit server-side (client handles language switching)
   html = html.replace(/<option\b[^>]*\bvalue=(["'])es\1[^>]*>[\s\S]*?<\/option>/gi, '');
   html = html.replace(/(<select[^>]*name="locale_code"[^>]*)onchange="this\.form\.submit\(\)"([^>]*>)/g, '$1$2');
+  html = html.replace(/href="\/customer_authentication\/login[^"]*"/g, 'href="/login"');
 
   if (page === "affiliate") {
     html = html
