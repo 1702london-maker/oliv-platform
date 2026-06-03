@@ -290,6 +290,180 @@ export async function sendAffiliateApprovalEmail({
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
 }
 
+export async function sendAffiliateApplicationReceivedEmail({
+  to,
+  displayName,
+  code,
+}: {
+  to: string;
+  displayName: string;
+  code: string;
+}) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: "Affiliate Application Received - OlivHairSupply",
+    html: applicationEmailTemplate({
+      eyebrow: "OlivHairSupply Affiliate",
+      title: "Application Received",
+      greeting: `Hi ${displayName},`,
+      body: "Thank you for applying to the OlivHairSupply Affiliate Programme. Our team will review your application and contact you once your account is approved.",
+      details: [
+        ["Email", to],
+        ["Affiliate Code", code],
+        ["Status", "Pending review"],
+      ],
+      buttonLabel: "Visit Affiliate Page",
+      buttonUrl: `${siteUrl}/affiliate`,
+      footer: "Approval emails include your dashboard access code after review."
+    }),
+  });
+  if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
+}
+
+export async function sendWholesaleApplicationReceivedEmail({
+  to,
+  businessName,
+}: {
+  to: string;
+  businessName: string;
+}) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: "Wholesale Application Received - OlivHairSupply",
+    html: applicationEmailTemplate({
+      eyebrow: "OlivHairSupply Wholesale",
+      title: "Application Received",
+      greeting: `Hi ${businessName},`,
+      body: "Thank you for applying for an OlivHairSupply wholesale account. Our supply team will review your details and contact you once your wholesale access is approved.",
+      details: [
+        ["Email", to],
+        ["Business", businessName],
+        ["Status", "Pending review"],
+      ],
+      buttonLabel: "Visit Wholesale Page",
+      buttonUrl: `${siteUrl}/wholesale`,
+      footer: "Approval emails include your wholesale portal access code after review."
+    }),
+  });
+  if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
+}
+
+export async function sendTrainingApplicationReceivedEmail({
+  to,
+  fullName,
+  programme,
+}: {
+  to: string;
+  fullName: string;
+  programme: string;
+}) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://oliv-platform.vercel.app";
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: "Training Application Received - OlivHairSupply Academy",
+    html: applicationEmailTemplate({
+      eyebrow: "OlivHairSupply Academy",
+      title: "Training Application Received",
+      greeting: `Hi ${fullName},`,
+      body: "Thank you for applying to OlivHairSupply Academy. Our training team will review your application and contact you with availability, confirmation details and invoice/payment instructions where applicable.",
+      details: [
+        ["Email", to],
+        ["Programme", programme || "To be confirmed"],
+        ["Status", "Pending review"],
+      ],
+      buttonLabel: "View Training Page",
+      buttonUrl: `${siteUrl}/training`,
+      footer: "This is an application receipt, not a final invoice. The invoice is sent after the team confirms your training placement."
+    }),
+  });
+  if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
+}
+
+export async function sendApplicationTeamNotification({
+  type,
+  name,
+  email,
+  details,
+}: {
+  type: "Affiliate" | "Wholesale" | "Training";
+  name: string;
+  email: string;
+  details: Array<[string, string]>;
+}) {
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to: TEAM_EMAIL,
+    subject: `New ${type} Application - ${name}`,
+    html: applicationEmailTemplate({
+      eyebrow: `OlivHairSupply ${type}`,
+      title: `New ${type} Application`,
+      greeting: name,
+      body: "A new application has been submitted from the website.",
+      details: [["Email", email], ...details],
+      buttonLabel: "Email Applicant",
+      buttonUrl: `mailto:${email}`,
+      footer: "Review the application in Supabase/admin before approval."
+    }),
+  });
+  if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
+}
+
+function applicationEmailTemplate({
+  eyebrow,
+  title,
+  greeting,
+  body,
+  details,
+  buttonLabel,
+  buttonUrl,
+  footer,
+}: {
+  eyebrow: string;
+  title: string;
+  greeting: string;
+  body: string;
+  details: Array<[string, string]>;
+  buttonLabel: string;
+  buttonUrl: string;
+  footer: string;
+}) {
+  const rows = details.map(([label, value]) => `
+    <tr>
+      <td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;width:140px;">${label}</td>
+      <td style="font-size:13px;color:#2B2620;padding:7px 0;">${value || "-"}</td>
+    </tr>
+  `).join("");
+
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family:'Montserrat',Arial,sans-serif;background:#F5F0E8;margin:0;padding:40px 20px;">
+  <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
+    <div style="background:#2B2620;padding:32px 40px;">
+      <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">${eyebrow}</p>
+      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">${title}</h1>
+    </div>
+    <div style="padding:36px 40px;">
+      <p style="color:#2B2620;font-size:14px;margin:0 0 10px;"><strong>${greeting}</strong></p>
+      <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">${body}</p>
+      <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:22px 26px;margin-bottom:28px;">
+        <table style="width:100%;border-collapse:collapse;">${rows}</table>
+      </div>
+      <a href="${buttonUrl}" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">${buttonLabel}</a>
+      <hr style="border:none;border-top:1px solid #E2D5C0;margin:34px 0 16px;">
+      <p style="color:#9B8878;font-size:10px;margin:0;line-height:1.6;">${footer}</p>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
 export async function sendWholesaleApprovalEmail({
   to,
   businessName,

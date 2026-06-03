@@ -1,5 +1,9 @@
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import {
+  sendAffiliateApplicationReceivedEmail,
+  sendApplicationTeamNotification,
+} from "@/lib/email/resend";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -21,6 +25,20 @@ export async function POST(request: Request) {
     },
     { onConflict: "email" }
   );
+
+  await Promise.allSettled([
+    sendAffiliateApplicationReceivedEmail({
+      to: email,
+      displayName: fullName,
+      code: generateAffiliateCode(fullName, email),
+    }),
+    sendApplicationTeamNotification({
+      type: "Affiliate",
+      name: fullName,
+      email,
+      details: [["Generated Code", generateAffiliateCode(fullName, email)]],
+    }),
+  ]);
 
   redirect("/affiliate?application=submitted");
 }

@@ -1,5 +1,9 @@
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import {
+  sendApplicationTeamNotification,
+  sendWholesaleApplicationReceivedEmail,
+} from "@/lib/email/resend";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -18,6 +22,19 @@ export async function POST(request: Request) {
     tier: "Verified",
     lifetime_spend_cents: 0
   });
+
+  await Promise.allSettled([
+    sendWholesaleApplicationReceivedEmail({
+      to: email,
+      businessName,
+    }),
+    sendApplicationTeamNotification({
+      type: "Wholesale",
+      name: businessName,
+      email,
+      details: [["Business", businessName]],
+    }),
+  ]);
 
   redirect("/wholesale?application=submitted");
 }

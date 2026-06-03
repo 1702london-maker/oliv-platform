@@ -1,5 +1,9 @@
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import {
+  sendApplicationTeamNotification,
+  sendTrainingApplicationReceivedEmail,
+} from "@/lib/email/resend";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -11,12 +15,14 @@ export async function POST(request: Request) {
   }
 
   const supabase = createSupabaseAdminClient();
+  const programme = value(formData, "contact[programme]");
+  const experience = value(formData, "contact[experience]");
   const { error } = await supabase.from("training_applications").insert({
     email,
     full_name: fullName,
     phone: value(formData, "contact[phone]"),
-    programme: value(formData, "contact[programme]"),
-    experience: value(formData, "contact[experience]"),
+    programme,
+    experience,
     message: value(formData, "contact[body]"),
     status: "pending"
   });
@@ -24,6 +30,23 @@ export async function POST(request: Request) {
   if (error) {
     console.error("[Training application] Insert error:", error);
   }
+
+  await Promise.allSettled([
+    sendTrainingApplicationReceivedEmail({
+      to: email,
+      fullName,
+      programme,
+    }),
+    sendApplicationTeamNotification({
+      type: "Training",
+      name: fullName,
+      email,
+      details: [
+        ["Programme", programme],
+        ["Experience", experience],
+      ],
+    }),
+  ]);
 
   redirect("/training?application=submitted");
 }
