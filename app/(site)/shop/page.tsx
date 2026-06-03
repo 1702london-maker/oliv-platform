@@ -183,14 +183,14 @@ function buildShopLandingHtml() {
   let html = normalizeShopHtml(fs.readFileSync(path.join(process.cwd(), "shopify-clone", "collections.html"), "utf8"));
 
   html = html.replace(/<img class="oshp-hero-img"[\s\S]*?>/, '<img class="oshp-hero-img" src="/heroes/shop-hero.svg" alt="OlivHairSupply Shop" loading="eager" fetchpriority="high">');
-  html = html.replace("The BiziLux <em>Edit</em>", "The BiziLuxe <em>Edit</em>");
-  html = html.replace("BiziLux by OlivHairSupply", "BiziLuxe by OlivHairSupply");
+  html = html.replace("The BiziLuxe <em>Edit</em>", "The BiziLuxe <em>Edit</em>");
+  html = html.replace("BiziLuxe by OlivHairSupply", "BiziLuxe by OlivHairSupply");
   html = html.replace('<span class="oshp-hero-meta-val">4</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>', '<span class="oshp-hero-meta-val">6</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>');
   html = html.replace('<span class="oshp-story-stat-val">4</span>\r\n          <span class="oshp-story-stat-label">Collections</span>', '<span class="oshp-story-stat-val">6</span>\r\n          <span class="oshp-story-stat-label">Collections</span>');
   html = html.replace(/<div class="oshp-col-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-all-cols">/, `<div class="oshp-col-grid">\n${buildCollectionCards()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-all-cols">`);
   html = html.replace(/<div class="oshp-all-cols-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-featured">/, `<div class="oshp-all-cols-grid">\n${buildCollectionTiles()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-featured">`);
   html = html.replace(/<div class="oshp-featured">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-story">/, buildFeaturedProducts());
-  html = html.replaceAll("/collections/bizilux-hair", "/shop?category=biziluxe-extensions");
+  html = html.replaceAll("/collections/BiziLuxe-hair", "/shop?category=biziluxe-extensions");
   html = html.replace('href="/collections" class="oshp-collections-all"', 'href="/shop?view=all" class="oshp-collections-all"');
   html = html.replaceAll("/collections", "/shop");
   html = html.replace("</style>", `${shopLandingOverrides()}\n</style>`);

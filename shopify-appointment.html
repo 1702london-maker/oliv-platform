@@ -2874,7 +2874,7 @@ first.parentNode.insertBefore(script, first);
           <div class="oappt-confirm-details" id="oappt-confirm-details"></div>
           <div class="oappt-confirm-btns">
             <a href="/" class="oappt-confirm-btn-dark">Return Home</a>
-            <a href="/collections" class="oappt-confirm-btn-out">Shop BiziLux</a>
+            <a href="/collections" class="oappt-confirm-btn-out">Shop BiziLuxe</a>
           </div>
         </div>
 
@@ -3178,9 +3178,9 @@ var OAPPT_SERVICES = [
 ];
 
 var OAPPT_HAIR_TYPES = [
-  { label: 'BiziLux Body Wave',  value: 'body-wave'  },
-  { label: 'BiziLux Straight',   value: 'straight'   },
-  { label: 'BiziLux Light Wave', value: 'light-wave' }
+  { label: 'BiziLuxe Body Wave',  value: 'body-wave'  },
+  { label: 'BiziLuxe Straight',   value: 'straight'   },
+  { label: 'BiziLuxe Light Wave', value: 'light-wave' }
 ];
 
 var OAPPT_HAIR_LENGTHS = [
@@ -3318,7 +3318,7 @@ function oapptUpdateSummary() {
     if (oapptState.hairColour) { OAPPT_HAIR_COLOURS.forEach(function(c) { if (c.value === oapptState.hairColour) hairLine += ' / ' + c.label; }); }
     var hprice = 0;
     OAPPT_HAIR_LENGTHS.forEach(function(l) { if (l.value === oapptState.hairLength) hprice = l.price * (oapptState.hairQty || 1); });
-    if (hairLine) lines.push({ label: 'BiziLux Hair', val: hairLine + (hprice ? ' (+&euro;' + hprice + ')' : '') });
+    if (hairLine) lines.push({ label: 'BiziLuxe Hair', val: hairLine + (hprice ? ' (+&euro;' + hprice + ')' : '') });
   }
   if (oapptState.selectedStylist) {
     var stylistLabel = oapptState.selectedStylist.name;
@@ -3485,10 +3485,10 @@ function oapptBuildConfigurator() {
   if (svc.hasPurchase) {
     html += '<div class="oappt-config-section">';
     html += '<span class="oappt-config-label">Hair</span>';
-    html += '<div class="oappt-config-title">Will you be using BiziLux hair for this appointment?</div>';
+    html += '<div class="oappt-config-title">Will you be using BiziLuxe hair for this appointment?</div>';
     html += '<div class="oappt-radio-group">';
     html += '<div class="oappt-radio-option ' + (!oapptState.hairPurchase ? 'selected' : '') + '" onclick="oapptSetHairPurchase(false)">I will bring my own hair</div>';
-    html += '<div class="oappt-radio-option ' + (oapptState.hairPurchase ? 'selected' : '') + '" onclick="oapptSetHairPurchase(true)">I want to purchase BiziLux hair</div>';
+    html += '<div class="oappt-radio-option ' + (oapptState.hairPurchase ? 'selected' : '') + '" onclick="oapptSetHairPurchase(true)">I want to purchase BiziLuxe hair</div>';
     html += '</div>';
     html += '<div class="oappt-hair-options ' + (oapptState.hairPurchase ? 'visible' : '') + '" id="oappt-hair-options">';
     html += '<div class="oappt-field-row">';
@@ -3674,7 +3674,7 @@ function oapptBuildBookingSummary() {
     OAPPT_HAIR_COLOURS.forEach(function(c) { if (c.value === oapptState.hairColour) hairDesc += ' / ' + c.label; });
     var hprice = 0;
     OAPPT_HAIR_LENGTHS.forEach(function(l) { if (l.value === oapptState.hairLength) hprice = l.price * (oapptState.hairQty || 1); });
-    rows.push({ label: 'BiziLux Hair', val: hairDesc + ' (+&euro;' + hprice + ')' });
+    rows.push({ label: 'BiziLuxe Hair', val: hairDesc + ' (+&euro;' + hprice + ')' });
   }
   if (oapptState.customerNotes) rows.push({ label: 'Notes', val: oapptState.customerNotes });
   rows.forEach(function(r) {
@@ -3704,7 +3704,7 @@ function oapptSubmitBooking(event) {
     OAPPT_HAIR_TYPES.forEach(function(t) { if (t.value === oapptState.hairType) hairDesc = t.label; });
     hairDesc += ' ' + oapptState.hairLength + 'cm x' + (oapptState.hairQty || 1) + ' bundle' + ((oapptState.hairQty || 1) > 1 ? 's' : '');
     OAPPT_HAIR_COLOURS.forEach(function(c) { if (c.value === oapptState.hairColour) hairDesc += ' / ' + c.label; });
-    msg += 'BiziLux Hair: ' + hairDesc + '\n';
+    msg += 'BiziLuxe Hair: ' + hairDesc + '\n';
   }
   if (oapptState.location === 'b') msg += 'Location Surcharge: +EUR 30\n';
   if (stylist && stylist.surcharge > 0) msg += 'Specialist Fee: +EUR ' + stylist.surcharge + '\n';
