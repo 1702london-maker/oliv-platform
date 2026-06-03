@@ -28,12 +28,16 @@ async function approveAffiliate(id: string) {
   const admin = createSupabaseAdminClient();
   const { data: record, error: readError } = await admin
     .from("affiliates")
-    .select("id,email")
+    .select("id,email,status")
     .eq("id", id)
     .maybeSingle();
 
   if (readError || !record) {
     return NextResponse.json({ error: "affiliate_not_found" }, { status: 404 });
+  }
+
+  if (record.status !== "pending") {
+    return approvalHtml("Affiliate already reviewed", record.email);
   }
 
   const { error } = await admin
@@ -52,12 +56,16 @@ async function approveWholesale(id: string) {
   const admin = createSupabaseAdminClient();
   const { data: record, error: readError } = await admin
     .from("wholesale_accounts")
-    .select("id,email,business_name")
+    .select("id,email,business_name,status")
     .eq("id", id)
     .maybeSingle();
 
   if (readError || !record) {
     return NextResponse.json({ error: "wholesale_not_found" }, { status: 404 });
+  }
+
+  if (record.status !== "pending") {
+    return approvalHtml("Wholesale already reviewed", record.email);
   }
 
   const { error } = await admin
@@ -76,12 +84,16 @@ async function approveTraining(id: string) {
   const admin = createSupabaseAdminClient();
   const { data: record, error: readError } = await admin
     .from("training_applications")
-    .select("id,email,full_name,programme")
+    .select("id,email,full_name,programme,status")
     .eq("id", id)
     .maybeSingle();
 
   if (readError || !record) {
     return NextResponse.json({ error: "training_not_found" }, { status: 404 });
+  }
+
+  if (record.status !== "pending") {
+    return approvalHtml("Training already reviewed", record.email);
   }
 
   const { error } = await admin
