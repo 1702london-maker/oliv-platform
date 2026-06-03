@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-308 -124 2057 829" preserveAspectRatio="xMidYMid slice" width="1440" height="580">
+  <defs>
+
+    <!-- Wholesale background gradients -->
+    <linearGradient id="srBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#3C3A38"/>
+      <stop offset="28%"  stop-color="#505050"/>
+      <stop offset="54%"  stop-color="#585450"/>
+      <stop offset="78%"  stop-color="#524E4C"/>
+      <stop offset="100%" stop-color="#464240"/>
+    </linearGradient>
+    <linearGradient id="srTopS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1C1810" stop-opacity="0.52"/>
+      <stop offset="38%"  stop-color="#1C1810" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C08" stop-opacity="0.38"/>
+    </linearGradient>
+    <radialGradient id="srKey" cx="50%" cy="38%" r="55%">
+      <stop offset="0%"   stop-color="#807060" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#5E5A56" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="srFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#363230"/>
+      <stop offset="100%" stop-color="#242018"/>
+    </linearGradient>
+
+    <!-- Side vignettes (same as wholesale) -->
+    <linearGradient id="vigL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="vigR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C8C8C8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#C8C8C8" stop-opacity="0.28"/>
+    </linearGradient>
+    <linearGradient id="vigB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#D0D0D0" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#D0D0D0" stop-opacity="0.22"/>
+    </linearGradient>
+
+    <!-- Gold gradient for hair and accents -->
+    <linearGradient id="goldA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#C9A96E"/>
+      <stop offset="50%"  stop-color="#E8C870"/>
+      <stop offset="100%" stop-color="#A07828"/>
+    </linearGradient>
+    <linearGradient id="goldB" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%"   stop-color="#D4B878"/>
+      <stop offset="100%" stop-color="#9A6820"/>
+    </linearGradient>
+
+    <!-- Heart glow -->
+    <radialGradient id="hrtGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#E8C870" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#C9A040" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#C9A040" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Icon panel glow -->
+    <radialGradient id="panelGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#7A6A50" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#3A3530" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Subtle glow filter for gold elements -->
+    <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+
+  <!-- ── BACKGROUND (wholesale tones) ─────────────────── -->
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#srBg)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#srTopS)"/>
+  <rect x="-308" y="-124" width="2057" height="829" fill="url(#srKey)"/>
+  <rect x="-308" y="448"  width="2057" height="257" fill="url(#srFloor)"/>
+  <rect x="-308" y="445"  width="2057" height="4"   fill="#14100C" opacity="0.32"/>
+
+  <!-- ══════════════════════════════════════════════
+       SUBTLE DIVIDING LINES between icon panels
+  ══════════════════════════════════════════════════ -->
+  <!-- Vertical centre divider -->
+  <line x1="720" y1="-40" x2="720" y2="625" stroke="#C9A96E" stroke-width="0.6" opacity="0.18"/>
+  <!-- Horizontal centre divider -->
+  <line x1="270" y1="290" x2="1170" y2="290" stroke="#C9A96E" stroke-width="0.6" opacity="0.18"/>
+
+  <!-- ══════════════════════════════════════════════
+       ICON 1 — TOP LEFT
+       Three Women With Flowing Hair (Community)
+  ══════════════════════════════════════════════════ -->
+  <g transform="translate(494, 63)">
+    <!-- Glow panel -->
+    <ellipse cx="112" cy="108" rx="100" ry="96" fill="url(#panelGlow)"/>
+
+    <!-- Left woman — dark hair, full body silhouette -->
+    <g stroke="#3A3530" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- Body -->
+      <path d="M 52,195 C 44,178 40,158 42,138 C 44,118 52,105 62,102 C 70,100 76,104 78,112" stroke-width="1.8"/>
+      <!-- Dress hem arc -->
+      <path d="M 38,195 C 44,200 56,202 68,202 C 76,202 82,200 86,196" stroke-width="1.6"/>
+      <!-- Neck -->
+      <line x1="62" y1="90" x2="62" y2="102" stroke-width="1.6"/>
+    </g>
+    <!-- Left hair (gold, flowing) -->
+    <g filter="url(#goldGlow)">
+      <path d="M 50,74 C 38,80 30,92 28,108 C 26,124 30,142 34,158 C 38,172 40,184 36,196" fill="url(#goldA)" stroke="none" opacity="0.90"/>
+      <path d="M 74,74 C 80,82 80,96 78,112 C 76,130 70,148 66,164 C 62,178 60,188 62,198" fill="none" stroke="url(#goldA)" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Face -->
+      <ellipse cx="62" cy="70" rx="16" ry="19" fill="none" stroke="#3A3530" stroke-width="1.8"/>
+    </g>
+
+    <!-- Centre woman — tallest, most prominent, gold hair -->
+    <g>
+      <!-- Gold hair cascading -->
+      <g filter="url(#goldGlow)">
+        <path d="M 98,34 C 88,42 84,58 86,76 C 88,94 90,116 86,138 C 82,160 76,178 72,196 C 76,200 84,202 94,202 C 104,202 112,200 116,196 C 112,178 106,160 102,138 C 98,116 100,94 102,76 C 104,58 108,42 108,34 Z"
+          fill="url(#goldA)" opacity="0.88"/>
+        <path d="M 94,32 C 86,40 82,56 84,74 C 86,92 90,114 86,136 C 82,158 76,178 72,196" fill="none" stroke="#E8C870" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
+        <path d="M 112,32 C 120,40 118,56 116,74 C 114,92 118,114 122,136 C 126,158 132,178 136,196" fill="none" stroke="#E8C870" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
+      </g>
+      <!-- Head -->
+      <ellipse cx="103" cy="30" rx="20" ry="22" fill="none" stroke="#3A3530" stroke-width="1.8"/>
+      <!-- Neck + body -->
+      <line x1="103" y1="52" x2="103" y2="68" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M 84,70 C 78,90 76,118 78,142 C 80,162 84,178 82,196" fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M 122,70 C 128,90 130,118 128,142 C 126,162 122,178 124,196" fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Dress base -->
+      <path d="M 72,196 C 80,204 92,207 103,207 C 114,207 126,204 134,196" fill="none" stroke="#3A3530" stroke-width="1.8"/>
+    </g>
+
+    <!-- Right woman — gold hair, slightly different angle -->
+    <g stroke="#3A3530" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <ellipse cx="154" cy="70" rx="16" ry="19" stroke-width="1.8"/>
+      <line x1="154" y1="89" x2="154" y2="102" stroke-width="1.6"/>
+      <path d="M 138,104 C 130,122 128,148 134,168 C 138,182 140,190 138,198" stroke-width="1.8"/>
+      <path d="M 170,104 C 178,122 180,148 174,168 C 170,182 168,190 170,198" stroke-width="1.8"/>
+      <path d="M 130,198 C 136,204 146,206 154,206 C 162,206 172,204 178,198" stroke-width="1.6"/>
+    </g>
+    <!-- Right hair gold -->
+    <g filter="url(#goldGlow)">
+      <path d="M 138,54 C 130,62 126,76 128,92 C 130,108 134,128 130,148 C 126,168 122,184 118,200 C 122,202 130,204 136,202" fill="url(#goldB)" opacity="0.85"/>
+      <path d="M 170,54 C 178,62 182,76 180,92 C 178,108 174,128 178,148 C 182,168 186,184 190,198" fill="none" stroke="url(#goldA)" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Arc uniting the three — hair strand sweep -->
+    <path d="M 36,196 C 68,210 103,212 138,210 C 158,208 174,204 190,196" fill="none" stroke="url(#goldA)" stroke-width="1.4" opacity="0.60"/>
+
+  </g>
+
+  <!-- ══════════════════════════════════════════════
+       ICON 2 — TOP RIGHT
+       Hands Holding Glowing Heart (Love)
+  ══════════════════════════════════════════════════ -->
+  <g transform="translate(894, 55)">
+    <!-- Glow halo behind heart -->
+    <ellipse cx="112" cy="106" rx="62" ry="56" fill="url(#hrtGlow)"/>
+
+    <!-- Two cupped hands (charcoal line art) -->
+    <g stroke="#4A4540" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-width="2.0">
+      <!-- Left hand cup -->
+      <path d="M 28,178 C 24,168 24,155 30,145 C 36,135 46,130 56,132 C 58,120 60,110 66,108 C 72,106 76,112 74,122 C 80,112 88,108 94,112 C 100,116 100,126 96,136 C 102,130 108,128 112,132 C 116,136 114,146 108,152"/>
+      <!-- Right hand cup -->
+      <path d="M 196,178 C 200,168 200,155 194,145 C 188,135 178,130 168,132 C 166,120 164,110 158,108 C 152,106 148,112 150,122 C 144,112 136,108 130,112 C 124,116 124,126 128,136 C 122,130 116,128 112,132"/>
+      <!-- Palm base left -->
+      <path d="M 28,178 C 40,188 64,196 90,196 C 100,196 110,194 112,192"/>
+      <!-- Palm base right -->
+      <path d="M 196,178 C 184,188 160,196 134,196 C 124,196 114,194 112,192"/>
+    </g>
+
+    <!-- Heart (gold, with highlight) -->
+    <g filter="url(#goldGlow)">
+      <path d="M 112,158 C 112,158 72,128 68,100 C 64,74 82,56 98,62 C 105,64 110,72 112,80 C 114,72 119,64 126,62 C 142,56 160,74 156,100 C 152,128 112,158 112,158 Z"
+        fill="url(#goldA)" opacity="0.92"/>
+      <!-- Heart highlight -->
+      <path d="M 86,72 C 78,76 74,86 76,98" fill="none" stroke="#FAEAAA" stroke-width="2.2" stroke-linecap="round" opacity="0.65"/>
+    </g>
+
+    <!-- Radiance lines above heart -->
+    <g stroke="url(#goldA)" stroke-linecap="round" opacity="0.55">
+      <line x1="112" y1="46" x2="112" y2="30" stroke-width="1.8"/>
+      <line x1="86"  y1="52" x2="78"  y2="38" stroke-width="1.5"/>
+      <line x1="138" y1="52" x2="146" y2="38" stroke-width="1.5"/>
+      <line x1="68"  y1="66" x2="56"  y2="56" stroke-width="1.3"/>
+      <line x1="156" y1="66" x2="168" y2="56" stroke-width="1.3"/>
+    </g>
+
+  </g>
+
+  <!-- ══════════════════════════════════════════════
+       ICON 3 — BOTTOM LEFT
+       Woman Empowering Another (Mentorship)
+  ══════════════════════════════════════════════════ -->
+  <g transform="translate(474, 320)">
+    <!-- Glow panel -->
+    <ellipse cx="132" cy="104" rx="110" ry="90" fill="url(#panelGlow)"/>
+
+    <!-- Taller woman LEFT — flowing gold hair, elegant line art -->
+    <g>
+      <!-- Gold hair -->
+      <g filter="url(#goldGlow)">
+        <path d="M 58,14 C 46,22 40,38 42,56 C 44,74 44,100 38,128 C 32,158 28,180 26,210 C 30,214 40,216 50,215 C 52,188 56,164 62,140 C 70,110 74,82 72,56 C 70,36 68,20 70,14 Z"
+          fill="url(#goldA)" opacity="0.88"/>
+        <path d="M 80,12 C 88,20 88,38 86,56 C 84,78 80,106 82,134 C 84,162 84,186 82,212" fill="none" stroke="#E8C870" stroke-width="1.8" stroke-linecap="round" opacity="0.68"/>
+      </g>
+      <!-- Head -->
+      <ellipse cx="65" cy="14" rx="19" ry="21" fill="none" stroke="#3A3530" stroke-width="1.8"/>
+      <!-- Neck -->
+      <line x1="65" y1="35" x2="65" y2="50" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Body -->
+      <path d="M 46,52 C 38,78 34,112 38,142 C 42,168 44,188 40,212" fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M 84,52 C 92,78 96,112 92,142 C 88,168 86,188 90,212" fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Dress sweep -->
+      <path d="M 24,210 C 36,220 52,224 65,224 C 78,224 90,220 96,212" fill="none" stroke="#3A3530" stroke-width="1.6"/>
+
+      <!-- Arm reaching RIGHT toward second figure -->
+      <path d="M 90,90 C 108,86 130,84 152,86 C 165,87 172,92 168,100 C 164,108 148,108 135,106 C 122,104 108,104 92,108"
+        fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Hand at end of arm -->
+      <path d="M 168,96 C 174,90 178,86 176,82 C 174,78 168,78 164,82" fill="none" stroke="#3A3530" stroke-width="1.6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Shorter woman RIGHT — dark hair, reaching back -->
+    <g>
+      <!-- Dark hair (charcoal) -->
+      <path d="M 196,30 C 188,38 184,52 186,68 C 188,84 190,104 186,124 C 182,144 178,162 178,184 C 182,188 190,190 198,189 C 200,168 204,148 206,126 C 208,104 208,82 206,64 C 204,48 202,36 196,30 Z"
+        fill="#3A3530" opacity="0.82"/>
+      <path d="M 220,28 C 226,38 224,54 222,70 C 220,88 216,110 218,130 C 220,150 222,168 220,186" fill="none" stroke="#3A3530" stroke-width="1.6" stroke-linecap="round" opacity="0.70"/>
+      <!-- Head (smaller) -->
+      <ellipse cx="208" cy="28" rx="17" ry="19" fill="none" stroke="#3A3530" stroke-width="1.8"/>
+      <!-- Body (shorter / smaller scale) -->
+      <line x1="208" y1="47" x2="208" y2="62" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M 192,65 C 186,86 184,112 188,136 C 192,156 192,174 190,192" fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M 224,65 C 230,86 232,112 228,136 C 224,156 224,174 226,192" fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M 182,192 C 190,200 200,204 208,204 C 216,204 226,200 232,192" fill="none" stroke="#3A3530" stroke-width="1.6"/>
+
+      <!-- Arm reaching LEFT toward mentor (smaller arm) -->
+      <path d="M 190,84 C 174,82 162,84 152,88" fill="none" stroke="#3A3530" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+
+    <!-- Hair strand line connecting their reaching gesture -->
+    <path d="M 92,96 C 112,92 132,90 152,88" fill="none" stroke="url(#goldA)" stroke-width="1.2" opacity="0.50"/>
+
+  </g>
+
+  <!-- ══════════════════════════════════════════════
+       ICON 4 — BOTTOM RIGHT
+       Globe With Hair Strands / Leaves (Global Impact)
+  ══════════════════════════════════════════════════ -->
+  <g transform="translate(900, 322)">
+    <!-- Glow panel -->
+    <ellipse cx="112" cy="108" rx="95" ry="88" fill="url(#panelGlow)"/>
+
+    <!-- Globe circle (charcoal) -->
+    <circle cx="112" cy="112" r="72" fill="none" stroke="#4A4540" stroke-width="2.0"/>
+
+    <!-- Latitude lines -->
+    <ellipse cx="112" cy="112" rx="72" ry="24" fill="none" stroke="#4A4540" stroke-width="1.3" opacity="0.70"/>
+    <ellipse cx="112" cy="112" rx="72" ry="46" fill="none" stroke="#4A4540" stroke-width="1.0" opacity="0.55"/>
+
+    <!-- Longitude lines (vertical arcs) -->
+    <path d="M 112,40 C 136,64 136,160 112,184" fill="none" stroke="#4A4540" stroke-width="1.3" opacity="0.70"/>
+    <path d="M 112,40 C 88,64 88,160 112,184" fill="none" stroke="#4A4540" stroke-width="1.3" opacity="0.70"/>
+    <path d="M 112,40 C 152,60 160,164 112,184" fill="none" stroke="#4A4540" stroke-width="1.0" opacity="0.50"/>
+    <path d="M 112,40 C 72,60 64,164 112,184" fill="none" stroke="#4A4540" stroke-width="1.0" opacity="0.50"/>
+
+    <!-- Gold hair strand wrapping around globe — left side sweep -->
+    <g filter="url(#goldGlow)">
+      <path d="M 112,40 C 78,28 42,36 24,62 C 8,86 12,118 28,140 C 44,162 72,172 100,176 C 112,178 120,184 112,184"
+        fill="none" stroke="url(#goldA)" stroke-width="3.0" stroke-linecap="round"/>
+      <!-- Hair wave detail on strand -->
+      <path d="M 60,46 C 50,56 44,70 46,84 C 48,98 56,108 52,120 C 48,132 40,140 42,152"
+        fill="none" stroke="#E8C870" stroke-width="1.6" stroke-linecap="round" opacity="0.62"/>
+    </g>
+
+    <!-- Gold leaf / hair frond at top-left of globe -->
+    <g filter="url(#goldGlow)" transform="translate(30, 28)">
+      <path d="M 20,42 C 14,30 10,16 18,8 C 26,0 40,4 42,18 C 44,30 36,42 28,50 C 22,56 16,60 20,70"
+        fill="url(#goldA)" opacity="0.88"/>
+      <path d="M 20,42 C 26,34 32,28 36,20" fill="none" stroke="#FAEAAA" stroke-width="1.5" stroke-linecap="round" opacity="0.60"/>
+    </g>
+
+    <!-- Small gold leaf bottom right -->
+    <g filter="url(#goldGlow)" transform="translate(156, 168) rotate(30)">
+      <path d="M 10,28 C 6,18 6,8 12,4 C 18,0 26,4 26,14 C 26,22 20,28 14,32 C 10,36 8,40 10,46"
+        fill="url(#goldB)" opacity="0.80"/>
+    </g>
+
+  </g>
+
+  <!-- ══════════════════════════════════════════════
+       VIGNETTES (wholesale style)
+  ══════════════════════════════════════════════════ -->
+  <rect x="-308" y="-124" width="350" height="829" fill="url(#vigL)"/>
+  <rect x="1398"  y="-124" width="351" height="829" fill="url(#vigR)"/>
+  <rect x="-308"  y="488"  width="2057" height="217" fill="url(#vigB)"/>
+  <!-- Top scrim -->
+  <rect x="-308" y="-124" width="2057" height="180" fill="#0D0804" opacity="0.32"/>
+
+</svg>
