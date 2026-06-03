@@ -2203,6 +2203,27 @@ first.parentNode.insertBefore(script, first);
   .osus-foundation-btn { width: 100%; justify-content: center; font-size: 15px; }
 }
 
+/* Hero text layout — left-aligned, SVG fills full screen */
+.osus-hero {
+  justify-content: flex-start !important;
+}
+.osus-hero-inner {
+  position: absolute !important;
+  top: 50% !important;
+  left: 80px !important;
+  transform: translateY(-50%) !important;
+  max-width: 480px !important;
+  padding: 0 !important;
+  text-align: left !important;
+  z-index: 3 !important;
+}
+.osus-hero-title {
+  font-size: clamp(32px, 4vw, 64px) !important;
+  margin-bottom: 0 !important;
+}
+.osus-hero-overlay {
+  background: linear-gradient(to right, rgba(15,10,6,0.78) 0%, rgba(15,10,6,0.45) 40%, rgba(15,10,6,0.08) 100%) !important;
+}
 
 @media (max-width: 768px) {
   .osus-hero {
