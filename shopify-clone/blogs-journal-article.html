@@ -1839,1320 +1839,195 @@ first.parentNode.insertBefore(script, first);
 <!-- END sections: header-group -->
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-      <div id="shopify-section-template--30023271383378__main" class="shopify-section">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<div id="shopify-section-template--article__main" class="shopify-section">
 
 <style>
-.ojnl * { box-sizing: border-box; }
-
-/* HERO */
-/* ── JOURNAL HERO — wholesale structure ── */
-.ojnl-hero {
-  position: relative;
-  height: 100vh;
-  min-height: 600px;
-  max-height: 880px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ojnl-hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 35%;
-  display: block;
-}
-.ojnl-hero-bg { display: none; }
-.ojnl-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(15,10,6,0.12) 0%, rgba(15,10,6,0.32) 100%);
-}
-.ojnl-hero-inner {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 4%;
-  z-index: 2;
-  text-align: left;
-  padding: 0 24px;
-  max-width: 30%;
-}
-.ojnl-hero-eyebrow {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: #C9A96E;
-  margin-bottom: 20px;
-  display: block;
-}
-.ojnl-hero-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(26px, 3.4vw, 50px);
-  font-weight: 300;
-  color: #FFFFFF;
-  line-height: 1.04;
-  margin-bottom: 0;
-}
-.ojnl-hero-title em { font-style: italic; color: #C9A96E; }
-.ojnl-hero-sub { display: none; }
-
-/* Mobile — wholesale mobile pattern */
-@media (max-width: 768px) {
-  .ojnl-hero { height: 84vh !important; min-height: 520px !important; overflow: hidden !important; background: #1C1810 !important; }
-  .ojnl-hero-img { object-fit: none !important; object-position: 48% 50% !important; transform: none !important; }
-  .ojnl-hero-inner {
-    position: absolute !important;
-    top: 0 !important; bottom: 0 !important;
-    left: 0 !important; right: 0 !important;
-    transform: none !important;
-    max-width: 100% !important;
-    padding: 72px 24px 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-  }
-  .ojnl-hero-eyebrow { margin-bottom: auto !important; }
-  .ojnl-hero-title { margin-top: auto !important; margin-bottom: 80px !important; }
-}
-
-/* SHARED */
-.ojnl-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-.ojnl-eyebrow {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 3.5px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 12px;
-  display: block;
-}
-.ojnl-section-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 44px;
-  font-weight: 300;
-  color: #2B2620;
-  line-height: 1.1;
-  margin-bottom: 8px;
-}
-.ojnl-section-title em { font-style: italic; }
-
-/* FEATURED */
-.ojnl-featured {
-  background: #F6F1E8;
-  padding: 80px 0;
-  border-bottom: 1px solid #E3D6C5;
-}
-.ojnl-featured-grid {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 2px;
-  margin-top: 48px;
-}
-.ojnl-feat-main {
-  position: relative;
-  overflow: hidden;
-  background: #DDD0C0;
-  display: block;
-  text-decoration: none;
-}
-.ojnl-feat-main-img {
-  width: 100%;
-  height: 520px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-.ojnl-feat-main:hover .ojnl-feat-main-img { transform: scale(1.03); }
-.ojnl-feat-main-ph {
-  width: 100%;
-  height: 520px;
-  background: linear-gradient(135deg, #D8CCB8 0%, #C4B49C 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ojnl-feat-main-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(26,20,14,0.75) 0%, transparent 50%);
-}
-.ojnl-feat-main-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 32px;
-}
-.ojnl-feat-tag {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 8px;
-  display: block;
-}
-.ojnl-feat-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 32px;
-  font-weight: 300;
-  color: #F6F1E8;
-  line-height: 1.15;
-  margin-bottom: 10px;
-}
-.ojnl-feat-excerpt {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  color: rgba(246,241,232,0.65);
-  line-height: 1.75;
-  margin-bottom: 16px;
-}
-.ojnl-feat-meta {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: rgba(246,241,232,0.45);
-  text-transform: uppercase;
-}
-
-.ojnl-feat-side {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.ojnl-feat-small {
-  position: relative;
-  overflow: hidden;
-  background: #DDD0C0;
-  flex: 1;
-  display: block;
-  text-decoration: none;
-}
-.ojnl-feat-small-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-  min-height: 200px;
-}
-.ojnl-feat-small:hover .ojnl-feat-small-img { transform: scale(1.04); }
-.ojnl-feat-small-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(26,20,14,0.72) 0%, transparent 55%);
-}
-.ojnl-feat-small-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px 22px;
-}
-.ojnl-feat-small-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 20px;
-  color: #F6F1E8;
-  line-height: 1.2;
-  margin-bottom: 6px;
-}
-.ojnl-feat-small-meta {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  color: rgba(246,241,232,0.45);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.ojnl-feat-ph {
-  width: 100%;
-  height: 100%;
-  min-height: 200px;
-  background: linear-gradient(135deg, #D8CCB8 0%, #C4B49C 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ojnl-feat-ph span {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  color: #9A8A7A;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-/* CATEGORIES */
-.ojnl-cats {
-  background: #2B2620;
-  padding: 0;
-  border-bottom: 1px solid rgba(182,138,69,0.2);
-}
-.ojnl-cats-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-  display: flex;
-  gap: 0;
-  overflow-x: auto;
-}
-.ojnl-cat-btn {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(246,241,232,0.45);
-  padding: 18px 24px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  text-decoration: none;
-  display: block;
-}
-.ojnl-cat-btn:hover {
-  color: #F6F1E8;
-  border-bottom-color: rgba(182,138,69,0.4);
-}
-.ojnl-cat-btn.active {
-  color: #B68A45;
-  border-bottom-color: #B68A45;
-}
-
-/* BLOG GRID */
-.ojnl-grid-section {
-  background: #FDFAF6;
-  padding: 80px 0;
-}
-.ojnl-grid-header {
-  margin-bottom: 48px;
-}
-.ojnl-blog-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-.ojnl-post-card {
-  display: block;
-  text-decoration: none;
-  background: #F6F1E8;
-  border: 1px solid #E3D6C5;
+.oart * { box-sizing: border-box; }
+.oart-back {
+  font-family: 'Montserrat', sans-serif; font-size: 9.5px;
+  font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: #B68A45; text-decoration: none;
+  border-bottom: 1.5px solid transparent;
   transition: border-color 0.2s;
+  margin-bottom: 32px; display: inline-block;
 }
-.ojnl-post-card:hover { border-color: #B68A45; }
-.ojnl-post-img-wrap {
-  position: relative;
-  overflow: hidden;
-  height: 240px;
-  background: #DDD0C0;
+.oart-back:hover { border-bottom-color: #B68A45; }
+.oart-hero {
+  background: linear-gradient(to right, #424040 0%, #555250 28%, #5E5A56 54%, #575350 78%, #4A4744 100%);
+  padding: 80px 0 64px; position: relative;
 }
-.ojnl-post-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
+.oart-hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: linear-gradient(to right, #B68A45, #E8C870, #B68A45); opacity: 0.5;
 }
-.ojnl-post-card:hover .ojnl-post-img-wrap img { transform: scale(1.04); }
-.ojnl-post-img-ph {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #D8CCB8 0%, #C4B49C 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.oart-hero-inner { max-width: 860px; margin: 0 auto; padding: 0 40px; }
+.oart-cat {
+  font-family: 'Montserrat', sans-serif; font-size: 9px;
+  font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  color: #C9A96E; margin-bottom: 20px; display: block;
 }
-.ojnl-post-img-ph span {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  color: #9A8A7A;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-.ojnl-post-body {
-  padding: 24px 24px 28px;
-}
-.ojnl-post-tag {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 8px;
-  display: block;
-}
-.ojnl-post-title {
+.oart-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 22px;
-  color: #2B2620;
-  line-height: 1.25;
-  margin-bottom: 10px;
+  font-size: clamp(32px, 4.5vw, 58px); font-weight: 300;
+  color: #FFFFFF; line-height: 1.08; margin-bottom: 28px;
 }
-.ojnl-post-excerpt {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  color: #7A6A5A;
-  line-height: 1.8;
-  margin-bottom: 18px;
+.oart-title em { font-style: italic; color: #C9A96E; }
+.oart-meta {
+  font-family: 'Montserrat', sans-serif; font-size: 10px;
+  font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
 }
-.ojnl-post-meta {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: #A0907E;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  display: block;
-}
-.ojnl-read-more {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #2B2620;
-  text-decoration: none;
-  border-bottom: 1.5px solid #2B2620;
-  padding-bottom: 2px;
-  transition: color 0.2s, border-color 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.ojnl-read-more:hover { color: #B68A45; border-color: #B68A45; }
-
-.ojnl-no-posts {
-  text-align: center;
-  padding: 64px 0;
+.oart-rule { width: 48px; height: 1px; background: rgba(182,138,69,0.5); margin: 24px 0 0; }
+.oart-body { background: #FDFAF6; padding: 72px 0 96px; }
+.oart-body-inner { max-width: 720px; margin: 0 auto; padding: 0 40px; }
+.oart-intro {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 22px;
-  font-style: italic;
-  color: #A0907E;
+  font-size: 22px; font-weight: 400; color: #2B2620;
+  line-height: 1.75; margin-bottom: 40px;
+  border-left: 3px solid #C9A96E; padding-left: 24px;
 }
-
-/* INSTAGRAM */
-.ojnl-instagram {
-  background: #F6F1E8;
-  padding: 80px 0;
-  border-top: 1px solid #E3D6C5;
-}
-.ojnl-ig-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-.ojnl-ig-handle {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: #B68A45;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 8px;
-  transition: opacity 0.2s;
-}
-.ojnl-ig-handle:hover { opacity: 0.7; }
-.ojnl-ig-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
-}
-.ojnl-ig-placeholder {
-  aspect-ratio: 1;
-  background: #E8E0D4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.ojnl-ig-placeholder span {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 8px;
-  color: #A0907E;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-#instafeed {
-  display: block;
-  width: 100%;
-}
-#instafeed a {
-  display: block;
-  aspect-ratio: 1;
-  overflow: hidden;
-  background: #E8E0D4;
-}
-#instafeed img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s;
-}
-#instafeed a:hover img { transform: scale(1.06); }
-
-/* YOUTUBE */
-.ojnl-youtube {
-  background: #2B2620;
-  padding: 80px 0;
-}
-.ojnl-yt-header {
-  text-align: center;
-  margin-bottom: 52px;
-}
-.ojnl-yt-title {
+.oart-section { margin-bottom: 44px; }
+.oart-section h2 {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 44px;
-  font-weight: 300;
-  color: #F6F1E8;
-  line-height: 1.1;
-  margin-bottom: 12px;
+  font-size: 30px; font-weight: 300; color: #2B2620;
+  line-height: 1.2; margin-bottom: 16px;
 }
-.ojnl-yt-title em { font-style: italic; color: #C9A96E; }
-.ojnl-yt-sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(246,241,232,0.5);
-  line-height: 1.8;
+.oart-section h2 em { font-style: italic; color: #B68A45; }
+.oart-section p {
+  font-family: 'Montserrat', sans-serif; font-size: 13.5px;
+  font-weight: 300; color: #5A4A3A; line-height: 1.95; margin-bottom: 18px;
 }
-.ojnl-yt-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+.oart-section ul { margin: 0 0 18px 0; padding-left: 20px; }
+.oart-section ul li {
+  font-family: 'Montserrat', sans-serif; font-size: 13.5px;
+  font-weight: 300; color: #5A4A3A; line-height: 1.95; margin-bottom: 8px;
 }
-.ojnl-yt-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(182,138,69,0.15);
-  overflow: hidden;
+.oart-tip {
+  background: #F0E8D8; border-left: 3px solid #C9A96E;
+  padding: 20px 24px; margin: 28px 0;
 }
-.ojnl-yt-thumb {
-  position: relative;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  background: rgba(255,255,255,0.05);
+.oart-tip p {
+  font-family: 'Montserrat', sans-serif; font-size: 12.5px;
+  font-weight: 500; color: #4A3A28; line-height: 1.7; margin: 0;
 }
-.ojnl-yt-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.oart-tip strong { color: #B68A45; }
+.oart-related { background: #F6F1E8; padding: 72px 0; border-top: 1px solid #E3D6C5; }
+.oart-related-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+.oart-related-eyebrow {
+  font-family: 'Montserrat', sans-serif; font-size: 9px;
+  font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase;
+  color: #B68A45; margin-bottom: 12px; display: block;
 }
-.ojnl-yt-thumb-ph {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.04);
-}
-.ojnl-yt-play {
-  width: 52px;
-  height: 52px;
-  border: 2px solid rgba(182,138,69,0.5);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ojnl-yt-play-triangle {
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 14px solid #B68A45;
-  margin-left: 4px;
-}
-.ojnl-yt-info {
-  padding: 18px 20px;
-}
-.ojnl-yt-card-title {
+.oart-related-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 19px;
-  color: #F6F1E8;
-  margin-bottom: 8px;
-  line-height: 1.3;
+  font-size: 36px; font-weight: 300; color: #2B2620;
+  margin-bottom: 40px; line-height: 1.1;
 }
-.ojnl-yt-card-desc {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11.5px;
-  font-weight: 300;
-  color: rgba(246,241,232,0.4);
-  line-height: 1.7;
-}
-.ojnl-yt-link {
-  display: block;
-  text-decoration: none;
-}
-
-/* TRAINING AND EVENTS */
-.ojnl-training {
-  background: #EDE5D8;
-  padding: 80px 0;
-}
-.ojnl-training-inner {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 48px;
-}
-.ojnl-training-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 44px;
-  font-weight: 300;
-  color: #2B2620;
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-.ojnl-training-title em { font-style: italic; }
-.ojnl-training-desc {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13.5px;
-  font-weight: 300;
-  color: #6B5A4A;
-  line-height: 1.85;
-}
-.ojnl-training-btn {
-  display: inline-flex;
-  align-items: center;
-  background: #2B2620;
-  color: #F6F1E8;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 14px 32px;
-  text-decoration: none;
-  transition: background 0.25s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.ojnl-training-btn:hover { background: #B68A45; color: #F6F1E8; }
-
-/* TRANSFORMATIONS */
-.ojnl-transforms {
-  background: #F6F1E8;
-  padding: 80px 0;
-  border-top: 1px solid #E3D6C5;
-}
-.ojnl-transforms-header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-.ojnl-transforms-sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
-  color: #7A6A5A;
-  line-height: 1.8;
-  margin-top: 8px;
-}
-.ojnl-transforms-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-}
-.ojnl-transform-card {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 3/4;
-  background: #DDD0C0;
-}
-.ojnl-transform-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-.ojnl-transform-card:hover img { transform: scale(1.04); }
-.ojnl-transform-ph {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #D8CCB8 0%, #C4B49C 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 8px;
-}
-.ojnl-transform-ph-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  color: #9A8A7A;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-.ojnl-transform-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(26,20,14,0.55) 0%, transparent 50%);
-}
-.ojnl-transform-caption {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 16px;
-  font-style: italic;
-  color: #F6F1E8;
-  line-height: 1.3;
-}
-
-/* FINAL CTA */
-.ojnl-cta {
-  background: #2B2620;
-  padding: 88px 0;
-}
-.ojnl-cta-inner {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 40px;
-  text-align: center;
-}
-.ojnl-cta-eyebrow {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 3.5px;
-  text-transform: uppercase;
-  color: #B68A45;
-  margin-bottom: 14px;
-  display: block;
-}
-.ojnl-cta-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 52px;
-  font-weight: 300;
-  color: #F6F1E8;
-  line-height: 1.1;
-  margin-bottom: 14px;
-}
-.ojnl-cta-title em { font-style: italic; color: #C9A96E; }
-.ojnl-cta-sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(246,241,232,0.55);
-  line-height: 1.85;
-  margin-bottom: 40px;
-}
-.ojnl-cta-btns {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.ojnl-cta-btn-gold {
-  display: inline-flex;
-  align-items: center;
-  background: #B68A45;
-  color: #F6F1E8;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 14px 28px;
-  text-decoration: none;
-  transition: background 0.25s;
-  white-space: nowrap;
-}
-.ojnl-cta-btn-gold:hover { background: #9A7538; color: #F6F1E8; }
-.ojnl-cta-btn-out {
-  display: inline-flex;
-  align-items: center;
-  background: transparent;
-  color: rgba(246,241,232,0.75);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 13px 28px;
-  text-decoration: none;
-  border: 1.5px solid rgba(246,241,232,0.3);
-  transition: all 0.25s;
-  white-space: nowrap;
-}
-.ojnl-cta-btn-out:hover { border-color: #B68A45; color: #B68A45; }
-
-/* RESPONSIVE */
-@media (max-width: 1100px) {
-  .ojnl-featured-grid { grid-template-columns: 1fr; }
-  .ojnl-feat-side { flex-direction: row; }
-  .ojnl-feat-small { min-height: 260px; }
-  .ojnl-blog-grid { grid-template-columns: repeat(2, 1fr); }
-  .ojnl-yt-grid { grid-template-columns: repeat(2, 1fr); }
-  .ojnl-ig-grid { grid-template-columns: repeat(4, 1fr); }
-  .ojnl-transforms-grid { grid-template-columns: repeat(2, 1fr); }
-  .ojnl-training-inner { grid-template-columns: 1fr; gap: 28px; }
-}
+.oart-related-title em { font-style: italic; }
 @media (max-width: 768px) {
-  .ojnl-hero { height: 380px; }
-  .ojnl-hero-title { font-size: 44px; }
-  .ojnl-inner { padding: 0 24px; }
-  .ojnl-blog-grid { grid-template-columns: 1fr; }
-  .ojnl-yt-grid { grid-template-columns: 1fr; }
-  .ojnl-ig-grid { grid-template-columns: repeat(3, 1fr); }
-  .ojnl-feat-side { flex-direction: column; }
-  .ojnl-cats-inner { padding: 0 24px; }
-  .ojnl-section-title { font-size: 34px; }
-  .ojnl-yt-title { font-size: 34px; }
-  .ojnl-cta-title { font-size: 38px; }
-  .ojnl-transforms-grid { grid-template-columns: repeat(2, 1fr); }
-  .ojnl-cta-inner { padding: 0 24px; }
-  .ojnl-featured { padding: 56px 0; }
-  .ojnl-grid-section { padding: 56px 0; }
-  .ojnl-instagram { padding: 56px 0; }
-  .ojnl-youtube { padding: 56px 0; }
-  .ojnl-training { padding: 56px 0; }
-  .ojnl-transforms { padding: 56px 0; }
-  .ojnl-cta { padding: 64px 0; }
+  .oart-hero { padding: 56px 0 48px; }
+  .oart-hero-inner, .oart-body-inner, .oart-related-inner { padding: 0 24px; }
+  .oart-title { font-size: clamp(28px, 8vw, 40px); }
+  .oart-intro { font-size: 18px; }
 }
 </style>
 
-<div class="ojnl">
-
-  <div class="ojnl-hero">
-    <img class="ojnl-hero-img" src="/heroes/journal-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
-    <div class="ojnl-hero-overlay"></div>
-    <div class="ojnl-hero-inner">
-      <span class="ojnl-hero-eyebrow">Journal</span>
-      <h1 class="ojnl-hero-title">
-        The OlivHairSupply <em>Edit</em>
-      </h1>
+<div class="oart">
+  <div class="oart-hero">
+    <div class="oart-hero-inner">
+      <a href="/blogs/journal" class="oart-back">&#8592; Back to Journal</a>
+      <span class="oart-cat" id="oart-cat"></span>
+      <h1 class="oart-title" id="oart-title">Loading&#8230;</h1>
+      <span class="oart-meta" id="oart-meta"></span>
+      <div class="oart-rule"></div>
     </div>
   </div>
-
-  
-  <div class="ojnl-featured">
-    <div class="ojnl-inner">
-      <span class="ojnl-eyebrow">Featured</span>
-      <h2 class="ojnl-section-title">Latest from the <em>Edit</em></h2>
-      <div class="ojnl-featured-grid">
-
-        
-        
-
-        
-          <div class="ojnl-feat-main">
-            <div class="ojnl-feat-main-ph">
-              <div class="ojnl-feat-ph"><span>Featured Post</span></div>
-            </div>
-            <div class="ojnl-feat-main-overlay"></div>
-            <div class="ojnl-feat-main-info">
-              <span class="ojnl-feat-tag">Journal</span>
-              <div class="ojnl-feat-title">Your first article will appear here</div>
-              <p class="ojnl-feat-excerpt">Add your first blog post in the Shopify admin under Online Store, Blogs, Journal.</p>
-            </div>
-          </div>
-        
-
-        <div class="ojnl-feat-side">
-          
-            <div class="ojnl-feat-small">
-              <div class="ojnl-feat-ph"><span>Article 2</span></div>
-            </div>
-            <div class="ojnl-feat-small">
-              <div class="ojnl-feat-ph"><span>Article 3</span></div>
-            </div>
-          
-        </div>
-
-      </div>
+  <div class="oart-body">
+    <div class="oart-body-inner" id="oart-body"></div>
+  </div>
+  <div class="oart-related">
+    <div class="oart-related-inner">
+      <span class="oart-related-eyebrow">Keep Reading</span>
+      <h2 class="oart-related-title">More from the <em>Journal</em></h2>
+      <div class="ojnl-blog-grid" id="oart-related"></div>
     </div>
   </div>
-
-  
-  <div class="ojnl-cats">
-    <div class="ojnl-cats-inner">
-      <a href="javascript:void(0)" class="ojnl-cat-btn active" data-filter="all" onclick="ojnlFilter(event,'all')" data-en="All" data-de="Alle" data-es="Todo">All</a>
-      <a href="javascript:void(0)" class="ojnl-cat-btn" data-filter="hair-care" onclick="ojnlFilter(event,'hair-care')" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</a>
-      <a href="javascript:void(0)" class="ojnl-cat-btn" data-filter="styling-tips" onclick="ojnlFilter(event,'styling-tips')" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</a>
-      <a href="javascript:void(0)" class="ojnl-cat-btn" data-filter="biziluxe-collections" onclick="ojnlFilter(event,'biziluxe-collections')" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</a>
-      <a href="javascript:void(0)" class="ojnl-cat-btn" data-filter="training-education" onclick="ojnlFilter(event,'training-education')" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</a>
-      <a href="javascript:void(0)" class="ojnl-cat-btn" data-filter="events" onclick="ojnlFilter(event,'events')" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</a>
-      <a href="javascript:void(0)" class="ojnl-cat-btn" data-filter="transformations" onclick="ojnlFilter(event,'transformations')" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</a>
-    </div>
-  </div>
-
-  <div class="ojnl-grid-section">
-    <div class="ojnl-inner">
-      <div class="ojnl-grid-header">
-        <span class="ojnl-eyebrow" id="ojnl-grid-eyebrow">All Articles</span>
-        <h2 class="ojnl-section-title">Read the <em>Edit</em></h2>
-      </div>
-
-      <div class="ojnl-blog-grid" id="ojnl-blog-grid">
-
-        <!-- ── HAIR CARE ───────────────────────────────────── -->
-        <a class="ojnl-post-card" href="/blogs/journal/hair-care-salon-fresh" data-category="hair-care">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>HAIR CARE</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</span>
-            <div class="ojnl-post-title" data-en="How to Keep Your Extensions Looking Salon Fresh" data-de="So halten Sie Ihre Extensions in Salon-Qualität" data-es="Cómo mantener tus extensiones con acabado de salón">How to Keep Your Extensions Looking Salon Fresh</div>
-            <p class="ojnl-post-excerpt" data-en="Learn the professional care routines that extend the life of your BiziLuxe extensions by months." data-de="Lernen Sie die professionellen Pflegeroutinen, die die Lebensdauer Ihrer BiziLuxe Extensions um Monate verlängern." data-es="Aprende las rutinas de cuidado profesional que prolongan la vida de tus extensiones BiziLuxe por meses.">Learn the professional care routines that extend the life of your BiziLuxe extensions by months.</p>
-            <span class="ojnl-post-meta" data-en="June 2025 · 5 min read" data-de="Juni 2025 · 5 Min. Lesezeit" data-es="Junio 2025 · 5 min de lectura">June 2025 · 5 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/hair-care-washing-right-way" data-category="hair-care">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>HAIR CARE</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</span>
-            <div class="ojnl-post-title" data-en="Washing Your Hair Extensions the Right Way" data-de="Haarverlängerungen richtig waschen" data-es="Cómo lavar tus extensiones correctamente">Washing Your Hair Extensions the Right Way</div>
-            <p class="ojnl-post-excerpt" data-en="The wrong wash routine can cut your extension lifespan in half. Here is what the professionals do." data-de="Die falsche Waschgewohnheit kann die Lebensdauer Ihrer Extensions halbieren. Das empfehlen die Profis." data-es="Una rutina de lavado incorrecta puede reducir a la mitad la vida de tus extensiones. Esto es lo que hacen los profesionales.">The wrong wash routine can cut your extension lifespan in half. Here is what the professionals do.</p>
-            <span class="ojnl-post-meta" data-en="May 2025 · 4 min read" data-de="Mai 2025 · 4 Min. Lesezeit" data-es="Mayo 2025 · 4 min de lectura">May 2025 · 4 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/hair-care-heat-protection" data-category="hair-care">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>HAIR CARE</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</span>
-            <div class="ojnl-post-title" data-en="Heat Protection: What Your Extensions Really Need" data-de="Hitzeschutz: Was Ihre Extensions wirklich brauchen" data-es="Protección térmica: lo que tus extensiones realmente necesitan">Heat Protection: What Your Extensions Really Need</div>
-            <p class="ojnl-post-excerpt" data-en="Before you pick up that curling iron, understand how to protect your investment from heat damage." data-de="Bevor Sie zum Lockenstab greifen, sollten Sie wissen, wie Sie Ihre Investition vor Hitzeschäden schützen." data-es="Antes de usar el rizador, entiende cómo proteger tu inversión del daño por calor.">Before you pick up that curling iron, understand how to protect your investment from heat damage.</p>
-            <span class="ojnl-post-meta" data-en="April 2025 · 4 min read" data-de="April 2025 · 4 Min. Lesezeit" data-es="Abril 2025 · 4 min de lectura">April 2025 · 4 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <!-- ── STYLING TIPS ─────────────────────────────────── -->
-        <a class="ojnl-post-card" href="/blogs/journal/styling-tips-5-styles" data-category="styling-tips">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>STYLING TIPS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</span>
-            <div class="ojnl-post-title" data-en="5 Styles That Look Better With Extensions" data-de="5 Looks, die mit Extensions besser aussehen" data-es="5 estilos que lucen mejor con extensiones">5 Styles That Look Better With Extensions</div>
-            <p class="ojnl-post-excerpt" data-en="From sleek ponytails to voluminous blowouts — discover styles that are made for added length and volume." data-de="Von glatten Pferdeschwänzen bis hin zu voluminösen Blowouts — entdecken Sie Styles, die für mehr Länge gemacht sind." data-es="Desde colas de caballo elegantes hasta voluminosos blow-outs, descubre estilos creados para mayor longitud y volumen.">From sleek ponytails to voluminous blowouts — discover styles that are made for added length and volume.</p>
-            <span class="ojnl-post-meta" data-en="June 2025 · 6 min read" data-de="Juni 2025 · 6 Min. Lesezeit" data-es="Junio 2025 · 6 min de lectura">June 2025 · 6 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/styling-tips-blending" data-category="styling-tips">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>STYLING TIPS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</span>
-            <div class="ojnl-post-title" data-en="How to Blend Extensions With Your Natural Hair" data-de="Wie Sie Extensions mit Ihrem natürlichen Haar kombinieren" data-es="Cómo combinar extensiones con tu cabello natural">How to Blend Extensions With Your Natural Hair</div>
-            <p class="ojnl-post-excerpt" data-en="The secret to undetectable extensions lies in the blend. Our master educators share their technique." data-de="Das Geheimnis unentdeckbarer Extensions liegt in der Mischung. Unsere Experten teilen ihre Technik." data-es="El secreto de las extensiones indetectables está en la combinación. Nuestros educadores comparten su técnica.">The secret to undetectable extensions lies in the blend. Our master educators share their technique.</p>
-            <span class="ojnl-post-meta" data-en="May 2025 · 5 min read" data-de="Mai 2025 · 5 Min. Lesezeit" data-es="Mayo 2025 · 5 min de lectura">May 2025 · 5 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/styling-tips-overnight" data-category="styling-tips">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>STYLING TIPS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</span>
-            <div class="ojnl-post-title" data-en="Overnight Styles That Protect Your Extensions" data-de="Overnight-Styles, die Ihre Extensions schützen" data-es="Peinados nocturnos que protegen tus extensiones">Overnight Styles That Protect Your Extensions</div>
-            <p class="ojnl-post-excerpt" data-en="Rest without worry. These protective night routines keep your extensions smooth and tangle-free each morning." data-de="Schlafen Sie sorglos. Diese Nachtpflegeroutinen halten Ihre Extensions jeden Morgen glatt und verknäuelungsfrei." data-es="Descansa sin preocupaciones. Estas rutinas nocturnas mantienen tus extensiones suaves y sin enredos.">Rest without worry. These protective night routines keep your extensions smooth and tangle-free each morning.</p>
-            <span class="ojnl-post-meta" data-en="April 2025 · 4 min read" data-de="April 2025 · 4 Min. Lesezeit" data-es="Abril 2025 · 4 min de lectura">April 2025 · 4 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <!-- ── BIZILUXE COLLECTIONS ─────────────────────────── -->
-        <a class="ojnl-post-card" href="/blogs/journal/biziluxe-signature-clip-in" data-category="biziluxe-collections">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>BIZILUXE</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</span>
-            <div class="ojnl-post-title" data-en="Introducing the BiziLuxe Signature Clip-In Set" data-de="Die BiziLuxe Signature Clip-In Kollektion" data-es="Presentamos el Set Signature Clip-In de BiziLuxe">Introducing the BiziLuxe Signature Clip-In Set</div>
-            <p class="ojnl-post-excerpt" data-en="Our most requested launch yet — a complete clip-in collection engineered for luxury, longevity and effortless styling." data-de="Unser meistgefragter Launch — eine vollständige Clip-In Kollektion für Luxus, Langlebigkeit und müheloses Styling." data-es="Nuestro lanzamiento más solicitado — una colección completa de clip-ins diseñada para lujo, longevidad y estilismo sin esfuerzo.">Our most requested launch yet — a complete clip-in collection engineered for luxury, longevity and effortless styling.</p>
-            <span class="ojnl-post-meta" data-en="June 2025 · 3 min read" data-de="Juni 2025 · 3 Min. Lesezeit" data-es="Junio 2025 · 3 min de lectura">June 2025 · 3 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/biziluxe-behind-collection" data-category="biziluxe-collections">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>BIZILUXE</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</span>
-            <div class="ojnl-post-title" data-en="Behind the Collection: How BiziLuxe Hair is Sourced" data-de="Hinter der Kollektion: Wie BiziLuxe Haar bezogen wird" data-es="Detrás de la colección: cómo se obtiene el cabello BiziLuxe">Behind the Collection: How BiziLuxe Hair is Sourced</div>
-            <p class="ojnl-post-excerpt" data-en="Quality begins at the source. We trace the journey of every BiziLuxe strand from origin to salon." data-de="Qualität beginnt an der Quelle. Wir verfolgen die Reise jeder BiziLuxe Strähne vom Ursprung bis zum Salon." data-es="La calidad empieza en el origen. Trazamos el recorrido de cada hebra BiziLuxe desde su origen hasta el salón.">Quality begins at the source. We trace the journey of every BiziLuxe strand from origin to salon.</p>
-            <span class="ojnl-post-meta" data-en="May 2025 · 5 min read" data-de="Mai 2025 · 5 Min. Lesezeit" data-es="Mayo 2025 · 5 min de lectura">May 2025 · 5 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/biziluxe-new-arrivals" data-category="biziluxe-collections">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>BIZILUXE</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</span>
-            <div class="ojnl-post-title" data-en="New Arrivals: Extended Lengths Now Available" data-de="Neuheiten: Erweiterte Längen jetzt erhältlich" data-es="Novedades: nuevas longitudes ahora disponibles">New Arrivals: Extended Lengths Now Available</div>
-            <p class="ojnl-post-excerpt" data-en="Longer, fuller, bolder. The BiziLuxe range now includes lengths up to 28 inches for maximum impact." data-de="Länger, voller, kühner. Die BiziLuxe Range umfasst jetzt Längen bis zu 71 cm für maximale Wirkung." data-es="Más largo, más lleno, más atrevido. La gama BiziLuxe ahora incluye longitudes de hasta 71 cm para el máximo impacto.">Longer, fuller, bolder. The BiziLuxe range now includes lengths up to 28 inches for maximum impact.</p>
-            <span class="ojnl-post-meta" data-en="April 2025 · 3 min read" data-de="April 2025 · 3 Min. Lesezeit" data-es="Abril 2025 · 3 min de lectura">April 2025 · 3 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <!-- ── TRAINING AND EDUCATION ───────────────────────── -->
-        <a class="ojnl-post-card" href="/blogs/journal/training-academy-overview" data-category="training-education">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRAINING</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</span>
-            <div class="ojnl-post-title" data-en="What to Expect at the OlivHairSupply Academy" data-de="Was Sie bei der OlivHairSupply Academy erwartet" data-es="Qué esperar en la Academia OlivHairSupply">What to Expect at the OlivHairSupply Academy</div>
-            <p class="ojnl-post-excerpt" data-en="A full breakdown of our professional certification programme — from beginner foundation to master level." data-de="Eine vollständige Übersicht unseres professionellen Zertifizierungsprogramms — vom Einsteiger bis zum Meister." data-es="Un desglose completo de nuestro programa de certificación profesional, desde nivel principiante hasta maestro.">A full breakdown of our professional certification programme — from beginner foundation to master level.</p>
-            <span class="ojnl-post-meta" data-en="June 2025 · 6 min read" data-de="Juni 2025 · 6 Min. Lesezeit" data-es="Junio 2025 · 6 min de lectura">June 2025 · 6 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/training-why-certification" data-category="training-education">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRAINING</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</span>
-            <div class="ojnl-post-title" data-en="Why Certification Changes Your Career" data-de="Warum Zertifizierung Ihre Karriere verändert" data-es="Por qué la certificación transforma tu carrera">Why Certification Changes Your Career</div>
-            <p class="ojnl-post-excerpt" data-en="Certified extensionists earn more, build faster and retain clients longer. Here is what the data shows." data-de="Zertifizierte Extensionisten verdienen mehr, wachsen schneller und binden Kunden länger. Das zeigen die Daten." data-es="Los extensionistas certificados ganan más, crecen más rápido y retienen clientes durante más tiempo. Así lo muestran los datos.">Certified extensionists earn more, build faster and retain clients longer. Here is what the data shows.</p>
-            <span class="ojnl-post-meta" data-en="May 2025 · 5 min read" data-de="Mai 2025 · 5 Min. Lesezeit" data-es="Mayo 2025 · 5 min de lectura">May 2025 · 5 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/training-master-educators" data-category="training-education">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRAINING</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</span>
-            <div class="ojnl-post-title" data-en="Meet Our Master Educators" data-de="Lernen Sie unsere Masterausbilder kennen" data-es="Conoce a nuestros educadores maestros">Meet Our Master Educators</div>
-            <p class="ojnl-post-excerpt" data-en="The team behind the training — experienced, passionate and dedicated to your professional development." data-de="Das Team hinter der Ausbildung — erfahren, leidenschaftlich und Ihrer beruflichen Entwicklung verpflichtet." data-es="El equipo detrás de la formación: experimentado, apasionado y comprometido con tu desarrollo profesional.">The team behind the training — experienced, passionate and dedicated to your professional development.</p>
-            <span class="ojnl-post-meta" data-en="April 2025 · 4 min read" data-de="April 2025 · 4 Min. Lesezeit" data-es="Abril 2025 · 4 min de lectura">April 2025 · 4 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <!-- ── EVENTS ───────────────────────────────────────── -->
-        <a class="ojnl-post-card" href="/blogs/journal/events-masterclass-advanced" data-category="events">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>EVENTS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</span>
-            <div class="ojnl-post-title" data-en="Upcoming Masterclass: Advanced Extension Techniques" data-de="Kommende Masterclass: Fortgeschrittene Extension-Techniken" data-es="Próxima Masterclass: Técnicas Avanzadas de Extensiones">Upcoming Masterclass: Advanced Extension Techniques</div>
-            <p class="ojnl-post-excerpt" data-en="Limited seats for our intensive one-day masterclass covering the latest professional application methods." data-de="Begrenzte Plätze für unsere intensive eintägige Masterclass mit den neuesten professionellen Applikationsmethoden." data-es="Plazas limitadas para nuestra masterclass intensiva de un día sobre los últimos métodos de aplicación profesional.">Limited seats for our intensive one-day masterclass covering the latest professional application methods.</p>
-            <span class="ojnl-post-meta" data-en="July 2025 · 2 min read" data-de="Juli 2025 · 2 Min. Lesezeit" data-es="Julio 2025 · 2 min de lectura">July 2025 · 2 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/events-european-hair-show" data-category="events">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>EVENTS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</span>
-            <div class="ojnl-post-title" data-en="OlivHairSupply at the European Hair Show 2025" data-de="OlivHairSupply auf der European Hair Show 2025" data-es="OlivHairSupply en el European Hair Show 2025">OlivHairSupply at the European Hair Show 2025</div>
-            <p class="ojnl-post-excerpt" data-en="We are exhibiting at Europe's largest professional hair event. Come find us at Stand 42B — we would love to meet you." data-de="Wir stellen auf Europas größter professioneller Haarmesse aus. Besuchen Sie uns an Stand 42B." data-es="Exhibimos en el evento de cabello profesional más grande de Europa. Encuéntranos en el Stand 42B.">We are exhibiting at Europe's largest professional hair event. Come find us at Stand 42B — we would love to meet you.</p>
-            <span class="ojnl-post-meta" data-en="June 2025 · 3 min read" data-de="Juni 2025 · 3 Min. Lesezeit" data-es="Junio 2025 · 3 min de lectura">June 2025 · 3 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/events-client-evening" data-category="events">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>EVENTS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</span>
-            <div class="ojnl-post-title" data-en="Exclusive Client Evening — By Invitation" data-de="Exklusiver Kundenabend — auf Einladung" data-es="Velada exclusiva para clientes — por invitación">Exclusive Client Evening — By Invitation</div>
-            <p class="ojnl-post-excerpt" data-en="An intimate evening of new collections, expert styling and private consultations. Reserve your place early." data-de="Ein exklusiver Abend mit neuen Kollektionen, Expertenberatung und privaten Konsultationen. Reservieren Sie frühzeitig." data-es="Una velada íntima con nuevas colecciones, estilismo experto y consultas privadas. Reserva tu lugar con antelación.">An intimate evening of new collections, expert styling and private consultations. Reserve your place early.</p>
-            <span class="ojnl-post-meta" data-en="May 2025 · 2 min read" data-de="Mai 2025 · 2 Min. Lesezeit" data-es="Mayo 2025 · 2 min de lectura">May 2025 · 2 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <!-- ── TRANSFORMATIONS ─────────────────────────────── -->
-        <a class="ojnl-post-card" href="/blogs/journal/transformations-sofia-story" data-category="transformations">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRANSFORMATIONS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</span>
-            <div class="ojnl-post-title" data-en="From Fine to Full: Sofia's Story" data-de="Von fein zu voll: Sofias Geschichte" data-es="De fino a lleno: la historia de Sofía">From Fine to Full: Sofia's Story</div>
-            <p class="ojnl-post-excerpt" data-en="After years of searching for volume, Sofia found her answer in BiziLuxe. See the remarkable transformation." data-de="Nach Jahren der Suche nach Volumen fand Sofia ihre Antwort bei BiziLuxe. Sehen Sie die beeindruckende Verwandlung." data-es="Después de años buscando volumen, Sofía encontró su respuesta en BiziLuxe. Mira la notable transformación.">After years of searching for volume, Sofia found her answer in BiziLuxe. See the remarkable transformation.</p>
-            <span class="ojnl-post-meta" data-en="June 2025 · 4 min read" data-de="Juni 2025 · 4 Min. Lesezeit" data-es="Junio 2025 · 4 min de lectura">June 2025 · 4 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/transformations-wedding" data-category="transformations">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRANSFORMATIONS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</span>
-            <div class="ojnl-post-title" data-en="Wedding Ready: How Extensions Completed the Look" data-de="Hochzeitsfertig: Wie Extensions den Look vollendeten" data-es="Lista para la boda: cómo las extensiones completaron el look">Wedding Ready: How Extensions Completed the Look</div>
-            <p class="ojnl-post-excerpt" data-en="For her wedding day, nothing less than perfection would do. See how BiziLuxe delivered exactly that." data-de="Für ihren Hochzeitstag war nur Perfektion gut genug. Sehen Sie, wie BiziLuxe genau das geliefert hat." data-es="Para su día de boda, nada menos que la perfección era suficiente. Descubre cómo BiziLuxe lo logró.">For her wedding day, nothing less than perfection would do. See how BiziLuxe delivered exactly that.</p>
-            <span class="ojnl-post-meta" data-en="May 2025 · 3 min read" data-de="Mai 2025 · 3 Min. Lesezeit" data-es="Mayo 2025 · 3 min de lectura">May 2025 · 3 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-        <a class="ojnl-post-card" href="/blogs/journal/transformations-before-after" data-category="transformations">
-          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRANSFORMATIONS</span></div></div>
-          <div class="ojnl-post-body">
-            <span class="ojnl-post-tag" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</span>
-            <div class="ojnl-post-title" data-en="Before and After: The Power of Clip-Ins" data-de="Vorher und Nachher: Die Kraft der Clip-Ins" data-es="Antes y después: el poder de los clip-ins">Before and After: The Power of Clip-Ins</div>
-            <p class="ojnl-post-excerpt" data-en="A 20-minute application. A complete transformation. This is what BiziLuxe clip-ins can do for you." data-de="20 Minuten Applikation. Eine vollständige Verwandlung. Das können BiziLuxe Clip-Ins für Sie tun." data-es="20 minutos de aplicación. Una transformación completa. Esto es lo que los clip-ins BiziLuxe pueden hacer por ti.">A 20-minute application. A complete transformation. This is what BiziLuxe clip-ins can do for you.</p>
-            <span class="ojnl-post-meta" data-en="April 2025 · 3 min read" data-de="April 2025 · 3 Min. Lesezeit" data-es="Abril 2025 · 3 min de lectura">April 2025 · 3 min read</span>
-            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
-          </div>
-        </a>
-
-      </div><!-- end ojnl-blog-grid -->
-    </div>
-  </div>
-
-  <script>
-  (function() {
-    // ── Language helper ──────────────────────────────────────
-    function ojnlGetLang() {
-      try { return localStorage.getItem('ohs-lang') || 'en'; } catch(e) { return 'en'; }
-    }
-
-    // ── Apply translations to all [data-en] elements ─────────
-    function ojnlApplyTranslations() {
-      var lang = ojnlGetLang();
-      document.querySelectorAll('[data-en]').forEach(function(el) {
-        var t = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
-        if (t) el.textContent = t;
-      });
-      // Update grid eyebrow for current active filter
-      var active = document.querySelector('.ojnl-cat-btn.active');
-      if (active) {
-        var filter = active.getAttribute('data-filter') || 'all';
-        ojnlUpdateEyebrow(filter, lang);
-      }
-    }
-
-    // ── Update section eyebrow based on active category ──────
-    var ojnlEyebrows = {
-      all:                    { en: 'All Articles',           de: 'Alle Artikel',              es: 'Todos los Artículos' },
-      'hair-care':            { en: 'Hair Care',              de: 'Haarpflege',                es: 'Cuidado del Cabello' },
-      'styling-tips':         { en: 'Styling Tips',           de: 'Styling-Tipps',             es: 'Consejos de Estilo' },
-      'biziluxe-collections': { en: 'BiziLuxe Collections',  de: 'BiziLuxe Kollektionen',     es: 'Colecciones BiziLuxe' },
-      'training-education':   { en: 'Training and Education', de: 'Ausbildung & Schulung',     es: 'Formación y Educación' },
-      'events':               { en: 'Events',                 de: 'Veranstaltungen',           es: 'Eventos' },
-      'transformations':      { en: 'Transformations',        de: 'Verwandlungen',             es: 'Transformaciones' }
-    };
-
-    function ojnlUpdateEyebrow(filter, lang) {
-      var eyebrow = document.getElementById('ojnl-grid-eyebrow');
-      if (!eyebrow) return;
-      var h = ojnlEyebrows[filter] || ojnlEyebrows.all;
-      eyebrow.textContent = h[lang] || h.en;
-    }
-
-    // ── Category filter ──────────────────────────────────────
-    window.ojnlFilter = function(e, cat) {
-      e.preventDefault();
-      document.querySelectorAll('.ojnl-cat-btn').forEach(function(b) { b.classList.remove('active'); });
-      e.currentTarget.classList.add('active');
-      document.querySelectorAll('.ojnl-post-card').forEach(function(card) {
-        card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
-      });
-      ojnlUpdateEyebrow(cat, ojnlGetLang());
-    };
-
-    // ── Save lang on locale selector change ──────────────────
-    document.querySelectorAll('select[name="locale_code"]').forEach(function(sel) {
-      sel.addEventListener('change', function() {
-        try { localStorage.setItem('ohs-lang', this.value); } catch(e) {}
-        setTimeout(ojnlApplyTranslations, 50);
-      });
-    });
-
-    // ── Run on load ──────────────────────────────────────────
-    document.addEventListener('DOMContentLoaded', ojnlApplyTranslations);
-    if (document.readyState !== 'loading') ojnlApplyTranslations();
-  })();
-  </script>
-
-  
-  <div class="ojnl-instagram">
-    <div class="ojnl-inner">
-      <div class="ojnl-ig-header">
-        <span class="ojnl-eyebrow" style="display:block;text-align:center;">Follow the Journey</span>
-        <h2 class="ojnl-section-title" style="text-align:center;">@olivhairsupply</h2>
-        <a href="https://instagram.com/olivhairsupply" class="ojnl-ig-handle" target="_blank" rel="noopener noreferrer">
-          Follow on Instagram
-        </a>
-      </div>
-      <div id="instafeed" style="width:100%">
-        <behold-widget feed-id="gaTEDtU3KmgCK5fpgMCR"></behold-widget>
-        <script type="module" src="https://w.behold.so/widget.js"></script>
-      </div>
-      
-    </div>
-  </div>
-
-  
-  <div class="ojnl-youtube">
-    <div class="ojnl-inner">
-      <div class="ojnl-yt-header">
-        <span class="ojnl-eyebrow" style="display:block;text-align:center;color:#B68A45;">Watch</span>
-        <h2 class="ojnl-yt-title">Watch and <em>Learn</em></h2>
-        <p class="ojnl-yt-sub">Explore tutorials, transformations and behind-the-scenes content from OlivHairSupply.</p>
-      </div>
-      <div class="ojnl-yt-grid">
-
-        <div class="ojnl-yt-card">
-          
-            <div class="ojnl-yt-thumb">
-              <div class="ojnl-yt-thumb-ph">
-                <div class="ojnl-yt-play">
-                  <div class="ojnl-yt-play-triangle"></div>
-                </div>
-              </div>
-            </div>
-          
-          <div class="ojnl-yt-info">
-            <div class="ojnl-yt-card-title">Tutorial Video 1</div>
-            <p class="ojnl-yt-card-desc">Add your YouTube video title and link in the Shopify customiser.</p>
-          </div>
-        </div>
-
-        <div class="ojnl-yt-card">
-          
-            <div class="ojnl-yt-thumb">
-              <div class="ojnl-yt-thumb-ph">
-                <div class="ojnl-yt-play">
-                  <div class="ojnl-yt-play-triangle"></div>
-                </div>
-              </div>
-            </div>
-          
-          <div class="ojnl-yt-info">
-            <div class="ojnl-yt-card-title">Tutorial Video 2</div>
-            <p class="ojnl-yt-card-desc">Add your YouTube video title and link in the Shopify customiser.</p>
-          </div>
-        </div>
-
-        <div class="ojnl-yt-card">
-          
-            <div class="ojnl-yt-thumb">
-              <div class="ojnl-yt-thumb-ph">
-                <div class="ojnl-yt-play">
-                  <div class="ojnl-yt-play-triangle"></div>
-                </div>
-              </div>
-            </div>
-          
-          <div class="ojnl-yt-info">
-            <div class="ojnl-yt-card-title">Tutorial Video 3</div>
-            <p class="ojnl-yt-card-desc">Add your YouTube video title and link in the Shopify customiser.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="ojnl-training">
-    <div class="ojnl-inner">
-      <div class="ojnl-training-inner">
-        <div>
-          <span class="ojnl-eyebrow">Academy</span>
-          <h2 class="ojnl-training-title">
-            Training and <em>Events</em>
-          </h2>
-          <p class="ojnl-training-desc">
-            Stay updated with upcoming training sessions, masterclasses and exclusive OlivHairSupply events. Limited spaces available — book early to secure your place.
-          </p>
-        </div>
-        <a href="/pages/training" class="ojnl-training-btn">View Training</a>
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="ojnl-transforms">
-    <div class="ojnl-inner">
-      <div class="ojnl-transforms-header">
-        <span class="ojnl-eyebrow" style="display:block;text-align:center;">Client Results</span>
-        <h2 class="ojnl-section-title" style="text-align:center;">Reviews and <em>Transformations</em></h2>
-        <p class="ojnl-transforms-sub" style="text-align:center;">Real results from our clients and students.</p>
-      </div>
-      <div class="ojnl-transforms-grid">
-        
-        
-        
-          <div class="ojnl-transform-card">
-            
-              <div class="ojnl-transform-ph">
-                <div class="ojnl-transform-ph-label">Before and After</div>
-              </div>
-            
-          </div>
-        
-          <div class="ojnl-transform-card">
-            
-              <div class="ojnl-transform-ph">
-                <div class="ojnl-transform-ph-label">Before and After</div>
-              </div>
-            
-          </div>
-        
-          <div class="ojnl-transform-card">
-            
-              <div class="ojnl-transform-ph">
-                <div class="ojnl-transform-ph-label">Before and After</div>
-              </div>
-            
-          </div>
-        
-          <div class="ojnl-transform-card">
-            
-              <div class="ojnl-transform-ph">
-                <div class="ojnl-transform-ph-label">Before and After</div>
-              </div>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="ojnl-cta">
-    <div class="ojnl-cta-inner">
-      <span class="ojnl-cta-eyebrow">Stay Connected</span>
-      <h2 class="ojnl-cta-title">
-        Follow the <em>Journey</em>
-      </h2>
-      <p class="ojnl-cta-sub">
-        Follow us for the latest drops, expert tips and behind-the-brand updates from OlivHairSupply.
-      </p>
-      <div class="ojnl-cta-btns">
-        <a href="https://instagram.com/olivhairsupply" class="ojnl-cta-btn-gold" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://youtube.com" class="ojnl-cta-btn-out" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="/collections/bizi-lux" class="ojnl-cta-btn-out">Shop Now</a>
-      </div>
-    </div>
-  </div>
-
 </div>
 
+<script>
+(function(){
+var A={
+"hair-care-salon-fresh":{cat:{en:"Hair Care",de:"Haarpflege",es:"Cuidado del Cabello"},date:{en:"June 2025",de:"Juni 2025",es:"Junio 2025"},read:{en:"5 min read",de:"5 Min.",es:"5 min"},title:{en:"How to Keep Your Extensions Looking <em>Salon Fresh</em>",de:"Extensions dauerhaft in <em>Salon-Qualität</em> halten",es:"Cómo mantener tus extensiones con <em>acabado de salón</em>"},intro:{en:"Your BiziLuxe extensions are an investment — and like any investment, they reward those who look after them. The difference between extensions that last three months and extensions that last nine months is almost entirely down to your home care routine.",de:"Ihre BiziLuxe Extensions sind eine Investition — und wie jede Investition belohnen sie diejenigen, die sie pflegen. Der Unterschied zwischen Extensions, die drei Monate halten, und solchen, die neun Monate halten, liegt fast ausschließlich in Ihrer Pflegeroutine.",es:"Tus extensiones BiziLuxe son una inversión, y como toda inversión, recompensan a quienes las cuidan. La diferencia entre extensiones que duran tres meses y las que duran nueve meses radica casi por completo en tu rutina de cuidado en casa."},sections:[{h:{en:"Brush <em>Before</em> You Wash",de:"Bürsten <em>vor</em> dem Waschen",es:"Cepilla <em>antes</em> de lavar"},p:{en:"<p>Always brush your extensions thoroughly before washing — starting from the ends and working your way up to the roots. Use a soft-bristle extension brush or a wide-tooth comb. Tangles tighten dramatically when wet, so removing them dry saves your extensions from unnecessary stress.</p><p>Take your time with this step. Rushing through detangling is one of the most common causes of premature shedding and matting.</p>",de:"<p>Bürsten Sie Ihre Extensions immer gründlich durch, bevor Sie sie waschen — von den Spitzen aufwärts zu den Wurzeln. Verwenden Sie eine weiche Extensions-Bürste oder einen Weitkamm. Verfilzungen ziehen sich im nassen Zustand stark zusammen, daher schont das trockene Lösen Ihre Extensions.</p>",es:"<p>Siempre cepilla tus extensiones a fondo antes de lavarlas, comenzando por las puntas y subiendo hacia las raíces. Los enredos se aprietan drámaticamente cuando están mojados, por lo que eliminarlos en seco protege tus extensiones de tensión innecesaria.</p>"}},{h:{en:"The Right Products <em>Matter</em>",de:"Die richtigen Produkte <em>zählen</em>",es:"Los productos correctos <em>importan</em>"},p:{en:"<p>Extensions do not have the benefit of natural scalp oils. Use a sulphate-free shampoo and a rich conditioner from mid-length to ends.</p><div class='oart-tip'><p><strong>OlivHairSupply Tip:</strong> Apply a lightweight leave-in conditioner or argan oil to damp extensions before styling. This seals the cuticle and adds lasting shine.</p></div>",de:"<p>Extensions haben nicht den Vorteil natürlicher Kopfhautöle. Verwenden Sie ein sulfatfreies Shampoo und einen reichhaltigen Conditioner.</p><div class='oart-tip'><p><strong>OlivHairSupply Tipp:</strong> Tragen Sie vor dem Stylen einen leichten Leave-in-Conditioner auf feuchte Extensions auf.</p></div>",es:"<p>Las extensiones no tienen el beneficio de los aceites naturales del cuero cabelludo. Usa un champú sin sulfatos y un acondicionador rico desde la mitad hasta las puntas.</p><div class='oart-tip'><p><strong>Consejo OlivHairSupply:</strong> Aplica un acondicionador sin enjuague en las extensiones húmedas antes de peinar.</p></div>"}},{h:{en:"Storage and <em>Sleep</em>",de:"Aufbewahrung und <em>Schlaf</em>",es:"Almacenamiento y <em>sueño</em>"},p:{en:"<p>For clip-in extensions, always remove them before sleeping. Store them loosely braided in the BiziLuxe storage bag. For bonded extensions, sleep on a silk or satin pillowcase to reduce friction.</p>",de:"<p>Für Clip-in Extensions: Entfernen Sie diese vor dem Schlafen. Für gebondete Extensions schlafen Sie auf einem Seide- oder Satinkissenbezug.</p>",es:"<p>Para extensiones clip-in, retíralas siempre antes de dormir. Para extensiones bonadas, duerme sobre una almohada de seda o satén.</p>"}}]},
+"hair-care-washing-right-way":{cat:{en:"Hair Care",de:"Haarpflege",es:"Cuidado del Cabello"},date:{en:"May 2025",de:"Mai 2025",es:"Mayo 2025"},read:{en:"4 min read",de:"4 Min.",es:"4 min"},title:{en:"Washing Your Hair Extensions <em>the Right Way</em>",de:"Haarverlängerungen <em>richtig waschen</em>",es:"Lavar tus extensiones <em>correctamente</em>"},intro:{en:"The way you wash your extensions has a greater impact on their lifespan than almost any other factor. Done correctly, washing keeps them healthy, shiny and tangle-free.",de:"Die Art, wie Sie Ihre Extensions waschen, hat einen größeren Einfluss auf ihre Lebensdauer als fast jeder andere Faktor.",es:"La forma en que lavas tus extensiones tiene un mayor impacto en su vida útil que casi cualquier otro factor."},sections:[{h:{en:"How <em>Often</em> to Wash",de:"Wie <em>oft</em> waschen",es:"Con qué <em>frecuencia</em> lavar"},p:{en:"<p>Aim to wash clip-in extensions every 15–20 wears. For bonded or sewn-in extensions, wash no more than twice a week with sulphate-free shampoo.</p>",de:"<p>Waschen Sie Clip-in Extensions alle 15–20 Trageeinheiten. Bei gebondeten Extensions maximal zweimal pro Woche.</p>",es:"<p>Intenta lavar las extensiones clip-in cada 15-20 usos. Para extensiones bonadas, lava no más de dos veces por semana.</p>"}},{h:{en:"The <em>Correct</em> Technique",de:"Die <em>richtige</em> Technik",es:"La técnica <em>correcta</em>"},p:{en:"<p>Always wash in a downward motion — never scrub in circles. Rinse thoroughly in cool water. Hot water opens the cuticle and strips colour faster.</p><div class='oart-tip'><p><strong>OlivHairSupply Tip:</strong> After washing, gently press water out with a towel — never twist or wring. Let air dry where possible.</p></div>",de:"<p>Waschen Sie immer in einer Abwärtsbewegung — niemals in Kreisen. Spülen Sie gründlich mit kühlem Wasser aus.</p><div class='oart-tip'><p><strong>OlivHairSupply Tipp:</strong> Wasser sanft mit einem Handtuch herausdrücken — niemals drehen oder wringen.</p></div>",es:"<p>Lava siempre con un movimiento descendente, nunca en círculos. Enjuaga bien con agua fría.</p><div class='oart-tip'><p><strong>Consejo OlivHairSupply:</strong> Después de lavar, presiona suavemente el agua con una toalla, nunca retuerces.</p></div>"}}]},
+"hair-care-heat-protection":{cat:{en:"Hair Care",de:"Haarpflege",es:"Cuidado del Cabello"},date:{en:"April 2025",de:"April 2025",es:"Abril 2025"},read:{en:"4 min read",de:"4 Min.",es:"4 min"},title:{en:"Heat Protection: What Your Extensions <em>Really Need</em>",de:"Hitzeschutz: Was Ihre Extensions <em>wirklich brauchen</em>",es:"Protección térmica: lo que tus extensiones <em>realmente necesitan</em>"},intro:{en:"Heat is the single fastest way to shorten the life of your extensions. Unlike natural hair, extensions cannot self-repair — once the cuticle is damaged by heat, that damage is permanent.",de:"Hitze ist der schnellste Weg, die Lebensdauer Ihrer Extensions zu verkürzen. Im Gegensatz zu natürlichem Haar können Extensions sich nicht selbst reparieren.",es:"El calor es la forma más rápida de acortar la vida de tus extensiones. A diferencia del cabello natural, las extensiones no pueden auto-repararse."},sections:[{h:{en:"Temperature <em>Matters</em>",de:"Temperatur <em>ist entscheidend</em>",es:"La temperatura <em>importa</em>"},p:{en:"<p>Keep your heat tools between 120°C and 180°C maximum. Above 180°C, you risk permanent cuticle damage.</p><ul><li>Fine extensions: 120°C–150°C</li><li>Medium thickness: 150°C–170°C</li><li>Thick extensions: up to 180°C maximum</li></ul>",de:"<p>Halten Sie Ihre Hitzewerkzeuge zwischen 120°C und maximal 180°C.</p><ul><li>Feine Extensions: 120°C–150°C</li><li>Mittlere Dicke: 150°C–170°C</li><li>Dicke Extensions: bis zu 180°C</li></ul>",es:"<p>Mantén tus herramientas de calor entre 120°C y 180°C máximo.</p><ul><li>Extensiones finas: 120°C–150°C</li><li>Grosor medio: 150°C–170°C</li><li>Gruesas: hasta 180°C máximo</li></ul>"}},{h:{en:"Always Use a <em>Heat Protectant</em>",de:"Immer einen <em>Hitzeschutz</em> verwenden",es:"Usa siempre un <em>protector térmico</em>"},p:{en:"<p>A good heat protectant is non-negotiable. Apply it to damp or dry extensions before any heat is applied, from mid-length to the ends.</p><div class='oart-tip'><p><strong>OlivHairSupply Tip:</strong> Never apply heat to wet extensions. The steam created inside the hair shaft causes microscopic bubbling that permanently weakens the strand.</p></div>",de:"<p>Ein guter Hitzeschutz ist unverzüglich. Tragen Sie ihn auf feuchte oder trockene Extensions auf, bevor Hitze angewendet wird.</p><div class='oart-tip'><p><strong>OlivHairSupply Tipp:</strong> Wenden Sie niemals Hitze auf nasse Extensions an.</p></div>",es:"<p>Un buen protector térmico es innegociable. Aplícalo en extensiones húmedas o secas antes de aplicar calor.</p><div class='oart-tip'><p><strong>Consejo OlivHairSupply:</strong> Nunca apliques calor a extensiones mojadas.</p></div>"}}]},
+"styling-tips-5-styles":{cat:{en:"Styling Tips",de:"Styling-Tipps",es:"Consejos de Estilo"},date:{en:"June 2025",de:"Juni 2025",es:"Junio 2025"},read:{en:"6 min read",de:"6 Min.",es:"6 min"},title:{en:"5 Styles That Look <em>Better With Extensions</em>",de:"5 Styles, die mit Extensions <em>besser aussehen</em>",es:"5 estilos que lucen <em>mejor con extensiones</em>"},intro:{en:"Extensions do not just add length — they add the volume, weight and movement that makes certain hairstyles truly come alive. These five styles simply perform better with BiziLuxe.",de:"Extensions fügen nicht nur Länge hinzu — sie verleihen auch Volumen, Gewicht und Bewegung, die bestimmte Frisuren zum Leben erwecken.",es:"Las extensiones no solo añaden longitud, añaden el volumen, peso y movimiento que hace que ciertos peinados realmente cobren vida."},sections:[{h:{en:"1. The <em>Sleek High Ponytail</em>",de:"1. Der <em>glatte hohe Pferdeschwanz</em>",es:"1. La <em>coleta alta y elegante</em>"},p:{en:"<p>A high ponytail with thin hair looks flat and struggles to hold shape. With BiziLuxe extensions, the same style becomes sculptural — thick, full and commanding. The weight of the extensions helps the style hold through the day.</p><p>Wrap a small section of hair around the hair tie for a polished, editorial finish.</p>",de:"<p>Ein hoher Pferdeschwanz mit dünnem Haar wirkt flach. Mit BiziLuxe Extensions wird derselbe Style skulptural — dick, voll und eindrucksvoll.</p>",es:"<p>Una coleta alta con cabello fino se ve plana. Con las extensiones BiziLuxe, el mismo peinado se vuelve escultural: grueso, lleno e imponente.</p>"}},{h:{en:"2. Loose Waves and <em>Beach Texture</em>",de:"2. Lockere Wellen und <em>Beach-Textur</em>",es:"2. Ondas sueltas y <em>textura playera</em>"},p:{en:"<p>Loose waves genuinely need volume to look right. Extensions give the waves something to work with, creating that full, effortless look that photographs beautifully.</p><p>Use a 32mm barrel at 160°C, wrapping each section away from the face. Shake out gently and finish with a light texturising spray.</p>",de:"<p>Lockere Wellen brauchen wirklich Volumen, um gut auszusehen. Extensions geben den Wellen etwas zum Arbeiten.</p>",es:"<p>Las ondas sueltas genuinamente necesitan volumen para verse bien. Las extensiones dan a las ondas algo con lo que trabajar.</p>"}},{h:{en:"3. The <em>Half-Up Twist</em>",de:"3. Das <em>Half-Up Twist</em>",es:"3. El <em>medio recogido trenzado</em>"},p:{en:"<p>A half-up twist or bun sits higher and fuller when there is more hair to work with. With extensions, this everyday style becomes an elegant, occasion-ready look.</p>",de:"<p>Ein Half-Up-Twist sitzt höher und voller, wenn mehr Haar vorhanden ist. Mit Extensions wird dieser Alltagsstyle zu einem eleganten Look.</p>",es:"<p>Un medio recogido queda más alto y lleno cuando hay más cabello. Con extensiones, este estilo cotidiano se convierte en un look elegante.</p>"}}]},
+"styling-tips-blending":{cat:{en:"Styling Tips",de:"Styling-Tipps",es:"Consejos de Estilo"},date:{en:"May 2025",de:"Mai 2025",es:"Mayo 2025"},read:{en:"5 min read",de:"5 Min.",es:"5 min"},title:{en:"How to Blend Extensions With <em>Your Natural Hair</em>",de:"Extensions mit Ihrem natürlichen Haar <em>kombinieren</em>",es:"Cómo combinar extensiones con <em>tu cabello natural</em>"},intro:{en:"The most common question we receive at OlivHairSupply is about blending. Undetectable extensions are an art form built on fundamental principles that anyone can learn.",de:"Die häufigste Frage, die wir erhalten, dreht sich ums Mischen. Unerkennbare Extensions sind eine Kunstform.",es:"La pregunta más común que recibimos en OlivHairSupply es sobre la combinación. Las extensiones indetectables son una forma de arte."},sections:[{h:{en:"Colour Match <em>First</em>",de:"Zuerst <em>Farbabstimmung</em>",es:"Primero el <em>tono exacto</em>"},p:{en:"<p>No blending technique compensates for a poor colour match. Choose a shade that matches your mid-lengths and ends, where the extension will be most visible.</p>",de:"<p>Keine Mischtechnik kompensiert eine schlechte Farbabstimmung. Wählen Sie einen Farbton, der zu Ihrer mittleren Länge passt.</p>",es:"<p>Ninguna técnica de combinación compensa una mala coincidencia de color. Elige un tono que coincida con tus longitudes medias.</p>"}},{h:{en:"Layer Your <em>Natural Hair</em>",de:"Ihr natürliches Haar <em>layern</em>",es:"Pide <em>capas</em> en tu cabello natural"},p:{en:"<p>Ask your stylist for face-framing layers and a softened perimeter. This allows the extension hair to integrate seamlessly at the ends.</p><div class='oart-tip'><p><strong>OlivHairSupply Tip:</strong> Lightly backcomb the root area of your natural hair directly above the clips. This creates texture that grips the extension and eliminates the visible line.</p></div>",de:"<p>Bitten Sie Ihren Stylisten um gesichtsumsäumende Layers und einen weicheren Rand.</p><div class='oart-tip'><p><strong>OlivHairSupply Tipp:</strong> Den Wurzelbereich des natürlichen Haares direkt über den Clips leicht anrauen.</p></div>",es:"<p>Pide a tu estilista capas que enmarquen el rostro y un perímetro suavizado.</p><div class='oart-tip'><p><strong>Consejo OlivHairSupply:</strong> Card ligeramente la raíz de tu cabello natural directamente sobre los clips.</p></div>"}}]},
+"styling-tips-overnight":{cat:{en:"Styling Tips",de:"Styling-Tipps",es:"Consejos de Estilo"},date:{en:"April 2025",de:"April 2025",es:"Abril 2025"},read:{en:"4 min read",de:"4 Min.",es:"4 min"},title:{en:"Overnight Styles That <em>Protect Your Extensions</em>",de:"Overnight-Styles, die Ihre Extensions <em>schützen</em>",es:"Peinados nocturnos que <em>protegen tus extensiones</em>"},intro:{en:"What you do with your hair overnight has a significant impact on the condition of your extensions. Eight hours of friction on loose hair causes tangling, matting and bond stress.",de:"Was Sie nachts mit Ihrem Haar machen, hat erheblichen Einfluss auf den Zustand Ihrer Extensions.",es:"Lo que haces con tu cabello durante la noche tiene un impacto significativo en el estado de tus extensiones."},sections:[{h:{en:"The Loose <em>Braid Method</em>",de:"Die lockere <em>Flechtmethode</em>",es:"El método de <em>trenza suelta</em>"},p:{en:"<p>A loose, single plait down the back is the most effective overnight protection. Secure with a soft fabric hair tie — never a rubber band. For clip-in extensions, remove them before sleeping and store them loosely braided.</p>",de:"<p>Ein loser, einzelner Zopf den Rücken hinunter ist der effektivste Nachtschutz. Mit einem weichen Stoffhaargummi befestigen.</p>",es:"<p>Una trenza suelta y sencilla hacia la espalda es la protección nocturna más efectiva. Asegúrala con una goma de tela suave.</p>"}},{h:{en:"Switch to <em>Silk</em>",de:"Auf <em>Seide</em> umsteigen",es:"Cámbiate a la <em>seda</em>"},p:{en:"<p>A silk or satin pillowcase reduces friction by up to 40% compared to cotton. This single change can extend the life of bonded extensions by several weeks.</p><div class='oart-tip'><p><strong>OlivHairSupply Tip:</strong> If you move a lot in your sleep, wrap your hair in a silk scarf or bonnet before bed.</p></div>",de:"<p>Ein Seiden- oder Satinkissenbezug reduziert die Reibung um bis zu 40%.</p><div class='oart-tip'><p><strong>OlivHairSupply Tipp:</strong> Wenn Sie sich im Schlaf viel bewegen, wickeln Sie Ihr Haar in ein Seidentuch ein.</p></div>",es:"<p>Una funda de almohada de seda o satén reduce la fricción hasta un 40%.</p><div class='oart-tip'><p><strong>Consejo OlivHairSupply:</strong> Si te mueves mucho mientras duermes, envuelve tu cabello en un pañuelo de seda.</p></div>"}}]},
+"biziluxe-signature-clip-in":{cat:{en:"BiziLuxe Collections",de:"BiziLuxe Kollektionen",es:"Colecciones BiziLuxe"},date:{en:"June 2025",de:"Juni 2025",es:"Junio 2025"},read:{en:"3 min read",de:"3 Min.",es:"3 min"},title:{en:"Introducing the BiziLuxe <em>Signature Clip-In Set</em>",de:"Die BiziLuxe <em>Signature Clip-In Kollektion</em>",es:"Presentamos el Set <em>Signature Clip-In de BiziLuxe</em>"},intro:{en:"After months of development and testing, the BiziLuxe Signature Clip-In Set is here. Engineered for women who want effortless luxury, this collection represents the most complete clip-in system we have ever offered.",de:"Nach Monaten der Entwicklung ist das BiziLuxe Signature Clip-In Set da. Entwickelt für Frauen, die mühelösen Luxus wollen.",es:"Después de meses de desarrollo y pruebas, el Set Signature Clip-In de BiziLuxe está aquí."},sections:[{h:{en:"What is <em>Included</em>",de:"Was ist <em>enthalten</em>",es:"Qué <em>incluye</em>"},p:{en:"<p>The Signature Set contains seven wefts designed to build full, natural volume:</p><ul><li>One 8-inch double-weft clip (main crown piece)</li><li>Two 6-inch clip wefts</li><li>Two 4-inch clip wefts</li><li>Two 2-inch clip wefts for sides and perimeter</li></ul><p>Every weft features our double-reinforced track stitching and pressure-clip system that holds all day without slipping.</p>",de:"<p>Das Signature Set enthält sieben Tressen:</p><ul><li>Eine 8-Zoll Doppeltressen-Clip</li><li>Zwei 6-Zoll Cliptressen</li><li>Zwei 4-Zoll Cliptressen</li><li>Zwei 2-Zoll Cliptressen für Seiten</li></ul>",es:"<p>El Set Signature contiene siete tramas:</p><ul><li>Una trama doble clip de 8 pulgadas</li><li>Dos tramas clip de 6 pulgadas</li><li>Dos tramas clip de 4 pulgadas</li><li>Dos tramas clip de 2 pulgadas para laterales</li></ul>"}},{h:{en:"Available <em>Lengths and Shades</em>",de:"Verfügbare <em>Längen und Farbtöne</em>",es:"<em>Longitudes y tonos</em> disponibles"},p:{en:"<p>Available in lengths from 16 to 24 inches in 22 shades including natural blacks, warm brunettes, cool blondes, and five new balayage blends.</p><div class='oart-tip'><p><strong>Not sure of your shade?</strong> Book a free colour consultation with one of our BiziLuxe specialists.</p></div>",de:"<p>In Längen von 16 bis 24 Zoll in 22 Farbtönen verfügbar.</p><div class='oart-tip'><p><strong>Nicht sicher bei Ihrem Farbton?</strong> Buchen Sie eine kostenlose Farbberatung.</p></div>",es:"<p>Disponible en longitudes de 16 a 24 pulgadas en 22 tonos.</p><div class='oart-tip'><p><strong>¿No estás segura de tu tono?</strong> Reserva una consulta de color gratuita.</p></div>"}}]},
+"biziluxe-behind-collection":{cat:{en:"BiziLuxe Collections",de:"BiziLuxe Kollektionen",es:"Colecciones BiziLuxe"},date:{en:"May 2025",de:"Mai 2025",es:"Mayo 2025"},read:{en:"5 min read",de:"5 Min.",es:"5 min"},title:{en:"Behind the Collection: How BiziLuxe Hair <em>is Sourced</em>",de:"Hinter der Kollektion: Wie BiziLuxe Haar <em>bezogen wird</em>",es:"Detrás de la colección: cómo se <em>obtiene el cabello BiziLuxe</em>"},intro:{en:"Every strand of BiziLuxe hair has a story that begins long before it reaches our Berlin studio. Understanding where your hair comes from is key to understanding why quality extensions feel and behave differently.",de:"Jede Strähne BiziLuxe Haar hat eine Geschichte, die lange vor unserer Berliner Studio beginnt.",es:"Cada hebra de cabello BiziLuxe tiene una historia que comienza mucho antes de llegar a nuestro estudio de Berlín."},sections:[{h:{en:"Only <em>Remy Human Hair</em>",de:"Nur <em>Remy Echthaar</em>",es:"Solo <em>cabello humano Remy</em>"},p:{en:"<p>BiziLuxe uses exclusively Remy human hair — the highest grade available. Remy hair is collected with all strands running in the same direction (root to tip), preserving the cuticle alignment that gives hair its natural shine and tangle resistance.</p>",de:"<p>BiziLuxe verwendet ausschließlich Remy Echthaar — die höchste Qualitätsstufe. Remy-Haar wird mit allen Strähnen in dieselbe Richtung gesammelt.</p>",es:"<p>BiziLuxe utiliza exclusivamente cabello humano Remy, el grado más alto disponible. El cabello Remy se recoge con todas las hebras en la misma dirección.</p>"}},{h:{en:"Ethical <em>Sourcing Practices</em>",de:"<em>Ethische</em> Beschaffungspraktiken",es:"Prácticas de obtención <em>éticas</em>"},p:{en:"<p>We work with a small number of trusted long-term suppliers who meet our ethical sourcing standards. All hair is collected from willing donors through programmes that provide fair compensation.</p><div class='oart-tip'><p><strong>Our Commitment:</strong> BiziLuxe will never knowingly source hair from programmes that do not fairly compensate donors.</p></div>",de:"<p>Wir arbeiten mit vertrauenswürdigen Lieferanten zusammen, die unsere ethischen Standards erfüllen. Alle Haare werden von freiwilligen Spendern gesammelt.</p><div class='oart-tip'><p><strong>Unser Versprechen:</strong> BiziLuxe wird niemals bewusst Haar aus Programmen beziehen, die Spender nicht fair entlohnen.</p></div>",es:"<p>Trabajamos con proveedores de confianza que cumplen con nuestros estándares éticos. Todo el cabello se recoge de donantes voluntarios.</p><div class='oart-tip'><p><strong>Nuestro Compromiso:</strong> BiziLuxe nunca obtendrá cabello de programas que no compensen equitativamente a los donantes.</p></div>"}}]},
+"biziluxe-new-arrivals":{cat:{en:"BiziLuxe Collections",de:"BiziLuxe Kollektionen",es:"Colecciones BiziLuxe"},date:{en:"April 2025",de:"April 2025",es:"Abril 2025"},read:{en:"3 min read",de:"3 Min.",es:"3 min"},title:{en:"New Arrivals: Extended Lengths <em>Now Available</em>",de:"Neuheiten: Erweiterte Längen <em>jetzt erhältlich</em>",es:"Novedades: nuevas longitudes <em>ahora disponibles</em>"},intro:{en:"The BiziLuxe range now extends to 28 inches — offering more length, more drama and more versatility than ever before.",de:"Die BiziLuxe Range erstreckt sich jetzt bis zu 28 Zoll — mehr Länge, mehr Drama und mehr Vielseitigkeit.",es:"La gama BiziLuxe ahora se extiende hasta 28 pulgadas, ofreciendo más longitud, más dramatismo y más versatilidad."},sections:[{h:{en:"Which Lengths Are <em>New</em>",de:"Welche Längen sind <em>neu</em>",es:"Qué longitudes son <em>nuevas</em>"},p:{en:"<ul><li>26-inch: Available in 18 shades</li><li>28-inch: Available in 12 core shades</li><li>Both lengths compatible with existing BiziLuxe clips</li></ul>",de:"<ul><li>26-Zoll: In 18 Farbtönen</li><li>28-Zoll: In 12 Kernfarbtönen</li><li>Kompatibel mit bestehenden BiziLuxe Clips</li></ul>",es:"<ul><li>26 pulgadas: disponible en 18 tonos</li><li>28 pulgadas: disponible en 12 tonos principales</li><li>Ambas compatibles con los clips BiziLuxe existentes</li></ul>"}},{h:{en:"Caring for <em>Longer Extensions</em>",de:"Pflege von <em>längeren Extensions</em>",es:"Cuidado de <em>extensiones más largas</em>"},p:{en:"<p>Apply a small amount of argan or jojoba oil to the final 4–6 inches of your extensions every three days to maintain moisture and prevent splitting.</p><div class='oart-tip'><p><strong>OlivHairSupply Tip:</strong> When wearing 26-inch or 28-inch extensions, always plait loosely before exercise or wind.</p></div>",de:"<p>Tragen Sie alle drei Tage etwas Argan- oder Jojobaöl auf die letzten 10-15 cm auf.</p><div class='oart-tip'><p><strong>OlivHairSupply Tipp:</strong> Bei langen Extensions immer locker flechten vor Sport oder Wind.</p></div>",es:"<p>Aplica una pequeña cantidad de aceite de argán o jojoba en los últimos 10-15 cm cada tres días.</p><div class='oart-tip'><p><strong>Consejo OlivHairSupply:</strong> Con extensiones largas, trenza siempre ligeramente antes de hacer ejercicio.</p></div>"}}]},
+"training-academy-overview":{cat:{en:"Training and Education",de:"Ausbildung & Schulung",es:"Formación y Educación"},date:{en:"June 2025",de:"Juni 2025",es:"Junio 2025"},read:{en:"6 min read",de:"6 Min.",es:"6 min"},title:{en:"What to Expect at the <em>OlivHairSupply Academy</em>",de:"Was Sie bei der <em>OlivHairSupply Academy</em> erwartet",es:"Qué esperar en la <em>Academia OlivHairSupply</em>"},intro:{en:"The OlivHairSupply Academy was created to produce the most competent, confident and business-ready hair extensionists in Europe. Our programme goes beyond technique.",de:"Die OlivHairSupply Academy wurde geschaffen, um die kompetentesten Haarverlängerungsspezialisten Europas auszubilden.",es:"La Academia OlivHairSupply fue creada para producir los extensionistas más competentes y seguros de Europa."},sections:[{h:{en:"The Three <em>Programme Levels</em>",de:"Die drei <em>Programmstufen</em>",es:"Los tres <em>niveles del programa</em>"},p:{en:"<p><strong>Foundation (1 Day):</strong> Introduction to hair extension science, consultation techniques, clip-in application and basic aftercare advice.</p><p><strong>Professional (2 Days):</strong> Covers tape, bond and weft application methods. Includes colour theory and live model work.</p><p><strong>Master (3 Days):</strong> All methods plus business development, pricing strategy and client retention.</p>",de:"<p><strong>Foundation (1 Tag):</strong> Einführung in die Extension-Wissenschaft und Clip-in-Applikation.</p><p><strong>Professional (2 Tage):</strong> Tape-, Bond- und Tressen-Applikation sowie Farbtheorie.</p><p><strong>Master (3 Tage):</strong> Alle Methoden plus Business-Entwicklung und Pricing-Strategie.</p>",es:"<p><strong>Foundation (1 día):</strong> Introducción a la ciencia de las extensiones y aplicación clip-in.</p><p><strong>Professional (2 días):</strong> Métodos de cinta, bono y trama, incluyendo teoría del color.</p><p><strong>Master (3 días):</strong> Todos los métodos más desarrollo empresarial y estrategia de precios.</p>"}},{h:{en:"What You <em>Walk Away With</em>",de:"Was Sie <em>mitnehmen</em>",es:"Lo que te <em>llevas</em>"},p:{en:"<p>Every graduate receives a certified OlivHairSupply Academy diploma, a full BiziLuxe starter kit and inclusion in our graduate directory — shared with clients looking for certified extensionists in their area.</p><div class='oart-tip'><p><strong>Ready to enrol?</strong> Visit our Training page to view current course dates and reserve your place.</p></div>",de:"<p>Jeder Absolvent erhält ein zertifiziertes OlivHairSupply Academy Diplom, ein vollständiges BiziLuxe Starter-Kit und Aufnahme in unser Absolventenverzeichnis.</p><div class='oart-tip'><p><strong>Bereit zur Anmeldung?</strong> Besuchen Sie unsere Schulungsseite für aktuelle Kursdaten.</p></div>",es:"<p>Cada graduado recibe un diploma certificado de la Academia OlivHairSupply, un kit de inicio BiziLuxe completo e inclusión en nuestro directorio de graduados.</p><div class='oart-tip'><p><strong>¿Listo para inscribirte?</strong> Visita nuestra página de formación para ver las fechas actuales.</p></div>"}}]},
+"training-why-certification":{cat:{en:"Training and Education",de:"Ausbildung & Schulung",es:"Formación y Educación"},date:{en:"May 2025",de:"Mai 2025",es:"Mayo 2025"},read:{en:"5 min read",de:"5 Min.",es:"5 min"},title:{en:"Why Certification <em>Changes Your Career</em>",de:"Warum Zertifizierung Ihre <em>Karriere verändert</em>",es:"Por qué la certificación <em>transforma tu carrera</em>"},intro:{en:"There are thousands of stylists offering hair extensions. There are very few who are certified and properly trained. In a market where clients are increasingly discerning, that difference translates directly into higher earnings.",de:"Es gibt tausende von Stylisten, die Haarverlängerungen anbieten. Es gibt sehr wenige, die zertifiziert und richtig ausgebildet sind.",es:"Hay miles de estilistas que ofrecen extensiones de cabello. Muy pocos están certificados y debidamente formados."},sections:[{h:{en:"The <em>Earnings Gap</em>",de:"Das <em>Einkommensgefälle</em>",es:"La <em>brecha salarial</em>"},p:{en:"<p>Based on our graduate survey data, certified OlivHairSupply extensionists charge on average 35% more per service than non-certified peers — and retain clients at a rate nearly twice as high.</p>",de:"<p>Zertifizierte OlivHairSupply-Extensionisten berechnen im Durchschnitt 35% mehr pro Service und binden Kunden fast doppelt so häufig.</p>",es:"<p>Los extensionistas certificados de OlivHairSupply cobran en promedio un 35% más por servicio y retienen clientes a una tasa casi el doble de alta.</p>"}},{h:{en:"Beyond <em>Technique</em>",de:"Über die <em>Technik hinaus</em>",es:"Más allá de la <em>técnica</em>"},p:{en:"<p>Our certification programme teaches more than application. You leave with consultation frameworks, aftercare protocols, social media strategies and pricing psychology.</p><div class='oart-tip'><p><strong>OlivHairSupply Graduates:</strong> Join our private graduate community for ongoing education and exclusive access to new BiziLuxe launches.</p></div>",de:"<p>Unser Programm lehrt mehr als Applikation: Beratungsrahmen, Nachsorgprotokolle, Social-Media-Strategien und Preispsychologie.</p>",es:"<p>Nuestro programa enseña más que aplicación: marcos de consulta, protocolos de cuidado, estrategias de redes sociales y psicología de precios.</p>"}}]},
+"training-master-educators":{cat:{en:"Training and Education",de:"Ausbildung & Schulung",es:"Formación y Educación"},date:{en:"April 2025",de:"April 2025",es:"Abril 2025"},read:{en:"4 min read",de:"4 Min.",es:"4 min"},title:{en:"Meet Our <em>Master Educators</em>",de:"Lernen Sie unsere <em>Masterausbilder</em> kennen",es:"Conoce a nuestros <em>educadores maestros</em>"},intro:{en:"The quality of a training programme is only as good as the educators who deliver it. At OlivHairSupply Academy, every educator has a minimum of eight years of professional extension experience.",de:"Die Qualität eines Ausbildungsprogramms ist nur so gut wie die Ausbilder. Bei der OlivHairSupply Academy hat jeder Ausbilder mindestens acht Jahre Erfahrung.",es:"La calidad de un programa de formación es tan buena como los educadores que lo imparten. En la Academia OlivHairSupply, cada educador tiene un mínimo de ocho años de experiencia."},sections:[{h:{en:"Our <em>Lead Educator</em>",de:"Unsere <em>Hauptausbilderin</em>",es:"Nuestra <em>educadora principal</em>"},p:{en:"<p>Our lead educator has trained over 600 extensionists across Europe over 12 years of teaching. Specialising in bond application and advanced colour work, she brings a precision-led approach to every session.</p>",de:"<p>Unsere Hauptausbilderin hat in 12 Jahren über 600 Extensionisten ausgebildet. Sie spezialisiert sich auf Bond-Applikation und fortgeschrittene Farbarbeit.</p>",es:"<p>Nuestra educadora principal ha formado a más de 600 extensionistas en 12 años. Se especializa en aplicación de bonos y trabajo de color avanzado.</p>"}},{h:{en:"Our <em>Business Educator</em>",de:"Unsere <em>Business-Ausbilderin</em>",es:"Nuestra <em>educadora de negocio</em>"},p:{en:"<p>Our business educator leads the business modules in our Master programme — covering pricing, client retention, social media and building a sustainable extension practice.</p><div class='oart-tip'><p><strong>Train with us:</strong> Our next intake for the Professional and Master programmes opens in September 2025. Register your interest on the Training page.</p></div>",de:"<p>Unsere Business-Ausbilderin leitet die Business-Module im Master-Programm.</p><div class='oart-tip'><p><strong>Trainieren Sie mit uns:</strong> Die nächste Aufnahme öffnet im September 2025.</p></div>",es:"<p>Nuestra educadora de negocios lidera los módulos de negocio en nuestro programa Master.</p><div class='oart-tip'><p><strong>Fórmate con nosotros:</strong> Nuestra próxima admisión abre en septiembre de 2025.</p></div>"}}]},
+"events-masterclass-advanced":{cat:{en:"Events",de:"Veranstaltungen",es:"Eventos"},date:{en:"July 2025",de:"Juli 2025",es:"Julio 2025"},read:{en:"2 min read",de:"2 Min.",es:"2 min"},title:{en:"Upcoming Masterclass: <em>Advanced Extension Techniques</em>",de:"Kommende Masterclass: <em>Fortgeschrittene Extension-Techniken</em>",es:"Próxima Masterclass: <em>Técnicas Avanzadas de Extensiones</em>"},intro:{en:"Limited places are available for our most intensive single-day masterclass — a full-day deep dive into advanced extension application, repair techniques and the business of high-end extension services.",de:"Begrenzte Plätze für unsere intensivste Masterclass — ein ganztägiger Einblick in fortgeschrittene Extension-Applikation.",es:"Plazas limitadas para nuestra masterclass de un día más intensiva — una inmersión completa en la aplicación avanzada de extensiones."},sections:[{h:{en:"What is <em>Covered</em>",de:"Was wird <em>behandelt</em>",es:"Qué se <em>cubre</em>"},p:{en:"<ul><li>Advanced bond placement for maximum hold and minimal damage</li><li>Tape extension layering for ultra-natural results</li><li>Extension repair and maintenance</li><li>Speed application techniques for busy salon environments</li><li>Live model work with feedback from lead educators</li></ul>",de:"<ul><li>Fortgeschrittene Bond-Platzierung</li><li>Tape-Extension-Layering</li><li>Extension-Reparatur und -Wartung</li><li>Geschwindigkeitsapplikationstechniken</li><li>Live-Modellarbeit mit Feedback</li></ul>",es:"<ul><li>Colocación avanzada de bonos</li><li>Capas de extensiones de cinta</li><li>Reparación y mantenimiento de extensiones</li><li>Técnicas de aplicación rápida</li><li>Trabajo con modelos reales</li></ul>"}},{h:{en:"Date, Location <em>and Booking</em>",de:"Datum, Ort <em>und Buchung</em>",es:"Fecha, lugar <em>y reserva</em>"},p:{en:"<p><strong>Date:</strong> Saturday 19 July 2025<br><strong>Location:</strong> OlivHairSupply Studio, Berlin<br><strong>Duration:</strong> 9:00am – 6:00pm<br><strong>Places remaining:</strong> 4 of 12</p><div class='oart-tip'><p><strong>To book your place,</strong> visit our Training page or contact us directly via WhatsApp.</p></div>",de:"<p><strong>Datum:</strong> Samstag, 19. Juli 2025<br><strong>Ort:</strong> OlivHairSupply Studio, Berlin<br><strong>Dauer:</strong> 9:00–18:00 Uhr<br><strong>Verbleibende Plätze:</strong> 4 von 12</p>",es:"<p><strong>Fecha:</strong> Sábado 19 de julio de 2025<br><strong>Lugar:</strong> Estudio OlivHairSupply, Berlín<br><strong>Duración:</strong> 9:00–18:00 h<br><strong>Plazas restantes:</strong> 4 de 12</p>"}}]},
+"events-european-hair-show":{cat:{en:"Events",de:"Veranstaltungen",es:"Eventos"},date:{en:"June 2025",de:"Juni 2025",es:"Junio 2025"},read:{en:"3 min read",de:"3 Min.",es:"3 min"},title:{en:"OlivHairSupply at the <em>European Hair Show 2025</em>",de:"OlivHairSupply auf der <em>European Hair Show 2025</em>",es:"OlivHairSupply en el <em>European Hair Show 2025</em>"},intro:{en:"OlivHairSupply will be exhibiting at this year's European Hair Show — Europe's largest professional hair industry event, bringing together over 8,000 industry professionals.",de:"OlivHairSupply stellt auf der European Hair Show aus — Europas größter professioneller Haarmesse mit über 8.000 Fachleuten.",es:"OlivHairSupply expondrá en el European Hair Show de este año, el mayor evento profesional de la industria del cabello en Europa."},sections:[{h:{en:"Find Us at <em>Stand 42B</em>",de:"Besuchen Sie uns an <em>Stand 42B</em>",es:"Encúéntranos en el <em>Stand 42B</em>"},p:{en:"<p>Our stand will feature live demonstrations of BiziLuxe Signature Clip-In application, colour matching consultations and an exclusive show-only discount on selected products.</p>",de:"<p>Unser Stand zeigt Live-Demonstrationen der BiziLuxe Signature Clip-In Applikation, Farbberatungen und einen exklusiven Show-Rabatt.</p>",es:"<p>Nuestro stand incluirá demostraciones en vivo de la aplicación BiziLuxe Signature Clip-In, consultas de color y un descuento exclusivo del evento.</p>"}},{h:{en:"Show <em>Details</em>",de:"Show <em>Details</em>",es:"Detalles del <em>evento</em>"},p:{en:"<p><strong>Event:</strong> European Hair Show 2025<br><strong>Dates:</strong> Saturday 14 – Sunday 15 June 2025<br><strong>Venue:</strong> Messe Berlin, Halls 5 and 6<br><strong>OlivHairSupply Stand:</strong> 42B, Hall 5</p>",de:"<p><strong>Veranstaltung:</strong> European Hair Show 2025<br><strong>Termine:</strong> Samstag 14. – Sonntag 15. Juni 2025<br><strong>Veranstaltungsort:</strong> Messe Berlin, Hallen 5 und 6<br><strong>OlivHairSupply Stand:</strong> 42B, Halle 5</p>",es:"<p><strong>Evento:</strong> European Hair Show 2025<br><strong>Fechas:</strong> Sábado 14 – Domingo 15 de junio de 2025<br><strong>Lugar:</strong> Messe Berlín, Salas 5 y 6<br><strong>Stand OlivHairSupply:</strong> 42B, Sala 5</p>"}}]},
+"events-client-evening":{cat:{en:"Events",de:"Veranstaltungen",es:"Eventos"},date:{en:"May 2025",de:"Mai 2025",es:"Mayo 2025"},read:{en:"2 min read",de:"2 Min.",es:"2 min"},title:{en:"Exclusive Client Evening — <em>By Invitation</em>",de:"Exklusiver Kundenabend — <em>auf Einladung</em>",es:"Velada exclusiva para clientes — <em>por invitación</em>"},intro:{en:"We are hosting an intimate client evening at the OlivHairSupply Berlin studio — an invitation-only event for our existing clients, graduates and their guests.",de:"Wir veranstalten einen exklusiven Kundenabend im OlivHairSupply Berlin Studio — auf Einladung für Kunden und Absolventen.",es:"Organizamos una velada íntima para clientes en el estudio OlivHairSupply de Berlín, solo por invitación."},sections:[{h:{en:"What to <em>Expect</em>",de:"Was Sie <em>erwartet</em>",es:"Qué <em>esperar</em>"},p:{en:"<ul><li>First look at the new BiziLuxe autumn/winter 2025 collection before public release</li><li>One-to-one consultations with extension specialists</li><li>Live styling demonstrations</li><li>Complimentary refreshments</li><li>Exclusive event-only pricing on BiziLuxe products</li></ul>",de:"<ul><li>Erster Blick auf die neue BiziLuxe Herbst/Winter 2025 Kollektion</li><li>Einzelgespräche mit Spezialisten</li><li>Live-Styling-Demonstrationen</li><li>Kostenlose Erfrischungen</li><li>Exklusive Event-Preise</li></ul>",es:"<ul><li>Primera mirada a la nueva colección BiziLuxe otoño/invierno 2025</li><li>Consultas individuales con especialistas</li><li>Demostraciones de estilismo en vivo</li><li>Refrescos gratuitos</li><li>Precios exclusivos del evento</li></ul>"}},{h:{en:"How to <em>Request an Invitation</em>",de:"Wie Sie eine <em>Einladung anfordern</em>",es:"Cómo <em>solicitar una invitación</em>"},p:{en:"<p>This event is limited to 30 guests. Send us a message via WhatsApp or Instagram with the subject line 'Client Evening'.</p><div class='oart-tip'><p><strong>Date:</strong> Friday 30 May 2025, 7:00pm – 10:00pm<br><strong>Location:</strong> OlivHairSupply Studio, Berlin</p></div>",de:"<p>Diese Veranstaltung ist auf 30 Gäste beschränkt. Senden Sie uns eine Nachricht über WhatsApp oder Instagram.</p><div class='oart-tip'><p><strong>Datum:</strong> Freitag, 30. Mai 2025, 19:00–22:00 Uhr</p></div>",es:"<p>Este evento está limitado a 30 invitados. Envíanos un mensaje a través de WhatsApp o Instagram.</p><div class='oart-tip'><p><strong>Fecha:</strong> Viernes 30 de mayo de 2025, 19:00–22:00 h</p></div>"}}]},
+"transformations-sofia-story":{cat:{en:"Transformations",de:"Verwandlungen",es:"Transformaciones"},date:{en:"June 2025",de:"Juni 2025",es:"Junio 2025"},read:{en:"4 min read",de:"4 Min.",es:"4 min"},title:{en:"From Fine to Full: <em>Sofia's Story</em>",de:"Von fein zu voll: <em>Sofias Geschichte</em>",es:"De fino a lleno: <em>la historia de Sofía</em>"},intro:{en:"Sofia came to OlivHairSupply after seven years of searching for a solution to hair that simply refused to grow. What happened over the next six months changed that completely.",de:"Sofia kam zu OlivHairSupply nach sieben Jahren der Suche nach einer Lösung. Was in den nächsten sechs Monaten geschah, änderte das vollständig.",es:"Sofía llegó a OlivHairSupply después de siete años buscando una solución. Lo que sucedió durante los siguientes seis meses lo cambió todo."},sections:[{h:{en:"The <em>First Consultation</em>",de:"Die <em>erste Beratung</em>",es:"La <em>primera consulta</em>"},p:{en:"<p>&ldquo;I was nervous. I had tried everything — vitamins, treatments, thickening sprays. My consultant was the first person who took the time to explain what was possible and what was realistic. She showed me photos of similar hair types and walked me through exactly what the extensions would look like on me.&rdquo;</p><p>After the consultation, Sofia was fitted with a set of 20-inch BiziLuxe tape extensions in a warm brunette shade blended with her natural colour.</p>",de:"<p>&bdquo;Ich war nervös. Ich hatte alles versucht. Meine Beraterin war die Erste, die sich Zeit nahm, um zu erklären, was möglich ist.&ldquo;</p><p>Nach der Beratung wurde Sofia mit 20-Zoll BiziLuxe Tape-Extensions ausgestattet.</p>",es:"<p>&laquo;Estaba nerviosa. Había probado de todo. Mi consultora fue la primera persona que se tomó el tiempo de explicar qué era posible y qué era realista.&raquo;</p>"}},{h:{en:"Six Months <em>Later</em>",de:"Sechs Monate <em>später</em>",es:"Seis meses <em>después</em>"},p:{en:"<p>&ldquo;It genuinely changed how I carry myself. I used to avoid having my photo taken. Now I style it every day. I actually enjoy it.&rdquo;</p><div class='oart-tip'><p><strong>Ready for your own consultation?</strong> Book an appointment with one of our extension specialists and take the first step.</p></div>",de:"<p>&bdquo;Es hat wirklich verändert, wie ich mich trage. Jetzt style ich mein Haar jeden Tag. Ich genieße es wirklich.&ldquo;</p><div class='oart-tip'><p><strong>Bereit für Ihre eigene Beratung?</strong> Buchen Sie einen Termin mit einem unserer Spezialisten.</p></div>",es:"<p>&laquo;Genuinamente cambió cómo me conduzco. Ahora me peino todos los días. Realmente lo disfruto.&raquo;</p><div class='oart-tip'><p><strong>¿Lista para tu propia consulta?</strong> Reserva una cita con uno de nuestros especialistas.</p></div>"}}]},
+"transformations-wedding":{cat:{en:"Transformations",de:"Verwandlungen",es:"Transformaciones"},date:{en:"May 2025",de:"Mai 2025",es:"Mayo 2025"},read:{en:"3 min read",de:"3 Min.",es:"3 min"},title:{en:"Wedding Ready: How Extensions <em>Completed the Look</em>",de:"Hochzeitsfertig: Wie Extensions den <em>Look vollendeten</em>",es:"Lista para la boda: cómo las extensiones <em>completaron el look</em>"},intro:{en:"For her wedding day, our client Amelia had one brief: full, long and effortless. Her natural hair was shoulder-length — not enough for the style she had planned. BiziLuxe clip-in extensions were the solution.",de:"Für ihren Hochzeitstag hatte Amelia eine Anforderung: voll, lang und mühelos. BiziLuxe Clip-in Extensions waren die Lösung.",es:"Para su día de boda, Amelia tenía un único requisito: lleno, largo y sin esfuerzo. Las extensiones clip-in BiziLuxe fueron la solución."},sections:[{h:{en:"The <em>Morning of</em>",de:"Der <em>Morgen des</em> Hochzeitstages",es:"La <em>mañana del</em> gran día"},p:{en:"<p>Amelia's BiziLuxe Signature Clip-In set was pre-matched six weeks before the wedding. On the day, the full application took 22 minutes. The extensions stayed secure through the ceremony, reception, dancing and a late-night photo session — with zero slippage.</p>",de:"<p>Amelias BiziLuxe Signature Clip-In Set wurde sechs Wochen vor der Hochzeit farblich abgestimmt. Am Tag dauerte die vollständige Applikation 22 Minuten. Die Extensions blieben den ganzen Tag sicher — ohne Verrutschen.</p>",es:"<p>El set BiziLuxe Signature Clip-In de Amelia fue igualado en color seis semanas antes de la boda. El día de la boda, la aplicación completa tardó 22 minutos. Las extensiones permanecieron seguras durante toda la ceremonia, sin ningún deslizamiento.</p>"}},{h:{en:"Amelia's <em>Words</em>",de:"Amelias <em>Worte</em>",es:"Las <em>palabras</em> de Amelia"},p:{en:"<p>&ldquo;I looked at the photos the morning after and genuinely could not tell where my hair ended and the extensions began. The blend was perfect. I danced all night and my hair looked exactly the same in the final photo as it did in the first one. That is everything you want on your wedding day.&rdquo;</p><div class='oart-tip'><p><strong>Planning your wedding look?</strong> Book a consultation at least 8 weeks before your date to allow time for colour matching and a trial run.</p></div>",de:"<p>&bdquo;Ich konnte am Morgen danach nicht sagen, wo mein Haar aufhörte und die Extensions begannen. Die Mischung war perfekt.&ldquo;</p>",es:"<p>&laquo;A la mañana siguiente no pude distinguir dónde terminaba mi cabello y comenzaban las extensiones. La combinación era perfecta.&raquo;</p>"}}]},
+"transformations-before-after":{cat:{en:"Transformations",de:"Verwandlungen",es:"Transformaciones"},date:{en:"April 2025",de:"April 2025",es:"Abril 2025"},read:{en:"3 min read",de:"3 Min.",es:"3 min"},title:{en:"Before and After: <em>The Power of Clip-Ins</em>",de:"Vorher und Nachher: <em>Die Kraft der Clip-Ins</em>",es:"Antes y después: <em>el poder de los clip-ins</em>"},intro:{en:"Twenty minutes. One set of BiziLuxe Signature Clip-Ins. A complete transformation. We sat down with three clients to capture their before-and-after stories.",de:"Zwanzig Minuten. Ein Set BiziLuxe Signature Clip-Ins. Eine vollständige Verwandlung.",es:"Veinte minutos. Un set de BiziLuxe Signature Clip-Ins. Una transformación completa."},sections:[{h:{en:"Client One: <em>More Volume, More Confidence</em>",de:"Kundin Eins: <em>Mehr Volumen, mehr Selbstvertrauen</em>",es:"Clienta uno: <em>más volumen, más confianza</em>"},p:{en:"<p>&ldquo;I have fine hair that sits flat no matter what I do. Within 20 minutes of the first time I put them in, I sent a photo to my mum saying I finally have the hair I always wanted. She cried. So did I.&rdquo;</p><p>— Lena M., Berlin</p>",de:"<p>&bdquo;Ich habe feines Haar, das egal was ich tue flach liegt. Innerhalb von 20 Minuten schickte ich meiner Mutter ein Foto und sagte, ich habe endlich das Haar, das ich immer wollte.&ldquo;</p><p>— Lena M., Berlin</p>",es:"<p>&laquo;Tengo el cabello fino que queda plano sin importar lo que haga. Dentro de los 20 minutos del primer uso, le envié una foto a mi mamá diciendo que finalmente tengo el cabello que siempre quise.&raquo;</p><p>— Lena M., Berlín</p>"}},{h:{en:"Client Two: <em>Length for a Reason</em>",de:"Kundin Zwei: <em>Länge mit einem Zweck</em>",es:"Clienta dos: <em>longitud con un propósito</em>"},p:{en:"<p>&ldquo;I had my hair cut short after a breakup. But I missed my length. The BiziLuxe extensions gave me back the length instantly. They are incredibly natural.&rdquo;</p><p>— Priya S., Munich</p><div class='oart-tip'><p><strong>Want results like these?</strong> Browse the BiziLuxe Signature Clip-In collection and find your shade.</p></div>",de:"<p>&bdquo;Ich hatte mein Haar nach einer Trennung kurz schneiden lassen. Die BiziLuxe Extensions gaben mir die Länge sofort zurück. Sie sind unglaublich natürlich.&ldquo;</p><p>— Priya S., München</p>",es:"<p>&laquo;Me corté el cabello corto después de una ruptura. Las extensiones BiziLuxe me devolvieron la longitud al instante. Son increíblemente naturales.&raquo;</p><p>— Priya S., Múnich</p>"}}]}
+};
+
+function getSlug(){var p=window.location.pathname.replace(/\/+$/,'').split('/');return p[p.length-1];}
+function getLang(){try{return localStorage.getItem('ohs-lang')||'en';}catch(e){return'en';}}
+function t(o,l){return(o&&(o[l]||o.en))||'';}
+
+function render(){
+  var slug=getSlug(),lang=getLang(),art=A[slug];
+  if(!art){
+    document.getElementById('oart-title').textContent='Article Not Found';
+    document.getElementById('oart-body').innerHTML='<p style="font-family:Montserrat,sans-serif;color:#7A6A5A">This article could not be found. <a href="/blogs/journal" style="color:#B68A45">Return to the Journal.</a></p>';
+    return;
+  }
+  document.getElementById('oart-cat').textContent=t(art.cat,lang);
+  document.getElementById('oart-title').innerHTML=t(art.title,lang);
+  document.getElementById('oart-meta').textContent=t(art.date,lang)+' · '+t(art.read,lang);
+  document.title=t(art.title,lang).replace(/<[^>]+>/g,'')+' — OlivHairSupply';
+
+  var html='<p class="oart-intro">'+t(art.intro,lang)+'</p>';
+  art.sections.forEach(function(s){
+    html+='<div class="oart-section"><h2>'+t(s.h,lang)+'</h2>'+t(s.p,lang)+'</div>';
+  });
+  document.getElementById('oart-body').innerHTML=html;
+
+  var keys=Object.keys(A).filter(function(k){return k!==slug;});
+  keys=keys.sort(function(){return Math.random()-0.5;}).slice(0,3);
+  var rh='';
+  keys.forEach(function(k){
+    var r=A[k];
+    rh+='<a class="ojnl-post-card" href="/blogs/journal/'+k+'">';
+    rh+='<div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>'+t(r.cat,lang).toUpperCase()+'</span></div></div>';
+    rh+='<div class="ojnl-post-body">';
+    rh+='<span class="ojnl-post-tag">'+t(r.cat,lang)+'</span>';
+    rh+='<div class="ojnl-post-title">'+t(r.title,lang).replace(/<[^>]+>/g,'')+'</div>';
+    rh+='<span class="ojnl-post-meta">'+t(r.date,lang)+' · '+t(r.read,lang)+'</span>';
+    rh+='<span class="ojnl-read-more">Read More →</span>';
+    rh+='</div></a>';
+  });
+  document.getElementById('oart-related').innerHTML=rh;
+}
+
+document.querySelectorAll('select[name="locale_code"]').forEach(function(s){
+  s.addEventListener('change',function(){setTimeout(render,80);});
+});
+
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',render);}
+else{render();}
+})();
+</script>
+
 </div>
-    </main>
+</div>
+</main>
 
     <!-- BEGIN sections: footer-group -->
 <div id="shopify-section-sections--30011492958546__ohs_trust_strip_8cTNGq" class="shopify-section shopify-section-group-footer-group">
