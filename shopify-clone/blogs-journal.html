@@ -2693,30 +2693,297 @@ first.parentNode.insertBefore(script, first);
   
   <div class="ojnl-cats">
     <div class="ojnl-cats-inner">
-      <a href="/blogs/journal" class="ojnl-cat-btn active">All</a>
-      <a href="/blogs/journal/tagged/hair-care" class="ojnl-cat-btn">Hair Care</a>
-      <a href="/blogs/journal/tagged/styling-tips" class="ojnl-cat-btn">Styling Tips</a>
-      <a href="/blogs/journal/tagged/BiziLuxe-collections" class="ojnl-cat-btn">BiziLuxe Collections</a>
-      <a href="/blogs/journal/tagged/training-education" class="ojnl-cat-btn">Training and Education</a>
-      <a href="/blogs/journal/tagged/events" class="ojnl-cat-btn">Events</a>
-      <a href="/blogs/journal/tagged/transformations" class="ojnl-cat-btn">Transformations</a>
+      <a href="#" class="ojnl-cat-btn active" data-filter="all" onclick="ojnlFilter(event,'all')" data-en="All" data-de="Alle" data-es="Todo">All</a>
+      <a href="#" class="ojnl-cat-btn" data-filter="hair-care" onclick="ojnlFilter(event,'hair-care')" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</a>
+      <a href="#" class="ojnl-cat-btn" data-filter="styling-tips" onclick="ojnlFilter(event,'styling-tips')" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</a>
+      <a href="#" class="ojnl-cat-btn" data-filter="biziluxe-collections" onclick="ojnlFilter(event,'biziluxe-collections')" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</a>
+      <a href="#" class="ojnl-cat-btn" data-filter="training-education" onclick="ojnlFilter(event,'training-education')" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</a>
+      <a href="#" class="ojnl-cat-btn" data-filter="events" onclick="ojnlFilter(event,'events')" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</a>
+      <a href="#" class="ojnl-cat-btn" data-filter="transformations" onclick="ojnlFilter(event,'transformations')" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</a>
     </div>
   </div>
 
-  
   <div class="ojnl-grid-section">
     <div class="ojnl-inner">
       <div class="ojnl-grid-header">
-        <span class="ojnl-eyebrow">All Articles</span>
+        <span class="ojnl-eyebrow" id="ojnl-grid-eyebrow">All Articles</span>
         <h2 class="ojnl-section-title">Read the <em>Edit</em></h2>
       </div>
-      
-        <div class="ojnl-no-posts">
-          No articles published yet. Add your first post under Online Store, Blogs, Journal.
-        </div>
-      
+
+      <div class="ojnl-blog-grid" id="ojnl-blog-grid">
+
+        <!-- ── HAIR CARE ───────────────────────────────────── -->
+        <a class="ojnl-post-card" href="#" data-category="hair-care">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>HAIR CARE</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</span>
+            <div class="ojnl-post-title" data-en="How to Keep Your Extensions Looking Salon Fresh" data-de="So halten Sie Ihre Extensions in Salon-Qualität" data-es="Cómo mantener tus extensiones con acabado de salón">How to Keep Your Extensions Looking Salon Fresh</div>
+            <p class="ojnl-post-excerpt" data-en="Learn the professional care routines that extend the life of your BiziLuxe extensions by months." data-de="Lernen Sie die professionellen Pflegeroutinen, die die Lebensdauer Ihrer BiziLuxe Extensions um Monate verlängern." data-es="Aprende las rutinas de cuidado profesional que prolongan la vida de tus extensiones BiziLuxe por meses.">Learn the professional care routines that extend the life of your BiziLuxe extensions by months.</p>
+            <span class="ojnl-post-meta" data-en="June 2025 · 5 min read" data-de="Juni 2025 · 5 Min. Lesezeit" data-es="Junio 2025 · 5 min de lectura">June 2025 · 5 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="hair-care">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>HAIR CARE</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</span>
+            <div class="ojnl-post-title" data-en="Washing Your Hair Extensions the Right Way" data-de="Haarverlängerungen richtig waschen" data-es="Cómo lavar tus extensiones correctamente">Washing Your Hair Extensions the Right Way</div>
+            <p class="ojnl-post-excerpt" data-en="The wrong wash routine can cut your extension lifespan in half. Here is what the professionals do." data-de="Die falsche Waschgewohnheit kann die Lebensdauer Ihrer Extensions halbieren. Das empfehlen die Profis." data-es="Una rutina de lavado incorrecta puede reducir a la mitad la vida de tus extensiones. Esto es lo que hacen los profesionales.">The wrong wash routine can cut your extension lifespan in half. Here is what the professionals do.</p>
+            <span class="ojnl-post-meta" data-en="May 2025 · 4 min read" data-de="Mai 2025 · 4 Min. Lesezeit" data-es="Mayo 2025 · 4 min de lectura">May 2025 · 4 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="hair-care">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>HAIR CARE</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Hair Care" data-de="Haarpflege" data-es="Cuidado del Cabello">Hair Care</span>
+            <div class="ojnl-post-title" data-en="Heat Protection: What Your Extensions Really Need" data-de="Hitzeschutz: Was Ihre Extensions wirklich brauchen" data-es="Protección térmica: lo que tus extensiones realmente necesitan">Heat Protection: What Your Extensions Really Need</div>
+            <p class="ojnl-post-excerpt" data-en="Before you pick up that curling iron, understand how to protect your investment from heat damage." data-de="Bevor Sie zum Lockenstab greifen, sollten Sie wissen, wie Sie Ihre Investition vor Hitzeschäden schützen." data-es="Antes de usar el rizador, entiende cómo proteger tu inversión del daño por calor.">Before you pick up that curling iron, understand how to protect your investment from heat damage.</p>
+            <span class="ojnl-post-meta" data-en="April 2025 · 4 min read" data-de="April 2025 · 4 Min. Lesezeit" data-es="Abril 2025 · 4 min de lectura">April 2025 · 4 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <!-- ── STYLING TIPS ─────────────────────────────────── -->
+        <a class="ojnl-post-card" href="#" data-category="styling-tips">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>STYLING TIPS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</span>
+            <div class="ojnl-post-title" data-en="5 Styles That Look Better With Extensions" data-de="5 Looks, die mit Extensions besser aussehen" data-es="5 estilos que lucen mejor con extensiones">5 Styles That Look Better With Extensions</div>
+            <p class="ojnl-post-excerpt" data-en="From sleek ponytails to voluminous blowouts — discover styles that are made for added length and volume." data-de="Von glatten Pferdeschwänzen bis hin zu voluminösen Blowouts — entdecken Sie Styles, die für mehr Länge gemacht sind." data-es="Desde colas de caballo elegantes hasta voluminosos blow-outs, descubre estilos creados para mayor longitud y volumen.">From sleek ponytails to voluminous blowouts — discover styles that are made for added length and volume.</p>
+            <span class="ojnl-post-meta" data-en="June 2025 · 6 min read" data-de="Juni 2025 · 6 Min. Lesezeit" data-es="Junio 2025 · 6 min de lectura">June 2025 · 6 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="styling-tips">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>STYLING TIPS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</span>
+            <div class="ojnl-post-title" data-en="How to Blend Extensions With Your Natural Hair" data-de="Wie Sie Extensions mit Ihrem natürlichen Haar kombinieren" data-es="Cómo combinar extensiones con tu cabello natural">How to Blend Extensions With Your Natural Hair</div>
+            <p class="ojnl-post-excerpt" data-en="The secret to undetectable extensions lies in the blend. Our master educators share their technique." data-de="Das Geheimnis unentdeckbarer Extensions liegt in der Mischung. Unsere Experten teilen ihre Technik." data-es="El secreto de las extensiones indetectables está en la combinación. Nuestros educadores comparten su técnica.">The secret to undetectable extensions lies in the blend. Our master educators share their technique.</p>
+            <span class="ojnl-post-meta" data-en="May 2025 · 5 min read" data-de="Mai 2025 · 5 Min. Lesezeit" data-es="Mayo 2025 · 5 min de lectura">May 2025 · 5 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="styling-tips">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>STYLING TIPS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Styling Tips" data-de="Styling-Tipps" data-es="Consejos de Estilo">Styling Tips</span>
+            <div class="ojnl-post-title" data-en="Overnight Styles That Protect Your Extensions" data-de="Overnight-Styles, die Ihre Extensions schützen" data-es="Peinados nocturnos que protegen tus extensiones">Overnight Styles That Protect Your Extensions</div>
+            <p class="ojnl-post-excerpt" data-en="Rest without worry. These protective night routines keep your extensions smooth and tangle-free each morning." data-de="Schlafen Sie sorglos. Diese Nachtpflegeroutinen halten Ihre Extensions jeden Morgen glatt und verknäuelungsfrei." data-es="Descansa sin preocupaciones. Estas rutinas nocturnas mantienen tus extensiones suaves y sin enredos.">Rest without worry. These protective night routines keep your extensions smooth and tangle-free each morning.</p>
+            <span class="ojnl-post-meta" data-en="April 2025 · 4 min read" data-de="April 2025 · 4 Min. Lesezeit" data-es="Abril 2025 · 4 min de lectura">April 2025 · 4 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <!-- ── BIZILUXE COLLECTIONS ─────────────────────────── -->
+        <a class="ojnl-post-card" href="#" data-category="biziluxe-collections">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>BIZILUXE</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</span>
+            <div class="ojnl-post-title" data-en="Introducing the BiziLuxe Signature Clip-In Set" data-de="Die BiziLuxe Signature Clip-In Kollektion" data-es="Presentamos el Set Signature Clip-In de BiziLuxe">Introducing the BiziLuxe Signature Clip-In Set</div>
+            <p class="ojnl-post-excerpt" data-en="Our most requested launch yet — a complete clip-in collection engineered for luxury, longevity and effortless styling." data-de="Unser meistgefragter Launch — eine vollständige Clip-In Kollektion für Luxus, Langlebigkeit und müheloses Styling." data-es="Nuestro lanzamiento más solicitado — una colección completa de clip-ins diseñada para lujo, longevidad y estilismo sin esfuerzo.">Our most requested launch yet — a complete clip-in collection engineered for luxury, longevity and effortless styling.</p>
+            <span class="ojnl-post-meta" data-en="June 2025 · 3 min read" data-de="Juni 2025 · 3 Min. Lesezeit" data-es="Junio 2025 · 3 min de lectura">June 2025 · 3 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="biziluxe-collections">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>BIZILUXE</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</span>
+            <div class="ojnl-post-title" data-en="Behind the Collection: How BiziLuxe Hair is Sourced" data-de="Hinter der Kollektion: Wie BiziLuxe Haar bezogen wird" data-es="Detrás de la colección: cómo se obtiene el cabello BiziLuxe">Behind the Collection: How BiziLuxe Hair is Sourced</div>
+            <p class="ojnl-post-excerpt" data-en="Quality begins at the source. We trace the journey of every BiziLuxe strand from origin to salon." data-de="Qualität beginnt an der Quelle. Wir verfolgen die Reise jeder BiziLuxe Strähne vom Ursprung bis zum Salon." data-es="La calidad empieza en el origen. Trazamos el recorrido de cada hebra BiziLuxe desde su origen hasta el salón.">Quality begins at the source. We trace the journey of every BiziLuxe strand from origin to salon.</p>
+            <span class="ojnl-post-meta" data-en="May 2025 · 5 min read" data-de="Mai 2025 · 5 Min. Lesezeit" data-es="Mayo 2025 · 5 min de lectura">May 2025 · 5 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="biziluxe-collections">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>BIZILUXE</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="BiziLuxe Collections" data-de="BiziLuxe Kollektionen" data-es="Colecciones BiziLuxe">BiziLuxe Collections</span>
+            <div class="ojnl-post-title" data-en="New Arrivals: Extended Lengths Now Available" data-de="Neuheiten: Erweiterte Längen jetzt erhältlich" data-es="Novedades: nuevas longitudes ahora disponibles">New Arrivals: Extended Lengths Now Available</div>
+            <p class="ojnl-post-excerpt" data-en="Longer, fuller, bolder. The BiziLuxe range now includes lengths up to 28 inches for maximum impact." data-de="Länger, voller, kühner. Die BiziLuxe Range umfasst jetzt Längen bis zu 71 cm für maximale Wirkung." data-es="Más largo, más lleno, más atrevido. La gama BiziLuxe ahora incluye longitudes de hasta 71 cm para el máximo impacto.">Longer, fuller, bolder. The BiziLuxe range now includes lengths up to 28 inches for maximum impact.</p>
+            <span class="ojnl-post-meta" data-en="April 2025 · 3 min read" data-de="April 2025 · 3 Min. Lesezeit" data-es="Abril 2025 · 3 min de lectura">April 2025 · 3 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <!-- ── TRAINING AND EDUCATION ───────────────────────── -->
+        <a class="ojnl-post-card" href="#" data-category="training-education">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRAINING</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</span>
+            <div class="ojnl-post-title" data-en="What to Expect at the OlivHairSupply Academy" data-de="Was Sie bei der OlivHairSupply Academy erwartet" data-es="Qué esperar en la Academia OlivHairSupply">What to Expect at the OlivHairSupply Academy</div>
+            <p class="ojnl-post-excerpt" data-en="A full breakdown of our professional certification programme — from beginner foundation to master level." data-de="Eine vollständige Übersicht unseres professionellen Zertifizierungsprogramms — vom Einsteiger bis zum Meister." data-es="Un desglose completo de nuestro programa de certificación profesional, desde nivel principiante hasta maestro.">A full breakdown of our professional certification programme — from beginner foundation to master level.</p>
+            <span class="ojnl-post-meta" data-en="June 2025 · 6 min read" data-de="Juni 2025 · 6 Min. Lesezeit" data-es="Junio 2025 · 6 min de lectura">June 2025 · 6 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="training-education">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRAINING</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</span>
+            <div class="ojnl-post-title" data-en="Why Certification Changes Your Career" data-de="Warum Zertifizierung Ihre Karriere verändert" data-es="Por qué la certificación transforma tu carrera">Why Certification Changes Your Career</div>
+            <p class="ojnl-post-excerpt" data-en="Certified extensionists earn more, build faster and retain clients longer. Here is what the data shows." data-de="Zertifizierte Extensionisten verdienen mehr, wachsen schneller und binden Kunden länger. Das zeigen die Daten." data-es="Los extensionistas certificados ganan más, crecen más rápido y retienen clientes durante más tiempo. Así lo muestran los datos.">Certified extensionists earn more, build faster and retain clients longer. Here is what the data shows.</p>
+            <span class="ojnl-post-meta" data-en="May 2025 · 5 min read" data-de="Mai 2025 · 5 Min. Lesezeit" data-es="Mayo 2025 · 5 min de lectura">May 2025 · 5 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="training-education">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRAINING</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Training and Education" data-de="Ausbildung &amp; Schulung" data-es="Formación y Educación">Training and Education</span>
+            <div class="ojnl-post-title" data-en="Meet Our Master Educators" data-de="Lernen Sie unsere Masterausbilder kennen" data-es="Conoce a nuestros educadores maestros">Meet Our Master Educators</div>
+            <p class="ojnl-post-excerpt" data-en="The team behind the training — experienced, passionate and dedicated to your professional development." data-de="Das Team hinter der Ausbildung — erfahren, leidenschaftlich und Ihrer beruflichen Entwicklung verpflichtet." data-es="El equipo detrás de la formación: experimentado, apasionado y comprometido con tu desarrollo profesional.">The team behind the training — experienced, passionate and dedicated to your professional development.</p>
+            <span class="ojnl-post-meta" data-en="April 2025 · 4 min read" data-de="April 2025 · 4 Min. Lesezeit" data-es="Abril 2025 · 4 min de lectura">April 2025 · 4 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <!-- ── EVENTS ───────────────────────────────────────── -->
+        <a class="ojnl-post-card" href="#" data-category="events">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>EVENTS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</span>
+            <div class="ojnl-post-title" data-en="Upcoming Masterclass: Advanced Extension Techniques" data-de="Kommende Masterclass: Fortgeschrittene Extension-Techniken" data-es="Próxima Masterclass: Técnicas Avanzadas de Extensiones">Upcoming Masterclass: Advanced Extension Techniques</div>
+            <p class="ojnl-post-excerpt" data-en="Limited seats for our intensive one-day masterclass covering the latest professional application methods." data-de="Begrenzte Plätze für unsere intensive eintägige Masterclass mit den neuesten professionellen Applikationsmethoden." data-es="Plazas limitadas para nuestra masterclass intensiva de un día sobre los últimos métodos de aplicación profesional.">Limited seats for our intensive one-day masterclass covering the latest professional application methods.</p>
+            <span class="ojnl-post-meta" data-en="July 2025 · 2 min read" data-de="Juli 2025 · 2 Min. Lesezeit" data-es="Julio 2025 · 2 min de lectura">July 2025 · 2 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="events">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>EVENTS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</span>
+            <div class="ojnl-post-title" data-en="OlivHairSupply at the European Hair Show 2025" data-de="OlivHairSupply auf der European Hair Show 2025" data-es="OlivHairSupply en el European Hair Show 2025">OlivHairSupply at the European Hair Show 2025</div>
+            <p class="ojnl-post-excerpt" data-en="We are exhibiting at Europe's largest professional hair event. Come find us at Stand 42B — we would love to meet you." data-de="Wir stellen auf Europas größter professioneller Haarmesse aus. Besuchen Sie uns an Stand 42B." data-es="Exhibimos en el evento de cabello profesional más grande de Europa. Encuéntranos en el Stand 42B.">We are exhibiting at Europe's largest professional hair event. Come find us at Stand 42B — we would love to meet you.</p>
+            <span class="ojnl-post-meta" data-en="June 2025 · 3 min read" data-de="Juni 2025 · 3 Min. Lesezeit" data-es="Junio 2025 · 3 min de lectura">June 2025 · 3 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="events">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>EVENTS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Events" data-de="Veranstaltungen" data-es="Eventos">Events</span>
+            <div class="ojnl-post-title" data-en="Exclusive Client Evening — By Invitation" data-de="Exklusiver Kundenabend — auf Einladung" data-es="Velada exclusiva para clientes — por invitación">Exclusive Client Evening — By Invitation</div>
+            <p class="ojnl-post-excerpt" data-en="An intimate evening of new collections, expert styling and private consultations. Reserve your place early." data-de="Ein exklusiver Abend mit neuen Kollektionen, Expertenberatung und privaten Konsultationen. Reservieren Sie frühzeitig." data-es="Una velada íntima con nuevas colecciones, estilismo experto y consultas privadas. Reserva tu lugar con antelación.">An intimate evening of new collections, expert styling and private consultations. Reserve your place early.</p>
+            <span class="ojnl-post-meta" data-en="May 2025 · 2 min read" data-de="Mai 2025 · 2 Min. Lesezeit" data-es="Mayo 2025 · 2 min de lectura">May 2025 · 2 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <!-- ── TRANSFORMATIONS ─────────────────────────────── -->
+        <a class="ojnl-post-card" href="#" data-category="transformations">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRANSFORMATIONS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</span>
+            <div class="ojnl-post-title" data-en="From Fine to Full: Sofia's Story" data-de="Von fein zu voll: Sofias Geschichte" data-es="De fino a lleno: la historia de Sofía">From Fine to Full: Sofia's Story</div>
+            <p class="ojnl-post-excerpt" data-en="After years of searching for volume, Sofia found her answer in BiziLuxe. See the remarkable transformation." data-de="Nach Jahren der Suche nach Volumen fand Sofia ihre Antwort bei BiziLuxe. Sehen Sie die beeindruckende Verwandlung." data-es="Después de años buscando volumen, Sofía encontró su respuesta en BiziLuxe. Mira la notable transformación.">After years of searching for volume, Sofia found her answer in BiziLuxe. See the remarkable transformation.</p>
+            <span class="ojnl-post-meta" data-en="June 2025 · 4 min read" data-de="Juni 2025 · 4 Min. Lesezeit" data-es="Junio 2025 · 4 min de lectura">June 2025 · 4 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="transformations">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRANSFORMATIONS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</span>
+            <div class="ojnl-post-title" data-en="Wedding Ready: How Extensions Completed the Look" data-de="Hochzeitsfertig: Wie Extensions den Look vollendeten" data-es="Lista para la boda: cómo las extensiones completaron el look">Wedding Ready: How Extensions Completed the Look</div>
+            <p class="ojnl-post-excerpt" data-en="For her wedding day, nothing less than perfection would do. See how BiziLuxe delivered exactly that." data-de="Für ihren Hochzeitstag war nur Perfektion gut genug. Sehen Sie, wie BiziLuxe genau das geliefert hat." data-es="Para su día de boda, nada menos que la perfección era suficiente. Descubre cómo BiziLuxe lo logró.">For her wedding day, nothing less than perfection would do. See how BiziLuxe delivered exactly that.</p>
+            <span class="ojnl-post-meta" data-en="May 2025 · 3 min read" data-de="Mai 2025 · 3 Min. Lesezeit" data-es="Mayo 2025 · 3 min de lectura">May 2025 · 3 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+        <a class="ojnl-post-card" href="#" data-category="transformations">
+          <div class="ojnl-post-img-wrap"><div class="ojnl-post-img-ph"><span>TRANSFORMATIONS</span></div></div>
+          <div class="ojnl-post-body">
+            <span class="ojnl-post-tag" data-en="Transformations" data-de="Verwandlungen" data-es="Transformaciones">Transformations</span>
+            <div class="ojnl-post-title" data-en="Before and After: The Power of Clip-Ins" data-de="Vorher und Nachher: Die Kraft der Clip-Ins" data-es="Antes y después: el poder de los clip-ins">Before and After: The Power of Clip-Ins</div>
+            <p class="ojnl-post-excerpt" data-en="A 20-minute application. A complete transformation. This is what BiziLuxe clip-ins can do for you." data-de="20 Minuten Applikation. Eine vollständige Verwandlung. Das können BiziLuxe Clip-Ins für Sie tun." data-es="20 minutos de aplicación. Una transformación completa. Esto es lo que los clip-ins BiziLuxe pueden hacer por ti.">A 20-minute application. A complete transformation. This is what BiziLuxe clip-ins can do for you.</p>
+            <span class="ojnl-post-meta" data-en="April 2025 · 3 min read" data-de="April 2025 · 3 Min. Lesezeit" data-es="Abril 2025 · 3 min de lectura">April 2025 · 3 min read</span>
+            <span class="ojnl-read-more" data-en="Read More →" data-de="Mehr lesen →" data-es="Leer más →">Read More →</span>
+          </div>
+        </a>
+
+      </div><!-- end ojnl-blog-grid -->
     </div>
   </div>
+
+  <script>
+  (function() {
+    // ── Language helper ──────────────────────────────────────
+    function ojnlGetLang() {
+      try { return localStorage.getItem('ohs-lang') || 'en'; } catch(e) { return 'en'; }
+    }
+
+    // ── Apply translations to all [data-en] elements ─────────
+    function ojnlApplyTranslations() {
+      var lang = ojnlGetLang();
+      document.querySelectorAll('[data-en]').forEach(function(el) {
+        var t = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+        if (t) el.textContent = t;
+      });
+      // Update grid eyebrow for current active filter
+      var active = document.querySelector('.ojnl-cat-btn.active');
+      if (active) {
+        var filter = active.getAttribute('data-filter') || 'all';
+        ojnlUpdateEyebrow(filter, lang);
+      }
+    }
+
+    // ── Update section eyebrow based on active category ──────
+    var ojnlEyebrows = {
+      all:                    { en: 'All Articles',           de: 'Alle Artikel',              es: 'Todos los Artículos' },
+      'hair-care':            { en: 'Hair Care',              de: 'Haarpflege',                es: 'Cuidado del Cabello' },
+      'styling-tips':         { en: 'Styling Tips',           de: 'Styling-Tipps',             es: 'Consejos de Estilo' },
+      'biziluxe-collections': { en: 'BiziLuxe Collections',  de: 'BiziLuxe Kollektionen',     es: 'Colecciones BiziLuxe' },
+      'training-education':   { en: 'Training and Education', de: 'Ausbildung & Schulung',     es: 'Formación y Educación' },
+      'events':               { en: 'Events',                 de: 'Veranstaltungen',           es: 'Eventos' },
+      'transformations':      { en: 'Transformations',        de: 'Verwandlungen',             es: 'Transformaciones' }
+    };
+
+    function ojnlUpdateEyebrow(filter, lang) {
+      var eyebrow = document.getElementById('ojnl-grid-eyebrow');
+      if (!eyebrow) return;
+      var h = ojnlEyebrows[filter] || ojnlEyebrows.all;
+      eyebrow.textContent = h[lang] || h.en;
+    }
+
+    // ── Category filter ──────────────────────────────────────
+    window.ojnlFilter = function(e, cat) {
+      e.preventDefault();
+      document.querySelectorAll('.ojnl-cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      e.currentTarget.classList.add('active');
+      document.querySelectorAll('.ojnl-post-card').forEach(function(card) {
+        card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+      });
+      ojnlUpdateEyebrow(cat, ojnlGetLang());
+    };
+
+    // ── Save lang on locale selector change ──────────────────
+    document.querySelectorAll('select[name="locale_code"]').forEach(function(sel) {
+      sel.addEventListener('change', function() {
+        try { localStorage.setItem('ohs-lang', this.value); } catch(e) {}
+        setTimeout(ojnlApplyTranslations, 50);
+      });
+    });
+
+    // ── Run on load ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', ojnlApplyTranslations);
+    if (document.readyState !== 'loading') ojnlApplyTranslations();
+  })();
+  </script>
 
   
   <div class="ojnl-instagram">
