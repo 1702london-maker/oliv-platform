@@ -3626,17 +3626,14 @@ function oapptRenderCalendar() {
     var dateStr = oapptState.calYear + '-' + String(oapptState.calMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
     var dow     = date.getDay();
     var isPast  = date < today;
-    var isTueToSat = dow >= 2 && dow <= 6;
-    var isMonToSat = dow >= 1 && dow <= 6;
-    var isWorkDay  = location === 'b' ? isTueToSat : isMonToSat;
-    var storeBOpen = new Date(2026, 7, 3); // Aug 3 2026 — Store B opening date
+    var isSunday = dow === 0;
+    var storeBOpen = new Date(2026, 7, 3); // Aug 3 2026
     var isBeforeStoreBOpen = location === 'b' && date < storeBOpen;
-    var isStylistDay = stylist && stylist.workingDays.indexOf(dow) > -1;
-    var isAvailable = !isPast && !isBeforeStoreBOpen && isWorkDay && isStylistDay;
+    var isAvailable = !isPast && !isSunday && !isBeforeStoreBOpen;
     var isSel = oapptState.selectedDate === dateStr;
     var isToday = date.toDateString() === today.toDateString();
     var cls = 'oappt-cal-date';
-    if (isPast || isBeforeStoreBOpen || dow === 0 || !isWorkDay || !isStylistDay) cls += ' unavailable';
+    if (isPast || isSunday || isBeforeStoreBOpen) cls += ' unavailable';
     else cls += ' available';
     if (isToday) cls += ' today';
     if (isSel) cls += ' selected';
