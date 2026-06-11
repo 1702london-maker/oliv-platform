@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./HairMatchPro.module.css";
 import type { HairMatchAnalysis, HairMatchPhoto, HairMatchProduct, HairMatchRecommendation, HairMatchAngle } from "@/lib/hairmatch/types";
 
@@ -39,17 +39,27 @@ export function HairMatchProClient() {
     return analysis?.recommendations.find((rec) => rec.id === selectedId) || analysis?.recommendations[0] || null;
   }, [analysis, selectedId]);
 
+  // Attach stream to video element once camera modal is rendered
+  useEffect(() => {
+    if (cameraAngle && streamRef.current && videoRef.current) {
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [cameraAngle]);
+
   async function openCamera(angle: HairMatchAngle) {
-    setCameraAngle(angle);
+    // Stop any existing stream first, wait briefly for browser to release camera
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((t) => t.stop());
+      streamRef.current = null;
+      await new Promise((r) => setTimeout(r, 200));
+    }
     setMessage("");
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false });
       streamRef.current = stream;
-      setTimeout(() => {
-        if (videoRef.current) videoRef.current.srcObject = stream;
-      }, 0);
+      setCameraAngle(angle); // set AFTER stream is ready so useEffect can attach it
     } catch {
-      setMessage("Camera access was blocked. Please use photo upload for this angle.");
+      setMessage("Camera access was blocked. Please use the Upload Photos button instead.");
     }
   }
 
