@@ -108,6 +108,32 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       document.head.appendChild(style);
     }
 
+    // OHS AI Match nav dropdown CSS
+    if (!document.getElementById('ohs-ai-nav-css')) {
+      const aiStyle = document.createElement('style');
+      aiStyle.id = 'ohs-ai-nav-css';
+      aiStyle.textContent = `
+        .ohs-ai-nav-item{position:relative;}
+        .ohs-ai-dropdown{
+          display:none;position:absolute;top:100%;right:0;
+          background:#0a0a0a;border:1px solid #C9A96E;
+          min-width:190px;z-index:9999;padding:8px 0;
+          box-shadow:0 8px 32px rgba(0,0,0,0.6);
+        }
+        .ohs-ai-dropdown a{
+          display:block;padding:10px 18px;
+          font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+          letter-spacing:1.5px;text-transform:uppercase;color:#fff;
+          white-space:nowrap;text-decoration:none;
+          transition:color 0.2s,background 0.2s;
+        }
+        .ohs-ai-dropdown a:hover{color:#C9A96E;background:rgba(201,169,110,0.07);}
+        .ohs-ai-dd-featured{color:#C9A96E !important;border-bottom:1px solid rgba(201,169,110,0.2);padding-bottom:12px !important;margin-bottom:2px;}
+        .ohs-ai-nav-item:hover .ohs-ai-dropdown,.ohs-ai-nav-item:focus-within .ohs-ai-dropdown{display:block;}
+      `;
+      document.head.appendChild(aiStyle);
+    }
+
     // Apply saved language — TranslationClient (runs first) already translated the body,
     // so DE_PAIRS translation here is a safe no-op on German text (English keys won't match).
     const savedLang = (() => { try { return localStorage.getItem('ohs-lang') || 'de'; } catch { return 'de'; } })();
