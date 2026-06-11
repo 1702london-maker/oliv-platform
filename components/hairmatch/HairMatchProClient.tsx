@@ -12,7 +12,6 @@ const ANGLES: Array<{ key: HairMatchAngle; label: string; help: string }> = [
   { key: "left", label: "Left", help: "Left profile" },
   { key: "right", label: "Right", help: "Right profile" },
   { key: "hair", label: "Hair", help: "Current hair" },
-  { key: "back", label: "Back", help: "Back view" },
 ];
 
 type ApiState = "idle" | "loading" | "done" | "error";
