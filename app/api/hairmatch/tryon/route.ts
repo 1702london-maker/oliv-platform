@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateTryOnDescription } from "@/lib/hairmatch/ai";
+import { generateTryOnImage } from "@/lib/hairmatch/ai";
 import type { HairMatchRecommendation } from "@/lib/hairmatch/types";
 
 export const runtime = "nodejs";
@@ -7,14 +7,15 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const photo = String(body.photo || "");
     const recommendation = body.recommendation as HairMatchRecommendation | undefined;
 
-    if (!recommendation) {
-      return NextResponse.json({ error: "recommendation_required" }, { status: 400 });
+    if (!photo || !recommendation) {
+      return NextResponse.json({ error: "photo_and_recommendation_required" }, { status: 400 });
     }
 
-    const description = await generateTryOnDescription(recommendation);
-    return NextResponse.json({ description });
+    const image = await generateTryOnImage(photo, recommendation);
+    return NextResponse.json({ image });
   } catch (error) {
     console.error("[HairMatch] Try-on error:", error);
     return NextResponse.json({
