@@ -20,11 +20,12 @@ grant all on wholesale_order_requests to service_role;
 -- RLS: wholesale buyers can only see their own orders
 alter table wholesale_order_requests enable row level security;
 
+drop policy if exists "Wholesale buyers read own orders" on wholesale_order_requests;
 create policy "Wholesale buyers read own orders"
   on wholesale_order_requests for select
   using (
-    account_id in (
-      select id from wholesale_accounts
-      where profile_id = auth.uid()
+    account_id::text in (
+      select id::text from wholesale_accounts
+      where profile_id::text = auth.uid()::text
     )
   );

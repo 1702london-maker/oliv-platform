@@ -26,6 +26,7 @@ CREATE INDEX IF NOT EXISTS vouchers_status_idx ON vouchers (status);
 ALTER TABLE vouchers ENABLE ROW LEVEL SECURITY;
 
 -- Only service role can write; public can read own voucher by code (handled in API)
+DROP POLICY IF EXISTS "service_role_all" ON vouchers;
 CREATE POLICY "service_role_all" ON vouchers
   FOR ALL USING (auth.role() = 'service_role');
 
@@ -38,6 +39,7 @@ BEGIN
 END;
 $$;
 
+DROP TRIGGER IF EXISTS vouchers_updated_at ON vouchers;
 CREATE TRIGGER vouchers_updated_at
   BEFORE UPDATE ON vouchers
   FOR EACH ROW EXECUTE FUNCTION update_vouchers_timestamp();
