@@ -2352,13 +2352,13 @@ first.parentNode.insertBefore(script, first);
   font-weight: 300;
   color: #F6F1E8;
 }
-.oappt-cal-grid { padding: 16px; }
-.oappt-cal-days-row {
+.oappt-cal-grid {
+  padding: 16px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
-  margin-bottom: 6px;
 }
+.oappt-cal-days-row { display: contents; }
 .oappt-cal-day-label {
   font-family: 'Montserrat', sans-serif;
   font-size: 9px;
@@ -2369,11 +2369,7 @@ first.parentNode.insertBefore(script, first);
   text-align: center;
   padding: 4px 0;
 }
-.oappt-cal-dates {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
+.oappt-cal-dates { display: contents; }
 .oappt-cal-date {
   aspect-ratio: 1;
   display: flex;
