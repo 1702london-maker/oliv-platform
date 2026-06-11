@@ -2352,14 +2352,15 @@ first.parentNode.insertBefore(script, first);
   font-weight: 300;
   color: #F6F1E8;
 }
-.oappt-cal-grid {
-  padding: 16px;
+.oappt-cal-grid { padding: 16px; }
+.oappt-cal-days-row { display: none; }
+.oappt-cal-day-label { display: none; }
+.oappt-cal-dates {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
 }
-.oappt-cal-days-row { display: contents; }
-.oappt-cal-day-label {
+.oappt-cal-day-hdr {
   font-family: 'Montserrat', sans-serif;
   font-size: 9px;
   font-weight: 700;
@@ -2369,7 +2370,6 @@ first.parentNode.insertBefore(script, first);
   text-align: center;
   padding: 4px 0;
 }
-.oappt-cal-dates { display: contents; }
 .oappt-cal-date {
   aspect-ratio: 1;
   display: flex;
@@ -3615,7 +3615,9 @@ function oapptRenderCalendar() {
   var today    = new Date(); today.setHours(0,0,0,0);
   var stylist  = oapptState.selectedStylist;
   var location = oapptState.location;
+  var dayHdrs = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   var html = '';
+  for (var h = 0; h < 7; h++) html += '<div class="oappt-cal-day-hdr">' + dayHdrs[h] + '</div>';
   for (var i = 0; i < startDow; i++) html += '<div class="oappt-cal-date empty"></div>';
   for (var d = 1; d <= lastDay.getDate(); d++) {
     var date    = new Date(oapptState.calYear, oapptState.calMonth, d);
