@@ -3618,8 +3618,9 @@ function oapptRenderCalendar() {
   var dayHdrs = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   var html = '';
   for (var h = 0; h < 7; h++) html += '<div class="oappt-cal-day-hdr">' + dayHdrs[h] + '</div>';
-  for (var i = 0; i < startDow; i++) html += '<div class="oappt-cal-date empty"></div>';
+  var firstCellStyle = startDow > 0 ? ' style="grid-column-start:' + (startDow + 1) + '"' : '';
   for (var d = 1; d <= lastDay.getDate(); d++) {
+    var colStyle = (d === 1 && firstCellStyle) ? firstCellStyle : '';
     var date    = new Date(oapptState.calYear, oapptState.calMonth, d);
     var dateStr = oapptState.calYear + '-' + String(oapptState.calMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
     var dow     = date.getDay();
@@ -3636,9 +3637,9 @@ function oapptRenderCalendar() {
     if (isToday) cls += ' today';
     if (isSel) cls += ' selected';
     if (isAvailable) {
-      html += '<div class="' + cls + '" onclick="oapptSelectDate(\'' + dateStr + '\')">' + d + '</div>';
+      html += '<div class="' + cls + '"' + colStyle + ' onclick="oapptSelectDate(\'' + dateStr + '\')">' + d + '</div>';
     } else {
-      html += '<div class="' + cls + '">' + d + '</div>';
+      html += '<div class="' + cls + '"' + colStyle + '>' + d + '</div>';
     }
   }
   datesEl.innerHTML = html;
