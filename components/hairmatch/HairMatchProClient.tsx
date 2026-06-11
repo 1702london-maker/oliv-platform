@@ -23,7 +23,7 @@ export function HairMatchProClient() {
   const [analysis, setAnalysis] = useState<HairMatchAnalysis | null>(null);
   const [products, setProducts] = useState<HairMatchProduct[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [tryOnImage, setTryOnImage] = useState<string | null>(null);
+  const [tryOnDescription, setTryOnDescription] = useState<string | null>(null);
   const [status, setStatus] = useState<ApiState>("idle");
   const [tryOnStatus, setTryOnStatus] = useState<ApiState>("idle");
   const [saveStatus, setSaveStatus] = useState<ApiState>("idle");
@@ -112,19 +112,19 @@ export function HairMatchProClient() {
   }
 
   async function generateTryOn() {
-    if (!selectedRecommendation || !photoList[0]) return;
+    if (!selectedRecommendation) return;
     setTryOnStatus("loading");
-    setTryOnImage(null);
+    setTryOnDescription(null);
     setMessage("");
     try {
       const res = await fetch("/api/hairmatch/tryon", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ photo: photoList[0].dataUrl, recommendation: selectedRecommendation }),
+        body: JSON.stringify({ recommendation: selectedRecommendation }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || data.error || "Try-on failed");
-      setTryOnImage(data.image);
+      setTryOnDescription(data.description);
       setTryOnStatus("done");
     } catch (error) {
       setTryOnStatus("error");
@@ -143,7 +143,7 @@ export function HairMatchProClient() {
         body: JSON.stringify({
           analysis,
           products,
-          tryOnImages: tryOnImage ? [tryOnImage] : [],
+          tryOnImages: tryOnDescription ? [tryOnDescription] : [],
           name: formData.get("name"),
           email: formData.get("email"),
         }),
@@ -292,7 +292,16 @@ export function HairMatchProClient() {
               <div className={styles.beforeAfter}>
                 <div className={styles.compare}>
                   {photoList[0] ? <img src={photoList[0].dataUrl} alt="Before HairMatch" /> : <div className={styles.placeholder}>Before</div>}
-                  {tryOnImage ? <img src={tryOnImage} alt="AI generated try-on result" /> : <div className={styles.placeholder}>Generate your AI try-on image</div>}
+                  <div className={styles.tryOnAfter}>
+                    {photoList[0] && <img src={photoList[0].dataUrl} alt="After HairMatch" style={{ opacity: tryOnDescription ? 1 : 0.45 }} />}
+                    {tryOnDescription ? (
+                      <div className={styles.tryOnOverlay}>
+                        <span className={styles.tryOnLabel}>{selectedRecommendation?.name}</span>
+                        <p className={styles.tryOnDesc}>{tryOnDescription}</p>
+                        <span className={styles.tryOnMatch}>{selectedRecommendation?.matchScore}% Match</span>
+                      </div>
+                    ) : !photoList[0] ? <div className={styles.placeholder}>Generate your AI style preview</div> : null}
+                  </div>
                 </div>
               </div>
               <div>
@@ -300,7 +309,7 @@ export function HairMatchProClient() {
                 <h2 className={styles.title}>Preview The <em>Result</em></h2>
                 <p className={styles.sectionDesc}>{selectedRecommendation?.reason}</p>
                 <div className={styles.actions}>
-                  <button className={styles.btn} onClick={generateTryOn} disabled={tryOnStatus === "loading"}>{tryOnStatus === "loading" ? "Generating..." : "Generate Try-On"}</button>
+                  <button className={styles.btn} onClick={generateTryOn} disabled={tryOnStatus === "loading"}>{tryOnStatus === "loading" ? "Generating preview..." : "Generate Style Preview"}</button>
                 </div>
               </div>
             </div>

@@ -17,39 +17,45 @@ Return only valid JSON matching this TypeScript shape:
 Use a warm luxury salon tone. Do not diagnose medical conditions.`;
 
 export async function analyzeHairMatchPhotos(photos: HairMatchPhoto[]): Promise<HairMatchAnalysis> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    throw new Error("OPENAI_API_KEY is missing. Add it in Vercel to enable real HairMatch analysis.");
+    throw new Error("ANTHROPIC_API_KEY is missing. Add it in Vercel Environment Variables to enable real HairMatch analysis.");
   }
 
+  // Build content blocks: text instruction + up to 5 images
   const content: Array<Record<string, unknown>> = [
     {
       type: "text",
       text: "Analyze these OHS HairMatch customer photos. Recommend practical OlivHairSupply products and appointment guidance.",
     },
-    ...photos.slice(0, 5).map((photo) => ({
-      type: "image_url",
-      image_url: {
-        url: photo.dataUrl,
-        detail: "low",
-      },
-    })),
+    ...photos.slice(0, 5).map((photo) => {
+      // Extract base64 data and media type from dataUrl
+      const match = photo.dataUrl.match(/^data:(image\/[a-z+]+);base64,(.+)$/);
+      const mediaType = (match?.[1] ?? "image/jpeg") as "image/jpeg" | "image/png" | "image/gif" | "image/webp";
+      const data = match?.[2] ?? photo.dataUrl;
+      return {
+        type: "image",
+        source: {
+          type: "base64",
+          media_type: mediaType,
+          data,
+        },
+      };
+    }),
   ];
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify({
-      model: process.env.OPENAI_VISION_MODEL || "gpt-4o-mini",
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content },
-      ],
-      temperature: 0.35,
+      model: process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
+      max_tokens: 2048,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content }],
     }),
   });
 
@@ -59,46 +65,55 @@ export async function analyzeHairMatchPhotos(photos: HairMatchPhoto[]): Promise<
   }
 
   const json = await response.json();
-  const raw = json.choices?.[0]?.message?.content;
-  const parsed = JSON.parse(raw || "{}") as HairMatchAnalysis;
+  const raw = json.content?.[0]?.text;
+
+  // Claude sometimes wraps JSON in markdown code fences — strip them
+  const cleaned = (raw || "")
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "")
+    .trim();
+
+  const parsed = JSON.parse(cleaned || "{}") as HairMatchAnalysis;
   return normalizeAnalysis(parsed);
 }
 
-export async function generateTryOnImage(photo: string, recommendation: HairMatchRecommendation): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    throw new Error("OPENAI_API_KEY is missing. Add it in Vercel to enable real AI try-on generation.");
-  }
+/**
+ * Try-on image generation — Claude does not have an image generation API.
+ * Instead we return a rich styling description that the UI renders as an
+ * annotated overlay on the customer's original photo.
+ */
+export async function generateTryOnDescription(
+  recommendation: HairMatchRecommendation
+): Promise<string> {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return buildFallbackDescription(recommendation);
 
-  const prompt = [
-    "Create a realistic luxury hair try-on image using the uploaded customer's face as identity reference.",
-    `Style: ${recommendation.name}.`,
-    `Category: ${recommendation.category}.`,
-    `Texture: ${recommendation.texture}. Colour: ${recommendation.colour}. Length: ${recommendation.length}.`,
-    "Keep face, skin tone, facial features and pose natural. Change only hairstyle/hair product. Premium salon lighting, realistic result.",
-  ].join(" ");
-
-  const form = new FormData();
-  form.append("model", process.env.OPENAI_IMAGE_MODEL || "gpt-image-1");
-  form.append("prompt", prompt);
-  form.append("size", "1024x1024");
-  form.append("image", dataUrlToBlob(photo), "customer.png");
-
-  const response = await fetch("https://api.openai.com/v1/images/edits", {
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}` },
-    body: form,
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+    },
+    body: JSON.stringify({
+      model: process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
+      max_tokens: 300,
+      messages: [
+        {
+          role: "user",
+          content: `You are a luxury hair stylist at OlivHairSupply. Write a 2-sentence vivid visual description of how this style will look on the customer. Style: ${recommendation.name}. Texture: ${recommendation.texture}. Colour: ${recommendation.colour}. Length: ${recommendation.length}. Keep it aspirational and specific.`,
+        },
+      ],
+    }),
   });
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`HairMatch try-on failed: ${text.slice(0, 500)}`);
-  }
-
+  if (!response.ok) return buildFallbackDescription(recommendation);
   const json = await response.json();
-  const b64 = json.data?.[0]?.b64_json;
-  if (!b64) throw new Error("HairMatch try-on did not return an image.");
-  return `data:image/png;base64,${b64}`;
+  return json.content?.[0]?.text?.trim() || buildFallbackDescription(recommendation);
+}
+
+function buildFallbackDescription(rec: HairMatchRecommendation): string {
+  return `${rec.name} — ${rec.texture} texture in ${rec.colour}, ${rec.length} length. ${rec.reason}`;
 }
 
 function normalizeAnalysis(input: HairMatchAnalysis): HairMatchAnalysis {
@@ -146,11 +161,4 @@ function defaultRecommendations(): HairMatchRecommendation[] {
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, Math.round(value)));
-}
-
-function dataUrlToBlob(dataUrl: string) {
-  const [header, data] = dataUrl.split(",");
-  const mime = header.match(/data:(.*?);/)?.[1] || "image/png";
-  const bytes = Buffer.from(data || "", "base64");
-  return new Blob([bytes], { type: mime });
 }
