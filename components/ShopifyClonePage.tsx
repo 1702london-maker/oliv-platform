@@ -75,10 +75,10 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   // Strip floating WhatsApp / iMessage chat widget scraped from Shopify
   html = html.replace(/<style>\s*\.ohs-chat[\s\S]*?<\/style>\s*<div class="ohs-chat-wrap"[\s\S]*?<\/div>/g, '');
 
-  // Replace Services nav button with OHS AI Match dropdown (keeps Services accessible as sub-item)
+  // Add OHS AI Match as dropdown under the Services nav button (Services label stays unchanged)
   html = html.replace(
     /<li>\s*<a class="ohs-nav-link [^"]*"\s*\n?\s*href="\/pages\/services">Services<\/a>\s*<\/li>/g,
-    `<li class="ohs-ai-nav-item"><a class="ohs-nav-link ohs-ai-nav-link" href="/ai-hairmatch-pro">OHS AI Match</a><div class="ohs-ai-dropdown"><a href="/ai-hairmatch-pro" class="ohs-ai-dd-featured">✦ AI HairMatch Pro™</a><a href="/pages/services">Services</a></div></li>`
+    `<li class="ohs-ai-nav-item"><a class="ohs-nav-link ohs-ai-nav-link" href="/pages/services">Services</a><div class="ohs-ai-dropdown"><a href="/ai-hairmatch-pro" class="ohs-ai-dd-featured">✦ OHS AI Match</a><a href="/pages/services">Services</a></div></li>`
   );
 
   // Mobile nav: add OHS AI Match above Services
