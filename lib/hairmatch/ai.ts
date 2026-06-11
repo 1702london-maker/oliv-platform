@@ -16,11 +16,10 @@ Return only valid JSON matching this TypeScript shape:
 }
 Use a warm luxury salon tone. Do not diagnose medical conditions.`;
 
-// ── ANALYSIS: Claude (Anthropic) ─────────────────────────────────────────────
 export async function analyzeHairMatchPhotos(photos: HairMatchPhoto[]): Promise<HairMatchAnalysis> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY is missing. Add it in Vercel Environment Variables to enable real HairMatch analysis.");
+    throw new Error("OPENAI_API_KEY is missing. Add it in Vercel to enable real HairMatch analysis.");
   }
 
   const content: Array<Record<string, unknown>> = [
@@ -28,29 +27,29 @@ export async function analyzeHairMatchPhotos(photos: HairMatchPhoto[]): Promise<
       type: "text",
       text: "Analyze these OHS HairMatch customer photos. Recommend practical OlivHairSupply products and appointment guidance.",
     },
-    ...photos.slice(0, 5).map((photo) => {
-      const match = photo.dataUrl.match(/^data:(image\/[a-z+]+);base64,(.+)$/);
-      const mediaType = (match?.[1] ?? "image/jpeg") as "image/jpeg" | "image/png" | "image/gif" | "image/webp";
-      const data = match?.[2] ?? photo.dataUrl;
-      return {
-        type: "image",
-        source: { type: "base64", media_type: mediaType, data },
-      };
-    }),
+    ...photos.slice(0, 5).map((photo) => ({
+      type: "image_url",
+      image_url: {
+        url: photo.dataUrl,
+        detail: "low",
+      },
+    })),
   ];
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
-      max_tokens: 2048,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content }],
+      model: process.env.OPENAI_VISION_MODEL || "gpt-4o-mini",
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content },
+      ],
+      temperature: 0.35,
     }),
   });
 
@@ -60,17 +59,15 @@ export async function analyzeHairMatchPhotos(photos: HairMatchPhoto[]): Promise<
   }
 
   const json = await response.json();
-  const raw = json.content?.[0]?.text ?? "";
-  const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
-  const parsed = JSON.parse(cleaned || "{}") as HairMatchAnalysis;
+  const raw = json.choices?.[0]?.message?.content;
+  const parsed = JSON.parse(raw || "{}") as HairMatchAnalysis;
   return normalizeAnalysis(parsed);
 }
 
-// ── TRY-ON IMAGE: OpenAI gpt-image-1 (image editing API) ─────────────────────
 export async function generateTryOnImage(photo: string, recommendation: HairMatchRecommendation): Promise<string> {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    throw new Error("OPENAI_API_KEY is missing. Add it in Vercel to enable real HairMatch try-on image generation.");
+    throw new Error("OPENAI_API_KEY is missing. Add it in Vercel to enable real AI try-on generation.");
   }
 
   const prompt = [

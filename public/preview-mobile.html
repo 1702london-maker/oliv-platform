@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head><style>
+  body { margin: 0; background: #1a1a1a; }
+  .hero { position: relative; width: 390px; height: 710px; overflow: hidden; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,10,6,0.35) 0%, rgba(15,10,6,0.08) 40%, rgba(15,10,6,0.55) 100%); }
+  .text {
+    position: absolute; z-index: 2;
+    inset: 0;
+    display: flex; flex-direction: column;
+    align-items: flex-start; text-align: left;
+    padding: 72px 24px 110px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: #fff;
+  }
+  .eye {
+    font-family: Montserrat, sans-serif; font-size: 9px;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: #B68A45; display: block;
+    margin-bottom: auto; /* push title to bottom */
+  }
+  h1 {
+    font-size: 36px; font-weight: 300;
+    margin: auto 0 0; max-width: 260px; line-height: 1.08;
+  }
+  h1 em { font-style: italic; color: #C9A96E; }
+  p { display: none; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="hero">
+    <img src="/heroes/careers-hero-mobile.svg" alt="">
+    <div class="overlay"></div>
+    <div class="text">
+      <span class="eye">Careers</span>
+      <h1>Join the OlivHairSupply <em>Team</em></h1>
+    </div>
+  </div>
+</body>
+</html>
