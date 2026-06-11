@@ -20,7 +20,7 @@ export default function AiHairmatchProPage() {
 }
 
 function normalizeShell(html: string) {
-  return html
+  let out = html
     .replaceAll('href="/collections"', 'href="/shop"')
     .replaceAll('href="/collections/all"', 'href="/shop"')
     .replaceAll('href="/pages/appointment"', 'href="/appointments"')
@@ -28,4 +28,18 @@ function normalizeShell(html: string) {
     .replaceAll('href="/pages/wholesale"', 'href="/wholesale"')
     .replaceAll('href="/customer_authentication/login"', 'href="/login"')
     .replace(/href="\/customer_authentication\/login[^"]*"/g, 'href="/login"');
+
+  // Inject OHS AI Match dropdown under Services (same as ShopifyClonePage)
+  out = out.replace(
+    /<li>\s*<a class="ohs-nav-link [^"]*"\s*\n?\s*href="\/pages\/services">Services<\/a>\s*<\/li>/g,
+    `<li class="ohs-ai-nav-item"><a class="ohs-nav-link ohs-ai-nav-link" href="/pages/services">Services</a><div class="ohs-ai-dropdown"><a href="/ai-hairmatch-pro" class="ohs-ai-dd-featured">✦ OHS AI Match</a><a href="/pages/services">Services</a></div></li>`
+  );
+
+  // Mobile nav
+  out = out.replaceAll(
+    '<li><a href="/pages/services">Services</a></li>',
+    '<li><a href="/ai-hairmatch-pro">OHS AI Match</a></li><li><a href="/pages/services">Services</a></li>'
+  );
+
+  return out;
 }
