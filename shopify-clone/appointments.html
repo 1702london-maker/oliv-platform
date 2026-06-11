@@ -3629,12 +3629,11 @@ function oapptRenderCalendar() {
     var isMonToSat = dow >= 1 && dow <= 6;
     var isWorkDay  = isMonToSat;
     var isBlackout = location === 'b' && dateStr >= '2026-06-11' && dateStr <= '2026-08-03';
-    var isStylistDay = stylist && stylist.workingDays.indexOf(dow) > -1;
-    var isAvailable = !isPast && isWorkDay && isStylistDay && !isBlackout;
+    var isAvailable = !isPast && isWorkDay && !isBlackout;
     var isSel = oapptState.selectedDate === dateStr;
     var isToday = date.toDateString() === today.toDateString();
     var cls = 'oappt-cal-date';
-    if (isPast || dow === 0 || !isWorkDay || !isStylistDay || isBlackout) cls += ' unavailable';
+    if (isPast || dow === 0 || !isWorkDay || isBlackout) cls += ' unavailable';
     else cls += ' available';
     if (isToday) cls += ' today';
     if (isSel) cls += ' selected';
