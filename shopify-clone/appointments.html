@@ -3628,7 +3628,7 @@ function oapptRenderCalendar() {
     var isPast  = date < today;
     var isMonToSat = dow >= 1 && dow <= 6;
     var isWorkDay  = isMonToSat;
-    var isBlackout = location === 'b' && dateStr >= '2026-06-11' && dateStr <= '2026-08-03';
+    var isBlackout = location === 'b' && dateStr < '2026-08-03';
     var isAvailable = !isPast && isWorkDay && !isBlackout;
     var isSel = oapptState.selectedDate === dateStr;
     var isToday = date.toDateString() === today.toDateString();
