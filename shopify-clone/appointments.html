@@ -3629,12 +3629,14 @@ function oapptRenderCalendar() {
     var isTueToSat = dow >= 2 && dow <= 6;
     var isMonToSat = dow >= 1 && dow <= 6;
     var isWorkDay  = location === 'b' ? isTueToSat : isMonToSat;
+    var storeBOpen = new Date(2026, 7, 3); // Aug 3 2026 — Store B opening date
+    var isBeforeStoreBOpen = location === 'b' && date < storeBOpen;
     var isStylistDay = stylist && stylist.workingDays.indexOf(dow) > -1;
-    var isAvailable = !isPast && isWorkDay && isStylistDay;
+    var isAvailable = !isPast && !isBeforeStoreBOpen && isWorkDay && isStylistDay;
     var isSel = oapptState.selectedDate === dateStr;
     var isToday = date.toDateString() === today.toDateString();
     var cls = 'oappt-cal-date';
-    if (isPast || dow === 0 || !isWorkDay || !isStylistDay) cls += ' unavailable';
+    if (isPast || isBeforeStoreBOpen || dow === 0 || !isWorkDay || !isStylistDay) cls += ' unavailable';
     else cls += ' available';
     if (isToday) cls += ' today';
     if (isSel) cls += ' selected';
