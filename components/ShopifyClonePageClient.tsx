@@ -115,9 +115,9 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
       aiStyle.textContent = `
         .ohs-ai-nav-item{position:relative;}
         .ohs-ai-dropdown{
-          display:none;position:absolute;top:100%;right:0;
+          display:none;position:fixed;
           background:#0a0a0a;border:1px solid #C9A96E;
-          min-width:190px;z-index:9999;padding:8px 0;
+          min-width:190px;z-index:99999;padding:8px 0;
           box-shadow:0 8px 32px rgba(0,0,0,0.6);
         }
         .ohs-ai-dropdown a{
@@ -129,9 +129,32 @@ export function ShopifyClonePageClient({ html }: { html: string }) {
         }
         .ohs-ai-dropdown a:hover{color:#C9A96E;background:rgba(201,169,110,0.07);}
         .ohs-ai-dd-featured{color:#C9A96E !important;border-bottom:1px solid rgba(201,169,110,0.2);padding-bottom:12px !important;margin-bottom:2px;}
-        .ohs-ai-nav-item:hover .ohs-ai-dropdown,.ohs-ai-nav-item:focus-within .ohs-ai-dropdown{display:block;}
+        .ohs-ai-dropdown.ohs-ai-open{display:block;}
       `;
       document.head.appendChild(aiStyle);
+    }
+
+    // OHS AI Match dropdown — JS-driven positioning (escapes overflow:hidden on .ohs-desktop)
+    const aiNavItem = ref.current.querySelector('.ohs-ai-nav-item') as HTMLElement | null;
+    const aiDropdown = ref.current.querySelector('.ohs-ai-dropdown') as HTMLElement | null;
+    if (aiNavItem && aiDropdown) {
+      let closeTimer: ReturnType<typeof setTimeout>;
+      const open = () => {
+        clearTimeout(closeTimer);
+        const r = aiNavItem.getBoundingClientRect();
+        aiDropdown.style.top = r.bottom + 4 + 'px';
+        aiDropdown.style.left = r.right - aiDropdown.offsetWidth + 'px';
+        // Clamp to viewport left edge
+        const ddWidth = aiDropdown.offsetWidth || 190;
+        const left = Math.max(8, r.right - ddWidth);
+        aiDropdown.style.left = left + 'px';
+        aiDropdown.classList.add('ohs-ai-open');
+      };
+      const close = () => { closeTimer = setTimeout(() => aiDropdown.classList.remove('ohs-ai-open'), 120); };
+      aiNavItem.addEventListener('mouseenter', open);
+      aiNavItem.addEventListener('mouseleave', close);
+      aiDropdown.addEventListener('mouseenter', () => clearTimeout(closeTimer));
+      aiDropdown.addEventListener('mouseleave', close);
     }
 
     // Apply saved language — TranslationClient (runs first) already translated the body,
