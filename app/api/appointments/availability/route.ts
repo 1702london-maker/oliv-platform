@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
   const slots = Array.from({ length: 10 }, (_, index) => `${String(index + 9).padStart(2, "0")}:00`);
   const dayOfWeek = new Date(`${date}T00:00:00.000Z`).getUTCDay();
-  if (dayOfWeek === 0) {
+  if (dayOfWeek === 0 || isStoreBBlackout(locationName, date)) {
     return NextResponse.json({
       date,
       locationName,
@@ -102,4 +102,8 @@ function lastSunday(year: number, monthIndex: number) {
   const date = new Date(Date.UTC(year, monthIndex + 1, 0));
   date.setUTCDate(date.getUTCDate() - date.getUTCDay());
   return date.getUTCDate();
+}
+
+function isStoreBBlackout(locationName: string, date: string) {
+  return /store\s*b/i.test(locationName) && date >= "2026-06-11" && date <= "2026-08-03";
 }

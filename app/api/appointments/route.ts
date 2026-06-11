@@ -46,6 +46,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "sunday_closed" }, { status: 409 });
     }
 
+    if (isStoreBBlackout(String(locationName || ""), String(startsAt))) {
+      return NextResponse.json({ error: "store_b_blackout" }, { status: 409 });
+    }
+
     if (runsPastBerlinClosing(String(endsAt))) {
       return NextResponse.json({ error: "outside_opening_hours" }, { status: 409 });
     }
@@ -217,4 +221,19 @@ function runsPastBerlinClosing(iso: string) {
   }).formatToParts(new Date(iso)).map((part) => [part.type, part.value]));
   const minutes = Number(parts.hour || 0) * 60 + Number(parts.minute || 0);
   return minutes > 19 * 60;
+}
+
+function isStoreBBlackout(locationName: string, iso: string) {
+  const date = berlinDate(iso);
+  return /store\s*b/i.test(locationName) && date >= "2026-06-11" && date <= "2026-08-03";
+}
+
+function berlinDate(iso: string) {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date(iso)).map((part) => [part.type, part.value]));
+  return `${parts.year}-${parts.month}-${parts.day}`;
 }

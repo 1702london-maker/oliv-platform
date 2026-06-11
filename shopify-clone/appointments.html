@@ -3626,14 +3626,15 @@ function oapptRenderCalendar() {
     var dateStr = oapptState.calYear + '-' + String(oapptState.calMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
     var dow     = date.getDay();
     var isPast  = date < today;
-    var isSunday = dow === 0;
-    var storeBOpen = new Date(2026, 7, 3); // Aug 3 2026
-    var isBeforeStoreBOpen = location === 'b' && date < storeBOpen;
-    var isAvailable = !isPast && !isSunday && !isBeforeStoreBOpen;
+    var isMonToSat = dow >= 1 && dow <= 6;
+    var isWorkDay  = isMonToSat;
+    var isBlackout = location === 'b' && dateStr >= '2026-06-11' && dateStr <= '2026-08-03';
+    var isStylistDay = stylist && stylist.workingDays.indexOf(dow) > -1;
+    var isAvailable = !isPast && isWorkDay && isStylistDay && !isBlackout;
     var isSel = oapptState.selectedDate === dateStr;
     var isToday = date.toDateString() === today.toDateString();
     var cls = 'oappt-cal-date';
-    if (isPast || isSunday || isBeforeStoreBOpen) cls += ' unavailable';
+    if (isPast || dow === 0 || !isWorkDay || !isStylistDay || isBlackout) cls += ' unavailable';
     else cls += ' available';
     if (isToday) cls += ' today';
     if (isSel) cls += ' selected';
@@ -4347,6 +4348,9 @@ function oapptMinutesToTime(totalMinutes) {
 function oapptSlotRunsPastClosing(slot) {
   return oapptTimeToMinutes(slot) + oapptServiceDurationMinutes() > (19 * 60);
 }
+function oapptIsStoreBBlackout(dateStr) {
+  return oapptState.location === 'b' && dateStr >= '2026-06-11' && dateStr <= '2026-08-03';
+}
 function oapptSelectedTimeLabel() {
   if (!oapptState.selectedTime) return '';
   return oapptState.selectedTime + ' - ' + oapptMinutesToTime(oapptTimeToMinutes(oapptState.selectedTime) + oapptServiceDurationMinutes());
@@ -4600,6 +4604,7 @@ function oapptSelectStylist(id) {
 }
 
 function oapptSelectDate(dateStr) {
+  if (oapptIsStoreBBlackout(dateStr)) return;
   oapptState.selectedDate = dateStr;
   oapptState.selectedTime = '';
   oapptState.slotFull = {};
@@ -4611,6 +4616,13 @@ function oapptLoadSlotAvailability(done) {
   var date = oapptState.selectedDate;
   var stylist = oapptState.selectedStylist;
   if (!date || !stylist || !oapptState.location) { if (done) done(); return; }
+  if (oapptIsStoreBBlackout(date)) {
+    var blackoutMap = {};
+    OAPPT_ALL_SLOTS.forEach(function(slot) { blackoutMap[slot] = true; });
+    oapptState.slotFull = blackoutMap;
+    if (done) done();
+    return;
+  }
   var duration = oapptServiceDurationMinutes();
   var cacheKey = [date, oapptStoreName(), stylist.name, duration].join('|');
   if (oapptState.slotAvailabilityCache[cacheKey]) {
