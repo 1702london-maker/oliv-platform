@@ -4,6 +4,7 @@ import { getHairMatchProducts } from "@/lib/hairmatch/products";
 import type { HairMatchPhoto } from "@/lib/hairmatch/types";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   try {
