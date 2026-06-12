@@ -14,9 +14,28 @@ const ANGLES: Array<{ key: HairMatchAngle; label: string; help: string }> = [
   { key: "hair", label: "Hair", help: "Current hair" },
 ];
 
+const HAIR_SERVICES = [
+  "Braids",
+  "Cornrows & Crochet",
+  "Clip-In Extensions",
+  "Weft Sewing",
+  "Weft Sewing With Knots",
+  "Weft Sewing With Microrings",
+  "Tapes Application",
+  "Tapes Renewal",
+  "Bondings Application",
+  "Brazilian Method",
+  "Full Weave With / Without Closure",
+  "Frontals",
+  "Closures",
+  "Wigs",
+];
+
 type ApiState = "idle" | "loading" | "done" | "error";
 
 export function HairMatchProClient() {
+  const [serviceType, setServiceType] = useState("");
+  const [wantsVolume, setWantsVolume] = useState<boolean | null>(null);
   const [photos, setPhotos] = useState<Partial<Record<HairMatchAngle, string>>>({});
   const [cameraAngle, setCameraAngle] = useState<HairMatchAngle | null>(null);
   const [analysis, setAnalysis] = useState<HairMatchAnalysis | null>(null);
@@ -105,7 +124,7 @@ export function HairMatchProClient() {
       const res = await fetch("/api/hairmatch/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ photos: photoList }),
+        body: JSON.stringify({ photos: photoList, serviceType, wantsVolume }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || data.error || "Analysis failed");
@@ -228,9 +247,28 @@ export function HairMatchProClient() {
         </div>
       </section>
 
+      <section className={styles.section} id="quiz">
+        <div className={styles.sectionHead}>
+          <span className={styles.eyebrow}>Step 1 · Your Hair Goals</span>
+          <h2 className={styles.title}>Tell Us About Your <em>Hair Goals</em></h2>
+          <p className={styles.sectionDesc}>Select your desired service and preferences — this helps our AI tailor your analysis and style recommendations perfectly.</p>
+        </div>
+        <p className={styles.quizLabel}>What type of hair service are you looking for?</p>
+        <div className={styles.quizGrid}>
+          {HAIR_SERVICES.map((s) => (
+            <button key={s} type="button" className={`${styles.quizBtn} ${serviceType === s ? styles.quizBtnActive : ""}`} onClick={() => setServiceType(serviceType === s ? "" : s)}>{s}</button>
+          ))}
+        </div>
+        <p className={styles.quizLabel} style={{ marginTop: 32 }}>Do you want to increase your hair volume?</p>
+        <div className={styles.volumeRow}>
+          <button type="button" className={`${styles.quizBtn} ${wantsVolume === true ? styles.quizBtnActive : ""}`} onClick={() => setWantsVolume(wantsVolume === true ? null : true)}>Yes, add volume</button>
+          <button type="button" className={`${styles.quizBtn} ${wantsVolume === false ? styles.quizBtnActive : ""}`} onClick={() => setWantsVolume(wantsVolume === false ? null : false)}>No, keep natural</button>
+        </div>
+      </section>
+
       <section className={styles.section} id="capture">
         <div className={styles.sectionHead}>
-          <span className={styles.eyebrow}>Step 1 · Photo Studio</span>
+          <span className={styles.eyebrow}>Step 2 · Photo Studio</span>
           <h2 className={styles.title}>Capture Your <em>Hair Profile</em></h2>
           <p className={styles.sectionDesc}>For best results, use natural light and a clean background. One front photo is enough to start, but five angles make the recommendations more accurate.</p>
         </div>
@@ -331,7 +369,7 @@ export function HairMatchProClient() {
                 <article className={styles.product} key={product.slug}>
                   {product.imageUrl ? <img src={product.imageUrl} alt={product.title} /> : <div className={styles.productImage}>OHS</div>}
                   <div className={styles.productBody}>
-                    <span className={styles.pill}>Matched Product</span>
+                    <span className={styles.pill}>Matched Hair Product</span>
                     <h3>{product.title}</h3>
                     <p className={styles.sectionDesc}>{product.reason}</p>
                     <p className={styles.price}>€{(product.priceCents / 100).toFixed(2)}</p>
@@ -341,6 +379,9 @@ export function HairMatchProClient() {
                   </div>
                 </article>
               ))}
+            </div>
+            <div className={styles.shopAllWrap}>
+              <a className={styles.btn} href="/shop">Shop All Collections →</a>
             </div>
           </section>
 

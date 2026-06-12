@@ -3,7 +3,7 @@ import type { HairMatchRecommendation, HairMatchProduct } from "@/lib/hairmatch/
 
 const CATEGORY_HINTS: Record<HairMatchRecommendation["category"], string[]> = {
   wigs: ["biziluxe-extensions", "bizihair-extensions"],
-  braids: ["biziluxe-accessoires", "buersten-und-kaemme"],
+  braids: ["biziluxe-extensions", "bizihair-extensions"],
   frontals: ["biziluxe-extensions"],
   closures: ["biziluxe-extensions"],
   extensions: ["biziluxe-extensions", "bizihair-extensions"],

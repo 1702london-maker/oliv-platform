@@ -16,16 +16,22 @@ Return only valid JSON matching this TypeScript shape:
 }
 Use a warm luxury salon tone. Do not diagnose medical conditions.`;
 
-export async function analyzeHairMatchPhotos(photos: HairMatchPhoto[]): Promise<HairMatchAnalysis> {
+export async function analyzeHairMatchPhotos(photos: HairMatchPhoto[], serviceType = "", wantsVolume: boolean | null = null): Promise<HairMatchAnalysis> {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     throw new Error("OPENAI_API_KEY is missing. Add it in Vercel to enable real HairMatch analysis.");
   }
 
+  const goalContext = [
+    serviceType ? `The client specifically wants: ${serviceType}.` : "",
+    wantsVolume === true ? "The client wants to increase hair volume — prioritise recommendations that add fullness and body." : "",
+    wantsVolume === false ? "The client wants to keep a natural volume — recommend styles that maintain or subtly enhance without excessive bulk." : "",
+  ].filter(Boolean).join(" ");
+
   const content: Array<Record<string, unknown>> = [
     {
       type: "text",
-      text: "Analyze these OHS HairMatch customer photos. Recommend practical OlivHairSupply products and appointment guidance.",
+      text: `Analyze these OHS HairMatch customer photos. ${goalContext ? goalContext + " " : ""}Tailor all recommendations, textures, lengths and product slugs specifically to this goal. Recommend practical OlivHairSupply hair products and appointment guidance.`,
     },
     ...photos.slice(0, 5).map((photo) => ({
       type: "image_url",
