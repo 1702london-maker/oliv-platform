@@ -32,7 +32,7 @@ function normalizeShell(html: string) {
   // Inject OHS AI Match dropdown under Services (same as ShopifyClonePage)
   out = out.replace(
     /<li>\s*<a class="ohs-nav-link [^"]*"\s*\n?\s*href="\/pages\/services">Services<\/a>\s*<\/li>/g,
-    `<li class="ohs-ai-nav-item"><a class="ohs-nav-link ohs-ai-nav-link" href="/pages/services">Services</a><div class="ohs-ai-dropdown"><a href="/ai-hairmatch-pro" class="ohs-ai-dd-featured">✦ OHS AI Match</a><a href="/pages/services">Services</a></div></li>`
+    `<li class="ohs-ai-nav-item"><a class="ohs-nav-link ohs-ai-nav-link" href="/pages/services">Services</a><div class="ohs-ai-dropdown"><a href="/ai-hairmatch-pro" class="ohs-ai-dd-featured">✦ OHS AI Match</a></div></li>`
   );
 
   // Mobile nav
