@@ -11,7 +11,20 @@ const WHOLESALE_CATEGORIES = [
   { slug: "profi-friseurbedarf",     label: "Profi Friseurbedarf" },
 ];
 
-export default async function WholesalePage() {
+export default async function WholesalePage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
+  const application = typeof params?.application === "string" ? params.application : "";
+
+  const bannerScript = application === "submitted"
+    ? `<script>(function(){function b(){var el=document.createElement('div');el.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#2B2620;color:#F6F1E8;font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-align:center;padding:14px 20px;';el.innerHTML='✓ Wholesale application received — our team will review it and contact you within 3–5 business days. <button onclick="this.parentNode.remove()" style="margin-left:16px;background:none;border:1px solid rgba(255,255,255,.4);color:inherit;padding:4px 10px;cursor:pointer;font-size:10px;letter-spacing:.1em;">Dismiss<\/button>';document.body.prepend(el);}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',b);}else{b();}})()\n<\/script>`
+    : application === "missing" || application === "failed"
+    ? `<script>(function(){function b(){var el=document.createElement('div');el.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#8B3535;color:#fff;font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;text-align:center;padding:14px 20px;';el.textContent='${application === "missing" ? "Please fill in all required fields." : "Something went wrong. Please try again."}';document.body.prepend(el);setTimeout(function(){el.remove();},5000);}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',b);}else{b();}})()\n<\/script>`
+    : "";
+
   const session = await getWholesaleSession();
 
   if (session) {
@@ -760,7 +773,7 @@ export default async function WholesalePage() {
 })();
 <\/script>`;
 
-    return <ShopifyClonePage page="wholesale" injectBeforeClose={bootScript + shopScript} />;
+    return <ShopifyClonePage page="wholesale" injectBeforeClose={bannerScript + bootScript + shopScript} />;
   }
 
   /* ── public page (not logged in) ── */
@@ -780,5 +793,5 @@ export default async function WholesalePage() {
 })();
 <\/script>`;
 
-  return <ShopifyClonePage page="wholesale" injectBeforeClose={loginScript} />;
+  return <ShopifyClonePage page="wholesale" injectBeforeClose={bannerScript + loginScript} />;
 }
