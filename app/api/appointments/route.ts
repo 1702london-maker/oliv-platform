@@ -89,10 +89,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "slot_full" }, { status: 409 });
     }
 
+    // Link to profile if email matches a registered account
+    const { data: matchedProfile } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("email", String(customerEmail).toLowerCase().trim())
+      .maybeSingle();
+    const customerId = matchedProfile?.id ?? null;
+
     const { data: appt, error: dbError } = await supabase
       .from("appointments")
       .insert({
         service_id: dbServiceId,
+        customer_id: customerId,
         email: String(customerEmail).toLowerCase(),
         starts_at: String(startsAt),
         ends_at: String(endsAt),
