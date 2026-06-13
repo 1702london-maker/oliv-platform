@@ -2604,9 +2604,22 @@ first.parentNode.insertBefore(script, first);
               <textarea class="ocon-input ocon-textarea" id="ocon-message" name="contact[body]" placeholder="Tell us about your enquiry..."></textarea>
             </div>
             <button type="submit" class="ocon-submit">Send Message</button>
+            <div class="ocon-form-success" id="ocon-success-msg" style="display:none;">
+              Thank you — your message has been sent. We will be in touch shortly.
+            </div>
           </div>
         </form>
       </div>
+<script>
+(function(){
+  if(new URLSearchParams(window.location.search).get('form')==='submitted'){
+    var el=document.getElementById('ocon-success-msg');
+    if(el){el.style.display='block';}
+    var form=document.getElementById('ocon-contact-form');
+    if(form){form.style.display='none';}
+  }
+})();
+</script>
 
     </div>
   </div>
