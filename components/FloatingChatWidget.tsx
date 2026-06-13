@@ -93,6 +93,11 @@ function MdLine({ text }: { text: string }) {
 
 // ── Component ──────────────────────────────────────────────────────────────
 
+// Read language synchronously from localStorage (safe — runs in browser only)
+function getInitialLang(): "en" | "de" {
+  try { return localStorage.getItem("ohs-lang") === "de" ? "de" : "en"; } catch { return "en"; }
+}
+
 export function FloatingChatWidget() {
   const [open, setOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);
@@ -100,7 +105,11 @@ export function FloatingChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [lang, setLang] = useState<"en" | "de">("en");
+  // Initialise lang synchronously so the welcome message is correct on first render
+  const [lang, setLang] = useState<"en" | "de">(() => {
+    if (typeof window === "undefined") return "en";
+    return getInitialLang();
+  });
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -112,35 +121,51 @@ export function FloatingChatWidget() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Read language from localStorage and keep in sync
+  // Keep lang in sync when user switches language
   useEffect(() => {
     const readLang = () => {
       try {
         const stored = localStorage.getItem("ohs-lang");
-        setLang(stored === "de" ? "de" : "en");
+        const next: "en" | "de" = stored === "de" ? "de" : "en";
+        setLang(prev => {
+          if (prev === next) return prev;
+          // If the only message is the welcome in the old language, swap it
+          setMessages(msgs => {
+            if (msgs.length === 1 && msgs[0].role === "assistant" &&
+                (msgs[0].content === WELCOME_EN || msgs[0].content === WELCOME_DE)) {
+              return [{ role: "assistant", content: next === "de" ? WELCOME_DE : WELCOME_EN }];
+            }
+            return msgs;
+          });
+          return next;
+        });
       } catch { /* */ }
     };
-    readLang();
     window.addEventListener("storage", readLang);
-    // Also poll occasionally in case same-tab change
     const interval = setInterval(readLang, 800);
     return () => { window.removeEventListener("storage", readLang); clearInterval(interval); };
   }, []);
 
-  // Load from sessionStorage on mount
+  // Load from sessionStorage on mount — use current lang (already correct)
   useEffect(() => {
+    const currentLang = getInitialLang();
     try {
       const saved = sessionStorage.getItem(SESSION_KEY);
       if (saved) {
         const parsed: Msg[] = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
+          // If only the welcome message is saved, replace it with the correct language version
+          if (parsed.length === 1 && parsed[0].role === "assistant" &&
+              (parsed[0].content === WELCOME_EN || parsed[0].content === WELCOME_DE)) {
+            setMessages([{ role: "assistant", content: currentLang === "de" ? WELCOME_DE : WELCOME_EN }]);
+          } else {
+            setMessages(parsed);
+          }
           return;
         }
       }
     } catch { /* */ }
-    const welcome = lang === "de" ? WELCOME_DE : WELCOME_EN;
-    setMessages([{ role: "assistant", content: welcome }]);
+    setMessages([{ role: "assistant", content: currentLang === "de" ? WELCOME_DE : WELCOME_EN }]);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Persist to sessionStorage
