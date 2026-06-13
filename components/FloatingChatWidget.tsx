@@ -55,6 +55,41 @@ const ICON_WRAP: React.CSSProperties = {
   justifyContent: "center",
 };
 
+// ── Markdown inline renderer (handles [text](url) links and **bold**) ─────
+function MdLine({ text }: { text: string }) {
+  // Split on markdown links [label](url) and **bold**
+  const parts = text.split(/(\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*)/g);
+  const result: React.ReactNode[] = [];
+  let i = 0;
+  while (i < parts.length) {
+    const part = parts[i];
+    if (!part) { i++; continue; }
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+    if (linkMatch) {
+      const [, label, href] = linkMatch;
+      const isExternal = href.startsWith("http");
+      result.push(
+        <a
+          key={i}
+          href={href}
+          target={isExternal ? "_blank" : "_self"}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          style={{ color: "#B68A45", textDecoration: "underline", cursor: "pointer" }}
+        >
+          {label}
+        </a>
+      );
+    } else if (boldMatch) {
+      result.push(<strong key={i}>{boldMatch[1]}</strong>);
+    } else {
+      result.push(<span key={i}>{part}</span>);
+    }
+    i++;
+  }
+  return <>{result}</>;
+}
+
 // ── Component ──────────────────────────────────────────────────────────────
 
 export function FloatingChatWidget() {
@@ -255,7 +290,7 @@ export function FloatingChatWidget() {
                       boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
                     }}>
                       {msg.content.split("\n").map((line, j, arr) => (
-                        <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                        <span key={j}><MdLine text={line} />{j < arr.length - 1 && <br />}</span>
                       ))}
                     </div>
                   </div>

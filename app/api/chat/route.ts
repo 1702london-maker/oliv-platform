@@ -14,6 +14,44 @@ PERSONALITY
 - The brand name is OlivHairSupply (one word, no space). Always write it exactly like that.
 
 ─────────────────────────────────────────────
+WHAT WE SELL — FULL SHOP
+─────────────────────────────────────────────
+OlivHairSupply sells much more than just hair. Our full product range includes:
+
+BIZILUXE HAIR EXTENSIONS (collection: biziluxe-extensions)
+  Clip-in and weft extensions in Body Wave, Straight and Light Wave textures.
+  Products: Adlon, Baden Baden, Kadew, Koenigsallee, Nymphenburg, Sanssouci, Schloss Charlottenburg
+
+BIZILUXE TAPE (collection: biziluxe-tape)
+  Premium tape-in wefts for a seamless, long-lasting semi-permanent finish.
+  Product: BizluxTape1
+
+BIZILUXE ACCESSORIES (collection: biziluxe-accessoires)
+  Hair care products, storage solutions, finishing accessories, hair clips, bands, silk wraps.
+  Products: Alster, Berliner Gold, Elbtower, Ku Damm, Meissen, Reichstag, Rosenthal, Rotenburg, Saphir, Schwarzwald
+
+PROFESSIONAL TOOLS / PROFI FRISEURBEDARF (collection: profi-friseurbedarf)
+  Professional-grade salon tools — including hair dryers, styling irons, straighteners, crimpers and other electrical styling devices.
+  Products: Bavaria, Berghain, Drachenfels, Eisenach, Glashuette, Hamburger Hafen, Mannheim, Neuschwanstein, Rhein, Ruhrstahl, Solingen, Speicherstadt, Taunus, Tegernsee, Waldenburg, Wiesbaden, Zeppelin, Zollverein
+
+BRUSHES & COMBS / BÜRSTEN UND KÄMME (collection: buersten-und-kaemme)
+  Professional brushes, combs and detangling tools.
+  Products: Celle, Goslar, Hameln, Hildesheim, Luebeck, Lueneburg, Wolfenbuettel
+
+─────────────────────────────────────────────
+PRODUCT SEARCH — HOW TO SUGGEST PRODUCTS
+─────────────────────────────────────────────
+When a customer asks about any product (hair dryer, brush, clip, straightener, extension, accessory, tool, etc.) you MUST search the shop and provide clickable links. Use this marker EXACTLY on its own line:
+[SEARCH_PRODUCTS:{"query":"hair dryer","category":"profi-friseurbedarf"}]
+
+Rules:
+- Use the most relevant category if you know it, or leave category as "" to search all
+- Category slugs: "biziluxe-extensions", "biziluxe-tape", "biziluxe-accessoires", "profi-friseurbedarf", "buersten-und-kaemme"
+- The system will replace this marker with real product results and clickable links
+- ALWAYS emit the marker when a customer asks what we sell, asks for a specific product type, or asks for recommendations
+- After the marker, write a brief warm intro like "Here are some options from our shop:" then let the system fill in the products
+
+─────────────────────────────────────────────
 FULL SERVICE MENU WITH PRICES
 ─────────────────────────────────────────────
 When a customer asks about services or wants to book, present options with prices clearly.
@@ -355,6 +393,33 @@ export async function POST(request: Request) {
 
     const json = await res.json();
     let reply: string = json.choices?.[0]?.message?.content || "I'm sorry, I didn't catch that. Could you rephrase?";
+
+    // ── Handle product search marker ──────────────────────────────────────
+    const prodMarkers = [...reply.matchAll(/\[SEARCH_PRODUCTS:(\{[^}]*\})\]/g)];
+    for (const match of prodMarkers) {
+      try {
+        const params = JSON.parse(match[1]);
+        const qs = new URLSearchParams({ q: params.query || "", limit: "5" });
+        if (params.category) qs.set("category", params.category);
+        const searchRes = await fetch(`${siteUrl}/api/catalog/search?${qs}`);
+        const searchData = searchRes.ok ? await searchRes.json() : { results: [] };
+        const results: Array<{ title: string; slug: string; price: string | null; description: string | null }> = searchData.results || [];
+        let block = "";
+        if (results.length === 0) {
+          block = `We don't currently have an exact match for "${params.query}" in stock. Please visit our full shop at /collections or WhatsApp us at +49 157 86283439 for assistance.`;
+        } else {
+          block = results.map((r) => {
+            const price = r.price ? ` — ${r.price}` : "";
+            const desc = r.description ? ` — ${r.description.replace(/<[^>]+>/g, "").slice(0, 80).trim()}` : "";
+            return `• [${r.title}${price}](/products/${r.slug})${desc}`;
+          }).join("\n");
+        }
+        reply = reply.replace(match[0], block);
+      } catch (e) {
+        console.error("[Chat] Product search error:", e);
+        reply = reply.replace(match[0], "Browse our full shop at [/collections](/collections) or ask us on WhatsApp.");
+      }
+    }
 
     // ── Handle availability check marker ──────────────────────────────────
     const availMarker = reply.match(/\[CHECK_AVAILABILITY:(\{[^}]*\})\]/);
