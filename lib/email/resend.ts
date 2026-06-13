@@ -420,6 +420,48 @@ export async function sendApplicationTeamNotification({
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
 }
 
+export async function sendAiReceptionTeamNotification({
+  title,
+  customerName,
+  phone,
+  email,
+  serviceInterest,
+  status,
+  message,
+  conversationUrl,
+}: {
+  title: string;
+  customerName?: string;
+  phone: string;
+  email?: string;
+  serviceInterest?: string;
+  status: string;
+  message: string;
+  conversationUrl?: string;
+}) {
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to: process.env.AI_RECEPTION_ADMIN_EMAIL || BOOKING_TEAM_EMAIL,
+    subject: `AI Reception - ${title}`,
+    html: applicationEmailTemplate({
+      eyebrow: "OlivHairSupply AI Reception",
+      title,
+      greeting: customerName || phone,
+      body: message,
+      details: [
+        ["Phone", phone],
+        ["Email", email || "-"],
+        ["Service", serviceInterest || "-"],
+        ["Status", status],
+      ],
+      buttonLabel: conversationUrl ? "Open Conversation" : "Email Team",
+      buttonUrl: conversationUrl || `mailto:${process.env.AI_RECEPTION_ADMIN_EMAIL || BOOKING_TEAM_EMAIL}`,
+      footer: "Review before confirming final price or appointment availability.",
+    }),
+  });
+  if (error) console.error("[Resend] AI Reception notification error:", error);
+}
+
 export async function sendTrainingApprovalEmail({
   to,
   fullName,
