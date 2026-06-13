@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "oliv-platform",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3900", "."],
+      "name": "oliv-luxury",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "-p", "3900"],
       "port": 3900
     }
   ]
