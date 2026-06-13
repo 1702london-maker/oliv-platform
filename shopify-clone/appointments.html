@@ -2938,7 +2938,7 @@ first.parentNode.insertBefore(script, first);
                   Monday to Saturday
                 </div>
               </div>
-              <div class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')">
+              <div class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')" style="opacity:0.72;pointer-events:none;position:relative;">
                 <div class="oappt-location-tick"></div>
                 <span class="oappt-location-eyebrow">Store B</span>
                 <div class="oappt-location-name">OlivHairSupply Store B</div>
@@ -2947,6 +2947,9 @@ first.parentNode.insertBefore(script, first);
                   Kurfurstendamm 115B<br>
                   10711 Berlin, Halensee<br>
                   Monday to Saturday
+                </div>
+                <div style="margin-top:12px;background:#fdf3e0;border:1px solid #e5c870;padding:8px 10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8a6200;">
+                  Temporarily Closed — Summer 2026
                 </div>
               </div>
             </div>
@@ -4014,6 +4017,27 @@ function oapptSubmitBooking(event) {
       if (err6) {
         err6.textContent = 'That time has just become fully booked. Please choose another time.';
         err6.classList.add('visible');
+      }
+    } else if (err && err.message === 'store_b_blackout') {
+      oapptGoStep(1);
+      var err1 = document.getElementById('oappt-err-1');
+      if (err1) {
+        err1.textContent = 'Store B (Kurfürstendamm) is temporarily closed for the summer. Please book at Store A (Winterfeldtstrasse) or contact us on WhatsApp.';
+        err1.classList.add('visible');
+      }
+    } else if (err && err.message === 'sunday_closed') {
+      oapptGoStep(5);
+      var err5 = document.getElementById('oappt-err-5');
+      if (err5) {
+        err5.textContent = 'We are closed on Sundays. Please select a different date.';
+        err5.classList.add('visible');
+      }
+    } else if (err && err.message === 'outside_opening_hours') {
+      oapptGoStep(6);
+      var err6b = document.getElementById('oappt-err-6');
+      if (err6b) {
+        err6b.textContent = 'That time slot runs past our closing time (19:00). Please choose an earlier slot.';
+        err6b.classList.add('visible');
       }
     } else if (err8) {
       err8.textContent = 'We could not confirm this appointment. Please try again or contact us on WhatsApp.';
