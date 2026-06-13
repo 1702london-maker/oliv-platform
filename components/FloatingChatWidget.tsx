@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 type Msg = { role: "user" | "assistant"; content: string };
 
 const SESSION_KEY = "ohs-chat-messages";
-const WELCOME = "Hello and welcome to Oliv Hair Supply.\nHow can we help you today?";
+const WELCOME_EN = "Hello and welcome to OlivHairSupply.\nHow can we help you today?";
+const WELCOME_DE = "Hallo und herzlich willkommen bei OlivHairSupply.\nWie können wir Ihnen heute helfen?";
 
 // ── Icons ──────────────────────────────────────────────────────────────────
 
@@ -99,6 +100,7 @@ export function FloatingChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [lang, setLang] = useState<"en" | "de">("en");
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -108,6 +110,21 @@ export function FloatingChatWidget() {
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Read language from localStorage and keep in sync
+  useEffect(() => {
+    const readLang = () => {
+      try {
+        const stored = localStorage.getItem("ohs-lang");
+        setLang(stored === "de" ? "de" : "en");
+      } catch { /* */ }
+    };
+    readLang();
+    window.addEventListener("storage", readLang);
+    // Also poll occasionally in case same-tab change
+    const interval = setInterval(readLang, 800);
+    return () => { window.removeEventListener("storage", readLang); clearInterval(interval); };
   }, []);
 
   // Load from sessionStorage on mount
@@ -122,8 +139,9 @@ export function FloatingChatWidget() {
         }
       }
     } catch { /* */ }
-    setMessages([{ role: "assistant", content: WELCOME }]);
-  }, []);
+    const welcome = lang === "de" ? WELCOME_DE : WELCOME_EN;
+    setMessages([{ role: "assistant", content: welcome }]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Persist to sessionStorage
   useEffect(() => {
@@ -156,7 +174,7 @@ export function FloatingChatWidget() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: updated }),
+        body: JSON.stringify({ messages: updated, lang }),
       });
       const data = await res.json();
       setMessages(prev => [...prev, { role: "assistant", content: data.reply || "Sorry, I didn't get that. Please try again." }]);
@@ -180,7 +198,7 @@ export function FloatingChatWidget() {
 
   // ── Floating button wrap position ────────────────────────────────────────
   const wrapStyle: React.CSSProperties = {
-    position: "fixed", right: 16, bottom: isMobile ? 20 : 100, zIndex: 999,
+    position: "fixed", right: 16, bottom: isMobile ? 90 : 100, zIndex: 100000,
     display: "flex", flexDirection: "column", gap: isMobile ? 10 : 12,
     alignItems: "flex-end", pointerEvents: "auto",
   };
@@ -201,7 +219,7 @@ export function FloatingChatWidget() {
     background: "#fff",
     border: isMobile ? "none" : "1px solid #E2D5C0",
     boxShadow: "0 12px 48px rgba(0,0,0,0.22)",
-    zIndex: 9999,
+    zIndex: 100001,
     display: "flex",
     flexDirection: "column",
     fontFamily: "'Montserrat', Arial, sans-serif",

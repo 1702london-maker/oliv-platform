@@ -359,7 +359,12 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const messages: Message[] = Array.isArray(body.messages) ? body.messages : [];
+    const lang: "en" | "de" = body.lang === "de" ? "de" : "en";
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://oliv-platform.vercel.app";
+
+    const langInstruction = lang === "de"
+      ? "\n\nSPRACHE: Der Kunde kommuniziert auf Deutsch. Antworte IMMER auf Deutsch. Alle Antworten, Fragen, Buchungsschritte und Bestätigungen müssen auf Deutsch sein. Halte denselben professionellen, warmen Ton auf Deutsch wie auf Englisch."
+      : "\n\nLANGUAGE: The customer is communicating in English. Always respond in English.";
 
     if (!messages.length) {
       return NextResponse.json({ error: "no_messages" }, { status: 400 });
@@ -371,7 +376,7 @@ export async function POST(request: Request) {
     }
 
     const payload = [
-      { role: "system", content: SYSTEM_PROMPT },
+      { role: "system", content: SYSTEM_PROMPT + langInstruction },
       ...messages.slice(-28).map(m => ({ role: m.role, content: m.content })),
     ];
 
