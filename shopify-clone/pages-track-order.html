@@ -2289,10 +2289,6 @@ first.parentNode.insertBefore(script, first);
 
         <div class="otrk-form" id="otrk-form">
           <div class="otrk-field">
-            <label class="otrk-label" for="otrk-order-num">Order Number</label>
-            <input class="otrk-input" type="text" id="otrk-order-num" placeholder="#OHS00000" autocomplete="off">
-          </div>
-          <div class="otrk-field">
             <label class="otrk-label" for="otrk-email">Email Address</label>
             <input class="otrk-input" type="email" id="otrk-email" placeholder="your@email.com" autocomplete="email">
           </div>
@@ -2300,14 +2296,7 @@ first.parentNode.insertBefore(script, first);
         </div>
 
         <div class="otrk-result" id="otrk-result">
-          <div class="otrk-result-info">
-            <span class="otrk-result-label">Tracking Update</span>
-            <p class="otrk-result-text">Once your order has been dispatched, you will receive a tracking link via email. If you have not received a tracking email within 48 hours of your order, please contact our support team.</p>
-          </div>
-          
-          <div class="otrk-app-slot" id="otrk-app-slot">
-            <span class="otrk-app-slot-text">Tracking integration — connect AfterShip or similar app here</span>
-          </div>
+          <div id="otrk-result-inner"></div>
         </div>
 
         <p class="otrk-track-note">Your tracking link is emailed to you automatically once your order is dispatched.</p>
@@ -2368,29 +2357,69 @@ first.parentNode.insertBefore(script, first);
 (function() {
   'use strict';
 
+  var STATUS_LABELS = {
+    draft: 'Awaiting Payment',
+    paid: 'Paid — Processing',
+    shipped: 'Shipped',
+    delivered: 'Delivered',
+    cancelled: 'Cancelled',
+    refunded: 'Refunded',
+  };
+
+  function statusColor(s) {
+    if (s === 'shipped' || s === 'delivered') return '#2A6E3F';
+    if (s === 'cancelled' || s === 'refunded') return '#8B3535';
+    return '#B68A45';
+  }
+
+  function renderOrders(orders) {
+    if (!orders.length) {
+      return '<div class="otrk-result-info"><span class="otrk-result-label">No Orders Found</span><p class="otrk-result-text">No orders were found for that email address. If you placed an order recently, please allow a few minutes and try again, or <a href="/pages/contact" style="color:#B68A45;">contact us</a>.</p></div>';
+    }
+    var rows = orders.map(function(o) {
+      var label = STATUS_LABELS[o.status] || o.status;
+      var color = statusColor(o.status);
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E2D5C0;gap:12px;flex-wrap:wrap;">' +
+        '<div><div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#2B2620;">#' + o.ref + '</div>' +
+        '<div style="font-size:11px;color:#6B5C4E;margin-top:3px;">' + o.date + '</div></div>' +
+        '<div style="text-align:right;"><div style="font-size:11px;font-weight:700;color:' + color + ';letter-spacing:.06em;">' + label + '</div>' +
+        '<div style="font-size:11px;color:#2B2620;margin-top:3px;">' + o.total + '</div></div>' +
+      '</div>';
+    }).join('');
+    return '<div class="otrk-result-info"><span class="otrk-result-label">Your Orders</span>' + rows +
+      '<p style="font-size:11px;color:#6B5C4E;margin-top:16px;line-height:1.6;">Tracking links are emailed once your order ships. If your order shows "Processing" for more than 3 business days, <a href="/pages/contact" style="color:#B68A45;">contact us</a>.</p></div>';
+  }
+
   function otrkSubmit() {
-    var orderNum = document.getElementById('otrk-order-num');
-    var email    = document.getElementById('otrk-email');
+    var emailEl  = document.getElementById('otrk-email');
     var result   = document.getElementById('otrk-result');
-    if (!orderNum || !email || !result) return;
-    if (orderNum.value.trim() === '' || email.value.trim() === '') {
-      orderNum.style.borderColor = orderNum.value.trim() === '' ? '#C05040' : '#E3D6C5';
-      email.style.borderColor    = email.value.trim() === '' ? '#C05040' : '#E3D6C5';
+    var inner    = document.getElementById('otrk-result-inner');
+    var btn      = document.querySelector('.otrk-submit');
+    if (!emailEl || !result || !inner) return;
+
+    var emailVal = emailEl.value.trim();
+    if (!emailVal) {
+      emailEl.style.borderColor = '#C05040';
       return;
     }
-    orderNum.style.borderColor = '#E3D6C5';
-    email.style.borderColor    = '#E3D6C5';
+    emailEl.style.borderColor = '#E3D6C5';
+
+    if (btn) { btn.textContent = 'Searching…'; btn.disabled = true; }
+    inner.innerHTML = '<p style="font-size:12px;color:#6B5C4E;padding:20px 0;">Looking up your orders…</p>';
     result.classList.add('visible');
-    var btn = document.querySelector('.otrk-submit');
-    if (btn) {
-      btn.textContent = 'Searching...';
-      btn.style.background = '#B68A45';
-      setTimeout(function() {
-        btn.textContent = 'Track Order';
-        btn.style.background = '';
-      }, 1200);
-    }
     result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    fetch('/api/orders/track?email=' + encodeURIComponent(emailVal))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        inner.innerHTML = renderOrders(data.orders || []);
+      })
+      .catch(function() {
+        inner.innerHTML = '<div class="otrk-result-info"><span class="otrk-result-label">Error</span><p class="otrk-result-text">Something went wrong. Please try again or <a href="/pages/contact" style="color:#B68A45;">contact us</a>.</p></div>';
+      })
+      .finally(function() {
+        if (btn) { btn.textContent = 'Track Order'; btn.disabled = false; }
+      });
   }
 
   window.otrkSubmit = otrkSubmit;
