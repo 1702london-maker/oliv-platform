@@ -12,10 +12,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <span style={{ display: "block", color: "#c9a96e", fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", fontWeight: 700 }}>OlivHairSupply</span>
             <span style={{ display: "block", fontFamily: "Georgia, serif", fontSize: 26, fontWeight: 300 }}>Admin</span>
           </Link>
-          <nav style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+          <nav style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <Link href="/admin/bookings" style={navStyle}>Bookings</Link>
+            <Link href="/admin/orders" style={navStyle}>Orders</Link>
+            <Link href="/admin/applications" style={navStyle}>Applications</Link>
             <Link href="/admin/ai-reception" style={navStyle}>AI Reception</Link>
-            <Link href="/admin/appointments/requests" style={navStyle}>Appointment Requests</Link>
-            <Link href="/" style={navStyle}>Website</Link>
+            <Link href="/admin/appointments/requests" style={navStyle}>Requests</Link>
+            <Link href="/" style={navStyle}>Website ↗</Link>
           </nav>
         </div>
       </header>
