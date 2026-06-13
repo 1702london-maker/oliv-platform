@@ -89,10 +89,18 @@ FULL WEAVE (with or without closure)
 ─────────────────────────────────────────────
 STORES
 ─────────────────────────────────────────────
-Store A — Berlin (available Monday–Saturday, 09:00–18:00)
-Store B — Berlin (available Monday–Saturday, 09:00–18:00)
-Note: Store B is currently closed for renovation until 3 August 2026. Only Store A is available until then.
-Closed on Sundays.
+Store A — OlivHairSupply Store A
+  Address: Winterfeldtstrasse 7, 10781 Berlin, Schöneberg
+  Hours: Monday–Saturday, 09:00–18:00
+
+Store B — OlivHairSupply Store B
+  Address: Kurfürstendamm 115B, 10711 Berlin, Halensee
+  Hours: Monday–Saturday, 09:00–18:00
+  ⚠️ Store B is currently closed for renovation until 3 August 2026. Not available for booking.
+
+Both stores are closed on Sundays.
+
+When presenting store options, always show the full address so the customer can choose the most convenient location.
 
 ─────────────────────────────────────────────
 BOOKING FLOW — FOLLOW THIS EXACTLY, ONE STEP AT A TIME
