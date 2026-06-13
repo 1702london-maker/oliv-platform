@@ -1509,6 +1509,8 @@
 .ohp-instagram-cell:hover .ohp-instagram-overlay { opacity: 1; }
 .ohp-instagram-overlay span { font-size: 20px; color: #FFFFFF; }
 .ohp-instagram-ph { width: 100%; height: 100%; background: linear-gradient(135deg, #D8CCB8 0%, #C8B8A0 100%); }
+.ohp-mirror-feed { position: relative; overflow: hidden; background: #111; border: 1px solid rgba(182,138,69,0.2); box-shadow: 0 22px 60px rgba(43,38,32,0.12); }
+.ohp-mirror-feed iframe { display: block; width: 100%; height: 740px; border: 0; background: #111; }
 .ohp-instagram-footer { text-align: center; margin-top: 28px; }
 
 /* RESPONSIVE */
@@ -1582,6 +1584,7 @@
 
   /* INSTAGRAM */
   .ohp-instagram { padding: 60px 0; }
+  .ohp-mirror-feed iframe { height: 620px; }
 
   /* SHARED */
   .ohp-inner { padding: 0 24px; }
@@ -1591,6 +1594,7 @@
   .ohp-trust-item { border-right: none; border-bottom: 1px solid rgba(182,138,69,0.15); }
   .ohp-trust-item:last-child { border-bottom: none; }
   .ohp-instagram-grid { grid-template-columns: repeat(2, 1fr); }
+  .ohp-mirror-feed iframe { height: 720px; }
 }
 </style>
 
@@ -1805,8 +1809,16 @@
         <span class="ohp-eyebrow" style="display:block;text-align:center;">Follow the Journey</span>
         <a href="https://instagram.com/olivhairsupply" target="_blank" rel="noopener" class="ohp-instagram-handle">@olivhairsupply</a>
       </div>
-      <div style="width:100%;overflow:hidden;">
-        <iframe onload="iFrameSetup(this)" src="https://app.mirror-app.com/feed-instagram/450fd992-26bf-4fd4-8412-895b8c35ccf3/preview" style="width:100%;border:none;overflow:hidden;" scrolling="no"></iframe>
+      <div class="ohp-mirror-feed" aria-label="OlivHairSupply Instagram video feed">
+        <iframe
+          onload="iFrameSetup(this)"
+          src="https://app.mirror-app.com/feed-instagram/450fd992-26bf-4fd4-8412-895b8c35ccf3/preview"
+          title="OlivHairSupply selected Instagram videos"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          scrolling="no"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        ></iframe>
         <script src="https://cdn.jsdelivr.net/npm/@mirrorapp/iframe-bridge@latest/dist/index.umd.js"></script>
       </div>
       <div class="ohp-instagram-footer">
