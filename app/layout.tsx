@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { AffiliateTracker } from "@/components/affiliate/AffiliateTracker";
 import { TranslationClient } from "@/components/TranslationClient";
+import { FloatingChatWidget } from "@/components/FloatingChatWidget";
 import Script from "next/script";
 import "./globals.css";
 import "./shopify-clone.css";
@@ -24,6 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AffiliateTracker />
         <TranslationClient />
         {children}
+        <FloatingChatWidget />
         <Script id="mobile-nav" strategy="afterInteractive">{`
           (function() {
             function initMobileNav() {
@@ -60,54 +62,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           })();
         `}</Script>
 
-        <a
-          href="https://wa.me/4915786283439?text=Hello%20OlivHairSupply%2C%20I%27d%20like%20help%20from%20AI%20Reception"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Chat with OlivHairSupply AI Reception on WhatsApp"
-          style={{
-            position: "fixed",
-            right: 20,
-            bottom: 24,
-            zIndex: 999,
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            minHeight: 52,
-            maxWidth: "calc(100vw - 40px)",
-            background: "#0f0f0f",
-            color: "#fff",
-            border: "1px solid #C9A96E",
-            padding: "0 18px 0 14px",
-            boxShadow: "0 10px 32px rgba(0,0,0,0.28)",
-            textDecoration: "none",
-            fontFamily: "Montserrat, Arial, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase"
-          }}
-        >
-          <span
-            aria-hidden="true"
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: "50%",
-              background: "#C9A96E",
-              color: "#0f0f0f",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 16,
-              fontWeight: 700,
-              flex: "0 0 auto"
-            }}
-          >
-            W
-          </span>
-          Chat with AI Reception
-        </a>
         <Script id="cart-init" strategy="afterInteractive">{`
   (function() {
     function initCart() {
