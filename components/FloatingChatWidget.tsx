@@ -144,9 +144,11 @@ export function FloatingChatWidget() {
   }
 
   // ── Floating button wrap position ────────────────────────────────────────
-  const wrapStyle: React.CSSProperties = isMobile
-    ? { position: "fixed", left: "50%", bottom: 90, transform: "translateX(-50%)", zIndex: 999, display: "flex", flexDirection: "column", gap: 10, alignItems: "center", pointerEvents: "auto" }
-    : { position: "fixed", right: 24, bottom: 100, zIndex: 999, display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-end", pointerEvents: "auto" };
+  const wrapStyle: React.CSSProperties = {
+    position: "fixed", right: 16, bottom: isMobile ? 20 : 100, zIndex: 999,
+    display: "flex", flexDirection: "column", gap: isMobile ? 10 : 12,
+    alignItems: "flex-end", pointerEvents: "auto",
+  };
 
   // On mobile: round buttons, no label
   const mobilePillOverride: React.CSSProperties = isMobile
@@ -179,7 +181,7 @@ export function FloatingChatWidget() {
 
         {/* WhatsApp — restored exactly as original */}
         <a
-          href="https://wa.me/4915563965237"
+          href="https://wa.me/4915786283439"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
