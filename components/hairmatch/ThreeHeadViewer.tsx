@@ -90,10 +90,10 @@ export function ThreeHeadViewer({ colour = "1A Naturschwarz", texture = "Wellig"
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
       renderer.dispose();
-      scene.traverse((obj) => {
+      scene.traverse((obj: THREE.Object3D) => {
         if (obj instanceof THREE.Mesh) {
           obj.geometry.dispose();
-          if (Array.isArray(obj.material)) obj.material.forEach((mat) => mat.dispose());
+          if (Array.isArray(obj.material)) obj.material.forEach((mat: THREE.Material) => mat.dispose());
           else obj.material.dispose();
         }
       });
