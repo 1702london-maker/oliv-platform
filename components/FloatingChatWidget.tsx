@@ -266,7 +266,7 @@ export function FloatingChatWidget() {
               <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>Chat</div>
               {!minimized && (
                 <div style={{ fontSize: 10, color: "#CBB899", marginTop: 3, letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                  How can we help?
+                  {lang === "de" ? "Wie können wir helfen?" : "How can we help?"}
                 </div>
               )}
             </div>

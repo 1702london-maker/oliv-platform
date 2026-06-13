@@ -957,3 +957,15 @@ a {
   line-height: 1;
 }
 }
+
+/* ── German nav fix: reduce font-size & letter-spacing so long words fit ── */
+body[data-global-lang="de"] .ohs-nav-left li a,
+body[data-global-lang="de"] .ohs-nav-right li a.ohs-nav-link {
+  font-size: 7.8px;
+  letter-spacing: 0.9px;
+}
+body[data-global-lang="de"] .ohs-topbar-left,
+body[data-global-lang="de"] .ohs-topbar-right {
+  font-size: 8px;
+  letter-spacing: 1.2px;
+}
