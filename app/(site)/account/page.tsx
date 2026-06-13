@@ -19,6 +19,14 @@ function getShell() {
   };
 }
 
+type AddressData = {
+  line1?: string;
+  line2?: string;
+  city?: string;
+  postcode?: string;
+  country?: string;
+} | null;
+
 export default async function AccountPage() {
   const profile = await requireProfile();
 
@@ -38,6 +46,7 @@ export default async function AccountPage() {
 
   let orders: OrderRow[] | null = null;
   let appointments: AppointmentRow[] | null = null;
+  let savedAddress: AddressData = null;
 
   const supabase = createSupabaseAdminClient();
 
@@ -63,6 +72,17 @@ export default async function AccountPage() {
     appointments = data as AppointmentRow[] | null;
   } catch (err) {
     console.error("[account] appointment lookup unavailable:", err);
+  }
+
+  try {
+    const { data } = await supabase
+      .from("profiles")
+      .select("default_address")
+      .eq("id", profile.id)
+      .maybeSingle();
+    savedAddress = (data as { default_address?: AddressData } | null)?.default_address ?? null;
+  } catch {
+    // ignore
   }
 
   const upcomingAppointments = appointments?.filter(
@@ -554,11 +574,23 @@ export default async function AccountPage() {
               </div>
               <div className="ohs-details-card">
                 <p className="ohs-details-eyebrow">Default Address</p>
-                <p className="ohs-details-empty">No Address Saved</p>
-                <p className="ohs-details-hint">
-                  Add a default shipping address for faster checkout.
-                </p>
-                <a href="/account/address" className="ohs-details-link">Add Address</a>
+                {savedAddress?.line1 ? (
+                  <>
+                    <p className="ohs-details-value">{savedAddress.line1}</p>
+                    {savedAddress.line2 && <p className="ohs-details-value">{savedAddress.line2}</p>}
+                    <p className="ohs-details-value">{[savedAddress.city, savedAddress.postcode].filter(Boolean).join(" ")}</p>
+                    <p className="ohs-details-value">{savedAddress.country}</p>
+                    <a href="/account/address" className="ohs-details-link">Edit Address</a>
+                  </>
+                ) : (
+                  <>
+                    <p className="ohs-details-empty">No Address Saved</p>
+                    <p className="ohs-details-hint">
+                      Add a default shipping address for faster checkout.
+                    </p>
+                    <a href="/account/address" className="ohs-details-link">Add Address</a>
+                  </>
+                )}
               </div>
             </div>
           </div>
