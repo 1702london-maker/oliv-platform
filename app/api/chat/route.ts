@@ -4,13 +4,14 @@ import { Resend } from "resend";
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-const SYSTEM_PROMPT = `You are a professional, friendly hair consultant for Oliv Hair Supply — a luxury hair brand in Berlin.
+const SYSTEM_PROMPT = `You are a professional, friendly hair consultant for OlivHairSupply — a luxury hair brand in Berlin.
 You help customers with hair advice, product recommendations, delivery, returns and booking appointments.
 
 PERSONALITY
 - Warm, professional, knowledgeable. Never robotic.
 - Never mention being AI unless directly asked.
 - Keep responses concise. Use a luxury salon tone.
+- The brand name is OlivHairSupply (one word, no space). Always write it exactly like that.
 
 ─────────────────────────────────────────────
 FULL SERVICE MENU WITH PRICES
@@ -103,11 +104,21 @@ Step 4 — Ask for their preferred date (remind them we are closed Sundays). Whe
 [CHECK_AVAILABILITY:{"date":"YYYY-MM-DD","location":"Store A","duration":90}]
 Replace YYYY-MM-DD with the actual date, location with their chosen store, duration with the service duration in minutes.
 Step 5 — The system will inject the available slots. Present them clearly and ask which time they prefer.
-Step 6 — Ask for their full name.
-Step 7 — Ask for their phone number.
-Step 8 — Ask for their email address.
+Step 6 — Ask for their full name. This is MANDATORY — do not proceed without it. If they do not give a full name (first and last name), ask again.
+Step 7 — Ask for their telephone number. This is MANDATORY — do not proceed without it.
+Step 8 — Ask for their email address. This is MANDATORY — do not proceed without it.
 Step 9 — Ask for any hair concerns or special notes (they can say "none").
-Step 10 — Show the full booking summary:
+Step 10 — CANCELLATION POLICY AGREEMENT. Before showing the summary, you MUST present the cancellation policy and ask the customer to confirm they agree:
+
+"Before I complete your booking request, please read our cancellation policy:
+
+📋 Missed Appointment Policy: If you miss your appointment or do not attend without prior notice, you agree to pay a missed-appointment fee equal to 50% of the estimated appointment value.
+
+Do you confirm you have read and agree to this policy? (Please reply 'Yes, I agree')"
+
+Only proceed to Step 11 after the customer confirms they agree. If they do not agree, do not proceed.
+
+Step 11 — Show the full booking summary:
 
 ---
 Service: [service + option]
@@ -119,17 +130,24 @@ Name: [name]
 Phone: [phone]
 Email: [email]
 Notes: [notes]
+Cancellation policy: Agreed ✓
 ---
 
-Ask: "Please confirm these details are correct and I will send your booking request to the Oliv Hair team."
+Ask: "Please confirm all details are correct and I will send your booking request to the OlivHairSupply team."
 
-Step 11 — After customer confirms, output EXACTLY (no other text between the marker and JSON):
+Step 12 — After customer confirms, output EXACTLY (no other text between the marker and JSON):
 [BOOKING_READY]
-{"service":"...","option":"...","price":"€...","store":"...","date":"...","time":"...","name":"...","phone":"...","email":"...","notes":"...","duration":90}
+{"service":"...","option":"...","price":"€...","store":"...","date":"...","time":"...","name":"...","phone":"...","email":"...","notes":"...","duration":90,"policyAgreed":true}
 
-Then write: "Thank you. Your booking request has been sent to the Oliv Hair team. They will review availability and contact you shortly to confirm. We look forward to welcoming you."
+Then write: "Your booking request has been sent to the OlivHairSupply team. They will contact you shortly to confirm your appointment. We look forward to welcoming you."
 
-IMPORTANT: Never tell the customer their appointment is confirmed — only that the request has been sent.
+MANDATORY FIELDS — NEVER SUBMIT WITHOUT THESE:
+- Full name (first and last name)
+- Telephone number
+- Email address
+- Cancellation policy agreement
+
+If a customer tries to skip any of these, politely insist they are required to complete the booking.
 
 ─────────────────────────────────────────────
 PRICING RULES
@@ -168,6 +186,7 @@ interface BookingData {
   email: string;
   notes: string;
   duration?: number;
+  policyAgreed?: boolean;
 }
 
 interface AvailabilityCheck {
@@ -193,7 +212,7 @@ export async function POST(request: Request) {
 
     const payload = [
       { role: "system", content: SYSTEM_PROMPT },
-      ...messages.slice(-24).map(m => ({ role: m.role, content: m.content })),
+      ...messages.slice(-28).map(m => ({ role: m.role, content: m.content })),
     ];
 
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -203,7 +222,7 @@ export async function POST(request: Request) {
         model: "gpt-4o-mini",
         messages: payload,
         temperature: 0.5,
-        max_tokens: 700,
+        max_tokens: 800,
       }),
     });
 
@@ -238,17 +257,19 @@ export async function POST(request: Request) {
     if (bookingMarker !== -1) {
       try {
         const afterMarker = reply.slice(bookingMarker + "[BOOKING_READY]".length).trim();
-        const jsonEnd = afterMarker.indexOf("}") + 1;
-        const booking: BookingData = JSON.parse(afterMarker.slice(0, jsonEnd));
+        // Find the JSON object (may span multiple lines)
+        const jsonStart = afterMarker.indexOf("{");
+        const jsonEnd = afterMarker.lastIndexOf("}") + 1;
+        const booking: BookingData = JSON.parse(afterMarker.slice(jsonStart, jsonEnd));
 
         await sendBookingEmails(booking);
         bookingSubmitted = true;
 
         const beforeMarker = reply.slice(0, bookingMarker).trim();
-        const afterJson = afterMarker.slice(jsonEnd).trim();
+        const afterJson = afterMarker.slice(jsonEnd - jsonStart + jsonStart).trim();
         reply = (beforeMarker + (afterJson ? "\n\n" + afterJson : "")).trim();
         if (!reply) {
-          reply = "Thank you. Your booking request has been sent to the Oliv Hair team. They will review availability and contact you shortly to confirm. We look forward to welcoming you.";
+          reply = "Your booking request has been sent to the OlivHairSupply team. They will contact you shortly to confirm your appointment. We look forward to welcoming you.";
         }
       } catch (e) {
         console.error("[Chat] Booking parse error:", e);
@@ -274,7 +295,6 @@ async function checkAvailability(avail: AvailabilityCheck, siteUrl: string) {
     const available = ALL_SLOTS.filter(s => !fullSet.has(s));
     return { available, full: Array.from(fullSet) };
   } catch {
-    // Fallback: return all slots as available
     return { available: ALL_SLOTS, full: [] };
   }
 }
@@ -287,8 +307,10 @@ async function sendBookingEmails(booking: BookingData) {
   const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
   const TEAM = process.env.BOOKING_TEAM_EMAIL || process.env.TEAM_NOTIFICATION_EMAIL || "olivhairbooking@gmail.com";
 
+  const serviceLabel = [booking.service, booking.option].filter(Boolean).join(" — ");
+
   const fields: [string, string][] = [
-    ["Service", [booking.service, booking.option].filter(Boolean).join(" — ")],
+    ["Service", serviceLabel],
     ["Price", booking.price || "To be confirmed"],
     ["Store", booking.store],
     ["Date", booking.date],
@@ -297,18 +319,88 @@ async function sendBookingEmails(booking: BookingData) {
     ["Phone", booking.phone],
     ["Email", booking.email],
     ["Notes", booking.notes || "None"],
+    ["Cancellation Policy", "Agreed ✓"],
   ];
 
-  const rows = fields.map(([label, val]) =>
-    `<tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:6px 0;width:130px;">${label}</td><td style="font-size:13px;color:#2B2620;padding:6px 0;">${val}</td></tr>`
+  const tableRows = fields.map(([label, val]) =>
+    `<tr>
+      <td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:8px 0;width:160px;vertical-align:top;">${label}</td>
+      <td style="font-size:13px;color:#2B2620;padding:8px 0;vertical-align:top;">${val}</td>
+    </tr>`
   ).join("");
 
-  const teamHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:'Montserrat',Arial,sans-serif;background:#F5F0E8;margin:0;padding:40px 20px;"><div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;"><div style="background:#2B2620;padding:24px 36px;"><p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 4px;">OlivHairSupply — Website Chat</p><h1 style="color:#fff;font-size:22px;font-weight:300;margin:0;font-family:Georgia,serif;">New Booking Request</h1></div><div style="padding:28px 36px;"><div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:20px 24px;margin-bottom:20px;"><table style="width:100%;border-collapse:collapse;">${rows}</table></div><a href="mailto:${booking.email}" style="display:inline-block;background:#2B2620;color:#fff;padding:12px 24px;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;">Reply by Email</a><hr style="border:none;border-top:1px solid #E2D5C0;margin:24px 0 12px;"><p style="color:#9B8878;font-size:10px;margin:0;">Via website chat. Confirm availability before replying to customer.</p></div></div></body></html>`;
+  // ── Team notification ─────────────────────────────────────────────────
+  const teamHtml = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="font-family:'Montserrat',Arial,sans-serif;background:#F5F0E8;margin:0;padding:40px 20px;">
+<div style="max-width:580px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
+  <div style="background:#2B2620;padding:24px 36px;">
+    <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 4px;">OlivHairSupply — Website Chat</p>
+    <h1 style="color:#fff;font-size:22px;font-weight:300;margin:0;font-family:Georgia,serif;">New Booking Request</h1>
+  </div>
+  <div style="padding:28px 36px;">
+    <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:20px 24px;margin-bottom:24px;">
+      <table style="width:100%;border-collapse:collapse;">${tableRows}</table>
+    </div>
+    <a href="mailto:${booking.email}" style="display:inline-block;background:#2B2620;color:#fff;padding:12px 24px;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;">Reply by Email</a>
+    <hr style="border:none;border-top:1px solid #E2D5C0;margin:24px 0 12px;">
+    <p style="color:#9B8878;font-size:10px;margin:0;">Submitted via website chat. Customer has agreed to the missed-appointment fee policy.</p>
+  </div>
+</div>
+</body></html>`;
 
-  const customerHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:'Montserrat',Arial,sans-serif;background:#F5F0E8;margin:0;padding:40px 20px;"><div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;"><div style="background:#2B2620;padding:32px 40px;"><p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p><h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">Booking Request Received</h1></div><div style="padding:36px 40px;"><p style="color:#2B2620;font-size:14px;margin:0 0 6px;">Hi <strong>${booking.name}</strong>,</p><p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">Thank you for your booking request. The Oliv Hair team will review availability and contact you shortly to confirm your appointment.</p><div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;"><p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Your Request</p><table style="width:100%;border-collapse:collapse;">${rows}</table></div><p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0;">Questions? WhatsApp us at <strong>+49 157 86283439</strong> or reply to this email.</p><hr style="border:none;border-top:1px solid #E2D5C0;margin:32px 0 16px;"><p style="color:#9B8878;font-size:10px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; appointments@olivhairsupply.de</p></div></div></body></html>`;
+  // ── Customer confirmation — reads as a real booking confirmation ───────
+  const customerHtml = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="font-family:'Montserrat',Arial,sans-serif;background:#F5F0E8;margin:0;padding:40px 20px;">
+<div style="max-width:580px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
+  <div style="background:#2B2620;padding:36px 40px;">
+    <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 10px;">OlivHairSupply — Berlin</p>
+    <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0 0 6px;font-family:Georgia,serif;">Your Appointment is Booked</h1>
+    <p style="color:rgba(255,255,255,0.6);font-size:11px;margin:0;letter-spacing:0.1em;">Booking confirmation</p>
+  </div>
+  <div style="padding:36px 40px;">
+    <p style="color:#2B2620;font-size:15px;margin:0 0 6px;">Hi <strong>${booking.name}</strong>,</p>
+    <p style="color:#6B5C4E;font-size:13px;line-height:1.8;margin:0 0 30px;">
+      Thank you for booking with OlivHairSupply. We have received your appointment request and look forward to seeing you. Your full booking details are below.
+    </p>
+
+    <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
+      <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Booking Details</p>
+      <table style="width:100%;border-collapse:collapse;">${tableRows}</table>
+    </div>
+
+    <div style="background:#FBF7F0;border-left:3px solid #B68A45;padding:16px 20px;margin-bottom:28px;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#B68A45;margin:0 0 8px;">Cancellation Policy</p>
+      <p style="font-size:12px;color:#6B5C4E;line-height:1.7;margin:0;">
+        If you miss your appointment or do not attend without prior notice, a missed-appointment fee equal to <strong>50% of the estimated appointment value</strong> will apply. By completing this booking you have agreed to this policy.
+      </p>
+    </div>
+
+    <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 6px;">Need to change or cancel? Please contact us as soon as possible:</p>
+    <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0;">
+      WhatsApp: <strong>+49 157 86283439</strong><br>
+      Or reply to this email.
+    </p>
+
+    <hr style="border:none;border-top:1px solid #E2D5C0;margin:32px 0 16px;">
+    <p style="color:#9B8878;font-size:10px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; olivhairsupply.de</p>
+  </div>
+</div>
+</body></html>`;
 
   await Promise.allSettled([
-    resend.emails.send({ from: FROM, to: TEAM, subject: `New Chat Booking — ${booking.name} — ${booking.service}`, html: teamHtml }),
-    ...(booking.email ? [resend.emails.send({ from: FROM, to: booking.email, subject: "Booking Request Received — Oliv Hair Supply", html: customerHtml })] : []),
+    resend.emails.send({
+      from: FROM,
+      to: TEAM,
+      subject: `New Booking — ${booking.name} — ${serviceLabel} — ${booking.date} ${booking.time}`,
+      html: teamHtml,
+    }),
+    ...(booking.email ? [resend.emails.send({
+      from: FROM,
+      to: booking.email,
+      subject: `Booking Confirmed — ${serviceLabel} — ${booking.date} at ${booking.time} — OlivHairSupply`,
+      html: customerHtml,
+    })] : []),
   ]);
 }
