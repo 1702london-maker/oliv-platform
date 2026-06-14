@@ -4053,7 +4053,7 @@ function oapptSubmitBooking(event) {
     oapptState.submitting = false;
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Confirm Appointment';
+      submitBtn.textContent = oapptLang() === 'de' ? 'Termin bestätigen' : 'Confirm Appointment';
     }
   });
 }
@@ -5000,6 +5000,18 @@ function oapptTranslateUI() {
   t('.oappt-summary-title', 'Deine Buchung');
   t('.oappt-summary-subtitle', 'Zusammenfassung');
   t('.oappt-summary-total-label', 'Geschätzter Gesamtpreis');
+
+  // Store A address — with hours in German
+  var storeAAddr = document.querySelector('#oappt-step-1 .oappt-location-card[data-loc="a"] .oappt-location-address');
+  if (storeAAddr) storeAAddr.innerHTML = 'OlivHairSupply<br>Winterfeldtstraße 7<br>10781 Berlin, Schöneberg<br>Montag bis Samstag · 10:00–19:00';
+
+  // Store B address — with hours in German
+  var storeBAddr = document.querySelector('#oappt-step-1 .oappt-location-card[data-loc="b"] .oappt-location-address');
+  if (storeBAddr) storeBAddr.innerHTML = 'OlivHairSupply<br>Kurfürstendamm 115B<br>10711 Berlin, Halensee<br>Montag bis Samstag · 10:00–19:00';
+
+  // Store B opening banner — translate to German
+  var storeBBanner = document.getElementById('oappt-store-b-closed');
+  if (storeBBanner) storeBBanner.textContent = 'Eröffnung 4. August 2026';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
