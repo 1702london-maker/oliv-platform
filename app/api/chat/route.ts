@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -212,13 +213,7 @@ HAIR LINES AVAILABLE:
   ✦ 1 — BiziHair Extensions — our core line, 100% cuticle-aligned human hair
   ✦ 2 — BiziLuxe Extensions — our new premium line, 100% cuticle-aligned human hair
 
-BIZILUXE LENGTHS & PRICES (price per pack — each pack is 25g):
-  ✦ 1 — 40 cm (~16 inches) — €52 per pack — 25g — shoulder length
-  ✦ 2 — 45 cm (~18 inches) — €60 per pack — 25g — collarbone length
-  ✦ 3 — 50 cm (~20 inches) — €70 per pack — 25g — mid-chest length
-  ✦ 4 — 55 cm (~22 inches) — €80 per pack — 25g — below chest
-  ✦ 5 — 60 cm (~24 inches) — €92 per pack — 25g — waist-grazing
-  ✦ 6 — 65 cm (~26 inches) — €105 per pack — 25g — long and dramatic
+{{HAIR_PRICES}}
 
 PACK WEIGHT: Each pack is exactly 25g. Always use 25g per pack in all calculations. Never say 50g or 100g.
 
@@ -265,19 +260,7 @@ Step 3 — HAIR (ONLY for Weft Sewing, Tapes, Bondings, Microrings — SKIP for 
 
       ✦ 2 — BiziLuxe Extensions — our new premium line
 
-  3c) Hair length — present ALL options with price per pack:
-
-      ✦ 1 — 40 cm (~16 inches) — €52/pack — shoulder length
-
-      ✦ 2 — 45 cm (~18 inches) — €60/pack — collarbone length
-
-      ✦ 3 — 50 cm (~20 inches) — €70/pack — mid-chest
-
-      ✦ 4 — 55 cm (~22 inches) — €80/pack — below chest
-
-      ✦ 5 — 60 cm (~24 inches) — €92/pack — waist-grazing
-
-      ✦ 6 — 65 cm (~26 inches) — €105/pack — long, dramatic
+  3c) Hair length — present the options from the HAIR PRICES section above (use those exact prices — they are live from our system).
 
   3d) Number of packs — ask how many packs they'd like. Share this guide:
       "As a general guide: shorter lengths (40–50cm) typically need 4–6 packs, longer lengths (55–65cm) typically need 6–8 packs. Your stylist will confirm the exact amount at your appointment."
@@ -402,6 +385,77 @@ interface AvailabilityCheck {
   duration: number;
 }
 
+async function fetchHairPrices(): Promise<string> {
+  try {
+    const admin = createSupabaseAdminClient();
+
+    // Get collection IDs for hair extension collections
+    const { data: cols } = await admin
+      .from("collections")
+      .select("id, slug")
+      .in("slug", ["biziluxe-extensions", "bizihair-extensions"]);
+
+    if (!cols?.length) throw new Error("no collections");
+    const collectionIds = cols.map(c => c.id);
+
+    // Get product IDs in those collections
+    const { data: pcRows } = await admin
+      .from("product_collections")
+      .select("product_id")
+      .in("collection_id", collectionIds);
+
+    if (!pcRows?.length) throw new Error("no products");
+    const productIds = [...new Set(pcRows.map(r => r.product_id))];
+
+    // Get products + variants
+    const { data: products } = await admin
+      .from("products")
+      .select("id, title")
+      .in("id", productIds)
+      .order("title");
+
+    const { data: variants } = await admin
+      .from("product_variants")
+      .select("product_id, title, retail_price_cents")
+      .in("product_id", productIds);
+
+    if (!products?.length || !variants?.length) throw new Error("no data");
+
+    // Build product title map
+    const productTitles: Record<string, string> = {};
+    for (const p of products) productTitles[p.id] = p.title;
+
+    // Group: productName → cm → lowest price
+    const byProduct: Record<string, Record<string, number>> = {};
+    for (const v of variants) {
+      const productName = productTitles[v.product_id];
+      if (!productName) continue;
+      const cmMatch = (v.title as string).match(/^(\d+)\s*cm/);
+      if (!cmMatch) continue;
+      const cm = cmMatch[1];
+      if (!byProduct[productName]) byProduct[productName] = {};
+      const existing = byProduct[productName][cm];
+      if (!existing || v.retail_price_cents < existing) {
+        byProduct[productName][cm] = v.retail_price_cents;
+      }
+    }
+
+    const lines: string[] = ["HAIR PRICES — LIVE FROM OUR SYSTEM (price per pack, each pack is 25g):"];
+    for (const [productName, lengths] of Object.entries(byProduct)) {
+      lines.push(`\n${productName}:`);
+      const sorted = Object.entries(lengths).sort((a, b) => Number(a[0]) - Number(b[0]));
+      sorted.forEach(([cm, cents], i) => {
+        lines.push(`  ✦ ${i + 1} — ${cm} cm — €${(cents / 100).toFixed(0)} per pack`);
+      });
+    }
+    return lines.join("\n");
+  } catch {
+    return `HAIR PRICES (please confirm current prices with the team at the consultation):
+BiziHair Extensions and BiziLuxe Extensions are available in lengths from 40 cm to 75 cm.
+Exact pricing per pack (25g) will be confirmed at the appointment.`;
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -422,8 +476,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ reply: "I'm sorry, the chat service is temporarily unavailable. Please contact us on WhatsApp at +49 157 86283439." });
     }
 
+    const hairPrices = await fetchHairPrices();
+    const systemPrompt = SYSTEM_PROMPT.replace("{{HAIR_PRICES}}", hairPrices);
+
     const payload = [
-      { role: "system", content: SYSTEM_PROMPT + langInstruction },
+      { role: "system", content: systemPrompt + langInstruction },
       ...messages.slice(-28).map(m => ({ role: m.role, content: m.content })),
     ];
 
