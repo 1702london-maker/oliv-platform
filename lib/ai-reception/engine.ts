@@ -1,8 +1,16 @@
 import { AI_RECEPTION_SYSTEM_PROMPT, OHS_RECEPTION_KNOWLEDGE } from "@/lib/ai-reception/prompt";
 import type { ReceptionConversation, ReceptionDecision, ReceptionDetails } from "@/lib/ai-reception/types";
 
-const REQUEST_RECEIVED =
-  "Thank you for contacting OlivHairSupply. Your appointment request has been received. Our team will review your details and confirm availability shortly.";
+function requestReceived(lang: "de" | "en") {
+  return lang === "de"
+    ? "Vielen Dank! Deine Terminanfrage ist bei uns eingegangen. Unser Team prüft deine Angaben und meldet sich in Kürze zur Verfügbarkeit."
+    : "Thank you for contacting OlivHairSupply. Your appointment request has been received. Our team will review your details and confirm availability shortly.";
+}
+
+function detectLang(message: string): "de" | "en" {
+  const deWords = /\b(ich|du|mir|dir|mein|dein|habe|bin|ist|sind|kann|möchte|würde|bitte|danke|hallo|guten|schreib|termin|haare|extensions|frage|hilfe|wann|wie|was|wo|warum)\b/i;
+  return deWords.test(message) ? "de" : "en";
+}
 
 export async function buildReceptionDecision({
   conversation,
@@ -15,10 +23,11 @@ export async function buildReceptionDecision({
   recentMessages: Array<{ direction: string; body: string }>;
   mediaUrls: string[];
 }): Promise<ReceptionDecision> {
+  const lang = detectLang(message);
   const mergedDetails = mergeDetails(conversation.collected_details || {}, extractDetails(message, conversation.phone_number));
-  if (mediaUrls.length > 0) mergedDetails.inspirationPhotos = "Customer sent WhatsApp media/inspiration photos.";
+  if (mediaUrls.length > 0) mergedDetails.inspirationPhotos = lang === "de" ? "Kunde hat Inspiration/Medien geschickt." : "Customer sent WhatsApp media/inspiration photos.";
 
-  const fallback = deterministicDecision(message, mergedDetails);
+  const fallback = deterministicDecision(message, mergedDetails, lang);
   const aiDecision = await askOpenAI({
     message,
     conversation,
@@ -27,9 +36,9 @@ export async function buildReceptionDecision({
     fallback,
   });
 
-  const decision = normalizeDecision(aiDecision || fallback, mergedDetails);
+  const decision = normalizeDecision(aiDecision || fallback, mergedDetails, lang);
   if (decision.appointmentRequestReady) {
-    decision.reply = REQUEST_RECEIVED;
+    decision.reply = requestReceived(lang);
     decision.leadStatus = "appointment_requested";
   }
   return decision;
@@ -102,7 +111,7 @@ async function askOpenAI({
   }
 }
 
-function deterministicDecision(message: string, details: ReceptionDetails): ReceptionDecision {
+function deterministicDecision(message: string, details: ReceptionDetails, lang: "de" | "en"): ReceptionDecision {
   const text = message.toLowerCase();
   const handoverReason = handoverReasonFor(text);
   if (handoverReason) {
@@ -114,7 +123,9 @@ function deterministicDecision(message: string, details: ReceptionDetails): Rece
       handoverReason,
       details,
       appointmentRequestReady: false,
-      reply: "Thank you for sharing this with us. I want to make sure you receive the right care, so I have passed this to the OlivHairSupply team and a team member will respond as soon as possible.",
+      reply: lang === "de"
+        ? "Danke, dass du dich bei uns meldest. Ich möchte sichergehen, dass du die richtige Betreuung bekommst — ich habe deine Nachricht direkt an das OlivHairSupply-Team weitergeleitet. Jemand aus dem Team meldet sich so schnell wie möglich bei dir."
+        : "Thank you for sharing this with us. I want to make sure you receive the right care, so I have passed this to the OlivHairSupply team and a team member will respond as soon as possible.",
     };
   }
 
@@ -136,11 +147,25 @@ function deterministicDecision(message: string, details: ReceptionDetails): Rece
     handoverRequired: false,
     details,
     appointmentRequestReady: ready,
-    reply: ready ? REQUEST_RECEIVED : nextReply(intent, details),
+    reply: ready ? requestReceived(lang) : nextReply(intent, details, lang),
   };
 }
 
-function nextReply(intent: ReceptionDecision["intent"], details: ReceptionDetails) {
+function nextReply(intent: ReceptionDecision["intent"], details: ReceptionDetails, lang: "de" | "en") {
+  if (lang === "de") {
+    if (intent === "cancel") {
+      return "Kein Problem. Schick mir gerne deine Buchungsreferenz (falls vorhanden) und die E-Mail-Adresse, die du für die Buchung verwendet hast. Unser Team kümmert sich darum und gibt dir Bescheid.";
+    }
+    if (intent === "reschedule") {
+      return "Kein Problem. Schick mir deine Buchungsreferenz (falls vorhanden), die E-Mail-Adresse aus der Buchung und deinen Wunschtermin. Unser Team prüft die Verfügbarkeit und meldet sich bei dir.";
+    }
+    const missing = missingBookingFields(details);
+    if (missing.length) {
+      return `Ich helfe dir gerne bei deiner Terminanfrage bei OlivHairSupply! Schick mir noch ${formatMissingDe(missing)}. Endpreise und Verfügbarkeit bestätigt unser Team.`;
+    }
+    return "Bei OlivHairSupply helfen wir dir mit Extensions, Tape-ins, Bondings, Braids, Wigs, Frontals, Closures und Aftercare. Welchen Look möchtest du erreichen, und wie ist dein aktueller Haarzustand?";
+  }
+
   if (intent === "cancel") {
     return "Of course. To help with a cancellation request, please send your booking reference if you have it, plus the email used for the booking. Our team will review and confirm once it has been processed.";
   }
@@ -154,6 +179,24 @@ function nextReply(intent: ReceptionDecision["intent"], details: ReceptionDetail
   }
 
   return "OlivHairSupply can guide you on extensions, tape-ins, bondings, braids, wigs, frontals, closures and aftercare. What look are you hoping to achieve, and what is your current hair condition?";
+}
+
+function formatMissingDe(items: string[]) {
+  const labels: Record<string, string> = {
+    "the service you want": "den gewünschten Service",
+    "your current hair condition": "deinen aktuellen Haarzustand",
+    "your desired style": "deinen Wunsch-Look",
+    "your current hair length": "deine aktuelle Haarlänge",
+    "whether you have inspiration photos": "ob du Inspirationsfotos hast",
+    "your preferred date": "deinen Wunschtermin",
+    "your preferred time": "deine Wunschuhrzeit",
+    "your name": "deinen Namen",
+    "your email": "deine E-Mail-Adresse",
+    "your phone number": "deine Telefonnummer",
+  };
+  const shortlist = items.slice(0, 4).map((item) => labels[item] || item);
+  if (shortlist.length === 1) return shortlist[0];
+  return `${shortlist.slice(0, -1).join(", ")} und ${shortlist[shortlist.length - 1]}`;
 }
 
 function mergeDetails(existing: ReceptionDetails, incoming: ReceptionDetails): ReceptionDetails {
@@ -214,7 +257,7 @@ function handoverReasonFor(text: string) {
   return "";
 }
 
-function normalizeDecision(input: ReceptionDecision, details: ReceptionDetails): ReceptionDecision {
+function normalizeDecision(input: ReceptionDecision, details: ReceptionDetails, lang: "de" | "en"): ReceptionDecision {
   const merged = mergeDetails(details, input.details || {});
   const intent = input.intent || "question";
   const requestType = input.requestType || (intent === "booking" ? "book" : intent === "reschedule" ? "reschedule" : intent === "cancel" ? "cancel" : "question");
@@ -227,6 +270,6 @@ function normalizeDecision(input: ReceptionDecision, details: ReceptionDetails):
     handoverReason: input.handoverReason || "",
     details: merged,
     appointmentRequestReady: Boolean(input.appointmentRequestReady) || (requestType === "book" && hasBookingDetails(merged)),
-    reply: input.reply || nextReply(intent, merged),
+    reply: input.reply || nextReply(intent, merged, lang),
   };
 }
