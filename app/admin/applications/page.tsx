@@ -29,6 +29,10 @@ export default async function ApplicationsPage() {
     return `${APPROVAL_BASE}/api/admin/applications/approve?secret=${encodeURIComponent(secret)}&type=${type}&id=${id}`;
   }
 
+  function rejectUrl(type: string, id: string) {
+    return `${APPROVAL_BASE}/api/admin/applications/reject?secret=${encodeURIComponent(secret)}&type=${type}&id=${id}`;
+  }
+
   return (
     <section style={{ maxWidth: 1180, margin: "0 auto", padding: "42px 24px" }}>
       <p style={eyebrow}>Admin</p>
@@ -50,9 +54,10 @@ export default async function ApplicationsPage() {
                 {row.status}
               </span>
               {row.status === "pending" && (
-                <a href={approveUrl("affiliate", row.id)} style={approveBtn} target="_blank" rel="noopener noreferrer">
-                  Approve
-                </a>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <a href={approveUrl("affiliate", row.id)} style={approveBtn} target="_blank" rel="noopener noreferrer">Approve</a>
+                  <a href={rejectUrl("affiliate", row.id)} style={rejectBtn} target="_blank" rel="noopener noreferrer">Reject</a>
+                </div>
               )}
             </div>
           </div>
@@ -75,9 +80,10 @@ export default async function ApplicationsPage() {
                 {row.status}
               </span>
               {row.status === "pending" && (
-                <a href={approveUrl("wholesale", row.id)} style={approveBtn} target="_blank" rel="noopener noreferrer">
-                  Approve
-                </a>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <a href={approveUrl("wholesale", row.id)} style={approveBtn} target="_blank" rel="noopener noreferrer">Approve</a>
+                  <a href={rejectUrl("wholesale", row.id)} style={rejectBtn} target="_blank" rel="noopener noreferrer">Reject</a>
+                </div>
               )}
             </div>
           </div>
@@ -100,9 +106,10 @@ export default async function ApplicationsPage() {
                 {row.status}
               </span>
               {row.status === "pending" && (
-                <a href={approveUrl("training", row.id)} style={approveBtn} target="_blank" rel="noopener noreferrer">
-                  Approve
-                </a>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <a href={approveUrl("training", row.id)} style={approveBtn} target="_blank" rel="noopener noreferrer">Approve</a>
+                  <a href={rejectUrl("training", row.id)} style={rejectBtn} target="_blank" rel="noopener noreferrer">Reject</a>
+                </div>
               )}
             </div>
           </div>
@@ -131,3 +138,4 @@ const badgeGold: React.CSSProperties = { ...badgeBase, background: "#fdf3e0", co
 const badgeGreen: React.CSSProperties = { ...badgeBase, background: "#e4eddf", color: "#315f38" };
 const badgeRed: React.CSSProperties = { ...badgeBase, background: "#f4e4e0", color: "#8b3535" };
 const approveBtn: React.CSSProperties = { display: "inline-block", background: "#2b2620", color: "#fff", padding: "8px 14px", fontSize: 10, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", textDecoration: "none" };
+const rejectBtn: React.CSSProperties = { display: "inline-block", background: "#fff", color: "#8b3535", border: "1px solid #8b3535", padding: "8px 14px", fontSize: 10, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", textDecoration: "none" };

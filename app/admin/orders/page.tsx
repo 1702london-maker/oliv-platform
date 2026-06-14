@@ -1,16 +1,30 @@
+import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+
+async function markShipped(formData: FormData) {
+  "use server";
+  const orderId = formData.get("orderId") as string;
+  if (!orderId) return;
+  const admin = createSupabaseAdminClient();
+  await admin
+    .from("orders")
+    .update({ status: "shipped", updated_at: new Date().toISOString() })
+    .eq("id", orderId)
+    .eq("status", "paid");
+  revalidatePath("/admin/orders");
+}
 
 export default async function OrdersPage() {
   const admin = createSupabaseAdminClient();
 
   const { data: orders } = await admin
     .from("orders")
-    .select("id,status,total_cents,affiliate_code,created_at,stripe_payment_intent_id")
+    .select("id,status,total_cents,affiliate_code,created_at,stripe_payment_intent_id,email")
     .order("created_at", { ascending: false })
     .limit(150);
 
   const totalRevenueCents = (orders || [])
-    .filter(o => o.status === "paid")
+    .filter(o => o.status === "paid" || o.status === "shipped")
     .reduce((sum, o) => sum + (o.total_cents || 0), 0);
 
   function fmt(cents: number) {
@@ -25,6 +39,7 @@ export default async function OrdersPage() {
       <div style={{ display: "flex", gap: 16, margin: "20px 0 32px", flexWrap: "wrap" }}>
         <Stat label="Total Orders" value={String((orders || []).length)} />
         <Stat label="Paid" value={String((orders || []).filter(o => o.status === "paid").length)} />
+        <Stat label="Shipped" value={String((orders || []).filter(o => o.status === "shipped").length)} />
         <Stat label="Revenue" value={fmt(totalRevenueCents)} />
         <Stat label="Affiliate Orders" value={String((orders || []).filter(o => o.affiliate_code).length)} />
       </div>
@@ -36,7 +51,7 @@ export default async function OrdersPage() {
           <table style={table}>
             <thead>
               <tr>
-                {["Order ID", "Status", "Total", "Affiliate Code", "Date"].map(h => (
+                {["Order ID", "Customer", "Status", "Total", "Affiliate Code", "Date", "Action"].map(h => (
                   <th key={h} style={th}>{h}</th>
                 ))}
               </tr>
@@ -53,13 +68,31 @@ export default async function OrdersPage() {
                     )}
                   </td>
                   <td style={td}>
-                    <span style={o.status === "paid" ? badgeGreen : o.status === "cancelled" ? badgeRed : badgeGold}>
+                    <span style={{ fontSize: 12, color: "#6b5c4e" }}>{o.email || "—"}</span>
+                  </td>
+                  <td style={td}>
+                    <span style={
+                      o.status === "paid" ? badgeGreen
+                      : o.status === "shipped" ? badgeBlue
+                      : o.status === "cancelled" ? badgeRed
+                      : badgeGold
+                    }>
                       {o.status}
                     </span>
                   </td>
                   <td style={td}>{o.total_cents ? fmt(o.total_cents) : "—"}</td>
                   <td style={td}>{o.affiliate_code || "—"}</td>
                   <td style={td}>{new Date(o.created_at).toLocaleString("en-GB")}</td>
+                  <td style={td}>
+                    {o.status === "paid" && (
+                      <form action={markShipped}>
+                        <input type="hidden" name="orderId" value={o.id} />
+                        <button type="submit" style={shipBtn}>
+                          Mark Shipped
+                        </button>
+                      </form>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -87,4 +120,6 @@ const td: React.CSSProperties = { padding: "12px 14px", verticalAlign: "top", co
 const badgeBase: React.CSSProperties = { display: "inline-block", padding: "5px 8px", fontSize: 9.5, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" };
 const badgeGold: React.CSSProperties = { ...badgeBase, background: "#fdf3e0", color: "#8a6200" };
 const badgeGreen: React.CSSProperties = { ...badgeBase, background: "#e4eddf", color: "#315f38" };
+const badgeBlue: React.CSSProperties = { ...badgeBase, background: "#e0eaf8", color: "#1a3f7a" };
 const badgeRed: React.CSSProperties = { ...badgeBase, background: "#f4e4e0", color: "#8b3535" };
+const shipBtn: React.CSSProperties = { background: "#1a3f7a", color: "#fff", border: "none", padding: "7px 13px", fontSize: 9.5, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", cursor: "pointer" };
