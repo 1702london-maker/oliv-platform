@@ -37,11 +37,15 @@ export async function POST(request: Request) {
     redirect("/affiliate?application=failed");
   }
 
-  await sendAffiliateApplicationReceivedEmail({
-    to: email,
-    displayName: fullName,
-    code,
-  });
+  try {
+    await sendAffiliateApplicationReceivedEmail({
+      to: email,
+      displayName: fullName,
+      code,
+    });
+  } catch (err) {
+    console.error("[Affiliate application] confirmation email failed:", err);
+  }
 
   await Promise.allSettled([
     sendApplicationTeamNotification({

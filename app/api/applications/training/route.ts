@@ -37,11 +37,15 @@ export async function POST(request: Request) {
     redirect("/training?application=failed");
   }
 
-  await sendTrainingApplicationReceivedEmail({
-    to: email,
-    fullName,
-    programme,
-  });
+  try {
+    await sendTrainingApplicationReceivedEmail({
+      to: email,
+      fullName,
+      programme,
+    });
+  } catch (err) {
+    console.error("[Training application] confirmation email failed:", err);
+  }
 
   await Promise.allSettled([
     sendApplicationTeamNotification({

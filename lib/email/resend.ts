@@ -809,3 +809,58 @@ export async function sendWholesaleOrderConfirmation({
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
 }
 
+
+/* ══════════════════════════════════════════════════════════════
+   APPLICATION REJECTION — sent to applicant when admin rejects
+══════════════════════════════════════════════════════════════ */
+
+export async function sendApplicationRejectionEmail({
+  to,
+  name,
+  type,
+}: {
+  to: string;
+  name: string;
+  type: "affiliate" | "wholesale" | "training";
+}) {
+  const siteUrl = getEmailSiteUrl();
+  const typeLabel =
+    type === "affiliate" ? "Affiliate Programme"
+    : type === "wholesale" ? "Wholesale Account"
+    : "Training Programme";
+
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: `Your OlivHairSupply ${typeLabel} Application`,
+    html: `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family:'Montserrat',Arial,sans-serif;background:#F5F0E8;margin:0;padding:40px 20px;">
+  <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
+    <div style="background:#2B2620;padding:32px 40px;">
+      <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
+      <h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">Application <em>Update</em></h1>
+    </div>
+    <div style="padding:36px 40px;">
+      <p style="color:#2B2620;font-size:14px;margin:0 0 16px;">Hi <strong>${name}</strong>,</p>
+      <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 20px;">
+        Thank you for your interest in the OlivHairSupply ${typeLabel}.
+        After careful review, we are unable to approve your application at this time.
+      </p>
+      <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
+        If your circumstances change, you are welcome to reapply in the future.
+        We appreciate your interest in working with us.
+      </p>
+      <a href="${siteUrl}" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">Visit OlivHairSupply</a>
+      <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
+      <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:info@olivhairsupply.de" style="color:#9B8878;">info@olivhairsupply.de</a></p>
+    </div>
+  </div>
+</body>
+</html>`,
+  });
+
+  if (error) console.error("[Resend] Rejection email error:", error);
+}

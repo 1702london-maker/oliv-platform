@@ -33,10 +33,14 @@ export async function POST(request: Request) {
     redirect("/wholesale?application=failed");
   }
 
-  await sendWholesaleApplicationReceivedEmail({
-    to: email,
-    businessName,
-  });
+  try {
+    await sendWholesaleApplicationReceivedEmail({
+      to: email,
+      businessName,
+    });
+  } catch (err) {
+    console.error("[Wholesale application] confirmation email failed:", err);
+  }
 
   await Promise.allSettled([
     sendApplicationTeamNotification({
