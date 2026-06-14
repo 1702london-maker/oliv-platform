@@ -2938,7 +2938,7 @@ first.parentNode.insertBefore(script, first);
                   Monday to Saturday
                 </div>
               </div>
-              <div id="oappt-store-b-card" class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')" style="opacity:0.72;pointer-events:none;position:relative;">
+              <div id="oappt-store-b-card" class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')">
                 <div class="oappt-location-tick"></div>
                 <span class="oappt-location-eyebrow">Store B</span>
                 <div class="oappt-location-name">OlivHairSupply Store B</div>
@@ -2946,10 +2946,10 @@ first.parentNode.insertBefore(script, first);
                   OlivHairSupply<br>
                   Kurfurstendamm 115B<br>
                   10711 Berlin, Halensee<br>
-                  Monday to Saturday
+                  Monday to Saturday · 10:00–19:00
                 </div>
-                <div id="oappt-store-b-closed" style="margin-top:12px;background:#fdf3e0;border:1px solid #e5c870;padding:8px 10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8a6200;">
-                  Temporarily Closed — Summer 2026
+                <div id="oappt-store-b-closed" style="margin-top:12px;background:#eef6ee;border:1px solid #a8d5a8;padding:8px 10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#2e6b2e;">
+                  Opening 4th August 2026
                 </div>
               </div>
             </div>
@@ -3630,7 +3630,7 @@ function oapptRenderCalendar() {
     var isPast  = date < today;
     var isMonToSat = dow >= 1 && dow <= 6;
     var isWorkDay  = isMonToSat;
-    var isBlackout = location === 'b' && dateStr < '2026-08-03';
+    var isBlackout = location === 'b' && dateStr < '2026-08-04';
     var isAvailable = !isPast && isWorkDay && !isBlackout;
     var isSel = oapptState.selectedDate === dateStr;
     var isToday = date.toDateString() === today.toDateString();
@@ -3731,7 +3731,10 @@ function oapptRenderSlotsFromCounts() {
   var date    = oapptState.selectedDate;
   var booked  = (stylist && stylist.bookedSlots && stylist.bookedSlots[date]) ? stylist.bookedSlots[date] : [];
   var html = '';
-  OAPPT_ALL_SLOTS.forEach(function(slot) {
+  var visibleSlots = OAPPT_ALL_SLOTS.filter(function(s) {
+    return !(oapptState.location === 'b' && s === '09:00');
+  });
+  visibleSlots.forEach(function(slot) {
     var liveCount = oapptState.slotCounts[slot] || 0;
     var isBooked = booked.indexOf(slot) > -1 || liveCount >= 4;
     var isSel    = oapptState.selectedTime === slot;
@@ -4022,7 +4025,7 @@ function oapptSubmitBooking(event) {
       oapptGoStep(1);
       var err1 = document.getElementById('oappt-err-1');
       if (err1) {
-        err1.textContent = 'Store B (Kurfürstendamm) is temporarily closed for the summer. Please book at Store A (Winterfeldtstrasse) or contact us on WhatsApp.';
+        err1.textContent = 'Store B (Kurfürstendamm) opens 4th August 2026. Please select a date from August 4th onwards, or book at Store A (Winterfeldtstrasse).';
         err1.classList.add('visible');
       }
     } else if (err && err.message === 'sunday_closed') {
