@@ -2934,8 +2934,8 @@ first.parentNode.insertBefore(script, first);
                 <div class="oappt-location-address">
                   OlivHairSupply<br>
                   Winterfeldtstrasse 7<br>
-                  10781 Berlin, Schoneberg<br>
-                  Monday to Saturday
+                  10781 Berlin, Schöneberg<br>
+                  Mo–Sa · 10:00–19:00
                 </div>
               </div>
               <div id="oappt-store-b-card" class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')">
@@ -2946,7 +2946,7 @@ first.parentNode.insertBefore(script, first);
                   OlivHairSupply<br>
                   Kurfurstendamm 115B<br>
                   10711 Berlin, Halensee<br>
-                  Monday to Saturday · 10:00–19:00
+                  Mo–Sa · 10:00–19:00
                 </div>
                 <div id="oappt-store-b-closed" style="margin-top:12px;background:#eef6ee;border:1px solid #a8d5a8;padding:8px 10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#2e6b2e;">
                   Opening 4th August 2026
@@ -3299,7 +3299,7 @@ var OAPPT_STYLISTS = [
   }
 ];
 
-var OAPPT_ALL_SLOTS = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+var OAPPT_ALL_SLOTS = ['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
 
 var oapptState = {
   currentStep: 1,
@@ -3845,21 +3845,22 @@ function oapptSubmitBooking(event) {
 
   var detailsEl = document.getElementById('oappt-confirm-details');
   if (detailsEl) {
+    var isDe = oapptLang() === 'de';
     var html = '';
     var rows = [
-      ['Store', oapptState.location === 'a' ? 'Store A' : 'Store B'],
-      ['Service',  svc ? svc.name : ''],
-      ['Stylist',  stylist ? stylist.name : ''],
-      ['Date',     oapptFormatDate(oapptState.selectedDate)],
-      ['Time',     oapptState.selectedTime],
-      ['Name',     oapptState.customerName],
-      ['Email',    oapptState.customerEmail]
+      [isDe ? 'Store' : 'Store',      oapptState.location === 'a' ? 'Store A' : 'Store B'],
+      [isDe ? 'Service' : 'Service',  svc ? oapptText(svc, 'name') : ''],
+      [isDe ? 'Stylistin' : 'Stylist', stylist ? oapptText(stylist, 'name') : ''],
+      [isDe ? 'Datum' : 'Date',       oapptFormatDate(oapptState.selectedDate)],
+      [isDe ? 'Uhrzeit' : 'Time',     oapptState.selectedTime],
+      [isDe ? 'Name' : 'Name',        oapptState.customerName],
+      [isDe ? 'E-Mail' : 'Email',     oapptState.customerEmail]
     ];
     rows.forEach(function(r) {
       html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r[0] + '</span><span class="oappt-confirm-detail-val">' + r[1] + '</span></div>';
     });
     html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
-    html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">Estimated Total</span>';
+    html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (isDe ? 'Geschätzter Gesamtpreis' : 'Estimated Total') + '</span>';
     html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + total + '</span>';
     html += '</div>';
     detailsEl.innerHTML = html;
@@ -3904,6 +3905,7 @@ function oapptSubmitBooking(event) {
       endsAt:          endsAt,
       estimatedPrice:  '€' + total,
       source:          source,
+      language:        oapptLang(),
     })
   }).catch(function(err) { console.warn('[OHS Booking] API error:', err); });
 
@@ -3982,6 +3984,7 @@ function oapptSubmitBooking(event) {
       endsAt:          endsAt,
       estimatedPrice:  'EUR ' + total,
       source:          source,
+      language:        oapptLang(),
       noShowFeeAgreed: true,
       noShowFeeTerms:  termsText
     })
@@ -4865,9 +4868,100 @@ document.querySelectorAll('select[name="locale_code"]').forEach(function(sel) {
   });
 });
 
+function oapptTranslateUI() {
+  if (oapptLang() !== 'de') return;
+  function t(sel, html) { var el = document.querySelector(sel); if (el) el.innerHTML = html; }
+  function ta(sel, attr, val) { var els = document.querySelectorAll(sel); els.forEach(function(el) { el[attr] = val; }); }
+  function tall(sel, html) { var els = document.querySelectorAll(sel); els.forEach(function(el) { el.innerHTML = html; }); }
+
+  // Confirmation screen
+  t('.oappt-confirm-title', 'Termin <em>bestätigt</em>');
+  t('.oappt-confirm-sub', 'Dein Termin ist bestätigt. Eine Bestätigungs-E-Mail mit deinen Buchungsdetails wurde verschickt.');
+  t('.oappt-confirm-btn-dark', 'Zurück zur Startseite');
+
+  // Step 1
+  t('#oappt-step-1 .oappt-step-title', 'Wähle deinen <em>Standort</em>');
+  t('#oappt-step-1 .oappt-step-sub', 'Wähle deinen bevorzugten OlivHairSupply-Standort. Preise können je nach Standort variieren.');
+  t('#oappt-step-1 .oappt-btn-next', 'Weiter');
+  t('#oappt-err-1', 'Bitte wähle einen Standort aus, um fortzufahren.');
+
+  // Step 2
+  t('#oappt-step-2 .oappt-step-title', 'Wähle deinen <em>Service</em>');
+  t('#oappt-step-2 .oappt-step-sub', 'Wähle die Servicekategorie, die du buchen möchtest.');
+  t('#oappt-step-2 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-2 .oappt-btn-next', 'Weiter');
+  t('#oappt-err-2', 'Bitte wähle einen Service aus, um fortzufahren.');
+
+  // Step 3
+  t('#oappt-step-3 .oappt-step-title', 'Konfiguriere deinen <em>Service</em>');
+  t('#oappt-step-3 .oappt-step-sub', 'Wähle deine Optionen. Deine geschätzte Gesamtsumme wird aktualisiert.');
+  t('#oappt-step-3 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-3 .oappt-btn-next', 'Weiter');
+  t('#oappt-err-3', 'Bitte vervollständige alle erforderlichen Angaben.');
+
+  // Step 4
+  t('#oappt-step-4 .oappt-step-title', 'Wähle deine <em>Stylistin</em>');
+  t('#oappt-step-4 .oappt-step-sub', 'Wähle die Spezialistin, mit der du arbeiten möchtest.');
+  t('#oappt-step-4 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-4 .oappt-btn-next', 'Weiter');
+  t('#oappt-err-4', 'Bitte wähle eine Stylistin aus, um fortzufahren.');
+
+  // Step 5
+  t('#oappt-step-5 .oappt-step-title', 'Wähle ein <em>Datum</em>');
+  t('#oappt-step-5 .oappt-step-sub', 'Tage mit einem goldenen Punkt haben freie Termine. Wir sind Montag bis Samstag geöffnet.');
+  t('#oappt-step-5 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-5 .oappt-btn-next', 'Weiter');
+  t('#oappt-err-5', 'Bitte wähle ein Datum aus, um fortzufahren.');
+  // Calendar legend
+  var legendItems = document.querySelectorAll('#oappt-step-5 .oappt-cal-legend-item');
+  var legendTexts = ['Verfügbar', 'Nicht verfügbar', 'Ausgewählt'];
+  legendItems.forEach(function(item, i) {
+    var dot = item.querySelector('.oappt-cal-legend-dot');
+    if (dot && legendTexts[i]) item.innerHTML = dot.outerHTML + ' ' + legendTexts[i];
+  });
+
+  // Step 6
+  t('#oappt-step-6 .oappt-step-title', 'Wähle eine <em>Uhrzeit</em>');
+  t('#oappt-step-6 .oappt-step-sub', 'Verfügbare Zeiten für deine gewählte Stylistin und dein Datum.');
+  t('.oappt-slots-note', 'Alle Zeiten in Berliner Ortszeit (CET/CEST). Bitte 5 Minuten früher erscheinen.');
+  t('#oappt-step-6 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-6 .oappt-btn-next', 'Weiter');
+  t('#oappt-err-6', 'Bitte wähle eine Uhrzeit aus, um fortzufahren.');
+
+  // Step 7
+  t('#oappt-step-7 .oappt-step-title', 'Deine <em>Angaben</em>');
+  t('#oappt-step-7 .oappt-step-sub', 'Bitte gib deine Kontaktdaten für deine automatische Terminbestätigung ein.');
+  t('label[for="oappt-full-name"]', 'Vollständiger Name');
+  t('label[for="oappt-email"]', 'E-Mail-Adresse');
+  t('label[for="oappt-phone"]', 'Telefonnummer');
+  t('label[for="oappt-notes"]', 'Anmerkungen (optional)');
+  ta('#oappt-full-name', 'placeholder', 'Dein vollständiger Name');
+  ta('#oappt-notes', 'placeholder', 'Allergien, besondere Wünsche oder sonstige Hinweise...');
+  t('#oappt-step-7 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-7 .oappt-btn-next', 'Buchung prüfen');
+  t('#oappt-err-7', 'Bitte fülle alle Pflichtfelder korrekt aus.');
+
+  // Step 8
+  t('#oappt-step-8 .oappt-step-title', 'Termin <em>bestätigen</em>');
+  t('#oappt-step-8 .oappt-step-sub', 'Bitte überprüfe deine Buchungsdetails und akzeptiere die Terminbedingungen.');
+  var bookingNote = document.querySelector('.oappt-booking-note p');
+  if (bookingNote) bookingNote.innerHTML = '<strong>Dein Termin wird automatisch bestätigt.</strong> Wenn du deinen Termin verpasst oder ohne vorherige Absage nicht erscheinst, stimmst du zu, eine Ausfallgebühr in Höhe von 50 % des geschätzten Terminwerts zu zahlen. Diese Vereinbarung wird mit deiner Buchung gespeichert.';
+  var legalSpan = document.querySelector('.oappt-legal-check span');
+  if (legalSpan) legalSpan.textContent = 'Ich habe gelesen und stimme zu, dass ich eine Ausfallgebühr in Höhe von 50 % des geschätzten Terminwerts zahle, wenn ich diesen Termin verpasse oder ohne vorherige Absage nicht erscheine.';
+  t('#oappt-err-8', 'Bitte akzeptiere die Ausfallgebühren-Vereinbarung, bevor du bestätigst.');
+  t('#oappt-submit-btn', 'Termin bestätigen');
+  t('#oappt-step-8 .oappt-btn-back', 'Zurück');
+
+  // Sidebar
+  t('.oappt-summary-title', 'Deine Buchung');
+  t('.oappt-summary-subtitle', 'Zusammenfassung');
+  t('.oappt-summary-total-label', 'Geschätzter Gesamtpreis');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   oapptRenderProgress();
   oapptUpdateSummary();
+  oapptTranslateUI();
 });
 </script>
 

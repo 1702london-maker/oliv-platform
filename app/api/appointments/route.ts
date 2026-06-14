@@ -234,7 +234,7 @@ function runsPastBerlinClosing(iso: string) {
 
 function isStoreBBlackout(locationName: string, iso: string) {
   const date = berlinDate(iso);
-  return /store\s*b/i.test(locationName) && date >= "2026-06-11" && date <= "2026-08-03";
+  return /store\s*b/i.test(locationName) && date <= "2026-08-03";
 }
 
 function berlinDate(iso: string) {
