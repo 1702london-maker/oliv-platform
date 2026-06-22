@@ -127,11 +127,14 @@ if (!categorySlug && !viewAll) {
             const firstVariant = product.variants[0];
             return (
               <article className="ohs-product-card" key={product.id}>
-                <a className="ohs-product-media" href={`/products/${product.slug}`}>
+                <a className="ohs-product-media" href={`/products/${product.slug}`} style={{position:"relative"}}>
                   {product.image_url ? (
                     <img src={product.image_url} alt={product.title} loading="lazy" />
                   ) : (
                     <span />
+                  )}
+                  {(product.attributes as any)?.coming_soon && (
+                    <span style={{position:"absolute",top:"10px",left:"10px",background:"#2B2620",color:"#F6F1E8",fontSize:"9px",fontWeight:700,letterSpacing:".12em",padding:"4px 10px",fontFamily:"Montserrat,sans-serif",textTransform:"uppercase"}}>Coming Soon</span>
                   )}
                 </a>
                 <div className="ohs-product-copy">

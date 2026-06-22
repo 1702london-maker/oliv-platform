@@ -24,6 +24,7 @@ export type CatalogProduct = {
   description: string | null;
   image_url: string | null;
   variants: CatalogVariant[];
+  attributes?: Record<string, unknown>;
 };
 
 function getBiziLuxeExtensionProducts(): CatalogProduct[] {
@@ -52,6 +53,7 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
       slug: "tape-in-extensions",
       description: "Premium Remy Echthaar Tape-In Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Verfügbar in 10 Farben und 8 Längen.",
       image_url: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg",
+      attributes: { coming_soon: true },
       variants: makeVariants("tape-in", 8900)
     },
     {
@@ -60,6 +62,7 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
       slug: "weft-extensions",
       description: "Handgeknüpfte Weft Echthaar Extensions für maximales Volumen. Ideal für Salon-Installation. Verfügbar in 10 Farben und 8 Längen.",
       image_url: "/products/biziluxe-extensions/weft/weft-main.jpg",
+      attributes: { coming_soon: true },
       variants: makeVariants("weft", 11900)
     },
     {
@@ -68,6 +71,7 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
       slug: "utip-extensions",
       description: "Keratin U-Tip Bonding Extensions für natürlichen Fall und lange Haltbarkeit. Professionelle Salon-Anwendung. Verfügbar in 10 Farben und 8 Längen.",
       image_url: "/products/biziluxe-extensions/utip/utip-main.jpg",
+      attributes: { coming_soon: true },
       variants: makeVariants("utip", 14900)
     }
   ];
