@@ -133,9 +133,7 @@ if (!categorySlug && !viewAll) {
                   ) : (
                     <span />
                   )}
-                  {(product.attributes as any)?.coming_soon && (
-                    <span style={{position:"absolute",top:"10px",left:"10px",background:"#2B2620",color:"#F6F1E8",fontSize:"9px",fontWeight:700,letterSpacing:".12em",padding:"4px 10px",fontFamily:"Montserrat,sans-serif",textTransform:"uppercase"}}>Coming Soon</span>
-                  )}
+                  <span style={{position:"absolute",top:"10px",left:"10px",background:"#2B2620",color:"#F6F1E8",fontSize:"9px",fontWeight:700,letterSpacing:".12em",padding:"4px 10px",fontFamily:"Montserrat,sans-serif",textTransform:"uppercase"}}>Coming Soon</span>
                 </a>
                 <div className="ohs-product-copy">
                   <h2>{product.title}</h2>
@@ -144,7 +142,7 @@ if (!categorySlug && !viewAll) {
                       ? `From ${formatMoney(firstVariant.retail_price_cents, currency)}`
                       : "Price available soon"}
                   </p>
-                  <a href={`/products/${product.slug}`}>Shop Now</a>
+                  <span style={{display:"inline-block",padding:"10px 20px",background:"#ccc",color:"#888",fontFamily:"Montserrat,sans-serif",fontSize:"11px",fontWeight:700,letterSpacing:".1em",textTransform:"uppercase",cursor:"not-allowed"}}>Coming Soon</span>
                 </div>
               </article>
             );

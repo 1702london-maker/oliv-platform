@@ -57,19 +57,10 @@ export function ProductDetailView({ product, isWholesale, currency }: ProductDet
         ) : (
           <span>Premium OlivHairSupply product.</span>
         )}
-        <AddToCart
-          product={{
-            id: product.id,
-            title: product.title,
-            slug: product.slug,
-            image_url: product.image_url
-          }}
-          variants={product.variants}
-          priceMode={isWholesale ? "wholesale" : "retail"}
-          currency={currency}
-          onImageChange={(imageUrl) => setSelectedImage(imageUrl || product.image_url)}
-          onPriceChange={setSelectedPrice}
-        />
+        <div style={{marginTop:"24px",padding:"20px 24px",background:"#F6F1E8",borderLeft:"3px solid #2B2620"}}>
+          <p style={{fontFamily:"Montserrat,sans-serif",fontSize:"11px",fontWeight:700,letterSpacing:".14em",textTransform:"uppercase",color:"#2B2620",margin:"0 0 6px"}}>Coming Soon</p>
+          <p style={{fontFamily:"Montserrat,sans-serif",fontSize:"13px",color:"#6B5E52",margin:0}}>This product is not yet available for purchase. Check back soon or contact us to be notified.</p>
+        </div>
       </div>
     </section>
   );
