@@ -24,13 +24,13 @@ const shopCollections = [
     title: "Bizihair Extensions",
     slug: "bizihair-extensions",
     desc: "Signature hair extensions selected for natural movement, lasting wear and refined everyday styling.",
-    image: ""
+    image: "/products/biziluxe-extensions/weft/weft-main.jpg"
   },
   {
     title: "BiziLuxe Extensions",
     slug: "biziluxe-extensions",
     desc: "Luxury Remy human hair extensions in premium textures, lengths and salon-ready finishes.",
-    image: ""
+    image: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg"
   },
   {
     title: "BiziLuxe Accessoires",
@@ -60,46 +60,25 @@ const shopCollections = [
 
 const featuredProducts = [
   {
-    title: "Parchim",
-    tag: "BiziLuxe Accessoires",
-    price: "&euro;45,00",
-    href: "/products/parchim",
-    image: "/products/biziluxe-accessoires/parchim/parchim-gold-main.jpg"
+    title: "Tape-In Extensions",
+    tag: "BiziLuxe Extensions",
+    price: "&euro;89,00",
+    href: "/shop?category=biziluxe-extensions",
+    image: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg"
   },
   {
-    title: "Rügen",
-    tag: "BiziLuxe Accessoires",
-    price: "&euro;35,00",
-    href: "/products/ruegen",
-    image: "/products/biziluxe-accessoires/ruegen/ruegen-gold-main.jpg"
+    title: "Weft Extensions",
+    tag: "BiziLuxe Extensions",
+    price: "&euro;119,00",
+    href: "/shop?category=biziluxe-extensions",
+    image: "/products/biziluxe-extensions/weft/weft-main.jpg"
   },
   {
-    title: "Ludwigslust",
-    tag: "BiziLuxe Stylinggeräte",
-    price: "&euro;189,00",
-    href: "/products/ludwigslust",
-    image: "/products/biziluxe-accessoires/ludwigslust/ludwigslust-schwarz-main.jpg"
-  },
-  {
-    title: "Lübeck",
-    tag: "Bürsten & Kämme",
-    price: "&euro;22,00",
-    href: "/products/luebeck",
-    image: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg"
-  },
-  {
-    title: "Herford",
-    tag: "Profi Friseurbedarf",
-    price: "&euro;59,00",
-    href: "/products/herford",
-    image: "/products/profi-friseurbedarf/herford/herford-main.jpg"
-  },
-  {
-    title: "Recklinghausen",
-    tag: "Profi Friseurbedarf",
-    price: "&euro;189,00",
-    href: "/products/recklinghausen",
-    image: "/products/profi-friseurbedarf/recklinghausen/recklinghausen-main.jpg"
+    title: "U-Tip Extensions",
+    tag: "BiziLuxe Extensions",
+    price: "&euro;149,00",
+    href: "/shop?category=biziluxe-extensions",
+    image: "/products/biziluxe-extensions/utip/utip-main.jpg"
   }
 ];
 
