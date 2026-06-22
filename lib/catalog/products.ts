@@ -140,6 +140,10 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
 }
 
 export async function getCatalogProductBySlug(slug: string): Promise<CatalogProduct | null> {
+  const extensionSlugs = ["tape-in-extensions", "weft-extensions", "utip-extensions"];
+  if (extensionSlugs.includes(slug)) {
+    return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
+  }
   const products = await getCatalogProducts();
   return products.find((product) => product.slug === slug) || getLocalPublicProductBySlug(slug);
 }
