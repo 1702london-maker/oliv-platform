@@ -26,7 +26,56 @@ export type CatalogProduct = {
   variants: CatalogVariant[];
 };
 
+function getBiziLuxeExtensionProducts(): CatalogProduct[] {
+  const COLOURS = ["1 Tiefschwarz","1A Naturschwarz","2 Schokobraun","4 Mittelbraun","8 Dunkelblond","8/22 Highlights Silver","613","SB Highlights","4/6/8 Highlights","60A"];
+  const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
+
+  const makeVariants = (slug: string, basePrice: number): CatalogVariant[] =>
+    COLOURS.flatMap((colour) =>
+      LENGTHS.map((length) => ({
+        id: `${slug}-${colour}-${length}`.toLowerCase().replace(/\s+/g,""),
+        title: `${colour} / ${length}`,
+        color: colour,
+        sku: `${slug}-${colour}-${length}`.toUpperCase().replace(/\s+/g,"-"),
+        image_url: null,
+        attributes: { length },
+        retail_price_cents: basePrice + (LENGTHS.indexOf(length) * 1000),
+        wholesale_price_cents: Math.round((basePrice + LENGTHS.indexOf(length) * 1000) * 0.7),
+        inventory_quantity: 20
+      }))
+    );
+
+  return [
+    {
+      id: "biziluxe-tape-in",
+      title: "Tape-In Extensions",
+      slug: "tape-in-extensions",
+      description: "Premium Remy Echthaar Tape-In Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Verfügbar in 10 Farben und 8 Längen.",
+      image_url: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg",
+      variants: makeVariants("tape-in", 8900)
+    },
+    {
+      id: "biziluxe-weft",
+      title: "Weft Extensions",
+      slug: "weft-extensions",
+      description: "Handgeknüpfte Weft Echthaar Extensions für maximales Volumen. Ideal für Salon-Installation. Verfügbar in 10 Farben und 8 Längen.",
+      image_url: "/products/biziluxe-extensions/weft/weft-main.jpg",
+      variants: makeVariants("weft", 11900)
+    },
+    {
+      id: "biziluxe-utip",
+      title: "U-Tip Extensions",
+      slug: "utip-extensions",
+      description: "Keratin U-Tip Bonding Extensions für natürlichen Fall und lange Haltbarkeit. Professionelle Salon-Anwendung. Verfügbar in 10 Farben und 8 Längen.",
+      image_url: "/products/biziluxe-extensions/utip/utip-main.jpg",
+      variants: makeVariants("utip", 14900)
+    }
+  ];
+}
+
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
+  if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
+
   const supabase = await createSupabaseServerClient();
   let productIds: string[] | null = null;
   let needsPathCategoryFallback = false;
