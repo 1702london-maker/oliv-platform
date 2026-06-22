@@ -7,9 +7,53 @@ import Script from "next/script";
 import "./globals.css";
 import "./shopify-clone.css";
 
+const siteUrl = "https://olivhairsupply.de";
+
 export const metadata: Metadata = {
-  title: "OlivHairSupply",
-  description: "Luxuriöses Haar. Premium-Qualität. Für dich gemacht."
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "OlivHairSupply Berlin — Echthaar Extensions & BiziLuxe Kollektion",
+    template: "%s | OlivHairSupply Berlin"
+  },
+  description: "Premium Echthaar Extensions aus Berlin. Entdecke die BiziLuxe Kollektion — Remy Haarverlängerungen, Clip-In Extensions, Perücken & Zubehör. Kostenloser EU-Versand ab 200 €. Professionelle Saloninstallation verfügbar.",
+  keywords: [
+    "Echthaar Extensions kaufen", "Haarverlängerung Berlin", "BiziLuxe Extensions",
+    "Remy Hair Extensions kaufen", "Echthaar Extensions Berlin", "Bonding Extensions Echthaar Berlin",
+    "Clip In Extensions Echthaar kaufen", "Tape Extensions Berlin kaufen",
+    "Premium Echthaar Extensions Deutschland", "Haarverdichtung Extensions",
+    "OlivHairSupply", "BiziLuxe Kollektion", "Extensions Zubehör kaufen",
+    "luxury hair extensions Berlin", "human hair extensions Germany"
+  ],
+  authors: [{ name: "OlivHairSupply", url: siteUrl }],
+  creator: "OlivHairSupply",
+  publisher: "OlivHairSupply",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 }
+  },
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    alternateLocale: "en_GB",
+    url: siteUrl,
+    siteName: "OlivHairSupply",
+    title: "OlivHairSupply Berlin — Echthaar Extensions & BiziLuxe Kollektion",
+    description: "Premium Echthaar Extensions aus Berlin. BiziLuxe Kollektion — Remy Haarverlängerungen, Clip-In Extensions & Zubehör. Kostenloser EU-Versand ab 200 €.",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "OlivHairSupply — BiziLuxe Echthaar Extensions Berlin" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OlivHairSupply Berlin — Echthaar Extensions & BiziLuxe Kollektion",
+    description: "Premium Echthaar Extensions aus Berlin. BiziLuxe Kollektion — Remy Haarverlängerungen, Clip-In Extensions & Zubehör.",
+    images: ["/og-image.jpg"],
+    creator: "@olivhairsupply"
+  },
+  alternates: {
+    canonical: siteUrl,
+    languages: { "de-DE": siteUrl, "en-GB": `${siteUrl}/en` }
+  },
+  category: "beauty"
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,6 +66,43 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": ["Organization", "LocalBusiness"],
+                "@id": "https://olivhairsupply.de/#organization",
+                name: "OlivHairSupply",
+                url: "https://olivhairsupply.de",
+                logo: { "@type": "ImageObject", url: "https://olivhairsupply.de/logo.svg" },
+                description: "Premium luxury human hair extensions and BiziLuxe collection. Berlin-based hair salon and online store serving Germany, UK and Europe.",
+                address: { "@type": "PostalAddress", addressLocality: "Berlin", addressCountry: "DE" },
+                areaServed: ["DE", "GB", "EU"],
+                priceRange: "€€€",
+                contactPoint: { "@type": "ContactPoint", contactType: "customer service", availableLanguage: ["German", "English"] },
+                sameAs: [
+                  "https://instagram.com/olivhairsupply",
+                  "https://tiktok.com/@olivhairsupply",
+                  "https://facebook.com/olivhairsupply"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://olivhairsupply.de/#website",
+                url: "https://olivhairsupply.de",
+                name: "OlivHairSupply",
+                publisher: { "@id": "https://olivhairsupply.de/#organization" },
+                potentialAction: {
+                  "@type": "SearchAction",
+                  target: { "@type": "EntryPoint", urlTemplate: "https://olivhairsupply.de/shop?q={search_term_string}" },
+                  "query-input": "required name=search_term_string"
+                }
+              }
+            ]
+          })}}
+        />
         <AffiliateTracker />
         <TranslationClient />
         {children}

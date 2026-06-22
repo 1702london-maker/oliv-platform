@@ -6,6 +6,19 @@ import { formatMoney, getCatalogProducts } from "@/lib/catalog/products";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Echthaar Extensions online kaufen — BiziLuxe Shop | OlivHairSupply Berlin",
+  description: "Echthaar Extensions, Clip-In Haarverlängerungen, Stylingwerkzeug & Zubehör aus der BiziLuxe Kollektion kaufen. 100 % Remy Echthaar. Schnelle EU-Lieferung aus Berlin. Jetzt shoppen.",
+  keywords: ["Echthaar Extensions online kaufen", "BiziLuxe Extensions Shop", "Remy Haarverlängerung kaufen", "Clip In Extensions Echthaar kaufen", "Tape Extensions kaufen Deutschland", "Haarverlängerung Zubehör kaufen"],
+  openGraph: {
+    title: "Echthaar Extensions kaufen — BiziLuxe Shop | OlivHairSupply",
+    description: "Echthaar Extensions, Clip-Ins, Stylingwerkzeug & Zubehör. 100 % Remy-Qualität aus Berlin.",
+    url: "https://olivhairsupply.de/shop",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "BiziLuxe Echthaar Extensions Shop Berlin" }]
+  },
+  alternates: { canonical: "https://olivhairsupply.de/shop" }
+};
+
 const shopCollections = [
   {
     title: "Bizihair Extensions",
