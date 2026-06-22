@@ -1,10 +1,29 @@
-﻿export const metadata = {
+import type { Metadata } from "next";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getAffiliateSession } from "@/lib/auth/affiliate-session";
+import { ShopifyClonePage } from "@/components/ShopifyClonePage";
+
+export const metadata: Metadata = {
   title: "Affiliate-Programm — Mit OlivHairSupply verdienen | BiziLuxe Partner",
   description: "Werde BiziLuxe Affiliate-Partner und verdiene Provision für jede Empfehlung. Attraktive Konditionen, Echtzeit-Tracking und exklusive Partnerrabatte. Jetzt bewerben.",
   keywords: ["Affiliate Programm Hair Extensions", "OlivHairSupply Affiliate", "BiziLuxe Partnerprogramm", "Beauty Affiliate Deutschland", "Geld verdienen Haarverlängerung empfehlen"],
   openGraph: { title: "OlivHairSupply Affiliate-Programm — BiziLuxe Partner werden", description: "Werde BiziLuxe Affiliate und verdiene Provision. Attraktive Konditionen & Echtzeit-Tracking.", url: "https://olivhairsupply.de/affiliate" },
   alternates: { canonical: "https://olivhairsupply.de/affiliate" }
 };
+
+
+
+type AffiliateRow = {
+  code: string;
+  display_name: string | null;
+  tier: string | null;
+  commission_rate: number | null;
+  discount_rate: number | null;
+  click_count: number | null;
+  total_commission_cents: number | null;
+  pending_payout_cents: number | null;
+};
+
 export default async function AffiliatePage({
   searchParams,
 }: {

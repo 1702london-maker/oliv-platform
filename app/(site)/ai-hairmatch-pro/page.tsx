@@ -1,13 +1,17 @@
-﻿export const metadata = {
-  title: "AI HairMatch Pro — Find Your Perfect Hair Extensions | OlivHairSupply",
-  description: "Use OlivHairSupply's AI HairMatch Pro to find your perfect BiziLuxe hair extensions. Upload your photo, get a personalised AI hair analysis and match to the ideal length, texture & colour.",
-  keywords: ["AI hair analyser", "hair extension colour match", "AI hairmatch Berlin", "find perfect hair extensions", "OHS AI Match", "hair AI tool online"],
-  openGraph: { title: "AI HairMatch Pro — Find Your Perfect Hair Extensions", description: "Upload your photo, get a personalised AI hair analysis and match to your ideal BiziLuxe extensions.", url: "https://olivhairsupply.de/ai-hairmatch-pro" },
-  alternates: { canonical: "https://olivhairsupply.de/ai-hairmatch-pro" }
-};
+import type { Metadata } from "next";
 import fs from "node:fs";
 import path from "node:path";
 import { HairMatchProClient } from "@/components/hairmatch/HairMatchProClient";
+
+export const metadata: Metadata = {
+  title: "KI Haaranalyse — Finde deine perfekte Haarverlängerung | OlivHairSupply",
+  description: "OlivHairSupply KI HairMatch Pro: Lade dein Foto hoch und finde die perfekten BiziLuxe Echthaar Extensions. Personalisierte KI-Haaranalyse für Länge, Textur & Farbe.",
+  keywords: ["KI Haaranalyse", "Extensions Farbanalyse KI", "KI Haarmatch Berlin", "perfekte Haarverlängerung finden", "OHS AI Match", "Haar KI Tool online"],
+  openGraph: { title: "KI Haaranalyse — Perfekte Haarverlängerung finden", description: "Lade dein Foto hoch und finde deine idealen BiziLuxe Extensions mit KI.", url: "https://olivhairsupply.de/ai-hairmatch-pro" },
+  alternates: { canonical: "https://olivhairsupply.de/ai-hairmatch-pro" }
+};
+
+
 
 export default function AiHairmatchProPage() {
   const shell = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "pages-services.html"), "utf8");
