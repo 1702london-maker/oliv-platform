@@ -217,18 +217,23 @@ export async function sendAffiliateApprovalEmail({
   displayName,
   code,
   password,
+  language = "de",
 }: {
   to: string;
   displayName: string;
   code: string;
   password: string;
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
+  const de = language === "de";
 
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Deine OlivHairSupply Affiliate-Bewerbung wurde genehmigt",
+    subject: de
+      ? "Deine OlivHairSupply Affiliate-Bewerbung wurde genehmigt"
+      : "Your OlivHairSupply Affiliate Account is Approved",
     html: `
 <!DOCTYPE html>
 <html>
@@ -237,51 +242,47 @@ export async function sendAffiliateApprovalEmail({
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">Du bist dabei</h1>
+      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">${de ? "Du bist dabei" : "You&rsquo;re Approved"}</h1>
     </div>
     <div style="padding:36px 40px;">
-      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">Hallo <strong>${displayName}</strong>,</p>
+      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">${de ? "Hallo" : "Hi"} <strong>${displayName}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        Deine Affiliate-Bewerbung wurde genehmigt. Unten findest du deine Zugangsdaten für das Affiliate-Dashboard.
-        Bitte speichere diese – wir senden sie nicht erneut zu.
+        ${de
+          ? "Deine Affiliate-Bewerbung wurde genehmigt. Unten findest du deine Zugangsdaten für das Affiliate-Dashboard. Bitte speichere diese – wir senden sie nicht erneut zu."
+          : "Your affiliate application has been approved. Below are your login credentials for the affiliate dashboard. Please save these — we will not send them again."}
       </p>
-
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
-        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Deine Zugangsdaten</p>
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">${de ? "Deine Zugangsdaten" : "Your Login Details"}</p>
         <table style="width:100%;border-collapse:collapse;">
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">Login-URL</td>
-            <td style="font-size:13px;color:#2B2620;padding:6px 0;">
-              <a href="${siteUrl}/affiliate" style="color:#B68A45;">${siteUrl}/affiliate</a>
-            </td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">${de ? "Login-URL" : "Login URL"}</td>
+            <td style="font-size:13px;color:#2B2620;padding:6px 0;"><a href="${siteUrl}/affiliate" style="color:#B68A45;">${siteUrl}/affiliate</a></td>
           </tr>
           <tr>
             <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">E-Mail</td>
             <td style="font-size:13px;color:#2B2620;padding:6px 0;">${to}</td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Zugangscode</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">${de ? "Zugangscode" : "Access Code"}</td>
             <td style="font-size:16px;font-weight:700;color:#2B2620;letter-spacing:0.12em;padding:6px 0;">${password}</td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Affiliate-Code</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">${de ? "Affiliate-Code" : "Affiliate Code"}</td>
             <td style="font-size:16px;font-weight:700;color:#B68A45;letter-spacing:0.12em;padding:6px 0;">${code}</td>
           </tr>
         </table>
       </div>
-
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 8px;">
-        Dein Affiliate-Link: <a href="${siteUrl}/shop?ref=${code}" style="color:#B68A45;">${siteUrl}/shop?ref=${code}</a>
+        ${de ? "Dein Affiliate-Link" : "Your affiliate link"}: <a href="${siteUrl}/shop?ref=${code}" style="color:#B68A45;">${siteUrl}/shop?ref=${code}</a>
       </p>
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 28px;">
-        Teile deinen Affiliate-Code <strong>${code}</strong> mit deiner Community – sie erhalten 5 % Rabatt auf ihre Bestellung
-        und du verdienst eine Provision für jeden Verkauf.
+        ${de
+          ? `Teile deinen Affiliate-Code <strong>${code}</strong> mit deiner Community – sie erhalten 5 % Rabatt auf ihre Bestellung und du verdienst eine Provision für jeden Verkauf.`
+          : `Share your affiliate code <strong>${code}</strong> with your audience for 5% off their order. You earn commission on every sale.`}
       </p>
-
       <a href="${siteUrl}/affiliate" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">
-        Zum Dashboard
+        ${de ? "Zum Dashboard" : "Log In to Dashboard"}
       </a>
-
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
       <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:affiliates@olivhairsupply.de" style="color:#9B8878;">affiliates@olivhairsupply.de</a></p>
     </div>
@@ -297,29 +298,36 @@ export async function sendAffiliateApplicationReceivedEmail({
   to,
   displayName,
   code,
+  language = "de",
 }: {
   to: string;
   displayName: string;
   code: string;
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
+  const de = language === "de";
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Bewerbung erhalten – OlivHairSupply Affiliate",
+    subject: de ? "Bewerbung erhalten – OlivHairSupply Affiliate" : "Affiliate Application Received - OlivHairSupply",
     html: applicationEmailTemplate({
-      eyebrow: "OlivHairSupply Affiliate",
-      title: "Bewerbung erhalten",
-      greeting: `Hallo ${displayName},`,
-      body: "Vielen Dank für deine Bewerbung beim OlivHairSupply Affiliate-Programm. Unser Team wird deine Bewerbung prüfen und sich bei dir melden, sobald dein Konto genehmigt wurde.",
+      eyebrow: de ? "OlivHairSupply Affiliate" : "OlivHairSupply Affiliate",
+      title: de ? "Bewerbung erhalten" : "Application Received",
+      greeting: de ? `Hallo ${displayName},` : `Hi ${displayName},`,
+      body: de
+        ? "Vielen Dank für deine Bewerbung beim OlivHairSupply Affiliate-Programm. Unser Team wird deine Bewerbung prüfen und sich bei dir melden, sobald dein Konto genehmigt wurde."
+        : "Thank you for applying to the OlivHairSupply Affiliate Programme. Our team will review your application and contact you once your account is approved.",
       details: [
-        ["E-Mail", to],
-        ["Affiliate-Code", code],
-        ["Status", "In Prüfung"],
+        [de ? "E-Mail" : "Email", to],
+        [de ? "Affiliate-Code" : "Affiliate Code", code],
+        [de ? "Status" : "Status", de ? "In Prüfung" : "Pending review"],
       ],
-      buttonLabel: "Zur Affiliate-Seite",
+      buttonLabel: de ? "Zur Affiliate-Seite" : "Visit Affiliate Page",
       buttonUrl: `${siteUrl}/affiliate`,
-      footer: "Nach der Prüfung erhältst du eine E-Mail mit deinem Dashboard-Zugangscode."
+      footer: de
+        ? "Nach der Prüfung erhältst du eine E-Mail mit deinem Dashboard-Zugangscode."
+        : "Approval emails include your dashboard access code after review.",
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -328,28 +336,35 @@ export async function sendAffiliateApplicationReceivedEmail({
 export async function sendWholesaleApplicationReceivedEmail({
   to,
   businessName,
+  language = "de",
 }: {
   to: string;
   businessName: string;
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
+  const de = language === "de";
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Bewerbung erhalten – OlivHairSupply Großhandel",
+    subject: de ? "Bewerbung erhalten – OlivHairSupply Großhandel" : "Wholesale Application Received - OlivHairSupply",
     html: applicationEmailTemplate({
-      eyebrow: "OlivHairSupply Großhandel",
-      title: "Bewerbung erhalten",
-      greeting: `Hallo ${businessName},`,
-      body: "Vielen Dank für deine Bewerbung für ein OlivHairSupply Großhandels-Konto. Unser Team wird deine Angaben prüfen und sich bei dir melden, sobald dein Großhandelszugang genehmigt wurde.",
+      eyebrow: de ? "OlivHairSupply Großhandel" : "OlivHairSupply Wholesale",
+      title: de ? "Bewerbung erhalten" : "Application Received",
+      greeting: de ? `Hallo ${businessName},` : `Hi ${businessName},`,
+      body: de
+        ? "Vielen Dank für deine Bewerbung für ein OlivHairSupply Großhandels-Konto. Unser Team wird deine Angaben prüfen und sich bei dir melden, sobald dein Großhandelszugang genehmigt wurde."
+        : "Thank you for applying for an OlivHairSupply wholesale account. Our supply team will review your details and contact you once your wholesale access is approved.",
       details: [
-        ["E-Mail", to],
-        ["Unternehmen", businessName],
-        ["Status", "In Prüfung"],
+        [de ? "E-Mail" : "Email", to],
+        [de ? "Unternehmen" : "Business", businessName],
+        [de ? "Status" : "Status", de ? "In Prüfung" : "Pending review"],
       ],
-      buttonLabel: "Zur Großhandels-Seite",
+      buttonLabel: de ? "Zur Großhandels-Seite" : "Visit Wholesale Page",
       buttonUrl: `${siteUrl}/wholesale`,
-      footer: "Nach der Prüfung erhältst du eine E-Mail mit deinem Zugangscode für das Großhandelsportal."
+      footer: de
+        ? "Nach der Prüfung erhältst du eine E-Mail mit deinem Zugangscode für das Großhandelsportal."
+        : "Approval emails include your wholesale portal access code after review.",
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -359,29 +374,36 @@ export async function sendTrainingApplicationReceivedEmail({
   to,
   fullName,
   programme,
+  language = "de",
 }: {
   to: string;
   fullName: string;
   programme: string;
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
+  const de = language === "de";
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Training Application Received - OlivHairSupply Academy",
+    subject: de ? "Kursanmeldung erhalten – OlivHairSupply Academy" : "Training Application Received - OlivHairSupply Academy",
     html: applicationEmailTemplate({
       eyebrow: "OlivHairSupply Academy",
-      title: "Training Application Received",
-      greeting: `Hi ${fullName},`,
-      body: "Thank you for applying to OlivHairSupply Academy. Our training team will review your application and contact you with availability, confirmation details and invoice/payment instructions where applicable.",
+      title: de ? "Kursanmeldung erhalten" : "Training Application Received",
+      greeting: de ? `Hallo ${fullName},` : `Hi ${fullName},`,
+      body: de
+        ? "Vielen Dank für deine Anmeldung bei der OlivHairSupply Academy. Unser Kursteam wird deine Anfrage prüfen und sich mit Verfügbarkeiten, Bestätigungsdetails und ggf. Zahlungshinweisen bei dir melden."
+        : "Thank you for applying to OlivHairSupply Academy. Our training team will review your application and contact you with availability, confirmation details and invoice/payment instructions where applicable.",
       details: [
-        ["Email", to],
-        ["Programme", programme || "To be confirmed"],
-        ["Status", "Pending review"],
+        [de ? "E-Mail" : "Email", to],
+        [de ? "Kurs" : "Programme", programme || (de ? "Wird bestätigt" : "To be confirmed")],
+        [de ? "Status" : "Status", de ? "In Prüfung" : "Pending review"],
       ],
-      buttonLabel: "View Training Page",
+      buttonLabel: de ? "Zur Kursseite" : "View Training Page",
       buttonUrl: `${siteUrl}/training`,
-      footer: "This is an application receipt, not a final invoice. The invoice is sent after the team confirms your training placement."
+      footer: de
+        ? "Dies ist eine Eingangsbestätigung, keine Rechnung. Die Rechnung wird nach Bestätigung deines Kursplatzes zugeschickt."
+        : "This is an application receipt, not a final invoice. The invoice is sent after the team confirms your training placement.",
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -466,29 +488,36 @@ export async function sendTrainingApprovalEmail({
   to,
   fullName,
   programme,
+  language = "de",
 }: {
   to: string;
   fullName: string;
   programme: string;
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
+  const de = language === "de";
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Training Application Approved - OlivHairSupply Academy",
+    subject: de ? "Kursanmeldung bestätigt – OlivHairSupply Academy" : "Training Application Approved - OlivHairSupply Academy",
     html: applicationEmailTemplate({
       eyebrow: "OlivHairSupply Academy",
-      title: "Training Approved",
-      greeting: `Hi ${fullName},`,
-      body: "Your training application has been approved. Our team will contact you with the next available dates, final placement details and invoice/payment instructions.",
+      title: de ? "Kurs bestätigt" : "Training Approved",
+      greeting: de ? `Hallo ${fullName},` : `Hi ${fullName},`,
+      body: de
+        ? "Deine Kursanmeldung wurde bestätigt. Unser Team wird sich mit den nächsten verfügbaren Terminen, endgültigen Platzierungsdetails und Zahlungshinweisen bei dir melden."
+        : "Your training application has been approved. Our team will contact you with the next available dates, final placement details and invoice/payment instructions.",
       details: [
-        ["Email", to],
-        ["Programme", programme || "To be confirmed"],
-        ["Status", "Approved"],
+        [de ? "E-Mail" : "Email", to],
+        [de ? "Kurs" : "Programme", programme || (de ? "Wird bestätigt" : "To be confirmed")],
+        [de ? "Status" : "Status", de ? "Bestätigt" : "Approved"],
       ],
-      buttonLabel: "View Training Page",
+      buttonLabel: de ? "Zur Kursseite" : "View Training Page",
       buttonUrl: `${siteUrl}/training`,
-      footer: "Please keep this email for your records. Your place is confirmed after invoice/payment instructions are completed."
+      footer: de
+        ? "Bitte bewahre diese E-Mail auf. Dein Platz ist nach Abschluss der Zahlung gesichert."
+        : "Please keep this email for your records. Your place is confirmed after invoice/payment instructions are completed.",
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -497,28 +526,35 @@ export async function sendTrainingApprovalEmail({
 export async function sendAccountCreatedEmail({
   to,
   firstName,
+  language = "de",
 }: {
   to: string;
   firstName?: string;
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
-  const greetingName = firstName?.trim() || "there";
+  const de = language === "de";
+  const greetingName = firstName?.trim() || (de ? "dort" : "there");
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Dein OlivHairSupply-Konto ist bereit",
+    subject: de ? "Dein OlivHairSupply-Konto ist bereit" : "Your OlivHairSupply Account is Ready",
     html: applicationEmailTemplate({
-      eyebrow: "OlivHairSupply Konto",
-      title: "Konto erstellt",
-      greeting: `Hallo ${greetingName},`,
-      body: "Dein OlivHairSupply-Konto wurde erstellt. Du kannst dich jetzt anmelden, um deine Kontodaten, Termine, Bestellungen und gespeicherten Informationen einzusehen.",
+      eyebrow: de ? "OlivHairSupply Konto" : "OlivHairSupply Account",
+      title: de ? "Konto erstellt" : "Account Created",
+      greeting: de ? `Hallo ${greetingName},` : `Hi ${greetingName},`,
+      body: de
+        ? "Dein OlivHairSupply-Konto wurde erstellt. Du kannst dich jetzt anmelden, um deine Kontodaten, Termine, Bestellungen und gespeicherten Informationen einzusehen."
+        : "Your OlivHairSupply account has been created. You can now sign in to view your account details, appointments, orders and saved information.",
       details: [
-        ["E-Mail", to],
-        ["Status", "Aktiv"],
+        [de ? "E-Mail" : "Email", to],
+        [de ? "Status" : "Status", de ? "Aktiv" : "Active"],
       ],
-      buttonLabel: "Jetzt anmelden",
+      buttonLabel: de ? "Jetzt anmelden" : "Sign In",
       buttonUrl: `${siteUrl}/login`,
-      footer: "Wenn du dieses Konto nicht erstellt hast, wende dich bitte an den OlivHairSupply-Support."
+      footer: de
+        ? "Wenn du dieses Konto nicht erstellt hast, wende dich bitte an den OlivHairSupply-Support."
+        : "If you did not create this account, please contact OlivHairSupply support.",
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -579,17 +615,22 @@ export async function sendWholesaleApprovalEmail({
   to,
   businessName,
   password,
+  language = "de",
 }: {
   to: string;
   businessName: string;
   password: string;
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
+  const de = language === "de";
 
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Dein OlivHairSupply Großhandels-Konto wurde genehmigt",
+    subject: de
+      ? "Dein OlivHairSupply Großhandels-Konto wurde genehmigt"
+      : "Your OlivHairSupply Wholesale Account is Approved",
     html: `
 <!DOCTYPE html>
 <html>
@@ -598,43 +639,40 @@ export async function sendWholesaleApprovalEmail({
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">Großhandels-Konto genehmigt</h1>
+      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">${de ? "Großhandels-Konto genehmigt" : "Wholesale Account Approved"}</h1>
     </div>
     <div style="padding:36px 40px;">
-      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">Hallo <strong>${businessName}</strong>,</p>
+      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">${de ? "Hallo" : "Hi"} <strong>${businessName}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        Dein Großhandelsantrag wurde genehmigt. Unten findest du deine Zugangsdaten für das Großhandelsportal.
-        Bitte speichere diese – wir senden sie nicht erneut zu.
+        ${de
+          ? "Dein Großhandelsantrag wurde genehmigt. Unten findest du deine Zugangsdaten für das Großhandelsportal. Bitte speichere diese – wir senden sie nicht erneut zu."
+          : "Your wholesale application has been approved. Below are your login credentials for the wholesale portal. Please save these — we will not send them again."}
       </p>
-
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
-        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Deine Zugangsdaten</p>
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">${de ? "Deine Zugangsdaten" : "Your Login Details"}</p>
         <table style="width:100%;border-collapse:collapse;">
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">Login-URL</td>
-            <td style="font-size:13px;color:#2B2620;padding:6px 0;">
-              <a href="${siteUrl}/wholesale" style="color:#B68A45;">${siteUrl}/wholesale</a>
-            </td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">${de ? "Login-URL" : "Login URL"}</td>
+            <td style="font-size:13px;color:#2B2620;padding:6px 0;"><a href="${siteUrl}/wholesale" style="color:#B68A45;">${siteUrl}/wholesale</a></td>
           </tr>
           <tr>
             <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">E-Mail</td>
             <td style="font-size:13px;color:#2B2620;padding:6px 0;">${to}</td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Zugangscode</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">${de ? "Zugangscode" : "Access Code"}</td>
             <td style="font-size:16px;font-weight:700;color:#2B2620;letter-spacing:0.12em;padding:6px 0;">${password}</td>
           </tr>
         </table>
       </div>
-
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 28px;">
-        Melde dich an, um auf Großhandelspreise zuzugreifen, Bestellungen aufzugeben und dein Konto zu verwalten.
+        ${de
+          ? "Melde dich an, um auf Großhandelspreise zuzugreifen, Bestellungen aufzugeben und dein Konto zu verwalten."
+          : "Log in to access wholesale pricing, place orders and manage your account."}
       </p>
-
       <a href="${siteUrl}/wholesale" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">
-        Zum Großhandelsportal
+        ${de ? "Zum Großhandelsportal" : "Log In to Wholesale Portal"}
       </a>
-
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
       <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:wholesale@olivhairsupply.de" style="color:#9B8878;">wholesale@olivhairsupply.de</a></p>
     </div>
@@ -740,13 +778,16 @@ export async function sendWholesaleOrderConfirmation({
   orderId,
   items,
   totalWholesaleCents,
+  language = "de",
 }: {
   to: string;
   businessName: string;
   orderId: string;
   items: Array<{ name: string; variantTitle: string; sku: string; qty: number; price: number }>;
   totalWholesaleCents: number;
+  language?: "en" | "de";
 }) {
+  const de = language === "de";
   const fmt = (cents: number) => `€${(cents / 100).toFixed(2).replace(".", ",")}`;
   const siteUrl = getEmailSiteUrl();
 
@@ -761,7 +802,7 @@ export async function sendWholesaleOrderConfirmation({
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Your Wholesale Order Request — OlivHairSupply",
+    subject: de ? "Deine Großhandelsbestellung – OlivHairSupply" : "Your Wholesale Order Request — OlivHairSupply",
     html: `
 <!DOCTYPE html>
 <html>
@@ -770,34 +811,36 @@ export async function sendWholesaleOrderConfirmation({
   <div style="max-width:600px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">Order Received</h1>
+      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">${de ? "Bestellung erhalten" : "Order Received"}</h1>
     </div>
     <div style="padding:36px 40px;">
-      <p style="color:#2B2620;font-size:14px;margin:0 0 16px;">Hi <strong>${businessName}</strong>,</p>
+      <p style="color:#2B2620;font-size:14px;margin:0 0 16px;">${de ? "Hallo" : "Hi"} <strong>${businessName}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        Thank you for your wholesale order request. Our supply team will review your order and be in touch shortly with stock confirmation and payment instructions.
+        ${de
+          ? "Vielen Dank für deine Großhandelsbestellung. Unser Lieferteam wird deine Bestellung prüfen und sich in Kürze mit Lagerbestätigung und Zahlungshinweisen bei dir melden."
+          : "Thank you for your wholesale order request. Our supply team will review your order and be in touch shortly with stock confirmation and payment instructions."}
       </p>
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;margin-bottom:28px;">
         <table style="width:100%;border-collapse:collapse;">
           <thead>
             <tr style="background:#EDE5D8;">
-              <th style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;text-align:left;">Product</th>
+              <th style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;text-align:left;">${de ? "Produkt" : "Product"}</th>
               <th style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;text-align:left;">SKU</th>
-              <th style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;text-align:center;">Qty</th>
-              <th style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;text-align:right;">Total</th>
+              <th style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;text-align:center;">${de ? "Menge" : "Qty"}</th>
+              <th style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;text-align:right;">${de ? "Gesamt" : "Total"}</th>
             </tr>
           </thead>
           <tbody>${itemRows}</tbody>
           <tfoot>
             <tr style="background:#EDE5D8;">
-              <td colspan="3" style="padding:12px 14px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;">Wholesale Total</td>
+              <td colspan="3" style="padding:12px 14px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6B5C4E;">${de ? "Großhandelssumme" : "Wholesale Total"}</td>
               <td style="padding:12px 14px;font-size:16px;font-weight:700;color:#2B2620;text-align:right;font-family:Georgia,serif;">${fmt(totalWholesaleCents)}</td>
             </tr>
           </tfoot>
         </table>
       </div>
-      <p style="color:#6B5C4E;font-size:11px;line-height:1.7;margin:0 0 24px;">Reference: <code style="background:#F0E8DA;padding:2px 6px;font-size:11px;">${orderId}</code></p>
-      <a href="${siteUrl}/wholesale" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">Back to Portal</a>
+      <p style="color:#6B5C4E;font-size:11px;line-height:1.7;margin:0 0 24px;">${de ? "Referenz" : "Reference"}: <code style="background:#F0E8DA;padding:2px 6px;font-size:11px;">${orderId}</code></p>
+      <a href="${siteUrl}/wholesale" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">${de ? "Zum Portal" : "Back to Portal"}</a>
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
       <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:wholesale@olivhairsupply.de" style="color:#9B8878;">wholesale@olivhairsupply.de</a></p>
     </div>
@@ -818,21 +861,23 @@ export async function sendApplicationRejectionEmail({
   to,
   name,
   type,
+  language = "de",
 }: {
   to: string;
   name: string;
   type: "affiliate" | "wholesale" | "training";
+  language?: "en" | "de";
 }) {
   const siteUrl = getEmailSiteUrl();
-  const typeLabel =
-    type === "affiliate" ? "Affiliate Programme"
-    : type === "wholesale" ? "Wholesale Account"
-    : "Training Programme";
+  const de = language === "de";
+  const typeLabel = de
+    ? type === "affiliate" ? "Affiliate-Programm" : type === "wholesale" ? "Großhandels-Konto" : "Kursprogramm"
+    : type === "affiliate" ? "Affiliate Programme" : type === "wholesale" ? "Wholesale Account" : "Training Programme";
 
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `Your OlivHairSupply ${typeLabel} Application`,
+    subject: de ? `Deine OlivHairSupply ${typeLabel} Bewerbung` : `Your OlivHairSupply ${typeLabel} Application`,
     html: `
 <!DOCTYPE html>
 <html>
@@ -841,19 +886,21 @@ export async function sendApplicationRejectionEmail({
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">Application <em>Update</em></h1>
+      <h1 style="color:#fff;font-size:26px;font-weight:300;margin:0;font-family:Georgia,serif;">${de ? "Bewerbung <em>Update</em>" : "Application <em>Update</em>"}</h1>
     </div>
     <div style="padding:36px 40px;">
-      <p style="color:#2B2620;font-size:14px;margin:0 0 16px;">Hi <strong>${name}</strong>,</p>
+      <p style="color:#2B2620;font-size:14px;margin:0 0 16px;">${de ? "Hallo" : "Hi"} <strong>${name}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 20px;">
-        Thank you for your interest in the OlivHairSupply ${typeLabel}.
-        After careful review, we are unable to approve your application at this time.
+        ${de
+          ? `Vielen Dank für dein Interesse am OlivHairSupply ${typeLabel}. Nach sorgfältiger Prüfung können wir deine Bewerbung zum jetzigen Zeitpunkt leider nicht genehmigen.`
+          : `Thank you for your interest in the OlivHairSupply ${typeLabel}. After careful review, we are unable to approve your application at this time.`}
       </p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        If your circumstances change, you are welcome to reapply in the future.
-        We appreciate your interest in working with us.
+        ${de
+          ? "Sollten sich deine Umstände ändern, bist du herzlich eingeladen, dich erneut zu bewerben. Wir schätzen dein Interesse an einer Zusammenarbeit mit uns."
+          : "If your circumstances change, you are welcome to reapply in the future. We appreciate your interest in working with us."}
       </p>
-      <a href="${siteUrl}" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">Visit OlivHairSupply</a>
+      <a href="${siteUrl}" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">${de ? "OlivHairSupply besuchen" : "Visit OlivHairSupply"}</a>
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
       <p style="color:#9B8878;font-size:11px;margin:0;">OlivHairSupply &mdash; Berlin &mdash; <a href="mailto:info@olivhairsupply.de" style="color:#9B8878;">info@olivhairsupply.de</a></p>
     </div>

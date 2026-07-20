@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { getStripe } from "@/lib/stripe";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -68,8 +69,9 @@ async function completeOrderFromSession(sessionId: string) {
       }
 
       const emailTo = customerEmail || order.email;
+      const lang = ((await cookies()).get("ohs-lang")?.value === "en") ? "en" : "de";
       if (emailTo) {
-        await sendOrderConfirmationEmail(emailTo, orderId, order.total_cents);
+        await sendOrderConfirmationEmail(emailTo, orderId, order.total_cents, lang);
       }
     }
 
@@ -144,31 +146,32 @@ async function updateAffiliateCommission(
     .eq("id", affiliate.id);
 }
 
-async function sendOrderConfirmationEmail(to: string, orderId: string, totalCents: number | null) {
+async function sendOrderConfirmationEmail(to: string, orderId: string, totalCents: number | null, language: "en" | "de" = "de") {
   try {
     const { Resend } = await import("resend");
     const resend = new Resend(process.env.RESEND_API_KEY);
     const ref = orderId.slice(0, 8).toUpperCase();
     const total = totalCents ? `€${(totalCents / 100).toFixed(2)}` : "";
     const siteUrl = (process.env.EMAIL_SITE_URL || "https://oliv-platform.vercel.app").replace(/\/$/, "");
+    const de = language === "de";
 
     await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || "noreply@olivhairsupply.de",
       to,
-      subject: `Order Confirmed — OlivHairSupply ${ref}`,
+      subject: de ? `Bestellung bestätigt — OlivHairSupply ${ref}` : `Order Confirmed — OlivHairSupply ${ref}`,
       html: `
         <div style="font-family:'Gill Sans',Optima,sans-serif;background:#1C1810;padding:48px 0;">
           <div style="max-width:520px;margin:0 auto;background:#F6F1E8;padding:52px 44px;">
             <p style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#B68A45;margin:0 0 20px;">OlivHairSupply</p>
-            <h1 style="font-family:Georgia,serif;font-size:36px;font-weight:300;color:#2B2620;margin:0 0 8px;line-height:1.1;">Order <em>Confirmed</em></h1>
-            <p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;margin:0 0 32px;">Thank you — your order has been received and is being prepared.</p>
+            <h1 style="font-family:Georgia,serif;font-size:36px;font-weight:300;color:#2B2620;margin:0 0 8px;line-height:1.1;">${de ? "Bestellung <em>bestätigt</em>" : "Order <em>Confirmed</em>"}</h1>
+            <p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;margin:0 0 32px;">${de ? "Danke — deine Bestellung ist eingegangen und wird vorbereitet." : "Thank you — your order has been received and is being prepared."}</p>
             <div style="background:#2B2620;padding:24px 28px;margin:0 0 32px;">
-              <p style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B68A45;margin:0 0 8px;">Order Reference</p>
+              <p style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B68A45;margin:0 0 8px;">${de ? "Bestellreferenz" : "Order Reference"}</p>
               <p style="font-family:monospace;font-size:20px;font-weight:700;letter-spacing:4px;color:#F6F1E8;margin:0 0 ${total ? "12px" : "0"};">${ref}</p>
               ${total ? `<p style="font-family:Georgia,serif;font-size:24px;font-weight:300;color:#C9A96E;margin:0;">${total}</p>` : ""}
             </div>
-            <p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;line-height:1.7;margin:0 0 24px;">Orders are typically dispatched within 1–3 business days. You can track your order at any time using your email address at <a href="${siteUrl}/pages/track-order" style="color:#B68A45;">${siteUrl}/pages/track-order</a>.</p>
-            <a href="${siteUrl}/shop" style="display:inline-block;background:#2B2620;color:#fff;padding:13px 24px;font-family:Montserrat,sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;margin-bottom:32px;">Continue Shopping</a>
+            <p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;line-height:1.7;margin:0 0 24px;">${de ? `Bestellungen werden in der Regel innerhalb von 1–3 Werktagen versandt. Du kannst deine Bestellung jederzeit mit deiner E-Mail-Adresse verfolgen unter <a href="${siteUrl}/pages/track-order" style="color:#B68A45;">${siteUrl}/pages/track-order</a>.` : `Orders are typically dispatched within 1–3 business days. You can track your order at any time using your email address at <a href="${siteUrl}/pages/track-order" style="color:#B68A45;">${siteUrl}/pages/track-order</a>.`}</p>
+            <a href="${siteUrl}/shop" style="display:inline-block;background:#2B2620;color:#fff;padding:13px 24px;font-family:Montserrat,sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;margin-bottom:32px;">${de ? "Weiter einkaufen" : "Continue Shopping"}</a>
             <p style="font-family:Montserrat,sans-serif;font-size:9px;color:#C0B0A0;letter-spacing:1px;text-transform:uppercase;margin:0;">OlivHairSupply · Berlin · Premium Hair</p>
           </div>
         </div>`,
