@@ -75,12 +75,12 @@ export default function AffiliateLoginPage() {
         `}</style>
 
         <div className="ohs-auth-card">
-          <p className="ohs-auth-eyebrow">Affiliate Programme</p>
-          <h1 className="ohs-auth-title">Affiliate Login</h1>
+          <p className="ohs-auth-eyebrow">Affiliate-Programm</p>
+          <h1 className="ohs-auth-title">Affiliate-Anmeldung</h1>
           <AffiliateLoginForm />
           <hr className="ohs-auth-divider" />
           <p className="ohs-auth-footer-text">
-            Not yet an affiliate? <a href="/affiliate">Apply here</a>
+            Noch kein Affiliate? <a href="/affiliate">Hier bewerben</a>
           </p>
         </div>
       </div>

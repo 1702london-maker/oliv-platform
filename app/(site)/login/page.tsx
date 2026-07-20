@@ -168,37 +168,37 @@ export default async function LoginPage({
         `}</style>
 
         <div className="ohs-auth-card">
-          <p className="ohs-auth-eyebrow">Account</p>
+          <p className="ohs-auth-eyebrow">Konto</p>
 
           <div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
-            <h1 className="ohs-auth-title">Sign In</h1>
-            {message === "registered" && <div className="ohs-auth-alert-info">Account created. Please sign in with your email and password.</div>}
+            <h1 className="ohs-auth-title">Anmelden</h1>
+            {message === "registered" && <div className="ohs-auth-alert-info">Konto erstellt. Bitte melde dich mit deiner E-Mail-Adresse und deinem Passwort an.</div>}
             <LoginBox next={next} error={error} detail={detail} />
             <div className="ohs-auth-row-end">
-              <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Forgot password?</button>
+              <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Passwort vergessen?</button>
             </div>
             <hr className="ohs-auth-divider" />
             <p className="ohs-auth-footer-text">
-              New to OlivHairSupply? <a href="/register">Create an account</a>
+              Neu bei OlivHairSupply? <a href="/register">Konto erstellen</a>
             </p>
           </div>
 
           <div id="ohs-forgot-panel" className={showForgot ? "" : "ohs-hidden"}>
-            <h1 className="ohs-auth-title">Reset Password</h1>
-            {message === "reset-sent" && <div className="ohs-auth-alert-info">Reset link sent. Please check your inbox.</div>}
-            {error === "reset-missing" && <div className="ohs-auth-alert-error">Please enter your email address.</div>}
-            <p className="ohs-auth-sub">Enter your email and we&apos;ll send you a link to reset your password.</p>
+            <h1 className="ohs-auth-title">Passwort zurücksetzen</h1>
+            {message === "reset-sent" && <div className="ohs-auth-alert-info">Reset-Link gesendet. Bitte überprüfe deinen Posteingang.</div>}
+            {error === "reset-missing" && <div className="ohs-auth-alert-error">Bitte gib deine E-Mail-Adresse ein.</div>}
+            <p className="ohs-auth-sub">Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen deines Passworts.</p>
             <form action={forgotPasswordAction}>
               <input type="hidden" name="from" value="/login" />
               <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-forgot-email">Email Address</label>
+                <label className="ohs-auth-label" htmlFor="ohs-forgot-email">E-Mail-Adresse</label>
                 <input className="ohs-auth-input" id="ohs-forgot-email" name="email" type="email" autoComplete="email" required />
               </div>
-              <button className="ohs-auth-btn" type="submit">Send Reset Link</button>
+              <button className="ohs-auth-btn" type="submit">Reset-Link senden</button>
             </form>
             <hr className="ohs-auth-divider" />
             <p className="ohs-auth-footer-text">
-              <button id="ohs-to-signin" className="ohs-auth-link-sm" type="button" style={{ fontSize: "13px", color: "#2B2620" }}>Back to sign in</button>
+              <button id="ohs-to-signin" className="ohs-auth-link-sm" type="button" style={{ fontSize: "13px", color: "#2B2620" }}>Zurück zur Anmeldung</button>
             </p>
           </div>
         </div>

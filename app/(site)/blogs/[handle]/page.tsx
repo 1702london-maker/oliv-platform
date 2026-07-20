@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { ShopifyClonePage } from "@/components/ShopifyClonePage";
 
 type PageProps = {
@@ -29,5 +30,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPage({ params }: PageProps) {
   const { handle } = await params;
+  if (handle === 'journal') redirect('/');
   return <ShopifyClonePage page={`blogs-${handle}`} />;
 }

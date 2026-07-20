@@ -413,16 +413,16 @@ export default async function AccountPage() {
         <div className="ohs-acct-hero">
           <div className="ohs-acct-hero-inner">
             <div>
-              <p className="ohs-acct-eyebrow">My Account</p>
+              <p className="ohs-acct-eyebrow">Mein Konto</p>
               <h1 className="ohs-acct-title">
-                Welcome back{displayName ? `, ${displayName}` : ","}
+                Willkommen zurück{displayName ? `, ${displayName}` : ","}
               </h1>
               <p className="ohs-acct-meta">
-                Signed in as <strong>{profile.email}</strong>
+                Angemeldet als <strong>{profile.email}</strong>
               </p>
             </div>
             <form action={logoutAction}>
-              <button className="ohs-logout-btn" type="submit">Log Out</button>
+              <button className="ohs-logout-btn" type="submit">Abmelden</button>
             </form>
           </div>
         </div>
@@ -436,78 +436,78 @@ export default async function AccountPage() {
             {/* Shopping */}
             <div className="ohs-acct-card">
               <p className="ohs-card-eyebrow">Shopping</p>
-              <h2 className="ohs-card-title">My Orders</h2>
+              <h2 className="ohs-card-title">Meine Bestellungen</h2>
               <p className="ohs-card-desc">
-                View and track your purchases. Your full order history and shipping updates in one place.
+                Bestellungen ansehen und verfolgen. Deine gesamte Bestellhistorie und Versandupdates auf einen Blick.
               </p>
-              <a href="#order-history" className="ohs-btn ohs-btn--dark">Go to Orders</a>
+              <a href="#order-history" className="ohs-btn ohs-btn--dark">Zu den Bestellungen</a>
             </div>
 
             {/* Services */}
             <div className="ohs-acct-card">
               <p className="ohs-card-eyebrow">Services</p>
-              <h2 className="ohs-card-title">My Appointments</h2>
+              <h2 className="ohs-card-title">Meine Termine</h2>
               <p className="ohs-card-desc">
                 {upcomingAppointments.length > 0
-                  ? `You have ${upcomingAppointments.length} upcoming appointment${upcomingAppointments.length > 1 ? "s" : ""}. View your bookings or make a new one at our Berlin salons.`
+                  ? `Du hast ${upcomingAppointments.length} bevorstehende${upcomingAppointments.length > 1 ? "" : "n"} Termin${upcomingAppointments.length > 1 ? "e" : ""}. Buchungen ansehen oder einen neuen Termin in unseren Berliner Salons buchen.`
                   : pastAppointments.length > 0
-                  ? `You have ${pastAppointments.length} past appointment${pastAppointments.length > 1 ? "s" : ""}. Book your next session at either of our Berlin salons.`
-                  : "Book a new appointment at either of our Berlin salons."}
+                  ? `Du hast ${pastAppointments.length} vergangene${pastAppointments.length > 1 ? "" : "n"} Termin${pastAppointments.length > 1 ? "e" : ""}. Buche deine nächste Session in einem unserer Berliner Salons.`
+                  : "Buche einen neuen Termin in einem unserer Berliner Salons."}
               </p>
               <a href="/appointments" className="ohs-btn ohs-btn--gold">
-                {upcomingAppointments.length > 0 ? "View Appointments" : "Book Appointment"}
+                {upcomingAppointments.length > 0 ? "Termine ansehen" : "Termin buchen"}
               </a>
             </div>
 
             {/* Academy */}
             <div className="ohs-acct-card">
               <p className="ohs-card-eyebrow">Academy</p>
-              <h2 className="ohs-card-title">My Training</h2>
+              <h2 className="ohs-card-title">Meine Schulungen</h2>
               <p className="ohs-card-desc">
-                Access your training sessions, course materials and academy resources from OlivHairSupply.
+                Zugang zu deinen Schulungsterminen, Kursmaterialien und Academy-Ressourcen von OlivHairSupply.
               </p>
-              <a href="/training" className="ohs-btn ohs-btn--outline">View Training</a>
+              <a href="/training" className="ohs-btn ohs-btn--outline">Schulungen ansehen</a>
             </div>
 
             {/* Affiliate */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Programme</p>
-              <h2 className="ohs-card-title">Affiliate Access</h2>
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Programm</p>
+              <h2 className="ohs-card-title">Affiliate-Zugang</h2>
               <p className="ohs-card-desc">
-                Earn commission by referring clients to OlivHairSupply. Apply to join our affiliate programme or log in to your dashboard.
+                Verdiene Provision durch Empfehlungen von Kunden an OlivHairSupply. Bewerbe dich für unser Affiliate-Programm oder melde dich in deinem Dashboard an.
               </p>
-              <a href="/affiliate" className="ohs-btn ohs-btn--outline">Affiliate Programme</a>
+              <a href="/affiliate" className="ohs-btn ohs-btn--outline">Affiliate-Programm</a>
             </div>
 
             {/* Wholesale */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Trade Accounts</p>
-              <h2 className="ohs-card-title">Wholesale Access</h2>
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Geschäftskunden</p>
+              <h2 className="ohs-card-title">Großhandel</h2>
               <p className="ohs-card-desc">
-                B2B pricing for salons, stylists and trade buyers. Apply for a wholesale account or log in to your wholesale portal.
+                B2B-Preise für Salons, Stylisten und Fachkunden. Beantrage ein Großhandelskonto oder melde dich in deinem Großhandelsportal an.
               </p>
-              <a href="/wholesale" className="ohs-btn ohs-btn--outline">Wholesale Portal</a>
+              <a href="/wholesale" className="ohs-btn ohs-btn--outline">Großhandelsportal</a>
             </div>
 
             {/* Account Details shortcut */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow">Personal</p>
-              <h2 className="ohs-card-title">Account Details</h2>
+              <p className="ohs-card-eyebrow">Persönlich</p>
+              <h2 className="ohs-card-title">Kontodaten</h2>
               <p className="ohs-card-desc">
-                Update your name, email address, password and saved delivery addresses.
+                Name, E-Mail-Adresse, Passwort und gespeicherte Lieferadressen aktualisieren.
               </p>
-              <a href="#account-details" className="ohs-btn ohs-btn--outline">Manage Account</a>
+              <a href="#account-details" className="ohs-btn ohs-btn--outline">Konto verwalten</a>
             </div>
 
             {/* Support */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow">Help</p>
+              <p className="ohs-card-eyebrow">Hilfe</p>
               <h2 className="ohs-card-title">Support</h2>
               <p className="ohs-card-desc">
-                Need help with an order, appointment or account query? Our team is available Monday to Saturday.
+                Fragen zu Bestellungen, Terminen oder deinem Konto? Unser Team ist Montag bis Samstag für dich da.
               </p>
               <div className="ohs-btn-row">
-                <a href="/pages/contact" className="ohs-btn ohs-btn--dark">Contact Us</a>
+                <a href="/pages/contact" className="ohs-btn ohs-btn--dark">Kontakt</a>
                 <a href="https://wa.me/4915786283439" className="ohs-btn ohs-btn--outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
               </div>
             </div>
@@ -516,13 +516,13 @@ export default async function AccountPage() {
 
           {/* ── Order History ── */}
           <div id="order-history" className="ohs-acct-section">
-            <h2 className="ohs-section-heading">Order <em>History</em></h2>
+            <h2 className="ohs-section-heading">Bestell<em>historie</em></h2>
             {orders?.length ? (
               <div className="ohs-order-table">
                 <div className="ohs-order-head">
-                  <span>Date</span>
+                  <span>Datum</span>
                   <span>Status</span>
-                  <span>Total</span>
+                  <span>Gesamt</span>
                   <span>Ref</span>
                 </div>
                 {orders.map((order) => (
@@ -549,46 +549,46 @@ export default async function AccountPage() {
               </div>
             ) : (
               <div className="ohs-orders-empty">
-                <p className="ohs-orders-empty-title">No orders yet</p>
+                <p className="ohs-orders-empty-title">Noch keine Bestellungen</p>
                 <p className="ohs-orders-empty-sub">
-                  Your order history will appear here once you make your first purchase.
+                  Deine Bestellhistorie erscheint hier, sobald du deinen ersten Einkauf getätigt hast.
                 </p>
-                <a href="/shop" className="ohs-btn ohs-btn--dark">Start Shopping</a>
+                <a href="/shop" className="ohs-btn ohs-btn--dark">Jetzt einkaufen</a>
               </div>
             )}
           </div>
 
           {/* ── Account Details ── */}
           <div id="account-details" className="ohs-acct-section">
-            <h2 className="ohs-section-heading">Account <em>Details</em></h2>
+            <h2 className="ohs-section-heading">Konto<em>daten</em></h2>
             <div className="ohs-details-grid">
               <div className="ohs-details-card">
-                <p className="ohs-details-eyebrow">Personal Information</p>
+                <p className="ohs-details-eyebrow">Persönliche Daten</p>
                 <p className="ohs-details-value">{profile.email}</p>
                 {(profile.first_name || profile.last_name) && (
                   <p className="ohs-details-value">
                     {[profile.first_name, profile.last_name].filter(Boolean).join(" ")}
                   </p>
                 )}
-                <a href="/account/details" className="ohs-details-link">Edit Details</a>
+                <a href="/account/details" className="ohs-details-link">Daten bearbeiten</a>
               </div>
               <div className="ohs-details-card">
-                <p className="ohs-details-eyebrow">Default Address</p>
+                <p className="ohs-details-eyebrow">Standardadresse</p>
                 {savedAddress?.line1 ? (
                   <>
                     <p className="ohs-details-value">{savedAddress.line1}</p>
                     {savedAddress.line2 && <p className="ohs-details-value">{savedAddress.line2}</p>}
                     <p className="ohs-details-value">{[savedAddress.city, savedAddress.postcode].filter(Boolean).join(" ")}</p>
                     <p className="ohs-details-value">{savedAddress.country}</p>
-                    <a href="/account/address" className="ohs-details-link">Edit Address</a>
+                    <a href="/account/address" className="ohs-details-link">Adresse bearbeiten</a>
                   </>
                 ) : (
                   <>
-                    <p className="ohs-details-empty">No Address Saved</p>
+                    <p className="ohs-details-empty">Keine Adresse gespeichert</p>
                     <p className="ohs-details-hint">
-                      Add a default shipping address for faster checkout.
+                      Füge eine Standard-Lieferadresse für schnelleres Bezahlen hinzu.
                     </p>
-                    <a href="/account/address" className="ohs-details-link">Add Address</a>
+                    <a href="/account/address" className="ohs-details-link">Adresse hinzufügen</a>
                   </>
                 )}
               </div>

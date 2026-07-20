@@ -43,7 +43,7 @@ export function AffiliateLoginForm() {
           padding: "12px 16px",
           marginBottom: "24px"
         }}>
-          Incorrect email or access code. Please try again.
+          Falsche E-Mail oder falscher Zugangscode. Bitte versuche es erneut.
         </div>
       )}
 
@@ -56,7 +56,7 @@ export function AffiliateLoginForm() {
           textTransform: "uppercase",
           color: "#2B2620"
         }}>
-          Email Address
+          E-Mail-Adresse
         </label>
         <input
           type="email"
@@ -87,7 +87,7 @@ export function AffiliateLoginForm() {
           textTransform: "uppercase",
           color: "#2B2620"
         }}>
-          Access Code
+          Zugangscode
         </label>
         <div style={{ position: "relative" }}>
           <input
@@ -129,7 +129,7 @@ export function AffiliateLoginForm() {
               textTransform: "uppercase"
             }}
           >
-            {showCode ? "Hide" : "Show"}
+            {showCode ? "Verbergen" : "Anzeigen"}
           </button>
         </div>
       </div>
@@ -152,7 +152,7 @@ export function AffiliateLoginForm() {
           marginTop: "8px"
         }}
       >
-        {loading ? "Checking..." : "Access Dashboard"}
+        {loading ? "Wird geprüft..." : "Dashboard aufrufen"}
       </button>
     </div>
   );

@@ -11,5 +11,6 @@ export async function POST(request: Request) {
   cookieStore.set("ohs_locale", locale, { path: "/", sameSite: "lax" });
   cookieStore.set("ohs_country", country, { path: "/", sameSite: "lax" });
 
-  redirect(returnTo.startsWith("/") && !returnTo.startsWith("//") ? returnTo : "/");
+  const cleanReturnTo = returnTo.replace(/^\/(de|en|es)\//, '/');
+  redirect(cleanReturnTo.startsWith("/") && !cleanReturnTo.startsWith("//") ? cleanReturnTo : "/");
 }
