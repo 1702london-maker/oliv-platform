@@ -1,0 +1,22 @@
+-- Update product titles to "Type – City" format per design brief
+update products set title = 'Tape Scraper – Wismar'             where slug = 'wismar';
+update products set title = 'Extension Scissors – Rügen'        where slug = 'ruegen';
+update products set title = 'Loop Needle – Usedom'              where slug = 'usedom';
+update products set title = 'Sectioning Clips – Anklam'         where slug = 'anklam';
+update products set title = 'Sewing Thread – Greifswald'        where slug = 'greifswald';
+update products set title = 'Gold Clips – Demmin'               where slug = 'demmin';
+update products set title = 'Extension Pliers – Parchim'        where slug = 'parchim';
+update products set title = 'Flat Iron – Ludwigslust'           where slug = 'ludwigslust';
+update products set title = 'Keratin Beads – Güstrow'           where slug = 'guestrow';
+update products set title = 'Styling Brush – Schwerin'          where slug = 'schwerin-brush';
+update products set title = 'K-Tips Remover – Neubrandenburg'   where slug = 'neubrandenburg';
+update products set title = 'Sewing Needle – Waren'             where slug = 'waren';
+update products set title = 'V-Comb – Rostock'                  where slug = 'rostock';
+update products set title = 'Claw Clip L – Stralsund'           where slug = 'stralsund';
+update products set title = 'Claw Clip S – Stavenhagen'         where slug = 'stavenhagen';
+update products set title = 'Styling Tool – Dessau'             where slug = 'dessau';
+update products set title = 'Styling Tool – Stuttgart'          where slug = 'stuttgart';
+update products set title = 'Styling Tool – Wolfsburg'          where slug = 'wolfsburg';
+update products set title = 'Styling Tool – Ulm'               where slug = 'ulm';
+update products set title = 'Styling Tool – Augsburg'           where slug = 'augsburg';
+update products set title = 'Styling Tool – Bochum'             where slug = 'bochum';

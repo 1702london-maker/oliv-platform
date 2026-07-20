@@ -24,7 +24,7 @@ export default async function ProductPage({ params }: PageProps) {
   const marker = '<main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">';
   const mainStart = shell.indexOf(marker);
   const footerStart = shell.indexOf("<!-- BEGIN sections: footer-group -->", mainStart);
-  const before = fixShellCartLinks(shell.slice(0, mainStart + marker.length));
+  const before = fixShellReturnTo(fixShellCartLinks(shell.slice(0, mainStart + marker.length)), `/products/${slug}`);
   const after = shell.slice(footerStart);
 
   return (
@@ -34,6 +34,10 @@ export default async function ProductPage({ params }: PageProps) {
       <div dangerouslySetInnerHTML={{ __html: after }} />
     </>
   );
+}
+
+function fixShellReturnTo(html: string, path: string) {
+  return html.replace(/name="return_to" value="[^"]*"/g, `name="return_to" value="${path}"`);
 }
 
 function fixShellCartLinks(html: string) {

@@ -84,11 +84,11 @@ export async function sendAppointmentConfirmationEmail(data: AppointmentEmailDat
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
         <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">${isDe ? "Buchungsübersicht" : "Booking Summary"}</p>
         <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;width:130px;">Service</td>
+          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;width:130px;">${isDe ? "Dienstleistung" : "Service"}</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.serviceName}</td></tr>
           <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Stylistin" : "Stylist"}</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.stylistName}</td></tr>
-          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">Store</td>
+          <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Salon" : "Store"}</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.locationName}</td></tr>
           <tr><td style="font-size:10px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:7px 0;">${isDe ? "Datum" : "Date"}</td>
               <td style="font-size:13px;color:#2B2620;padding:7px 0;">${data.dateLabel}</td></tr>
@@ -228,7 +228,7 @@ export async function sendAffiliateApprovalEmail({
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Your OlivHairSupply Affiliate Account is Approved",
+    subject: "Deine OlivHairSupply Affiliate-Bewerbung wurde genehmigt",
     html: `
 <!DOCTYPE html>
 <html>
@@ -237,49 +237,49 @@ export async function sendAffiliateApprovalEmail({
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">You&rsquo;re Approved</h1>
+      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">Du bist dabei</h1>
     </div>
     <div style="padding:36px 40px;">
-      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">Hi <strong>${displayName}</strong>,</p>
+      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">Hallo <strong>${displayName}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        Your affiliate application has been approved. Below are your login credentials for the affiliate dashboard.
-        Please save these — we will not send them again.
+        Deine Affiliate-Bewerbung wurde genehmigt. Unten findest du deine Zugangsdaten für das Affiliate-Dashboard.
+        Bitte speichere diese – wir senden sie nicht erneut zu.
       </p>
 
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
-        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Your Login Details</p>
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Deine Zugangsdaten</p>
         <table style="width:100%;border-collapse:collapse;">
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">Login URL</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">Login-URL</td>
             <td style="font-size:13px;color:#2B2620;padding:6px 0;">
               <a href="${siteUrl}/affiliate" style="color:#B68A45;">${siteUrl}/affiliate</a>
             </td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Email</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">E-Mail</td>
             <td style="font-size:13px;color:#2B2620;padding:6px 0;">${to}</td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Access Code</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Zugangscode</td>
             <td style="font-size:16px;font-weight:700;color:#2B2620;letter-spacing:0.12em;padding:6px 0;">${password}</td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Affiliate Code</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Affiliate-Code</td>
             <td style="font-size:16px;font-weight:700;color:#B68A45;letter-spacing:0.12em;padding:6px 0;">${code}</td>
           </tr>
         </table>
       </div>
 
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 8px;">
-        Your affiliate link: <a href="${siteUrl}/shop?ref=${code}" style="color:#B68A45;">${siteUrl}/shop?ref=${code}</a>
+        Dein Affiliate-Link: <a href="${siteUrl}/shop?ref=${code}" style="color:#B68A45;">${siteUrl}/shop?ref=${code}</a>
       </p>
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 28px;">
-        Share your affiliate code <strong>${code}</strong> with your audience for 5% off their order.
-        You earn commission on every sale.
+        Teile deinen Affiliate-Code <strong>${code}</strong> mit deiner Community – sie erhalten 5 % Rabatt auf ihre Bestellung
+        und du verdienst eine Provision für jeden Verkauf.
       </p>
 
       <a href="${siteUrl}/affiliate" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">
-        Log In to Dashboard
+        Zum Dashboard
       </a>
 
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
@@ -306,20 +306,20 @@ export async function sendAffiliateApplicationReceivedEmail({
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Affiliate Application Received - OlivHairSupply",
+    subject: "Bewerbung erhalten – OlivHairSupply Affiliate",
     html: applicationEmailTemplate({
       eyebrow: "OlivHairSupply Affiliate",
-      title: "Application Received",
-      greeting: `Hi ${displayName},`,
-      body: "Thank you for applying to the OlivHairSupply Affiliate Programme. Our team will review your application and contact you once your account is approved.",
+      title: "Bewerbung erhalten",
+      greeting: `Hallo ${displayName},`,
+      body: "Vielen Dank für deine Bewerbung beim OlivHairSupply Affiliate-Programm. Unser Team wird deine Bewerbung prüfen und sich bei dir melden, sobald dein Konto genehmigt wurde.",
       details: [
-        ["Email", to],
-        ["Affiliate Code", code],
-        ["Status", "Pending review"],
+        ["E-Mail", to],
+        ["Affiliate-Code", code],
+        ["Status", "In Prüfung"],
       ],
-      buttonLabel: "Visit Affiliate Page",
+      buttonLabel: "Zur Affiliate-Seite",
       buttonUrl: `${siteUrl}/affiliate`,
-      footer: "Approval emails include your dashboard access code after review."
+      footer: "Nach der Prüfung erhältst du eine E-Mail mit deinem Dashboard-Zugangscode."
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -336,20 +336,20 @@ export async function sendWholesaleApplicationReceivedEmail({
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Wholesale Application Received - OlivHairSupply",
+    subject: "Bewerbung erhalten – OlivHairSupply Großhandel",
     html: applicationEmailTemplate({
-      eyebrow: "OlivHairSupply Wholesale",
-      title: "Application Received",
-      greeting: `Hi ${businessName},`,
-      body: "Thank you for applying for an OlivHairSupply wholesale account. Our supply team will review your details and contact you once your wholesale access is approved.",
+      eyebrow: "OlivHairSupply Großhandel",
+      title: "Bewerbung erhalten",
+      greeting: `Hallo ${businessName},`,
+      body: "Vielen Dank für deine Bewerbung für ein OlivHairSupply Großhandels-Konto. Unser Team wird deine Angaben prüfen und sich bei dir melden, sobald dein Großhandelszugang genehmigt wurde.",
       details: [
-        ["Email", to],
-        ["Business", businessName],
-        ["Status", "Pending review"],
+        ["E-Mail", to],
+        ["Unternehmen", businessName],
+        ["Status", "In Prüfung"],
       ],
-      buttonLabel: "Visit Wholesale Page",
+      buttonLabel: "Zur Großhandels-Seite",
       buttonUrl: `${siteUrl}/wholesale`,
-      footer: "Approval emails include your wholesale portal access code after review."
+      footer: "Nach der Prüfung erhältst du eine E-Mail mit deinem Zugangscode für das Großhandelsportal."
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -506,19 +506,19 @@ export async function sendAccountCreatedEmail({
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Your OlivHairSupply Account is Ready",
+    subject: "Dein OlivHairSupply-Konto ist bereit",
     html: applicationEmailTemplate({
-      eyebrow: "OlivHairSupply Account",
-      title: "Account Created",
-      greeting: `Hi ${greetingName},`,
-      body: "Your OlivHairSupply account has been created. You can now sign in to view your account details, appointments, orders and saved information.",
+      eyebrow: "OlivHairSupply Konto",
+      title: "Konto erstellt",
+      greeting: `Hallo ${greetingName},`,
+      body: "Dein OlivHairSupply-Konto wurde erstellt. Du kannst dich jetzt anmelden, um deine Kontodaten, Termine, Bestellungen und gespeicherten Informationen einzusehen.",
       details: [
-        ["Email", to],
-        ["Status", "Active"],
+        ["E-Mail", to],
+        ["Status", "Aktiv"],
       ],
-      buttonLabel: "Sign In",
+      buttonLabel: "Jetzt anmelden",
       buttonUrl: `${siteUrl}/login`,
-      footer: "If you did not create this account, please contact OlivHairSupply support."
+      footer: "Wenn du dieses Konto nicht erstellt hast, wende dich bitte an den OlivHairSupply-Support."
     }),
   });
   if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
@@ -589,7 +589,7 @@ export async function sendWholesaleApprovalEmail({
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: "Your OlivHairSupply Wholesale Account is Approved",
+    subject: "Dein OlivHairSupply Großhandels-Konto wurde genehmigt",
     html: `
 <!DOCTYPE html>
 <html>
@@ -598,41 +598,41 @@ export async function sendWholesaleApprovalEmail({
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E2D5C0;">
     <div style="background:#2B2620;padding:32px 40px;">
       <p style="color:#B68A45;font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin:0 0 8px;">OlivHairSupply</p>
-      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">Wholesale Account Approved</h1>
+      <h1 style="color:#fff;font-size:28px;font-weight:300;margin:0;font-family:Georgia,serif;">Großhandels-Konto genehmigt</h1>
     </div>
     <div style="padding:36px 40px;">
-      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">Hi <strong>${businessName}</strong>,</p>
+      <p style="color:#2B2620;font-size:14px;margin:0 0 20px;">Hallo <strong>${businessName}</strong>,</p>
       <p style="color:#6B5C4E;font-size:13px;line-height:1.7;margin:0 0 28px;">
-        Your wholesale application has been approved. Below are your login credentials for the wholesale portal.
-        Please save these — we will not send them again.
+        Dein Großhandelsantrag wurde genehmigt. Unten findest du deine Zugangsdaten für das Großhandelsportal.
+        Bitte speichere diese – wir senden sie nicht erneut zu.
       </p>
 
       <div style="background:#FBF7F0;border:1px solid #E2D5C0;padding:24px 28px;margin-bottom:28px;">
-        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Your Login Details</p>
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B68A45;margin:0 0 16px;">Deine Zugangsdaten</p>
         <table style="width:100%;border-collapse:collapse;">
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">Login URL</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;width:120px;">Login-URL</td>
             <td style="font-size:13px;color:#2B2620;padding:6px 0;">
               <a href="${siteUrl}/wholesale" style="color:#B68A45;">${siteUrl}/wholesale</a>
             </td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Email</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">E-Mail</td>
             <td style="font-size:13px;color:#2B2620;padding:6px 0;">${to}</td>
           </tr>
           <tr>
-            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Access Code</td>
+            <td style="font-size:11px;color:#9B8878;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;padding:6px 0;">Zugangscode</td>
             <td style="font-size:16px;font-weight:700;color:#2B2620;letter-spacing:0.12em;padding:6px 0;">${password}</td>
           </tr>
         </table>
       </div>
 
       <p style="color:#6B5C4E;font-size:12px;line-height:1.7;margin:0 0 28px;">
-        Log in to access wholesale pricing, place orders and manage your account.
+        Melde dich an, um auf Großhandelspreise zuzugreifen, Bestellungen aufzugeben und dein Konto zu verwalten.
       </p>
 
       <a href="${siteUrl}/wholesale" style="display:inline-block;background:#2B2620;color:#fff;padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">
-        Log In to Wholesale Portal
+        Zum Großhandelsportal
       </a>
 
       <hr style="border:none;border-top:1px solid #E2D5C0;margin:36px 0 20px;">
