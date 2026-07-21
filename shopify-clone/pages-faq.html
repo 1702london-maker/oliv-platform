@@ -2210,16 +2210,51 @@ first.parentNode.insertBefore(script, first);
 }
 </style>
 
+<style>
+/* LANG TOGGLE */
+.ofaq-lang-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 40px;
+  background: #F6F1E8;
+  border-bottom: 1px solid #E3D6C5;
+  gap: 6px;
+}
+.ofaq-lang-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid transparent;
+  color: #9A8A7A;
+  cursor: pointer;
+  padding: 5px 12px;
+  transition: all 0.18s;
+}
+.ofaq-lang-btn.active { color: #2B2620; border-color: #2B2620; }
+.ofaq-lang-sep { color: #C5B89E; font-size: 12px; }
+@media (max-width: 640px) { .ofaq-lang-bar { padding: 10px 24px; } }
+</style>
+
 <div class="ofaq">
+
+  <div class="ofaq-lang-bar">
+    <button class="ofaq-lang-btn" id="ofaq-btn-en" onclick="ofaqSetLang('en')">EN</button>
+    <span class="ofaq-lang-sep">|</span>
+    <button class="ofaq-lang-btn" id="ofaq-btn-de" onclick="ofaqSetLang('de')">DE</button>
+  </div>
 
   <div class="ofaq-hero">
     <img class="ofaq-hero-img" src="/heroes/faq-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
     <div class="ofaq-hero-overlay"></div>
     <div class="ofaq-hero-inner">
-      <span class="ofaq-eyebrow">Hilfe-Center</span>
-      <h1 class="ofaq-hero-title">Häufig gestellte <em>Fragen</em></h1>
+      <span class="ofaq-eyebrow" data-en="Help Centre" data-de="Hilfe-Center">Hilfe-Center</span>
+      <h1 class="ofaq-hero-title" data-en="Frequently Asked <em>Questions</em>" data-de="Häufig gestellte <em>Fragen</em>">Häufig gestellte <em>Fragen</em></h1>
       <div class="ofaq-search-wrap">
-        <input class="ofaq-search" type="text" id="ofaq-search-input" placeholder="Fragen durchsuchen...">
+        <input class="ofaq-search" type="text" id="ofaq-search-input" data-placeholder-en="Search questions..." data-placeholder-de="Fragen durchsuchen..." placeholder="Fragen durchsuchen...">
         <div class="ofaq-search-icon"></div>
       </div>
     </div>
@@ -2228,260 +2263,424 @@ first.parentNode.insertBefore(script, first);
   <div class="ofaq-layout">
 
     <div class="ofaq-sidebar">
-      <span class="ofaq-sidebar-label">Kategorien</span>
+      <span class="ofaq-sidebar-label" data-en="Categories" data-de="Kategorien">Kategorien</span>
       <div class="ofaq-sidebar-cats">
-        <button class="ofaq-cat-btn active" data-cat="preise">Preise</button>
-        <button class="ofaq-cat-btn" data-cat="produkte">Produkte, Längen &amp; Farben</button>
-        <button class="ofaq-cat-btn" data-cat="termine">Termine &amp; Buchung</button>
-        <button class="ofaq-cat-btn" data-cat="flechtfrisuren">Flechtfrisuren</button>
-        <button class="ofaq-cat-btn" data-cat="nacharbeit">Nacharbeit &amp; Entfernung</button>
-        <button class="ofaq-cat-btn" data-cat="versand">Versand &amp; Bestellungen</button>
-        <button class="ofaq-cat-btn" data-cat="zahlung">Zahlung</button>
-        <button class="ofaq-cat-btn" data-cat="standorte">Standorte &amp; Öffnungszeiten</button>
-        <button class="ofaq-cat-btn" data-cat="pflege">Pflege</button>
-        <button class="ofaq-cat-btn" data-cat="zubehoer">Stylinggeräte, Zubehör &amp; Friseurbedarf</button>
+        <button class="ofaq-cat-btn active" data-cat="preise" data-en="Pricing" data-de="Preise">Preise</button>
+        <button class="ofaq-cat-btn" data-cat="produkte" data-en="Products, Lengths &amp; Colours" data-de="Produkte, Längen &amp; Farben">Produkte, Längen &amp; Farben</button>
+        <button class="ofaq-cat-btn" data-cat="termine" data-en="Appointments &amp; Booking" data-de="Termine &amp; Buchung">Termine &amp; Buchung</button>
+        <button class="ofaq-cat-btn" data-cat="flechtfrisuren" data-en="Braids &amp; Plaited Styles" data-de="Braids &amp; Flechtfrisuren">Braids &amp; Flechtfrisuren</button>
+        <button class="ofaq-cat-btn" data-cat="nacharbeit" data-en="Refit &amp; Removal" data-de="Hochsetzen &amp; Entfernen">Hochsetzen &amp; Entfernen</button>
+        <button class="ofaq-cat-btn" data-cat="versand" data-en="Shipping &amp; Orders" data-de="Versand &amp; Bestellungen">Versand &amp; Bestellungen</button>
+        <button class="ofaq-cat-btn" data-cat="zahlung" data-en="Payment" data-de="Zahlung">Zahlung</button>
+        <button class="ofaq-cat-btn" data-cat="standorte" data-en="Locations &amp; Hours" data-de="Standorte &amp; Öffnungszeiten">Standorte &amp; Öffnungszeiten</button>
+        <button class="ofaq-cat-btn" data-cat="pflege" data-en="Hair Care" data-de="Pflege">Pflege</button>
+        <button class="ofaq-cat-btn" data-cat="zubehoer" data-en="Tools, Accessories &amp; Salon Supplies" data-de="Stylinggeräte, Zubehör &amp; Friseurbedarf">Stylinggeräte, Zubehör &amp; Friseurbedarf</button>
       </div>
     </div>
 
     <div class="ofaq-content">
 
       <div id="ofaq-no-results" class="ofaq-no-results" style="display:none;">
-        <p class="ofaq-no-results-text">Keine Ergebnisse gefunden. Bitte versuche einen anderen Suchbegriff.</p>
+        <p class="ofaq-no-results-text" data-en="No results found. Please try a different search term." data-de="Keine Ergebnisse gefunden. Bitte versuche einen anderen Suchbegriff.">Keine Ergebnisse gefunden. Bitte versuche einen anderen Suchbegriff.</p>
       </div>
 
-      <!-- KATEGORIE 1: PREISE -->
+      <!-- CATEGORY 1: PRICING -->
       <div class="ofaq-section visible" data-section="preise">
-        <h2 class="ofaq-section-title">Preise</h2>
+        <h2 class="ofaq-section-title" data-en="Pricing" data-de="Preise">Preise</h2>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie werden eure Preise berechnet?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Unsere Preise setzen sich aus zwei Teilen zusammen – Haar und Einarbeitung. 1. Das Haar – verkauft in Paketen: Bizihair (50 g pro Paket) und BiziLuxe (25 g pro Paket). Der Preis hängt von Länge und Farbe ab (Blond/Farbig +10 € pro Paket). 2. Die Einarbeitung (Service) – abhängig von Methode und Menge. Die aktuellen Haarpreise findest du direkt in unserem Online-Shop – und bei der Terminbuchung kannst du einfach das passende Haar hinzufügen.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Was kostet die Einarbeitung?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p><strong>Weft-Nähen:</strong> ab €40 pro Reihe (klassisch) oder €35 pro Reihe mit Knoten oder Microrings. <strong>Brazilian Methode:</strong> €170 (100 g), €210 (150 g), €250 (200 g). <strong>Tape-Einarbeitung:</strong> ab €35 (20 Stück) bis €130 (80 Stück). <strong>Bondings / Microring Einzelsträhnen:</strong> €90 (50 Strähnen) bis €290 (200 Strähnen).</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Ich habe eigene Extensions – könnt ihr diese einarbeiten?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja, das machen wir! Du bezahlst dann nur die Einarbeitung – der Preis hängt von der gewählten Methode und der Gesamtmenge ab. Bei der Online-Buchung kannst du einfach auswählen, ob du nur den Service oder auch das Haar benötigst.</p></div>
-        </div>
-      </div>
-
-      <!-- KATEGORIE 2: PRODUKTE, LÄNGEN & FARBEN -->
-      <div class="ofaq-section" data-section="produkte">
-        <h2 class="ofaq-section-title">Produkte, Längen &amp; Farben</h2>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Welche Methoden bietet ihr an?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Wir bieten Wefts (eingenäht, mit Knoten oder Microrings), Brazilian Methode, Tape-ins, Keratin Bondings, Microring Einzelsträhnen, Clip-ins und Pferdeschwänze – sowie Flechtfrisuren, Crochet, Full Weave und geflochtene Stile.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Welche Methode ist die beste für mein Haar?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Das ist individuell – es hängt von deiner Haarstruktur, Haardichte und dem gewünschten Ergebnis ab. Genau dafür ist unsere kostenlose Beratung da: Komm einfach ohne Termin vorbei, wir schauen uns dein Haar an und empfehlen die passende Methode. Alternativ kannst du uns auch ein Foto per DM schicken.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Welche Längen sind erhältlich?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Je nach Produktlinie sind Längen von 40 bis 65 cm erhältlich.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie viele Gramm brauche ich?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Als Faustregel gilt: Bei feinem, dünnem Haar empfehlen wir 100–150 g, bei dickem Haar 200 g oder mehr. Die genaue Menge hängt von deiner Haardichte und der gewünschten Länge ab – je länger, desto mehr Volumen benötigst du für schöne, volle Enden. In der Beratung sagen wir dir genau, wie viel du brauchst.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Habt ihr meine Haarfarbe?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Wir führen Farbtöne von Tiefschwarz bis zu verschiedenen Blond- und Highlight-Tönen (u. a. Highlights 8/22, Silver, Ice, Mint, 613 Platinum Blond). Komm für eine Farbberatung vorbei und wir gleichen die Farbe mit deinem eigenen Haar ab – oder schick uns ein Foto per DM.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Ist euer Haar echtes Menschenhaar?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja. Alle Extensions aus unserer BiziHair- und BiziLuxe-Kollektion sind aus 100 % Remy Echthaar. Remy Haar ist die höchste Qualitätsstufe – die Haarschuppenschicht zeigt einheitlich in dieselbe Richtung, dadurch bewegt sich das Haar natürlich, verfilzt weniger und behält seinen Luxus-Look deutlich länger.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie lange halten die Extensions?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Mit guter Pflege hält dunkles Haar in der Regel länger als ein Jahr, blondes Haar ungefähr bis zu einem Jahr. Die Haltbarkeit hängt immer davon ab, wie sorgfältig das Haar gepflegt wird.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Kann ich das Haar auch ohne Einarbeitung kaufen?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja – alles Haar ist auch einzeln zum Pack-Preis erhältlich, im Salon und online.</p></div>
-        </div>
-      </div>
-
-      <!-- KATEGORIE 3: TERMINE & BUCHUNG -->
-      <div class="ofaq-section" data-section="termine">
-        <h2 class="ofaq-section-title">Termine &amp; Buchung</h2>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Brauche ich einen Termin für eine Beratung?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Nein! Du kannst jederzeit ohne Termin vorbeikommen. Wir schauen uns dein Haar an, besprechen die passende Methode und zeigen dir Farben und Längen direkt vor Ort.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie buche ich einen Termin?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Am einfachsten geht es online über unsere Website <a href="/appointments" style="color:#B68A45;">olivhairsupply.de</a>. Du kannst bis zu 8 Services pro Buchung auswählen.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie lange dauert ein Termin?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p><strong>Weft-Nähen:</strong> 30 Min–2 Std (1–5 Reihen) · <strong>Brazilian Methode:</strong> 2–4 Std (je nach Gramm) · <strong>Tape-Einarbeitung:</strong> 30 Min–1 Std · <strong>Tape-Erneuerung:</strong> 2–4 Std · <strong>Bondings / Microrings:</strong> 1–4 Std je nach Strängeanzahl · <strong>Braids:</strong> ca. 6 Std · <strong>Micro Braids:</strong> 45 Min–1 Std</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Kann ich meinen Termin verschieben oder absagen?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja, du kannst deinen Termin bis zu 24 Stunden vorher kostenlos verschieben oder absagen.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Soll ich mit frisch gewaschenem Haar kommen?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja – bitte wasche dein Haar mit <strong>nur Shampoo, ohne Conditioner und ohne Haarmaske</strong>. Das sorgt dafür, dass die Einarbeitung optimal hält, da fettiges oder mit Conditioner beschichtetes Haar dazu führen kann, dass die Extensions schneller herausrutschen. Das gilt nur für den Tag der Einarbeitung – danach kannst du wie gewohnt Shampoo und Conditioner verwenden.</p></div>
-        </div>
-      </div>
-
-      <!-- KATEGORIE 4: FLECHTFRISUREN -->
-      <div class="ofaq-section" data-section="flechtfrisuren">
-        <h2 class="ofaq-section-title">Flechtfrisuren &amp; Geflochtene Stile</h2>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Was kosten Flechtfrisuren &amp; geflochtene Stile?</span><div class="ofaq-q-icon"></div></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How is your pricing structured?" data-de="Wie setzen sich eure Preise zusammen?">Wie setzen sich eure Preise zusammen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
           <div class="ofaq-a">
-            <p><strong>Braids:</strong> €290 · <strong>Offene Braids:</strong> €290 · <strong>Dünne Braids:</strong> €380 · <strong>Micro-/Million Braids:</strong> €600</p>
-            <p><strong>Braids für Kinder</strong> (bis 10 Jahre): €220</p>
-            <p><strong>Boxer Braids:</strong> €60 (2 Braids), €75 (4 Strähnen), €95 (6 Strähnen)</p>
-            <p><strong>Cornrows:</strong> ab €50 · <strong>Crochet:</strong> €270 (inkl. Haar) / €240 (ohne Haar)</p>
-            <p><strong>Full Weave</strong> (mit/ohne Closure): €140 · <strong>Feed-in Pferdeschwanz:</strong> ab €230 · <strong>Feed-in Braids mit Rastas:</strong> €250</p>
+            <p data-en="Our prices have two parts — hair and installation. 1. <strong>Hair</strong> — sold in packs: Bizihair (50 g per pack) and BiziLuxe (25 g per pack). Price depends on length and colour (blonde/coloured +€10 per pack). 2. <strong>Installation (service)</strong> — depends on the method and quantity. Current hair prices are in our online shop — when booking you can simply add the right hair to your appointment." data-de="Bei uns werden Haare und Einarbeitung getrennt berechnet: 1. <strong>Die Haare</strong> – verkauft in Paketen: Bizihair (50 g pro Paket) und BiziLuxe (25 g pro Paket). Der Preis hängt von Länge und Farbe ab (Blond/Farbig +10 € pro Paket). 2. <strong>Die Einarbeitung (Service)</strong> – je nach Methode und Menge. Die aktuellen Haarpreise findest du direkt in unserem Online-Shop – bei der Terminbuchung kannst du die passenden Haare einfach mit dazubuchen.">Bei uns werden Haare und Einarbeitung getrennt berechnet: 1. <strong>Die Haare</strong> – Bizihair (50 g) und BiziLuxe (25 g). 2. <strong>Die Einarbeitung</strong> – je nach Methode und Menge.</p>
           </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie lange dauern Flechtfrisuren?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Braids: ca. 6 Std · Dünne Braids: ca. 6 Std · Micro-/Million Braids: ca. 9 Std · Kinderbraids: ca. 3 Std · Boxer Braids: 45 Min–1 Std · Cornrows: ca. 45 Min · Crochet: ca. 2,5–3 Std.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="What does installation cost?" data-de="Was kostet die Einarbeitung?">Was kostet die Einarbeitung?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="<strong>Weft sewing:</strong> from €40/row (classic) or €35/row with knots or microrings. <strong>Brazilian method:</strong> €170 (100 g), €210 (150 g), €250 (200 g). <strong>Tape application:</strong> from €35 (20 pcs) to €130 (80 pcs). <strong>Bondings / microring singles:</strong> €90 (50 strands) to €290 (200 strands)." data-de="<strong>Tressen einnähen:</strong> ab 40 € pro Reihe (klassisch) bzw. 35 € pro Reihe mit Knoten oder Microrings. <strong>Brasilianische Methode:</strong> 170 € (100 g), 210 € (150 g), 250 € (200 g). <strong>Tapes einsetzen:</strong> ab 35 € (20 Stück) bis 130 € (80 Stück). <strong>Bondings / Microring-Einzelsträhnen:</strong> 90 € (50 Strähnen) bis 290 € (200 Strähnen)."><strong>Tressen einnähen:</strong> ab 40 € pro Reihe. <strong>Brasilianische Methode:</strong> 170–250 €. <strong>Tapes:</strong> ab 35 €. <strong>Bondings / Microrings:</strong> 90–290 €.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="I have my own extensions — can you install them?" data-de="Ich habe schon eigene Extensions – setzt ihr die auch ein?">Ich habe schon eigene Extensions – setzt ihr die auch ein?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes! If you already have hair extensions you're happy with, bring them along. You only pay for the installation — the price depends on the method and total quantity. When booking online you can select service-only or add our hair." data-de="Ja, das machen wir! Wenn du bereits eigene Haar-Extensions hast, kannst du sie gerne mitbringen. Du zahlst dann nur die Einarbeitung. Bei der Online-Terminbuchung kannst du direkt wählen, ob du nur den Service buchst oder unsere Extensions dazunimmst.">Ja! Bring deine Extensions einfach mit – du zahlst nur die Einarbeitung.</p>
+          </div>
         </div>
       </div>
 
-      <!-- KATEGORIE 5: NACHARBEIT & ENTFERNUNG -->
+      <!-- CATEGORY 2: PRODUCTS -->
+      <div class="ofaq-section" data-section="produkte">
+        <h2 class="ofaq-section-title" data-en="Products, Lengths &amp; Colours" data-de="Produkte, Längen &amp; Farben">Produkte, Längen &amp; Farben</h2>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Which methods do you offer?" data-de="Welche Methoden bietet ihr an?">Welche Methoden bietet ihr an?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Wefts/weft sewing (classic, knots or microrings), Brazilian method, tape-ins, keratin bondings, microring singles, clip-ins and ponytails — plus braids, crochet, full weave and plaited styles." data-de="Tressen/Wefts (einnähen, mit Knoten oder Microrings), brasilianische Methode, Tape-Ins, Keratin-Bondings, Microring-Einzelsträhnen, Clip-Ins und Ponytails – dazu Braids, Crochet, Full Weave und Flechtfrisuren.">Tressen/Wefts, brasilianische Methode, Tape-Ins, Keratin-Bondings, Microring-Einzelsträhnen, Clip-Ins, Ponytails, Braids, Crochet und Full Weave.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Which method is best for my hair?" data-de="Welche Methode ist die beste für mein Haar?">Welche Methode ist die beste für mein Haar?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="That depends on your hair structure, volume and desired result — which is exactly what our free consultation is for. Simply walk in, we'll assess your hair and recommend the right method. Or send us a photo via DM." data-de="Das ist individuell verschieden – die beste Methode hängt von deiner Haarstruktur, deinem Haarvolumen und dem gewünschten Ergebnis ab. Genau dafür ist unsere kostenlose Beratung da: Komm einfach ohne Termin vorbei. Alternativ kannst du uns auch ein Foto per DM schicken.">Individuell verschieden – komm einfach ohne Termin zur kostenlosen Beratung vorbei.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="What lengths are available?" data-de="Welche Längen gibt es?">Welche Längen gibt es?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Depending on the product line, lengths range from 40 to 65 cm." data-de="Je nach Produktlinie von 40 bis 65 cm.">Je nach Produktlinie von 40 bis 65 cm.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How many grams do I need?" data-de="Wie viel Gramm brauche ich?">Wie viel Gramm brauche ich?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="As a rule: fine/thin hair needs 100–150 g, thick hair 200 g or more. The exact amount depends on your hair volume and desired length — the longer, the more you need for full ends. We'll tell you exactly in your consultation." data-de="Als Faustregel: Bei feinem, dünnem Haar empfehlen wir 100–150 g, bei dickem Haar 200 g oder mehr. Die genaue Menge hängt von Haarvolumen und Wunschlänge ab – je länger, desto mehr Volumen brauchst du für volle Spitzen. In der Beratung sagen wir dir genau, wie viel du brauchst.">Feines Haar: 100–150 g. Dickes Haar: 200 g oder mehr. Wir beraten dich gerne.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Do you have my hair colour?" data-de="Habt ihr meine Haarfarbe?">Habt ihr meine Haarfarbe?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="We stock shades from jet black through brunette to various blonde and highlight tones (including Highlights 8/22, Silver, Ice, Mint, 613 Platinum Blonde). Come in for a colour consultation and we'll match directly — or send us a photo via DM." data-de="Wir führen Farbtöne von Jet Black über Braun bis zu verschiedenen Blond- und Highlight-Tönen (u. a. Highlights 8/22, Silver, Ice, Mint, 613 Platinblond). Komm zur Beratung und vergleiche die Farben direkt an deinem Haar – oder schick uns ein Foto per DM.">Von Jet Black bis Platinblond, inkl. Highlights 8/22, Silver, Ice, Mint, 613. Komm für einen Farbvergleich vorbei.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Is your hair real human hair?" data-de="Sind eure Haare Echthaar?">Sind eure Haare Echthaar?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes — 100% premium human hair. The cuticle layer is uniformly aligned (cuticle-aligned) and the hair is specially sorted so it lasts significantly longer. You can treat it just like your own hair." data-de="Ja, 100 % Echthaar in höchster Qualität: Die Schuppenschicht (Cuticula) ist gleichmäßig ausgerichtet (cuticle aligned) und die Haare werden speziell sortiert, damit sie besonders lange halten. Du kannst sie grundsätzlich wie dein eigenes Haar behandeln.">Ja – 100 % Echthaar mit ausgerichteter Schuppenschicht (cuticle aligned) für maximale Haltbarkeit.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Is your hair coated with silicone?" data-de="Sind eure Haare mit Silikon beschichtet?">Sind eure Haare mit Silikon beschichtet?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="No. Our hair is not silicone-coated to artificially create softness or shine. We rely on premium human hair that speaks for itself — with the right care and regular moisture it maintains its look without any temporary coating." data-de="Nein. Unsere Haare sind nicht mit Silikon beschichtet, um künstlich Weichheit oder Glanz zu erzeugen. Mit der richtigen Pflege und regelmäßiger Feuchtigkeitsversorgung behalten unsere Extensions ihr schönes Aussehen – ganz ohne vorübergehende Silikonbeschichtung.">Nein – keine Silikonbeschichtung. Hochwertiges Echthaar, das für sich selbst spricht.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How long do the extensions last?" data-de="Wie lange halten die Extensions?">Wie lange halten die Extensions?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="With good care, dark hair typically lasts over a year; blonde hair up to approximately one year. Longevity always depends on how well the hair is treated and maintained." data-de="Dunkle Haare halten bei guter Pflege länger als ein Jahr, blonde Haare ca. bis zu einem Jahr. Die Haltbarkeit hängt immer davon ab, wie die Haare behandelt und gepflegt werden.">Dunkel: über 1 Jahr. Blond: ca. 1 Jahr. Hängt von der Pflege ab.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Can I buy hair without installation?" data-de="Kann ich Haare auch nur kaufen (ohne Einarbeitung)?">Kann ich Haare auch nur kaufen (ohne Einarbeitung)?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes — all hair is available to buy individually at pack prices, in-salon and online." data-de="Ja – alle Haare gibt es auch einzeln zu den Paketpreisen, im Laden oder online.">Ja – im Salon oder online zu den Paketpreisen.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY 3: APPOINTMENTS -->
+      <div class="ofaq-section" data-section="termine">
+        <h2 class="ofaq-section-title" data-en="Appointments &amp; Booking" data-de="Termine &amp; Buchung">Termine &amp; Buchung</h2>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Do I need an appointment for a consultation?" data-de="Brauche ich für eine Beratung einen Termin?">Brauche ich für eine Beratung einen Termin?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="No! Just walk in. We'll assess your hair, discuss the right method and you can see colours and lengths in person." data-de="Nein! Für eine Beratung kannst du einfach ohne Termin vorbeikommen. Wir schauen uns dein Haar an, besprechen die passende Methode und du kannst Farben und Längen direkt vor Ort sehen.">Nein! Einfach ohne Termin vorbeikommen.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How do I book an appointment?" data-de="Wie buche ich einen Termin?">Wie buche ich einen Termin?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="The easiest way is online via <a href='/appointments' style='color:#B68A45;'>olivhairsupply.de</a>. Up to 8 services can be selected per booking." data-de="Am einfachsten online über unsere Website <a href='/appointments' style='color:#B68A45;'>olivhairsupply.de</a>. Pro Buchung können bis zu 8 Services ausgewählt werden.">Am einfachsten online über <a href="/appointments" style="color:#B68A45;">olivhairsupply.de</a>.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How long does an appointment take?" data-de="Wie lange dauert ein Termin?">Wie lange dauert ein Termin?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="<strong>Weft sewing:</strong> 30 min–2 hrs (1–5 rows) · <strong>Brazilian method:</strong> 2–4 hrs · <strong>Tape application:</strong> 30 min–1 hr · <strong>Tape renewal:</strong> 2–4 hrs · <strong>Bondings/microrings:</strong> 1–4 hrs · <strong>Braids:</strong> ~6 hrs · <strong>Micro Braids:</strong> ~9 hrs · <strong>Boxer Braids:</strong> 45 min–1 hr" data-de="<strong>Tressen einnähen:</strong> 30 Min–2 Std (1–5 Reihen) · <strong>Brasilianische Methode:</strong> 2–4 Std · <strong>Tapes einsetzen:</strong> 30 Min–1 Std · <strong>Tapes erneuern:</strong> 2–4 Std · <strong>Bondings/Microrings:</strong> 1–4 Std · <strong>Braids:</strong> ca. 6 Std · <strong>Micro Braids:</strong> ca. 9 Std · <strong>Boxer Braids:</strong> 45 Min–1 Std"><strong>Tressen:</strong> 30 Min–2 Std · <strong>Brazilian:</strong> 2–4 Std · <strong>Tapes:</strong> 30 Min–1 Std · <strong>Braids:</strong> ca. 6 Std</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Can I reschedule or cancel my appointment?" data-de="Kann ich meinen Termin verschieben oder absagen?">Kann ich meinen Termin verschieben oder absagen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes — you can reschedule or cancel free of charge up to 24 hours before your appointment." data-de="Ja, du kannst deinen Termin bis 24 Stunden vorher kostenlos verschieben oder absagen.">Ja – kostenlos bis 24 Stunden vorher.</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Should I come with freshly washed hair?" data-de="Soll ich mit frisch gewaschenen Haaren zum Termin kommen?">Soll ich mit frisch gewaschenen Haaren zum Termin kommen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes — please wash your hair with <strong>shampoo only, no conditioner and no hair mask</strong>. This ensures the installation holds firmly. Greasy or conditioner-coated hair can cause extensions to slip later. This applies only on the day of installation — after that, use shampoo and conditioner as normal." data-de="Ja, bitte komm mit frisch gewaschenen Haaren – aber wasche sie nur mit <strong>Shampoo, ohne Conditioner und ohne Haarmaske</strong>. So sitzt die Einarbeitung fest. Das gilt nur für den Tag der Einarbeitung – danach gehören Shampoo und Conditioner zur normalen Pflege.">Ja – nur mit <strong>Shampoo, ohne Conditioner und ohne Haarmaske</strong>. Das gilt nur für den Tag der Einarbeitung.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY 4: BRAIDS -->
+      <div class="ofaq-section" data-section="flechtfrisuren">
+        <h2 class="ofaq-section-title" data-en="Braids &amp; Plaited Styles" data-de="Braids &amp; Flechtfrisuren">Braids &amp; Flechtfrisuren</h2>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How much do braids &amp; plaited styles cost?" data-de="Was kosten Braids &amp; Flechtfrisuren?">Was kosten Braids &amp; Flechtfrisuren?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="<strong>Braids / Open Braids:</strong> €290 · <strong>Thin Braids:</strong> €380 · <strong>Micro / Million Braids:</strong> €600<br><strong>Children's Braids</strong> (up to age 10): €220<br><strong>Boxer Braids:</strong> €60 (2 braids), €75 (4 strands), €95 (6 strands)<br><strong>Cornrows:</strong> from €50 · <strong>Crochet:</strong> €270 (incl. hair) / €240 (without hair)<br><strong>Full Weave</strong> (with/without closure): €140 · <strong>Feed-in Ponytail:</strong> from €230 · <strong>Feed-in Braids with Rastas:</strong> €250" data-de="<strong>Braids / Open Braids:</strong> 290 € · <strong>Dünne Braids:</strong> 380 € · <strong>Micro / Million Braids:</strong> 600 €<br><strong>Braids für Kinder</strong> (bis 10 Jahre): 220 €<br><strong>Boxer Braids:</strong> 60 € (2 Zöpfe), 75 € (4 Strähnen), 95 € (6 Strähnen)<br><strong>Cornrows:</strong> ab 50 € · <strong>Crochet:</strong> 270 € (all inclusive) / 240 € (ohne Haare)<br><strong>Full Weave</strong> (mit/ohne Closure): 140 € · <strong>Feed-In Ponytail:</strong> ab 230 € · <strong>Feed-In Braids mit Rastas:</strong> 250 €"><strong>Braids:</strong> 290 € · <strong>Dünne Braids:</strong> 380 € · <strong>Micro Braids:</strong> 600 € · <strong>Kinder:</strong> 220 € · <strong>Boxer Braids:</strong> ab 60 € · <strong>Cornrows:</strong> ab 50 € · <strong>Crochet:</strong> 270 € · <strong>Full Weave:</strong> 140 € · <strong>Feed-In Ponytail:</strong> ab 230 €</p>
+          </div>
+        </div>
+
+        <div class="ofaq-item">
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How long do braids take?" data-de="Wie lange dauern Braids?">Wie lange dauern Braids?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Braids: ~6 hrs · Thin Braids: ~6 hrs · Micro/Million Braids: ~9 hrs · Children's Braids: ~3 hrs · Boxer Braids: 45 min–1 hr · Cornrows: ~45 min · Crochet: ~2.5–3 hrs" data-de="Braids: ca. 6 Std · Dünne Braids: ca. 6 Std · Micro/Million Braids: ca. 9 Std · Kinderbraids: ca. 3 Std · Boxer Braids: 45 Min–1 Std · Cornrows: ca. 45 Min · Crochet: ca. 2,5–3 Std">Braids: ca. 6 Std · Micro Braids: ca. 9 Std · Kinder: ca. 3 Std · Boxer Braids: 45 Min–1 Std · Crochet: ca. 2,5–3 Std</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY 5: REFIT & REMOVAL -->
       <div class="ofaq-section" data-section="nacharbeit">
-        <h2 class="ofaq-section-title">Nacharbeit &amp; Entfernung</h2>
+        <h2 class="ofaq-section-title" data-en="Refit &amp; Removal" data-de="Hochsetzen &amp; Entfernen">Hochsetzen &amp; Entfernen</h2>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie oft brauche ich eine Nacharbeit (Refit)?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p><strong>Wefts, Microring-Wefts und Tapes:</strong> alle 6 Wochen erneuern · <strong>Bondings und Brazilian Methode:</strong> alle 3 Monate. Bitte halte diese Intervalle ein – das Tragen von Extensions über längere Zeit ohne Refit kann dein natürliches Haar schädigen.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How often do I need a refit?" data-de="Wie oft muss ich zum Hochsetzen kommen?">Wie oft muss ich zum Hochsetzen kommen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="<strong>Wefts, microring wefts and tapes:</strong> renew every 6 weeks · <strong>Bondings and Brazilian method:</strong> every 3 months. Please keep to these intervals — wearing extensions for longer without a refit can damage your natural hair." data-de="<strong>Tressen, Microring-Wefts und Tapes:</strong> alle 6 Wochen erneuern · <strong>Bondings und brasilianische Methode:</strong> alle 3 Monate. Bitte halte diese Abstände ein – bei längerem Tragen ohne Erneuerung kann dein Eigenhaar geschädigt werden."><strong>Tressen/Tapes:</strong> alle 6 Wochen · <strong>Bondings/Brazilian:</strong> alle 3 Monate</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Was kostet ein Refit (Verschieben / Move-up)?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p><strong>Weft-Refit:</strong> €35 pro Reihe · <strong>Tape-Erneuerung:</strong> €70 (20 Stück), €130 (40 Stück), €175 (60 Stück), €220 (80–100 Stück).</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="What does a refit cost?" data-de="Was kostet das Hochsetzen?">Was kostet das Hochsetzen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="<strong>Weft refit:</strong> €35/row · <strong>Tape renewal:</strong> €70 (20 pcs), €130 (40 pcs), €175 (60 pcs), €220 (80–100 pcs)." data-de="<strong>Tressen hochsetzen:</strong> 35 € pro Reihe · <strong>Tapes erneuern:</strong> 70 € (20 Stück), 130 € (40 Stück), 175 € (60 Stück), 220 € (80–100 Stück)."><strong>Tressen:</strong> 35 € pro Reihe · <strong>Tapes:</strong> 70–220 €</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Was kostet die Entfernung von Extensions?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Je nach Art und Menge deiner Extensions: · Weft-Entfernung: ab €10 · Tape-Entfernung: ab €30 · Bondings &amp; Brazilian Knoten-Entfernung: ab €40. Bei größeren Mengen steigt der Preis entsprechend.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="What does removal cost?" data-de="Was kostet das Entfernen von Extensions?">Was kostet das Entfernen von Extensions?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Depends on the type and amount: <strong>Weft removal:</strong> from €10 · <strong>Tape removal:</strong> from €30 · <strong>Bondings &amp; Brazilian removal:</strong> from €40. Price increases with larger quantities." data-de="Das hängt von der Art und Menge ab: <strong>Tressen/Wefts entfernen:</strong> ab 10 € · <strong>Tapes entfernen:</strong> ab 30 € · <strong>Bondings &amp; brasilianische Knoten:</strong> ab 40 €. Bei größeren Mengen erhöht sich der Preis entsprechend."><strong>Tressen:</strong> ab 10 € · <strong>Tapes:</strong> ab 30 € · <strong>Bondings/Brazilian:</strong> ab 40 €</p>
+          </div>
         </div>
       </div>
 
-      <!-- KATEGORIE 6: VERSAND & BESTELLUNGEN -->
+      <!-- CATEGORY 6: SHIPPING -->
       <div class="ofaq-section" data-section="versand">
-        <h2 class="ofaq-section-title">Versand &amp; Bestellungen</h2>
+        <h2 class="ofaq-section-title" data-en="Shipping &amp; Orders" data-de="Versand &amp; Bestellungen">Versand &amp; Bestellungen</h2>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Versendet ihr Haar?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja, wir versenden innerhalb Deutschlands und international. Lagerware wird sofort nach Zahlungseingang verschickt und kommt in der Regel innerhalb von 2–3 Werktagen an. Die Versandkosten richten sich nach den aktuellen DHL-Tarifen für deinen Standort und werden beim Checkout angezeigt.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie lange dauert die Lieferung?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Innerhalb Deutschlands in der Regel 2–3 Werktage nach Versand. International kann die Lieferzeit je nach Zielland variieren.</p></div>
-        </div>
-
-        <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Kann ich meine Bestellung verfolgen?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja, du erhältst nach dem Versand eine Bestätigungs-E-Mail mit deiner DHL-Sendungsverfolgungsnummer.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Do you ship hair?" data-de="Verschickt ihr auch Haare?">Verschickt ihr auch Haare?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes — we ship within Germany and internationally. In-stock items are dispatched immediately after payment and typically arrive within 2–3 business days. Shipping costs follow current DHL rates for your location and are shown at checkout." data-de="Ja, wir versenden innerhalb Deutschlands und auch ins Ausland. Produkte, die auf Lager sind, werden sofort nach Zahlungseingang verschickt und kommen in der Regel innerhalb von 2–3 Werktagen bei dir an. Die Versandkosten richten sich nach den aktuellen DHL-Tarifen.">Ja – Deutschland und international. In der Regel 2–3 Werktage. DHL-Versandkosten werden beim Checkout angezeigt.</p>
+          </div>
         </div>
       </div>
 
-      <!-- KATEGORIE 7: ZAHLUNG -->
+      <!-- CATEGORY 7: PAYMENT -->
       <div class="ofaq-section" data-section="zahlung">
-        <h2 class="ofaq-section-title">Zahlung</h2>
+        <h2 class="ofaq-section-title" data-en="Payment" data-de="Zahlung">Zahlung</h2>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie kann ich bezahlen?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Per Karte, PayPal, Banküberweisung oder bar.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How can I pay?" data-de="Wie kann ich bezahlen?">Wie kann ich bezahlen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="By card, PayPal, bank transfer or cash." data-de="Mit Karte, PayPal, Überweisung oder bar.">Mit Karte, PayPal, Überweisung oder bar.</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Muss ich eine Anzahlung leisten?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Für reguläre Terminbuchungen ist keine Anzahlung erforderlich. Eine Anzahlung fällt nur bei Sonderbestellungen an – z. B. bei Farben oder Längen, die speziell für dich bestellt werden müssen.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Do I need to pay a deposit?" data-de="Muss ich eine Anzahlung leisten?">Muss ich eine Anzahlung leisten?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="No deposit is needed for regular bookings. A deposit is only required for special orders — colours or lengths that need to be produced specifically for you." data-de="Für normale Terminbuchungen ist keine Anzahlung nötig. Eine Anzahlung fällt nur bei Sonderbestellungen an – bei Farben oder Längen, die speziell für dich produziert werden müssen.">Keine Anzahlung für normale Buchungen. Nur bei Sonderbestellungen.</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Bietet ihr Ratenzahlung an?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja, Ratenzahlung ist ausschließlich über PayPal möglich.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Is instalment payment available?" data-de="Gibt es Ratenzahlung?">Gibt es Ratenzahlung?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes — instalment payment is available exclusively via PayPal." data-de="Ja, Ratenzahlung ist ausschließlich über PayPal möglich.">Ja – ausschließlich über PayPal.</p>
+          </div>
         </div>
       </div>
 
-      <!-- KATEGORIE 8: STANDORTE & ÖFFNUNGSZEITEN -->
+      <!-- CATEGORY 8: LOCATIONS -->
       <div class="ofaq-section" data-section="standorte">
-        <h2 class="ofaq-section-title">Standorte &amp; Öffnungszeiten</h2>
+        <h2 class="ofaq-section-title" data-en="Locations &amp; Opening Hours" data-de="Standorte &amp; Öffnungszeiten">Standorte &amp; Öffnungszeiten</h2>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wo findet ihr uns?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Wir haben zwei Standorte in Berlin:<br><strong>Schöneberg:</strong> Winterfeldtstraße 7, 10781 Berlin<br><strong>Charlottenburg:</strong> Kurfürstendamm 115B</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Where are you located?" data-de="Wo findet ihr uns?">Wo findet ihr uns?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="We have two locations in Berlin:<br><strong>Schöneberg:</strong> Winterfeldtstraße 7, 10781 Berlin<br><strong>Charlottenburg:</strong> Kurfürstendamm 115B" data-de="Wir haben zwei Standorte in Berlin:<br><strong>Schöneberg:</strong> Winterfeldtstraße 7, 10781 Berlin<br><strong>Charlottenburg:</strong> Kurfürstendamm 115B">Zwei Standorte in Berlin:<br><strong>Schöneberg:</strong> Winterfeldtstraße 7, 10781 Berlin<br><strong>Charlottenburg:</strong> Kurfürstendamm 115B</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wann habt ihr geöffnet?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Montag bis Samstag, 10:00–19:00 Uhr.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="What are your opening hours?" data-de="Wann habt ihr geöffnet?">Wann habt ihr geöffnet?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Monday to Saturday, 10:00–19:00." data-de="Montag bis Samstag von 10:00 bis 19:00 Uhr.">Montag bis Samstag, 10:00–19:00 Uhr.</p>
+          </div>
         </div>
       </div>
 
-      <!-- KATEGORIE 9: PFLEGE -->
+      <!-- CATEGORY 9: CARE -->
       <div class="ofaq-section" data-section="pflege">
-        <h2 class="ofaq-section-title">Pflege</h2>
+        <h2 class="ofaq-section-title" data-en="Hair Care" data-de="Pflege">Pflege</h2>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Wie pflege ich meine Extensions?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Wir empfehlen ein normales, feuchtigkeitsspendendes Shampoo und Conditioner. Silikon-freie Shampoos sind <strong>nicht</strong> zu empfehlen – sie können das Haar trocken machen und der Extensions die notwendige Feuchtigkeit entziehen. Im Gegensatz zu natürlichem Haar erhalten Extensions keine Öle mehr vom Kopf, deshalb sind sie auf Pflege von außen angewiesen. Für lang anhaltende, schöne Extensions empfehlen wir außerdem zusätzliche feuchtigkeitsspendende Produkte nach Bedarf. Lufttrocknen ist ideal – Hitze ist möglich, aber bitte sparsam einsetzen, da zu viel Hitze die Extensions genauso schädigt wie natürliches Haar.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="How do I care for my extensions?" data-de="Wie pflege ich meine Extensions richtig?">Wie pflege ich meine Extensions richtig?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="We recommend a regular moisturising shampoo and conditioner. We advise <strong>against</strong> silicone-free shampoos — they can dry the hair out and strip essential moisture. Unlike your own hair, extensions no longer receive natural oils from the scalp, so they rely entirely on external care. Air-drying is ideal; heat styling is possible but use sparingly." data-de="Wir empfehlen ein normales, feuchtigkeitsspendendes Shampoo und einen Conditioner. Von silikonfreien Shampoos raten wir ab – sie können das Haar trocken wirken lassen. Extensions erhalten keine natürlichen Öle mehr, sie sind deshalb auf die richtige Pflege angewiesen. Lufttrocknen empfohlen – Hitzestyling ist möglich, aber sparsam einsetzen.">Feuchtigkeitsspendendes Shampoo + Conditioner. Keine silikonfreien Shampoos. Lufttrocknen bevorzugt.</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Kann ich die Extensions färben?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Wir empfehlen es nicht – aber ja, die Extensions können in einem dunkleren Ton gefärbt werden.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Can I colour the extensions?" data-de="Kann ich die Extensions färben?">Kann ich die Extensions färben?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="We don't recommend it — but yes, extensions can in most cases be coloured to a darker shade." data-de="Wir empfehlen es nicht – aber ja, die Extensions können in den meisten Fällen in einen dunkleren Ton gefärbt werden.">Wir empfehlen es nicht – aber zu einem dunkleren Ton ist es möglich.</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Kann ich die Extensions mit Wärme stylen?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja, das ist möglich – bitte jedoch sparsam einsetzen. Übermäßige Hitze schädigt Extensions genauso wie natürliches Haar. Wir empfehlen, die Temperatur niedrig zu halten und ein Hitzeschutzspray zu verwenden.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Can I use heat tools on the extensions?" data-de="Kann ich die Extensions mit Hitze stylen?">Kann ich die Extensions mit Hitze stylen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes — but use heat sparingly. Excessive heat damages extensions just as it damages natural hair. We recommend keeping temperatures low and using a heat protectant spray." data-de="Ja, das ist möglich – aber bitte sparsam einsetzen. Übermäßige Hitze schädigt Extensions genauso wie Naturhaar. Niedrige Temperaturen und Hitzeschutzspray empfohlen.">Ja – sparsam einsetzen. Niedrige Temperaturen und Hitzeschutzspray verwenden.</p>
+          </div>
         </div>
       </div>
 
-      <!-- KATEGORIE 10: WERKZEUG & ZUBEHÖR -->
+      <!-- CATEGORY 10: TOOLS & ACCESSORIES -->
       <div class="ofaq-section" data-section="zubehoer">
-        <h2 class="ofaq-section-title">Werkzeug, Zubehör &amp; Salonbedarf</h2>
+        <h2 class="ofaq-section-title" data-en="Tools, Accessories &amp; Salon Supplies" data-de="Stylinggeräte, Zubehör &amp; Friseurbedarf">Stylinggeräte, Zubehör &amp; Friseurbedarf</h2>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Welches Zubehör und welche Werkzeuge bietet ihr an?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Wir führen ein sorgfältig ausgewähltes Sortiment an Werkzeugen und Zubehör für Extensions, Perücken, Naturhaarpflege und den professionellen Saloneinsatz. Unser Fokus liegt auf Qualität, Langlebigkeit und einfacher Handhabung.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="What tools and accessories do you offer?" data-de="Welche Stylinggeräte und welches Zubehör bietet ihr an?">Welche Stylinggeräte und welches Zubehör bietet ihr an?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="We stock a carefully selected range of styling tools and accessories for extensions, wigs, natural hair care and professional salon use. Our focus is on quality, durability and ease of use." data-de="Wir bieten ein sorgfältig ausgewähltes Sortiment an Stylinggeräten und Zubehör für Haarverlängerungen, Perücken, Naturhaarpflege und den professionellen Salonbedarf. Unser Fokus liegt auf Qualität, Langlebigkeit und einfacher Anwendung.">Sorgfältig ausgewähltes Sortiment für Extensions, Perücken, Naturhaarpflege und professionellen Saloneinsatz.</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Sind eure Produkte sowohl für Profis als auch für Privatkunden geeignet?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja. Unser Sortiment eignet sich für professionelle Friseure, Salons und alle, die hochwertige Haar- und Beautyprodukte für den privaten Gebrauch suchen.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Are your products suitable for both professionals and private customers?" data-de="Sind eure Produkte für Profis und Privatkundinnen geeignet?">Sind eure Produkte für Profis und Privatkundinnen geeignet?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes. Our range suits professional hairstylists, salons and anyone looking for high-quality hair and beauty products for personal use." data-de="Ja. Unser Sortiment eignet sich für professionelle Hairstylisten, Salons und alle, die hochwertige Haar- und Beauty-Produkte für den privaten Gebrauch suchen.">Ja – für professionelle Stylisten und Privatkundinnen gleichermaßen.</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Bietet ihr professionellen Salonbedarf (Friseurbedarf) an?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Ja. Wir erweitern unser Sortiment an professionellem Salonbedarf kontinuierlich, um den Bedürfnissen moderner Friseure und Salons gerecht zu werden.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Do you offer professional salon supplies?" data-de="Bietet ihr professionellen Friseurbedarf an?">Bietet ihr professionellen Friseurbedarf an?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Yes. We continuously expand our professional salon supplies, styling tools and accessories to meet the demands of modern hairstylists and salons." data-de="Ja. Wir erweitern unser Sortiment an professionellem Friseurbedarf, Stylinggeräten und Zubehör kontinuierlich, um den Anforderungen moderner Hairstylisten und Salons gerecht zu werden.">Ja – kontinuierlich wachsendes Sortiment an professionellem Friseurbedarf.</p>
+          </div>
         </div>
 
         <div class="ofaq-item">
-          <div class="ofaq-q"><span class="ofaq-q-text">Könnt ihr mir bei der Auswahl der richtigen Produkte helfen?</span><div class="ofaq-q-icon"></div></div>
-          <div class="ofaq-a"><p>Aber natürlich! Wenn du unsicher bist, welche Werkzeuge, Zubehörteile oder Salonprodukte für dich am besten geeignet sind, hilft dir unser Team gerne dabei, die beste Lösung zu finden.</p></div>
+          <div class="ofaq-q">
+            <span class="ofaq-q-text" data-en="Can you help me choose the right products?" data-de="Könnt ihr mir bei der Produktauswahl helfen?">Könnt ihr mir bei der Produktauswahl helfen?</span>
+            <div class="ofaq-q-icon"></div>
+          </div>
+          <div class="ofaq-a">
+            <p data-en="Of course. If you're unsure which tools, accessories or salon products are right for you, our team is happy to help you find the best solution." data-de="Natürlich. Wenn du unsicher bist, welche Stylinggeräte, welches Zubehör oder welche Salonprodukte die richtigen für dich sind, hilft dir unser Team gerne dabei, die beste Lösung zu finden.">Natürlich – unser Team hilft dir gerne, die beste Lösung zu finden.</p>
+          </div>
         </div>
       </div>
 
@@ -2490,12 +2689,12 @@ first.parentNode.insertBefore(script, first);
 
   <div class="ofaq-cta">
     <div class="ofaq-cta-inner">
-      <span class="ofaq-cta-eyebrow">Noch Fragen?</span>
-      <h2 class="ofaq-cta-title">Wir helfen dir <em>gerne weiter</em></h2>
-      <p class="ofaq-cta-sub">Schreib uns eine DM auf Instagram oder komm einfach in einen unserer Berliner Salons.</p>
+      <span class="ofaq-cta-eyebrow" data-en="Still have questions?" data-de="Noch Fragen?">Noch Fragen?</span>
+      <h2 class="ofaq-cta-title" data-en="We're happy to <em>help</em>" data-de="Wir helfen dir <em>gerne weiter</em>">Wir helfen dir <em>gerne weiter</em></h2>
+      <p class="ofaq-cta-sub" data-en="Send us a DM on Instagram or simply visit one of our Berlin salons." data-de="Schreib uns eine DM auf Instagram oder komm einfach in einen unserer Berliner Salons.">Schreib uns eine DM auf Instagram oder komm einfach in einen unserer Berliner Salons.</p>
       <div class="ofaq-cta-btns">
-        <a href="/appointments" class="ofaq-btn-gold">Termin buchen</a>
-        <a href="/pages/contact" class="ofaq-btn-outline">Kontakt</a>
+        <a href="/appointments" class="ofaq-btn-gold" data-en="Book Appointment" data-de="Termin buchen">Termin buchen</a>
+        <a href="/pages/contact" class="ofaq-btn-outline" data-en="Contact" data-de="Kontakt">Kontakt</a>
       </div>
     </div>
   </div>
@@ -2504,7 +2703,44 @@ first.parentNode.insertBefore(script, first);
 
 <script>
 (function(){
-  // Accordion
+  // ── Language ──────────────────────────────────────────────
+  function ofaqGetLang(){
+    var c = document.cookie.split(';').map(function(s){ return s.trim(); });
+    for(var i=0;i<c.length;i++){
+      if(c[i].indexOf('ohs-lang=')===0) return c[i].split('=')[1];
+    }
+    return 'de';
+  }
+  window.ofaqSetLang = function(lang){
+    document.cookie = 'ohs-lang=' + lang + ';path=/;max-age=31536000';
+    applyLang(lang);
+  };
+  function applyLang(lang){
+    // Toggle button states
+    var btnEn = document.getElementById('ofaq-btn-en');
+    var btnDe = document.getElementById('ofaq-btn-de');
+    if(btnEn) btnEn.classList.toggle('active', lang === 'en');
+    if(btnDe) btnDe.classList.toggle('active', lang === 'de');
+
+    // Swap all data-en / data-de elements
+    document.querySelectorAll('[data-en][data-de]').forEach(function(el){
+      var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-de');
+      if(el.tagName === 'INPUT'){
+        el.placeholder = val;
+      } else {
+        el.innerHTML = val;
+      }
+    });
+
+    // Search placeholder
+    var si = document.getElementById('ofaq-search-input');
+    if(si){ si.placeholder = lang === 'en' ? 'Search questions...' : 'Fragen durchsuchen...'; }
+  }
+  // Init on load
+  var _initLang = ofaqGetLang();
+  applyLang(_initLang);
+
+  // ── Accordion ─────────────────────────────────────────────
   document.querySelectorAll('.ofaq-q').forEach(function(q){
     q.addEventListener('click', function(){
       var item = q.parentElement;
@@ -2514,7 +2750,7 @@ first.parentNode.insertBefore(script, first);
     });
   });
 
-  // Sidebar category filter
+  // ── Sidebar category filter ────────────────────────────────
   document.querySelectorAll('.ofaq-cat-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
       var cat = btn.getAttribute('data-cat');
@@ -2527,13 +2763,12 @@ first.parentNode.insertBefore(script, first);
     });
   });
 
-  // Search
+  // ── Search ────────────────────────────────────────────────
   var searchInput = document.getElementById('ofaq-search-input');
   if(searchInput){
     searchInput.addEventListener('input', function(){
       var q = searchInput.value.trim().toLowerCase();
       if(!q){
-        // Restore active category
         var activeBtn = document.querySelector('.ofaq-cat-btn.active');
         var activeCat = activeBtn ? activeBtn.getAttribute('data-cat') : null;
         document.querySelectorAll('.ofaq-section').forEach(function(s){
