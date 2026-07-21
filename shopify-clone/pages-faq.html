@@ -2668,12 +2668,10 @@ first.parentNode.insertBefore(script, first);
 
 <script>
 (function(){
-  // ── Language: read site cookie set by top-menu locale switcher ──
+  // ── Language: same source as oapptLang() used site-wide ────
   (function(){
-    var lang = 'de';
-    document.cookie.split(';').forEach(function(c){
-      if(c.trim().indexOf('ohs-lang=')===0) lang = c.trim().split('=')[1];
-    });
+    var lang;
+    try { lang = localStorage.getItem('ohs-lang') || document.body.dataset.ohsLang || 'en'; } catch(e){ lang = 'en'; }
     document.querySelectorAll('[data-en][data-de]').forEach(function(el){
       var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-de');
       if(el.tagName === 'INPUT'){ el.placeholder = val; } else { el.innerHTML = val; }
