@@ -2210,42 +2210,7 @@ first.parentNode.insertBefore(script, first);
 }
 </style>
 
-<style>
-/* LANG TOGGLE */
-.ofaq-lang-bar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 12px 40px;
-  background: #F6F1E8;
-  border-bottom: 1px solid #E3D6C5;
-  gap: 6px;
-}
-.ofaq-lang-btn {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  background: none;
-  border: 1px solid transparent;
-  color: #9A8A7A;
-  cursor: pointer;
-  padding: 5px 12px;
-  transition: all 0.18s;
-}
-.ofaq-lang-btn.active { color: #2B2620; border-color: #2B2620; }
-.ofaq-lang-sep { color: #C5B89E; font-size: 12px; }
-@media (max-width: 640px) { .ofaq-lang-bar { padding: 10px 24px; } }
-</style>
-
 <div class="ofaq">
-
-  <div class="ofaq-lang-bar">
-    <button class="ofaq-lang-btn" id="ofaq-btn-en" onclick="ofaqSetLang('en')">EN</button>
-    <span class="ofaq-lang-sep">|</span>
-    <button class="ofaq-lang-btn" id="ofaq-btn-de" onclick="ofaqSetLang('de')">DE</button>
-  </div>
 
   <div class="ofaq-hero">
     <img class="ofaq-hero-img" src="/heroes/faq-hero.svg" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
@@ -2703,42 +2668,19 @@ first.parentNode.insertBefore(script, first);
 
 <script>
 (function(){
-  // ── Language ──────────────────────────────────────────────
-  function ofaqGetLang(){
-    var c = document.cookie.split(';').map(function(s){ return s.trim(); });
-    for(var i=0;i<c.length;i++){
-      if(c[i].indexOf('ohs-lang=')===0) return c[i].split('=')[1];
-    }
-    return 'de';
-  }
-  window.ofaqSetLang = function(lang){
-    document.cookie = 'ohs-lang=' + lang + ';path=/;max-age=31536000';
-    applyLang(lang);
-  };
-  function applyLang(lang){
-    // Toggle button states
-    var btnEn = document.getElementById('ofaq-btn-en');
-    var btnDe = document.getElementById('ofaq-btn-de');
-    if(btnEn) btnEn.classList.toggle('active', lang === 'en');
-    if(btnDe) btnDe.classList.toggle('active', lang === 'de');
-
-    // Swap all data-en / data-de elements
+  // ── Language: read site cookie set by top-menu locale switcher ──
+  (function(){
+    var lang = 'de';
+    document.cookie.split(';').forEach(function(c){
+      if(c.trim().indexOf('ohs-lang=')===0) lang = c.trim().split('=')[1];
+    });
     document.querySelectorAll('[data-en][data-de]').forEach(function(el){
       var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-de');
-      if(el.tagName === 'INPUT'){
-        el.placeholder = val;
-      } else {
-        el.innerHTML = val;
-      }
+      if(el.tagName === 'INPUT'){ el.placeholder = val; } else { el.innerHTML = val; }
     });
-
-    // Search placeholder
     var si = document.getElementById('ofaq-search-input');
     if(si){ si.placeholder = lang === 'en' ? 'Search questions...' : 'Fragen durchsuchen...'; }
-  }
-  // Init on load
-  var _initLang = ofaqGetLang();
-  applyLang(_initLang);
+  })();
 
   // ── Accordion ─────────────────────────────────────────────
   document.querySelectorAll('.ofaq-q').forEach(function(q){
