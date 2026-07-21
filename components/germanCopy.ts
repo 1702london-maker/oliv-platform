@@ -89,7 +89,7 @@ export const GERMAN_COPY_PAIRS: [string, string][] = [
   ["HELP", "HILFE"],
   ["Home", "Startseite"],
   ["Shop", "Shop"],
-  ["FAQ", "FAQ"],
+  ["FAQ", "Fragen & Antworten"],
   ["Language & Currency", "Sprache & Währung"],
   ["Language", "Sprache"],
   ["Currency", "Währung"],
