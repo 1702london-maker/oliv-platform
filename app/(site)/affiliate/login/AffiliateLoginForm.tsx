@@ -63,7 +63,7 @@ export function AffiliateLoginForm() {
           value={email}
           onChange={e => setEmail(e.target.value)}
           autoComplete="email"
-          placeholder="your@email.com"
+          placeholder="deinname@beispiel.de"
           style={{
             width: "100%",
             border: "1px solid #dfceb5",
