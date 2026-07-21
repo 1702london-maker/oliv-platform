@@ -2668,17 +2668,21 @@ first.parentNode.insertBefore(script, first);
 
 <script>
 (function(){
-  // ── Language: same source as oapptLang() used site-wide ────
-  (function(){
+  // ── Language: runs on load and whenever the nav locale switcher changes ──
+  function ofaqApplyLang(){
     var lang;
-    try { lang = localStorage.getItem('ohs-lang') || document.body.dataset.ohsLang || 'en'; } catch(e){ lang = 'en'; }
+    try { lang = document.body.dataset.ohsLang || localStorage.getItem('ohs-lang') || 'de'; } catch(e){ lang = 'de'; }
     document.querySelectorAll('[data-en][data-de]').forEach(function(el){
       var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-de');
       if(el.tagName === 'INPUT'){ el.placeholder = val; } else { el.innerHTML = val; }
     });
-    var si = document.getElementById('ofaq-search-input');
-    if(si){ si.placeholder = lang === 'en' ? 'Search questions...' : 'Fragen durchsuchen...'; }
-  })();
+  }
+  ofaqApplyLang();
+  // Watch body.dataset.ohsLang — ShopifyClonePageClient sets this when nav lang is switched
+  if(typeof MutationObserver !== 'undefined'){
+    new MutationObserver(ofaqApplyLang)
+      .observe(document.body, { attributes: true, attributeFilter: ['data-ohs-lang'] });
+  }
 
   // ── Accordion ─────────────────────────────────────────────
   document.querySelectorAll('.ofaq-q').forEach(function(q){
