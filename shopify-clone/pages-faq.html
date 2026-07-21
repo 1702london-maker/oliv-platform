@@ -2683,6 +2683,13 @@ first.parentNode.insertBefore(script, first);
     new MutationObserver(ofaqApplyLang)
       .observe(document.body, { attributes: true, attributeFilter: ['data-ohs-lang'] });
   }
+  // Also bind directly to the locale selector so switching is instant (no observer delay)
+  document.addEventListener('change', function(e){
+    var sel = e.target;
+    if(sel && sel.name === 'locale_code'){ ofaqApplyLang(); }
+  });
+  // Re-run if the client sets lang after hydration
+  window.addEventListener('load', function(){ setTimeout(ofaqApplyLang, 0); });
 
   // ── Accordion ─────────────────────────────────────────────
   document.querySelectorAll('.ofaq-q').forEach(function(q){
