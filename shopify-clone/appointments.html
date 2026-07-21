@@ -2940,8 +2940,8 @@ first.parentNode.insertBefore(script, first);
               </div>
               <div id="oappt-store-b-card" class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')">
                 <div class="oappt-location-tick"></div>
-                <span class="oappt-location-eyebrow">Store B</span>
-                <div class="oappt-location-name">OlivHairSupply Store B</div>
+                <span class="oappt-location-eyebrow">Salon B</span>
+                <div class="oappt-location-name">OlivHairSupply Salon B</div>
                 <div class="oappt-location-address">
                   OlivHairSupply<br>
                   Kurfurstendamm 115B<br>
@@ -3096,7 +3096,7 @@ first.parentNode.insertBefore(script, first);
           <p class="oappt-summary-empty">Select a location to begin.</p>
         </div>
         <div class="oappt-summary-total" id="oappt-summary-total" style="display:none;">
-          <span class="oappt-summary-total-label">Estimated Total</span>
+          <span class="oappt-summary-total-label">Geschätzte Gesamtsumme</span>
           <span class="oappt-summary-total-val" id="oappt-summary-total-val">&euro;0</span>
         </div>
       </div>
@@ -3348,7 +3348,7 @@ function oapptUpdateSummary() {
   if (!body) return;
   var lines = [];
   if (oapptState.location) {
-    lines.push({ label: 'Store', val: oapptState.location === 'a' ? 'Store A' : 'Store B' });
+    lines.push({ label: 'Salon', val: oapptState.location === 'a' ? 'Salon A' : 'Salon B' });
     if (oapptState.location === 'b') lines.push({ label: 'Location Surcharge', val: '+&euro;20' });
   }
   if (oapptState.selectedService) lines.push({ label: 'Service', val: oapptState.selectedService.name });
@@ -3768,10 +3768,10 @@ function oapptBuildBookingSummary() {
   var stylist = oapptState.selectedStylist;
   var html    = '';
   var rows = [
-    { label: 'Store', val: oapptState.location === 'a' ? 'Store A' : 'Store B' },
+    { label: 'Salon', val: oapptState.location === 'a' ? 'Salon A' : 'Salon B' },
     { label: 'Service',  val: svc ? svc.name : '' },
     { label: svc ? svc.optionLabel : 'Option', val: oapptState.serviceOption + (oapptState.serviceOptionPrice ? ' (+&euro;' + oapptState.serviceOptionPrice + ')' : '') },
-    { label: 'Stylist',  val: stylist ? stylist.name + (stylist.surcharge > 0 ? ' (+&euro;' + stylist.surcharge + ')' : '') : '' },
+    { label: 'Stylistin',  val: stylist ? stylist.name + (stylist.surcharge > 0 ? ' (+&euro;' + stylist.surcharge + ')' : '') : '' },
     { label: 'Date',     val: oapptFormatDate(oapptState.selectedDate) },
     { label: 'Time',     val: oapptState.selectedTime },
     { label: 'Name',     val: oapptState.customerName },
@@ -3793,7 +3793,7 @@ function oapptBuildBookingSummary() {
     if (!r.val) return;
     html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">' + r.label + '</span><span class="oappt-confirm-row-val">' + r.val + '</span></div>';
   });
-  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Estimated Total</span><span class="oappt-confirm-total-val">&euro;' + total + '</span></div>';
+  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Geschätzte Gesamtsumme</span><span class="oappt-confirm-total-val">&euro;' + total + '</span></div>';
   wrap.innerHTML = html;
 }
 
@@ -3805,7 +3805,7 @@ function oapptSubmitBooking(event) {
   msg += 'Name: '     + oapptState.customerName  + '\n';
   msg += 'Email: '    + oapptState.customerEmail + '\n';
   msg += 'Phone: '    + oapptState.customerPhone + '\n\n';
-  msg += 'Store: ' + (oapptState.location === 'a' ? 'Store A, Winterfeldtstrasse 7' : 'Store B, Kurfurstendamm 115B') + '\n';
+  msg += 'Salon: ' + (oapptState.location === 'a' ? 'Salon A, Winterfeldtstrasse 7' : 'Salon B, Kurfurstendamm 115B') + '\n';
   msg += 'Service: '  + (svc ? svc.name : '') + '\n';
   msg += (svc ? svc.optionLabel : 'Option') + ': ' + oapptState.serviceOption + '\n';
   msg += 'Stylist: '  + (stylist ? stylist.name : '') + '\n';
@@ -3848,7 +3848,7 @@ function oapptSubmitBooking(event) {
     var isDe = oapptLang() === 'de';
     var html = '';
     var rows = [
-      [isDe ? 'Store' : 'Store',      oapptState.location === 'a' ? 'Store A' : 'Store B'],
+      [isDe ? 'Salon' : 'Salon',      oapptState.location === 'a' ? 'Salon A' : 'Salon B'],
       [isDe ? 'Service' : 'Service',  svc ? oapptText(svc, 'name') : ''],
       [isDe ? 'Stylistin' : 'Stylist', stylist ? oapptText(stylist, 'name') : ''],
       [isDe ? 'Datum' : 'Date',       oapptFormatDate(oapptState.selectedDate)],
@@ -3860,14 +3860,14 @@ function oapptSubmitBooking(event) {
       html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r[0] + '</span><span class="oappt-confirm-detail-val">' + r[1] + '</span></div>';
     });
     html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
-    html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (isDe ? 'Geschätzter Gesamtpreis' : 'Estimated Total') + '</span>';
+    html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (isDe ? 'Geschätzte Gesamtsumme' : 'Estimated Total') + '</span>';
     html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + total + '</span>';
     html += '</div>';
     detailsEl.innerHTML = html;
   }
 
   // Build ISO timestamps from selected date + time slot
-  var locName = oapptState.location === 'a' ? 'Store A' : 'Store B';
+  var locName = oapptState.location === 'a' ? 'Salon A' : 'Salon B';
   var locAddr = oapptState.location === 'a'
     ? 'Winterfeldtstrasse 7, 10781 Berlin-Schöneberg'
     : 'Kurfürstendamm 115B, 10711 Berlin-Halensee';
@@ -3948,7 +3948,7 @@ function oapptSubmitBooking(event) {
   var svc     = oapptState.selectedService;
   var stylist = oapptState.selectedStylist;
   var total   = oapptGetTotal();
-  var locName = oapptState.location === 'a' ? 'Store A' : 'Store B';
+  var locName = oapptState.location === 'a' ? 'Salon A' : 'Salon B';
   var locAddr = oapptState.location === 'a'
     ? 'Winterfeldtstrasse 7, 10781 Berlin-Schoneberg'
     : 'Kurfurstendamm 115B, 10711 Berlin-Halensee';
@@ -4028,7 +4028,7 @@ function oapptSubmitBooking(event) {
       oapptGoStep(1);
       var err1 = document.getElementById('oappt-err-1');
       if (err1) {
-        err1.textContent = 'Store B (Kurfürstendamm) opens 4th August 2026. Please select a date from August 4th onwards, or book at Store A (Winterfeldtstrasse).';
+        err1.textContent = 'Salon B (Kurfürstendamm) opens 4th August 2026. Please select a date from August 4th onwards, or book at Salon A (Winterfeldtstrasse).';
         err1.classList.add('visible');
       }
     } else if (err && err.message === 'sunday_closed') {
@@ -4072,7 +4072,7 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
   if (!detailsEl) return;
   var html = '';
   var rows = [
-    ['Store', oapptState.location === 'a' ? 'Store A' : 'Store B'],
+    ['Salon', oapptState.location === 'a' ? 'Salon A' : 'Salon B'],
     ['Service',  svc ? svc.name : ''],
     ['Stylist',  stylist ? stylist.name : ''],
     ['Date',     oapptFormatDate(oapptState.selectedDate)],
@@ -4084,7 +4084,7 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
     html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r[0] + '</span><span class="oappt-confirm-detail-val">' + r[1] + '</span></div>';
   });
   html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
-  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">Estimated Total</span>';
+  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">Geschätzte Gesamtsumme</span>';
   html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + total + '</span>';
   html += '</div>';
   detailsEl.innerHTML = html;
@@ -4092,8 +4092,8 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
 
 var OAPPT_STORE_B_SURCHARGE = 20;
 var OAPPT_STORE_LABELS = {
-  a: { en: 'Store A', de: 'Store A', address: 'Winterfeldtstrasse 7, 10781 Berlin-Schoneberg' },
-  b: { en: 'Store B', de: 'Store B', address: 'Kurfurstendamm 115B, 10711 Berlin-Halensee' }
+  a: { en: 'Salon A', de: 'Salon A', address: 'Winterfeldtstrasse 7, 10781 Berlin-Schoneberg' },
+  b: { en: 'Salon B', de: 'Salon B', address: 'Kurfurstendamm 115B, 10711 Berlin-Halensee' }
 };
 
 OAPPT_SERVICES = [
@@ -4476,7 +4476,7 @@ function oapptUpdateSummary() {
   if (!body) return;
   var lines = [];
   if (oapptState.location) {
-    lines.push({ label: oapptLang() === 'de' ? 'Store' : 'Store', val: oapptStoreName() });
+    lines.push({ label: 'Salon', val: oapptStoreName() });
     if (oapptState.location === 'b') lines.push({ label: oapptLang() === 'de' ? 'Luxury-Zuschlag' : 'Luxury Surcharge', val: '+&euro;' + OAPPT_STORE_B_SURCHARGE });
   }
   if (oapptState.selectedService) lines.push({ label: 'Service', val: oapptText(oapptState.selectedService, 'name') });
@@ -4747,15 +4747,15 @@ function oapptBuildBookingRows() {
   var opt = oapptSelectedServiceOption();
   var stylist = oapptState.selectedStylist;
   var rows = [
-    { label: 'Store', val: oapptStoreName() },
-    { label: 'Stylist', val: stylist ? stylist.name : '' },
+    { label: 'Salon', val: oapptStoreName() },
+    { label: oapptLang() === 'de' ? 'Stylistin' : 'Stylist', val: stylist ? stylist.name : '' },
     { label: 'Service', val: svc ? oapptText(svc, 'name') : '' },
-    { label: 'Service Duration', val: oapptDurationLabel(oapptServiceDurationMinutes()) },
-    { label: 'Base Service Price', val: '&euro;' + oapptMoney(oapptState.serviceOptionPrice) },
+    { label: oapptLang() === 'de' ? 'Behandlungsdauer' : 'Service Duration', val: oapptDurationLabel(oapptServiceDurationMinutes()) },
+    { label: oapptLang() === 'de' ? 'Grundpreis der Dienstleistung' : 'Base Service Price', val: '&euro;' + oapptMoney(oapptState.serviceOptionPrice) },
     { label: svc ? oapptText(svc, 'optionLabel') : 'Option', val: opt ? oapptText(opt, 'label') : '' }
   ];
-  if (oapptState.location === 'b') rows.push({ label: 'Store B Luxury Surcharge', val: '+&euro;' + OAPPT_STORE_B_SURCHARGE });
-  rows.push({ label: 'Hair Option', val: oapptHairRequirementLabel() });
+  if (oapptState.location === 'b') rows.push({ label: oapptLang() === 'de' ? 'Salon B Luxury-Zuschlag' : 'Salon B Luxury Surcharge', val: '+&euro;' + OAPPT_STORE_B_SURCHARGE });
+  rows.push({ label: oapptLang() === 'de' ? 'Haaroption' : 'Hair Option', val: oapptHairRequirementLabel() });
   if (oapptState.hairRequirement === 'add') {
     var cfg = oapptExtensionConfig();
     var colour = oapptExtensionColour();
@@ -4788,7 +4788,7 @@ function oapptBuildBookingSummary() {
     html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">' + r.label + '</span><span class="oappt-confirm-row-val">' + r.val + '</span></div>';
   });
   html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">Price</span><span class="oappt-confirm-row-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
-  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Estimated Total</span><span class="oappt-confirm-total-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
+  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Geschätzte Gesamtsumme</span><span class="oappt-confirm-total-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
   wrap.innerHTML = html;
 }
 
@@ -4894,7 +4894,7 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
     html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r.label + '</span><span class="oappt-confirm-detail-val">' + r.val + '</span></div>';
   });
   html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
-  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">Estimated Total</span>';
+  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (oapptLang() === 'de' ? 'Geschätzte Gesamtsumme' : 'Estimated Total') + '</span>';
   html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + oapptMoney(total) + '</span>';
   html += '</div>';
   detailsEl.innerHTML = html;
