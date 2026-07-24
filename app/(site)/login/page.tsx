@@ -106,7 +106,7 @@ export default async function LoginPage({
           .ohs-auth-row-end {
             display: flex;
             justify-content: flex-end;
-            margin-top: -8px;
+            margin-top: 12px;
             margin-bottom: 16px;
           }
           .ohs-auth-link-sm {

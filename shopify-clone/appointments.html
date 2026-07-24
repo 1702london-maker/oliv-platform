@@ -2916,8 +2916,8 @@ first.parentNode.insertBefore(script, first);
           <p class="oappt-confirm-sub">Your appointment is confirmed. A confirmation email has been sent with your booking details.</p>
           <div class="oappt-confirm-details" id="oappt-confirm-details"></div>
           <div class="oappt-confirm-btns">
-            <a href="/" class="oappt-confirm-btn-dark">Return Home</a>
-            <a href="/collections" class="oappt-confirm-btn-out">Shop BiziLuxe</a>
+            <a href="/" class="oappt-confirm-btn-dark">Zur Startseite</a>
+            <a href="/shop" class="oappt-confirm-btn-out">BiziLuxe entdecken</a>
           </div>
         </div>
 
@@ -3772,13 +3772,13 @@ function oapptBuildBookingSummary() {
     { label: 'Service',  val: svc ? svc.name : '' },
     { label: svc ? svc.optionLabel : 'Option', val: oapptState.serviceOption + (oapptState.serviceOptionPrice ? ' (+&euro;' + oapptState.serviceOptionPrice + ')' : '') },
     { label: 'Stylistin',  val: stylist ? stylist.name + (stylist.surcharge > 0 ? ' (+&euro;' + stylist.surcharge + ')' : '') : '' },
-    { label: 'Date',     val: oapptFormatDate(oapptState.selectedDate) },
-    { label: 'Time',     val: oapptState.selectedTime },
-    { label: 'Name',     val: oapptState.customerName },
-    { label: 'Email',    val: oapptState.customerEmail },
-    { label: 'Phone',    val: oapptState.customerPhone }
+    { label: oapptLang() === 'de' ? 'Datum' : 'Date',     val: oapptFormatDate(oapptState.selectedDate) },
+    { label: oapptLang() === 'de' ? 'Uhrzeit' : 'Time',     val: oapptState.selectedTime },
+    { label: oapptLang() === 'de' ? 'Name' : 'Name',     val: oapptState.customerName },
+    { label: oapptLang() === 'de' ? 'E-Mail' : 'Email',    val: oapptState.customerEmail },
+    { label: oapptLang() === 'de' ? 'Telefon' : 'Phone',    val: oapptState.customerPhone }
   ];
-  if (oapptState.location === 'b') rows.push({ label: 'Location Surcharge', val: '+&euro;20' });
+  if (oapptState.location === 'b') rows.push({ label: oapptLang() === 'de' ? 'Standortzuschlag' : 'Location Surcharge', val: '+&euro;20' });
   if (oapptState.hairPurchase) {
     var hairDesc = '';
     OAPPT_HAIR_TYPES.forEach(function(t) { if (t.value === oapptState.hairType) hairDesc = t.label; });
@@ -4770,12 +4770,12 @@ function oapptBuildBookingRows() {
     if (oapptColourExtraPrice()) rows.push({ label: 'Colour Extra Price', val: '+&euro;' + oapptMoney(oapptColourExtraPrice()) + ' per bundle' });
     rows.push({ label: 'Extension Price Total', val: '&euro;' + oapptMoney(oapptExtensionTotal()) });
   }
-  rows.push({ label: 'Date', val: oapptFormatDate(oapptState.selectedDate) });
-  rows.push({ label: 'Time', val: oapptSelectedTimeLabel() });
-  rows.push({ label: 'Name', val: oapptState.customerName });
-  rows.push({ label: 'Email', val: oapptState.customerEmail });
-  rows.push({ label: 'Phone', val: oapptState.customerPhone });
-  if (oapptState.customerNotes) rows.push({ label: 'Notes', val: oapptState.customerNotes });
+  rows.push({ label: oapptLang() === 'de' ? 'Datum' : 'Date', val: oapptFormatDate(oapptState.selectedDate) });
+  rows.push({ label: oapptLang() === 'de' ? 'Uhrzeit' : 'Time', val: oapptSelectedTimeLabel() });
+  rows.push({ label: oapptLang() === 'de' ? 'Name' : 'Name', val: oapptState.customerName });
+  rows.push({ label: oapptLang() === 'de' ? 'E-Mail' : 'Email', val: oapptState.customerEmail });
+  rows.push({ label: oapptLang() === 'de' ? 'Telefon' : 'Phone', val: oapptState.customerPhone });
+  if (oapptState.customerNotes) rows.push({ label: oapptLang() === 'de' ? 'Hinweise' : 'Notes', val: oapptState.customerNotes });
   return rows;
 }
 

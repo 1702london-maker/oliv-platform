@@ -43,7 +43,7 @@ export function WholesaleLoginForm() {
           padding: "12px 16px",
           marginBottom: "24px"
         }}>
-          Incorrect email or access code. Please try again.
+          Falsche E-Mail-Adresse oder falscher Zugangscode. Bitte erneut versuchen.
         </div>
       )}
 
@@ -56,17 +56,17 @@ export function WholesaleLoginForm() {
           textTransform: "uppercase",
           color: "#2B2620"
         }}>
-          Email Address
+          E-Mail-Adresse
         </label>
         <input
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
           autoComplete="email"
-          placeholder="your@email.com"
+          placeholder="deinname@beispiel.de"
           style={{
             width: "100%",
-            border: "1px solid #dfceb5",
+            border: "1px solid #dfceb15",
             background: "#fdfaf6",
             padding: "13px 16px",
             fontFamily: "'Montserrat', sans-serif",
@@ -87,7 +87,7 @@ export function WholesaleLoginForm() {
           textTransform: "uppercase",
           color: "#2B2620"
         }}>
-          Access Code
+          Zugangscode
         </label>
         <div style={{ position: "relative" }}>
           <input
@@ -99,7 +99,7 @@ export function WholesaleLoginForm() {
             placeholder="••••••••••••"
             style={{
               width: "100%",
-              border: "1px solid #dfceb5",
+              border: "1px solid #dfceb15",
               background: "#fdfaf6",
               padding: "13px 48px 13px 16px",
               fontFamily: "'Montserrat', sans-serif",
@@ -129,7 +129,7 @@ export function WholesaleLoginForm() {
               textTransform: "uppercase"
             }}
           >
-            {showCode ? "Hide" : "Show"}
+            {showCode ? "Verbergen" : "Anzeigen"}
           </button>
         </div>
       </div>
@@ -152,8 +152,24 @@ export function WholesaleLoginForm() {
           marginTop: "8px"
         }}
       >
-        {loading ? "Checking..." : "Access Wholesale Portal"}
+        {loading ? "Wird geprüft..." : "Zum Großhandelsportal"}
       </button>
+
+      <div style={{ textAlign: "right", marginTop: "12px" }}>
+        <a
+          href="mailto:info@olivhairsupply.co.uk?subject=Zugangscode%20vergessen&body=Hallo%2C%20ich%20habe%20meinen%20Zugangscode%20vergessen.%20Bitte%20sende%20ihn%20an%20meine%20E-Mail-Adresse."
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: "11px",
+            color: "#B68A45",
+            fontWeight: 600,
+            textDecoration: "underline",
+            textUnderlineOffset: "3px"
+          }}
+        >
+          Zugangscode vergessen?
+        </a>
+      </div>
     </div>
   );
 }

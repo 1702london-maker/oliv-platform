@@ -103,7 +103,7 @@ export default async function AffiliatePage({
     /* ── commission rate note ── */
     var commNote = document.getElementById('dash-commission-note');
     if(commNote){
-      commNote.textContent = 'Your current commission rate is ${affiliate?.commission_rate ?? 10}%. Discount for customers: ${affiliate?.discount_rate ?? 10}%.';
+      commNote.textContent = 'Deine aktuelle Provision beträgt ${affiliate?.commission_rate ?? 10}%. Kundenrabatt: ${affiliate?.discount_rate ?? 10}%.';
     }
 
     // Open overlay directly
