@@ -25,6 +25,7 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   let html = rawHtml
     .replaceAll('href="/collections"', 'href="/shop"')
     .replaceAll('href="/collections/all"', 'href="/shop"')
+    .replace(/href="\/collections\/[^"]+"/g, 'href="/shop"')
     .replaceAll('href="/pages/appointment"', 'href="/appointments"')
     .replaceAll('href="/pages/affiliate"', 'href="/affiliate"')
     .replaceAll('href="/pages/wholesale"', 'href="/wholesale"')

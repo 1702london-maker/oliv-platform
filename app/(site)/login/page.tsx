@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { forgotPasswordAction } from "@/app/(site)/login/actions";
 import { LoginBox } from "@/components/auth/LoginBox";
+import { ForgotToggle } from "@/components/auth/ForgotToggle";
 
 function getShell() {
   const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
@@ -203,22 +204,7 @@ export default async function LoginPage({
           </div>
         </div>
 
-        <script dangerouslySetInnerHTML={{ __html: `
-          (function(){
-            var toForgot = document.getElementById('ohs-to-forgot');
-            var toSignin = document.getElementById('ohs-to-signin');
-            var signinPanel = document.getElementById('ohs-signin-panel');
-            var forgotPanel = document.getElementById('ohs-forgot-panel');
-            if(toForgot) toForgot.addEventListener('click', function(){
-              signinPanel.classList.add('ohs-hidden');
-              forgotPanel.classList.remove('ohs-hidden');
-            });
-            if(toSignin) toSignin.addEventListener('click', function(){
-              forgotPanel.classList.add('ohs-hidden');
-              signinPanel.classList.remove('ohs-hidden');
-            });
-          })();
-        `}} />
+        <ForgotToggle />
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: after }} />
