@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { WholesaleLoginForm } from "./WholesaleLoginForm";
+import { WholesaleLoginHeader, WholesaleLoginFooter } from "./WholesaleLoginHeader";
+import { LocaleInterceptor } from "@/components/auth/LocaleInterceptor";
 
 function getShell() {
   const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
@@ -75,17 +77,15 @@ export default function WholesaleLoginPage() {
         `}</style>
 
         <div className="ohs-auth-card">
-          <p className="ohs-auth-eyebrow">Wholesale Programme</p>
-          <h1 className="ohs-auth-title">Wholesale Login</h1>
+          <WholesaleLoginHeader />
           <WholesaleLoginForm />
           <hr className="ohs-auth-divider" />
-          <p className="ohs-auth-footer-text">
-            Not yet a wholesale partner? <a href="/wholesale?apply=1">Apply here</a>
-          </p>
+          <WholesaleLoginFooter />
         </div>
       </div>
 
       <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: after }} />
+      <LocaleInterceptor />
     </>
   );
 }
