@@ -1,8 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { forgotPasswordAction } from "@/app/(site)/login/actions";
-import { LoginBox } from "@/components/auth/LoginBox";
-import { ForgotToggle } from "@/components/auth/ForgotToggle";
+import { LoginCard } from "@/components/auth/LoginCard";
 
 function getShell() {
   const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
@@ -161,50 +160,20 @@ export default async function LoginPage({
             line-height: 1.6;
             margin: 0 0 28px;
           }
-          .ohs-hidden { display: none !important; }
           @media (max-width: 520px) {
             .ohs-auth-card { padding: 36px 24px; }
             .ohs-auth-title { font-size: 34px; }
           }
         `}</style>
 
-        <div className="ohs-auth-card">
-          <p className="ohs-auth-eyebrow">Konto</p>
-
-          <div id="ohs-signin-panel" className={showForgot ? "ohs-hidden" : ""}>
-            <h1 className="ohs-auth-title">Anmelden</h1>
-            {message === "registered" && <div className="ohs-auth-alert-info">Konto erstellt. Bitte melde dich mit deiner E-Mail-Adresse und deinem Passwort an.</div>}
-            <LoginBox next={next} error={error} detail={detail} />
-            <div className="ohs-auth-row-end">
-              <button id="ohs-to-forgot" className="ohs-auth-link-sm" type="button">Passwort vergessen?</button>
-            </div>
-            <hr className="ohs-auth-divider" />
-            <p className="ohs-auth-footer-text">
-              Neu bei OlivHairSupply? <a href="/register">Konto erstellen</a>
-            </p>
-          </div>
-
-          <div id="ohs-forgot-panel" className={showForgot ? "" : "ohs-hidden"}>
-            <h1 className="ohs-auth-title">Passwort zurücksetzen</h1>
-            {message === "reset-sent" && <div className="ohs-auth-alert-info">Reset-Link gesendet. Bitte überprüfe deinen Posteingang.</div>}
-            {error === "reset-missing" && <div className="ohs-auth-alert-error">Bitte gib deine E-Mail-Adresse ein.</div>}
-            <p className="ohs-auth-sub">Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen deines Passworts.</p>
-            <form action={forgotPasswordAction}>
-              <input type="hidden" name="from" value="/login" />
-              <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-forgot-email">E-Mail-Adresse</label>
-                <input className="ohs-auth-input" id="ohs-forgot-email" name="email" type="email" autoComplete="email" required />
-              </div>
-              <button className="ohs-auth-btn" type="submit">Reset-Link senden</button>
-            </form>
-            <hr className="ohs-auth-divider" />
-            <p className="ohs-auth-footer-text">
-              <button id="ohs-to-signin" className="ohs-auth-link-sm" type="button" style={{ fontSize: "13px", color: "#2B2620" }}>Zurück zur Anmeldung</button>
-            </p>
-          </div>
-        </div>
-
-        <ForgotToggle />
+        <LoginCard
+          next={next}
+          error={error}
+          detail={detail}
+          message={message}
+          showForgot={showForgot}
+          forgotAction={forgotPasswordAction}
+        />
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: after }} />
