@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { forgotPasswordAction } from "@/app/(site)/login/actions";
 import { LoginCard } from "@/components/auth/LoginCard";
+import { LocaleInterceptor } from "@/components/auth/LocaleInterceptor";
 
 function getShell() {
   const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
@@ -177,6 +178,7 @@ export default async function LoginPage({
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: after }} />
+      <LocaleInterceptor />
     </>
   );
 }
