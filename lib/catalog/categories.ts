@@ -18,16 +18,5 @@ const fallbackCategories: ShopCategory[] = [
 ];
 
 export async function getShopCategories(): Promise<ShopCategory[]> {
-  const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("shop_categories")
-    .select("id,title,slug,position,image_url")
-    .order("position", { ascending: true });
-
-  if (error) {
-    console.error("Failed to load shop categories", error);
-    return fallbackCategories;
-  }
-
-  return data?.length ? data : fallbackCategories;
+  return fallbackCategories;
 }

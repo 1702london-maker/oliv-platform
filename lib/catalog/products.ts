@@ -150,8 +150,33 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
   ];
 }
 
+const MINI_BRUSH_COLOURS = [
+  { name: "White/Ivory", hex: "#F5F0E8", img: "white-ivory/mini-travel-brush-main.jpg" },
+  { name: "Terracotta",  hex: "#C4633A", img: "terracotta/mini-travel-brush-main.jpg" },
+  { name: "Black",       hex: "#1A1A1A", img: "black/mini-travel-brush-main.jpg" },
+];
+
 function getBrushesProducts(): CatalogProduct[] {
   return [
+    {
+      id: "mini-travel-brush",
+      title: "BiziLuxe Mini Travel Brush",
+      slug: "mini-travel-brush",
+      description: "Compact folding travel hair brush with soft nylon bristles. Ideal for handbags, travel and everyday styling. Available in 3 colours.",
+      image_url: "/products/buersten-und-kaemme/mini-travel-brush/white-ivory/mini-travel-brush-main.jpg",
+      attributes: {},
+      variants: MINI_BRUSH_COLOURS.map((colour) => ({
+        id: `mini-travel-brush-${colour.name}`.toLowerCase().replace(/[\s/]+/g, "-"),
+        title: colour.name,
+        color: colour.name,
+        sku: `BIZILUXE-MINI-BRUSH-${colour.name}`.toUpperCase().replace(/[\s/]+/g, "-"),
+        image_url: `/products/buersten-und-kaemme/mini-travel-brush/${colour.img}`,
+        attributes: { colour_hex: colour.hex },
+        retail_price_cents: 1490,
+        wholesale_price_cents: 1043,
+        inventory_quantity: 30
+      }))
+    },
     {
       id: "vent-brush",
       title: "BiziLuxe Vent Brush",
@@ -308,7 +333,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
   }
-  const brushSlugs = ["vent-brush", "wooden-paddle-brush", "detangling-brush"];
+  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush"];
   if (brushSlugs.includes(slug)) {
     return getBrushesProducts().find((p) => p.slug === slug) || null;
   }
