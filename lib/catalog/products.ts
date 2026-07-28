@@ -366,7 +366,7 @@ function getBrushesProducts(): CatalogProduct[] {
           wholesale_price_cents: 1043,
           inventory_quantity: 30
         })),
-        { id: "mini-travel-brush-pocket-comb", title: "Pocket Comb", color: "Pocket Comb", sku: "BIZILUXE-POCKET-COMB", image_url: "/products/buersten-und-kaemme/lueneburg/lueneburg-main.jpg", attributes: { colour_hex: "#8B6340" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 25 }
+        { id: "mini-travel-brush-pocket-comb", title: "Pocket Comb", color: null, sku: "BIZILUXE-POCKET-COMB", image_url: "/products/buersten-und-kaemme/lueneburg/lueneburg-main.jpg", attributes: {}, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 25 }
       ]
     },
     {
@@ -377,8 +377,8 @@ function getBrushesProducts(): CatalogProduct[] {
       image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg",
       attributes: {},
       variants: [
-        { id: "vent-brush-classic",  title: "Classic",  color: "Classic",  sku: "BIZILUXE-VENT-BRUSH-CLASSIC",  image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 30 },
-        { id: "vent-brush-flexible", title: "Flexible", color: "Flexible", sku: "BIZILUXE-VENT-BRUSH-FLEXIBLE", image_url: "/products/buersten-und-kaemme/bremen-main.jpg",                 attributes: { colour_hex: "#3D5A3E" }, retail_price_cents: 2190, wholesale_price_cents: 1533, inventory_quantity: 20 },
+        { id: "vent-brush-classic",  title: "Classic",  color: null, sku: "BIZILUXE-VENT-BRUSH-CLASSIC",  image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg", attributes: {}, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 30 },
+        { id: "vent-brush-flexible", title: "Flexible", color: null, sku: "BIZILUXE-VENT-BRUSH-FLEXIBLE", image_url: "/products/buersten-und-kaemme/bremen-main.jpg",                 attributes: {}, retail_price_cents: 2190, wholesale_price_cents: 1533, inventory_quantity: 20 },
       ]
     },
     {
@@ -440,8 +440,8 @@ function getBrushesProducts(): CatalogProduct[] {
       image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg",
       attributes: {},
       variants: [
-        { id: "biziluxe-styling-combs-rat-tail", title: "Rat-Tail Comb", color: "Rat-Tail Comb", sku: "BIZILUXE-RAT-TAIL-COMB",  image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg",       attributes: { colour_hex: "#2C1A0E" }, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
-        { id: "biziluxe-styling-combs-styling",  title: "Styling Comb",  color: "Styling Comb",  sku: "BIZILUXE-STYLING-COMB",   image_url: "/products/buersten-und-kaemme/hildesheim/hildesheim-main.jpg", attributes: { colour_hex: "#3D2C1E" }, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
+        { id: "biziluxe-styling-combs-rat-tail", title: "Rat-Tail Comb", color: null, sku: "BIZILUXE-RAT-TAIL-COMB",  image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg",       attributes: {}, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
+        { id: "biziluxe-styling-combs-styling",  title: "Styling Comb",  color: null, sku: "BIZILUXE-STYLING-COMB",   image_url: "/products/buersten-und-kaemme/hildesheim/hildesheim-main.jpg", attributes: {}, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
       ]
     },
     {
@@ -470,8 +470,8 @@ function getBrushesProducts(): CatalogProduct[] {
       image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg",
       attributes: {},
       variants: [
-        { id: "biziluxe-professional-combs-dressing",   title: "Dressing Comb",   color: "Dressing Comb",   sku: "BIZILUXE-DRESSING-COMB",   image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg",  attributes: { colour_hex: "#8B7355" }, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 },
-        { id: "biziluxe-professional-combs-metal-tail", title: "Metal Tail Comb", color: "Metal Tail Comb", sku: "BIZILUXE-METAL-TAIL-COMB",  image_url: "/products/profi-friseurbedarf/bielefeld/bielefeld-main.jpg",         attributes: { colour_hex: "#C0C0C0" }, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 },
+        { id: "biziluxe-professional-combs-dressing",   title: "Dressing Comb",   color: null, sku: "BIZILUXE-DRESSING-COMB",   image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg",  attributes: {}, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 },
+        { id: "biziluxe-professional-combs-metal-tail", title: "Metal Tail Comb", color: null, sku: "BIZILUXE-METAL-TAIL-COMB",  image_url: "/products/profi-friseurbedarf/bielefeld/bielefeld-main.jpg",         attributes: {}, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 },
       ]
     },
   ];
@@ -536,8 +536,8 @@ function getBiziLuxeStylingToolProducts(): CatalogProduct[] {
       image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",
       attributes: {},
       variants: [
-        { id: "wiesbaden-hair-dryer",    title: "Hair Dryer",             color: "Hair Dryer",             sku: "HAIR-DRYER-BIZILUXE",     image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",  attributes: { colour_hex: "#C0607A" }, retail_price_cents:  8990, wholesale_price_cents: 6293,  inventory_quantity: 10 },
-        { id: "waldenburg-dryer-set",    title: "Dryer & Straightener Set", color: "Dryer & Straightener Set", sku: "DRYER-STRAIGHTENER-SET",  image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg", attributes: { colour_hex: "#B8860B" }, retail_price_cents: 14990, wholesale_price_cents: 10493, inventory_quantity: 5  },
+        { id: "wiesbaden-hair-dryer",  title: "Hair Dryer",               color: null, sku: "HAIR-DRYER-BIZILUXE",    image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",  attributes: {}, retail_price_cents:  8990, wholesale_price_cents: 6293,  inventory_quantity: 10 },
+        { id: "waldenburg-dryer-set",  title: "Dryer & Straightener Set", color: null, sku: "DRYER-STRAIGHTENER-SET",  image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg", attributes: {}, retail_price_cents: 14990, wholesale_price_cents: 10493, inventory_quantity: 5  },
       ]
     },
     { id: "glashuette",  title: "Keratin Bond Fusion Iron",                slug: "glashuette",  description: "Professional keratin bond fusion iron for applying and removing bonded extensions. Temperature-controlled with LCD display. Comes with carrying case.",                 image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",  attributes: {}, variants: [{ id: "glashuette-standard",  title: "Standard", color: null, sku: "KERATIN-FUSION-IRON",         image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",  attributes: {}, retail_price_cents: 5990,  wholesale_price_cents: 4193, inventory_quantity: 10 }] },
