@@ -515,6 +515,22 @@ function getBrushesProducts(): CatalogProduct[] {
   ];
 }
 
+function makeBiziHairVariants(prefix: string, folder: string, basePrice: number): CatalogVariant[] {
+  return BIZIHAIR_COLOURS.flatMap((colour) =>
+    LENGTHS.map((length) => ({
+      id: `${prefix}-${colour.name}-${length}`.toLowerCase().replace(/[\s/]+/g, "-"),
+      title: `${colour.name} / ${length}`,
+      color: colour.name,
+      sku: `${prefix}-${colour.name}-${length}`.toUpperCase().replace(/[\s/]+/g, "-"),
+      image_url: `/products/bizihair-extensions/${folder}/${colour.img}`,
+      attributes: { length, colour_hex: colour.hex },
+      retail_price_cents: basePrice + (LENGTHS.indexOf(length) * 1000),
+      wholesale_price_cents: Math.round((basePrice + LENGTHS.indexOf(length) * 1000) * 0.7),
+      inventory_quantity: 20
+    }))
+  );
+}
+
 function getBiziHairProducts(): CatalogProduct[] {
   return [
     {
@@ -524,19 +540,25 @@ function getBiziHairProducts(): CatalogProduct[] {
       description: "BiziHair Genius Weft Echthaar Extensions. Erhältlich in 7 Farben und 8 Längen.",
       image_url: "/products/bizihair-extensions/weft/weft-main.jpg",
       attributes: {},
-      variants: BIZIHAIR_COLOURS.flatMap((colour) =>
-        LENGTHS.map((length) => ({
-          id: `bizihair-weft-${colour.name}-${length}`.toLowerCase().replace(/[\s/]+/g, "-"),
-          title: `${colour.name} / ${length}`,
-          color: colour.name,
-          sku: `BIZIHAIR-WEFT-${colour.name}-${length}`.toUpperCase().replace(/[\s/]+/g, "-"),
-          image_url: `/products/bizihair-extensions/weft/${colour.img}`,
-          attributes: { length, colour_hex: colour.hex },
-          retail_price_cents: 8900 + (LENGTHS.indexOf(length) * 1000),
-          wholesale_price_cents: Math.round((8900 + LENGTHS.indexOf(length) * 1000) * 0.7),
-          inventory_quantity: 20
-        }))
-      )
+      variants: makeBiziHairVariants("bizihair-weft", "weft", 8900)
+    },
+    {
+      id: "bizihair-tape-in",
+      title: "BiziHair Tape-In Extensions",
+      slug: "bizihair-tape-in-extensions",
+      description: "BiziHair Tape-In Echthaar Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Erhältlich in 7 Farben und 8 Längen.",
+      image_url: "/products/bizihair-extensions/tape-in/tape-in-main.jpg",
+      attributes: {},
+      variants: makeBiziHairVariants("bizihair-tape-in", "weft", 9900)
+    },
+    {
+      id: "bizihair-utip",
+      title: "BiziHair U-Tip Extensions",
+      slug: "bizihair-utip-extensions",
+      description: "BiziHair U-Tip Keratin Bonding Echthaar Extensions. Natürlich anmutendes Ergebnis durch Keratinbindung. Erhältlich in 7 Farben und 8 Längen.",
+      image_url: "/products/bizihair-extensions/utip/utip-main.jpg",
+      attributes: {},
+      variants: makeBiziHairVariants("bizihair-utip", "weft", 10900)
     }
   ];
 }
@@ -616,8 +638,9 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (brushSlugs.includes(slug)) {
     return getBrushesProducts().find((p) => p.slug === slug) || null;
   }
-  if (slug === "bizihair-weft-extensions") {
-    return getBiziHairProducts()[0];
+  const biziHairSlugs = ["bizihair-weft-extensions", "bizihair-tape-in-extensions", "bizihair-utip-extensions"];
+  if (biziHairSlugs.includes(slug)) {
+    return getBiziHairProducts().find((p) => p.slug === slug) || null;
   }
   const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "gator-grip-clips", "matte-section-clips", "sectioning-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles"];
   if (accessorySlugs.includes(slug)) {
