@@ -27,25 +27,37 @@ export type CatalogProduct = {
   attributes?: Record<string, unknown>;
 };
 
+const EXTENSION_COLOURS = [
+  { name: "1 Tiefschwarz",       hex: "#1C1008",                          img: "colour-1.jpg" },
+  { name: "1A Naturschwarz",     hex: "#231A10",                          img: "colour-1a.jpg" },
+  { name: "2 Schokobraun",       hex: "#3D2314",                          img: "colour-2.jpg" },
+  { name: "4 Mittelbraun",       hex: "#6B3A22",                          img: "colour-4.jpg" },
+  { name: "8 Dunkelblond",       hex: "#9B7040",                          img: "colour-8.jpg" },
+  { name: "8/22 Highlights",     hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)", img: "colour-8-22.jpg" },
+  { name: "613 Platinblond",     hex: "#EDE0C0",                          img: "colour-613.jpg" },
+  { name: "SB Balayage",         hex: "linear-gradient(135deg,#3D2314 50%,#EDE0C0 50%)", img: "colour-sb.jpg" },
+  { name: "4/6/8 Highlights",   hex: "linear-gradient(135deg,#6B3A22 50%,#C09060 50%)", img: "colour-4-6-8.jpg" },
+  { name: "60A Goldblond",       hex: "#D4A83A",                          img: "colour-60a.jpg" },
+];
+const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
+
+function makeExtensionVariants(slug: string, folder: string, basePrice: number): CatalogVariant[] {
+  return EXTENSION_COLOURS.flatMap((colour) =>
+    LENGTHS.map((length) => ({
+      id: `${slug}-${colour.name}-${length}`.toLowerCase().replace(/[\s/]+/g,"-"),
+      title: `${colour.name} / ${length}`,
+      color: colour.name,
+      sku: `${slug}-${colour.name}-${length}`.toUpperCase().replace(/[\s/]+/g,"-"),
+      image_url: `/products/${folder}/${colour.img}`,
+      attributes: { length, colour_hex: colour.hex },
+      retail_price_cents: basePrice + (LENGTHS.indexOf(length) * 1000),
+      wholesale_price_cents: Math.round((basePrice + LENGTHS.indexOf(length) * 1000) * 0.7),
+      inventory_quantity: 20
+    }))
+  );
+}
+
 function getBiziLuxeExtensionProducts(): CatalogProduct[] {
-  const COLOURS = ["1 Tiefschwarz","1A Naturschwarz","2 Schokobraun","4 Mittelbraun","8 Dunkelblond","8/22 Highlights Silver","613","SB Highlights","4/6/8 Highlights","60A"];
-  const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
-
-  const makeVariants = (slug: string, basePrice: number): CatalogVariant[] =>
-    COLOURS.flatMap((colour) =>
-      LENGTHS.map((length) => ({
-        id: `${slug}-${colour}-${length}`.toLowerCase().replace(/\s+/g,""),
-        title: `${colour} / ${length}`,
-        color: colour,
-        sku: `${slug}-${colour}-${length}`.toUpperCase().replace(/\s+/g,"-"),
-        image_url: null,
-        attributes: { length },
-        retail_price_cents: basePrice + (LENGTHS.indexOf(length) * 1000),
-        wholesale_price_cents: Math.round((basePrice + LENGTHS.indexOf(length) * 1000) * 0.7),
-        inventory_quantity: 20
-      }))
-    );
-
   return [
     {
       id: "biziluxe-tape-in",
@@ -53,17 +65,17 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
       slug: "tape-in-extensions",
       description: "Premium Remy Echthaar Tape-In Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Verfügbar in 10 Farben und 8 Längen.",
       image_url: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg",
-      attributes: { coming_soon: true },
-      variants: makeVariants("tape-in", 8900)
+      attributes: {},
+      variants: makeExtensionVariants("tape-in", "biziluxe-extensions/tape-in", 8900)
     },
     {
       id: "biziluxe-weft",
-      title: "Weft Extensions",
+      title: "Genius Weft Extensions",
       slug: "weft-extensions",
-      description: "Handgeknüpfte Weft Echthaar Extensions für maximales Volumen. Ideal für Salon-Installation. Verfügbar in 10 Farben und 8 Längen.",
+      description: "Handgeknüpfte Genius Weft Echthaar Extensions für maximales Volumen. Ideal für Salon-Installation. Verfügbar in 10 Farben und 8 Längen.",
       image_url: "/products/biziluxe-extensions/weft/weft-main.jpg",
-      attributes: { coming_soon: true },
-      variants: makeVariants("weft", 11900)
+      attributes: {},
+      variants: makeExtensionVariants("weft", "biziluxe-extensions/weft", 11900)
     },
     {
       id: "biziluxe-utip",
@@ -71,8 +83,8 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
       slug: "utip-extensions",
       description: "Keratin U-Tip Bonding Extensions für natürlichen Fall und lange Haltbarkeit. Professionelle Salon-Anwendung. Verfügbar in 10 Farben und 8 Längen.",
       image_url: "/products/biziluxe-extensions/utip/utip-main.jpg",
-      attributes: { coming_soon: true },
-      variants: makeVariants("utip", 14900)
+      attributes: {},
+      variants: makeExtensionVariants("utip", "biziluxe-extensions/utip", 14900)
     }
   ];
 }

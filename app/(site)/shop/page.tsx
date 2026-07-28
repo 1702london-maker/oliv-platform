@@ -3,6 +3,7 @@ import path from "node:path";
 import { cookies } from "next/headers";
 import { getShopCategories } from "@/lib/catalog/categories";
 import { formatMoney, getCatalogProducts } from "@/lib/catalog/products";
+import { HairProductCard } from "@/components/shop/HairProductCard";
 
 export const dynamic = "force-dynamic";
 
@@ -125,28 +126,54 @@ if (!categorySlug && !viewAll) {
         <div className="ohs-catalog-grid">
           {products.length ? products.map((product) => {
             const firstVariant = product.variants[0];
+            const priceLabel = firstVariant
+              ? `From ${formatMoney(firstVariant.retail_price_cents, currency)}`
+              : "Price on request";
+
+            // Build unique colour list (first variant per colour)
+            const seenColours = new Set<string>();
+            const colours = product.variants
+              .filter((v) => {
+                if (!v.color || seenColours.has(v.color)) return false;
+                seenColours.add(v.color);
+                return true;
+              })
+              .map((v) => ({
+                name: v.color!,
+                hex: (v.attributes as Record<string, string> | undefined)?.colour_hex ?? "#888",
+                imageUrl: v.image_url ?? product.image_url ?? "",
+              }));
+
+            if (colours.length > 1) {
+              return (
+                <HairProductCard
+                  key={product.id}
+                  title={product.title}
+                  href={`/products/${product.slug}`}
+                  mainImage={product.image_url ?? colours[0]?.imageUrl ?? ""}
+                  price={priceLabel}
+                  colours={colours}
+                />
+              );
+            }
+
             return (
               <article className="ohs-product-card" key={product.id}>
-                <a className="ohs-product-media" href={`/products/${product.slug}`} style={{position:"relative"}}>
+                <a className="ohs-product-media" href={`/products/${product.slug}`}>
                   {product.image_url ? (
                     <img src={product.image_url} alt={product.title} loading="lazy" />
                   ) : (
-                    <span />
+                    <span className="ohs-product-ph" />
                   )}
-                  <span style={{position:"absolute",top:"10px",left:"10px",background:"#2B2620",color:"#F6F1E8",fontSize:"9px",fontWeight:700,letterSpacing:".12em",padding:"4px 10px",fontFamily:"Montserrat,sans-serif",textTransform:"uppercase"}}>Coming Soon</span>
                 </a>
                 <div className="ohs-product-copy">
                   <h2>{product.title}</h2>
-                  <p>
-                    {firstVariant
-                      ? `From ${formatMoney(firstVariant.retail_price_cents, currency)}`
-                      : "Price available soon"}
-                  </p>
-                  <span style={{display:"inline-block",padding:"10px 20px",background:"#ccc",color:"#888",fontFamily:"Montserrat,sans-serif",fontSize:"11px",fontWeight:700,letterSpacing:".1em",textTransform:"uppercase",cursor:"not-allowed"}}>Coming Soon</span>
+                  <p>{priceLabel}</p>
+                  <a href={`/products/${product.slug}`} className="ohs-product-btn">View Product</a>
                 </div>
               </article>
             );
-          }) : <p className="ohs-catalog-empty">Products for this collection are coming soon.</p>}
+          }) : <p className="ohs-catalog-empty">No products found in this collection.</p>}
         </div>
       </section>
       <div dangerouslySetInnerHTML={{ __html: after }} />
