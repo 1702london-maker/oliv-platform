@@ -105,39 +105,14 @@ function getProSalonProducts(): CatalogProduct[] {
     { id: "salon-service-trolley", title: "Salon Service Trolley",           price: 9900, desc: "3-shelf black salon service trolley with top tray, tool holder and lockable castors. Ideal for colouring services." },
     { id: "colour-mixing-trolley", title: "Colour Mixing Trolley",           price: 14900, desc: "Premium acrylic colour mixing trolley with 3 mixing bowl holders, tool holder and lower storage shelf." },
     { id: "hair-cutting-cape",     title: "Professional Hair Cutting Cape",  price: 1490,  desc: "Waterproof professional hair cutting cape. Full-length coverage with adjustable neck closure. Salon quality." },
-    { id: "arnsberg",              title: "Gator Grip Clips (Silver)",        price: 1290,  desc: "BiziLuxe silver sectioning clips with grip mechanism. Professional-grade for precise hair sectioning. Pack of 6." },
-    { id: "bielefeld",             title: "BiziLuxe Metal Tail Comb",         price: 1090,  desc: "BiziLuxe Styling Comb Collection. Fine-tooth comb with precision stainless steel rat-tail pin. Chemical & heat resistant." },
-    { id: "bocholt",               title: "Professional Elastic Hair Bands",  price:  690,  desc: "BiziLuxe professional elastic hair bands. Gentle on hair with no metal parts. Pack of 6." },
     { id: "detmold",               title: "Tinting Bowl (Black & White)",     price:  890,  desc: "Professional two-tone tinting bowl with handle spout. Black gloss interior, white exterior for easy colour visibility." },
-    { id: "dortmund",              title: "Slip-On Bonnet (Black)",           price: 1090,  desc: "Lightweight slip-on hair bonnet in black for protecting styles overnight. Smooth lining reduces frizz and breakage." },
     { id: "essen",                 title: "Hair Cutting Cape (Textured)",     price: 2490,  desc: "Premium waterproof salon cutting cape in textured black. Lightweight with professional neck closure." },
-    { id: "hagen",                 title: "Gator Grip Clips (White)",         price: 1290,  desc: "BiziLuxe white sectioning clips with grip mechanism. Professional-grade for precise hair sectioning. Pack of 6." },
     { id: "herford",               title: "Adjustable Wig Stand Tripod",      price: 3490,  desc: "Professional adjustable tripod stand for mannequin heads and wig forms. Height-adjustable with stable metal base." },
-    { id: "minden",                title: "Gator Grip Clips (Clear)",         price: 1290,  desc: "BiziLuxe transparent sectioning clips with grip mechanism. Professional-grade for precise hair sectioning. Pack of 6." },
     { id: "muenster",              title: "Disposable Gloves (100 pcs)",      price: 1490,  desc: "Non-medical disposable gloves, 100 per box. Essential for hair colouring and chemical treatments." },
     { id: "recklinghausen",        title: "Open Shelf Salon Trolley",         price: 18990, desc: "Professional rolling salon trolley with three open shelves. Holds bowls, colour products and styling tools. Lockable wheels." },
-    { id: "wesel",                 title: "Micro Rings Set",                  price: 1490,  desc: "Professional micro ring set for hair extensions. Comes in 4 shades: blonde, light brown, dark brown and black." },
-    { id: "witten",                title: "Gator Grip Clips (Black)",         price: 1290,  desc: "BiziLuxe black sectioning clips with grip mechanism. Professional-grade for precise hair sectioning. Pack of 6." },
   ];
   const extraProducts: CatalogProduct[] = [
-    { id: "soest",           title: "Fine Mist Spray Bottle (Champagne Gold)", slug: "soest",           description: "BiziLuxe fine mist continuous spray bottle in champagne gold. 360° spray for even moisture distribution.",                                                                   image_url: "/products/profi-friseurbedarf/soest/soest-champagnergold-main.jpg",  attributes: {}, variants: [{ id: "soest-standard",           title: "Standard", color: null, sku: "SPRAY-BOTTLE-CHAMPAGNE",       image_url: "/products/profi-friseurbedarf/soest/soest-champagnergold-main.jpg",  attributes: {}, retail_price_cents: 1990,  wholesale_price_cents: 1393, inventory_quantity: 20 }] },
-    { id: "bavaria",         title: "Keratin Heat Shield (Black)",             slug: "bavaria",         description: "BiziLuxe keratin bond heat shield protectors in black. 10 pcs per box. Protects bonds during heat styling.",                                                               image_url: "/products/profi-friseurbedarf/bavaria-main.jpg",                     attributes: {}, variants: [{ id: "bavaria-standard",         title: "Standard", color: null, sku: "KERATIN-HEAT-SHIELD-BLACK",    image_url: "/products/profi-friseurbedarf/bavaria-main.jpg",                     attributes: {}, retail_price_cents: 1490,  wholesale_price_cents: 1043, inventory_quantity: 20 }] },
-    { id: "berghain",        title: "BiziLuxe Cotton Thread for Sew-In",      slug: "berghain",        description: "Professional cotton thread for sew-in extensions. 1000 yards per spool. Available in Beige, Light Brown, Brown, Dark Brown and Black.",                                  image_url: "/products/profi-friseurbedarf/berghain-main.jpg",                    attributes: {}, variants: [{ id: "berghain-standard",        title: "Standard", color: null, sku: "COTTON-THREAD-SEW-IN",         image_url: "/products/profi-friseurbedarf/berghain-main.jpg",                    attributes: {}, retail_price_cents: 1290,  wholesale_price_cents:  903, inventory_quantity: 30 }] },
-    { id: "drachenfels",     title: "Rose Gold Sectioning Clips",              slug: "drachenfels",     description: "BiziLuxe rose gold metal sectioning clips with open-slot design. Set of 5 in a branded bag.",                                                                              image_url: "/products/profi-friseurbedarf/drachenfels-main.jpg",                 attributes: {}, variants: [{ id: "drachenfels-standard",     title: "Standard", color: null, sku: "ROSE-GOLD-SECTION-CLIPS",      image_url: "/products/profi-friseurbedarf/drachenfels-main.jpg",                 attributes: {}, retail_price_cents: 1490,  wholesale_price_cents: 1043, inventory_quantity: 20 }] },
-    { id: "eisenach",        title: "BiziLuxe Removal Tonic",                  slug: "eisenach",        description: "BiziLuxe tape extension removal tonic. 100ml spray bottle. Gently dissolves tape adhesive for clean, damage-free removal.",                                              image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",                    attributes: {}, variants: [{ id: "eisenach-standard",        title: "Standard", color: null, sku: "REMOVAL-TONIC-TAPE",            image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",                    attributes: {}, retail_price_cents: 1990,  wholesale_price_cents: 1393, inventory_quantity: 20 }] },
-    { id: "glashuette",      title: "Keratin Bond Fusion Iron",                slug: "glashuette",      description: "Professional keratin bond fusion iron for applying and removing bonded extensions. Temperature-controlled with LCD display. Comes with carrying case.",                  image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",                  attributes: {}, variants: [{ id: "glashuette-standard",      title: "Standard", color: null, sku: "KERATIN-FUSION-IRON",           image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",                  attributes: {}, retail_price_cents: 5990,  wholesale_price_cents: 4193, inventory_quantity: 10 }] },
-    { id: "hamburger-hafen", title: "BiziLuxe Latch Hook Tool",                slug: "hamburger-hafen", description: "BiziLuxe professional latch hook tool with gold handle. Includes 3 interchangeable needle sizes for micro ring and nano ring installations. Comes with BiziLuxe case.", image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg",            attributes: {}, variants: [{ id: "hamburger-hafen-standard", title: "Standard", color: null, sku: "LATCH-HOOK-TOOL",               image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg",            attributes: {}, retail_price_cents: 1990,  wholesale_price_cents: 1393, inventory_quantity: 15 }] },
-    { id: "mannheim",        title: "BiziLuxe Double Sided Tape",              slug: "mannheim",        description: "BiziLuxe double sided tape tabs for tape-in hair extensions. 60 tabs per pack (4.0 cm × 0.8 cm). Ultra-strong hold.",                                                    image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",                    attributes: {}, variants: [{ id: "mannheim-standard",        title: "Standard", color: null, sku: "DOUBLE-SIDED-TAPE-60",         image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",                    attributes: {}, retail_price_cents:  990,  wholesale_price_cents:  693, inventory_quantity: 30 }] },
-    { id: "neuschwanstein",  title: "BiziLuxe Gold Clips (20 pcs)",            slug: "neuschwanstein",  description: "BiziLuxe gold metal sectioning clips in a luxury round tin. 20 pcs per tin.",                                                                                              image_url: "/products/profi-friseurbedarf/neuschwanstein-main.jpg",              attributes: {}, variants: [{ id: "neuschwanstein-standard",  title: "Standard", color: null, sku: "GOLD-CLIPS-TIN",               image_url: "/products/profi-friseurbedarf/neuschwanstein-main.jpg",              attributes: {}, retail_price_cents: 1990,  wholesale_price_cents: 1393, inventory_quantity: 20 }] },
-    { id: "paderborn",       title: "Cross-Back Salon Apron",                  slug: "paderborn",       description: "Professional cross-back salon apron in dark navy with front pocket. Comfortable, adjustable fit for long salon shifts.",                                                   image_url: "/products/profi-friseurbedarf/paderborn-main.jpg",                   attributes: {}, variants: [{ id: "paderborn-standard",       title: "Standard", color: null, sku: "CROSS-BACK-APRON",             image_url: "/products/profi-friseurbedarf/paderborn-main.jpg",                   attributes: {}, retail_price_cents: 2490,  wholesale_price_cents: 1743, inventory_quantity: 15 }] },
-    { id: "rhein",           title: "Keratin Heat Shield (Clear)",             slug: "rhein",           description: "BiziLuxe keratin bond heat shield protectors in clear. 10 pcs per box. Protects bonds during heat styling.",                                                               image_url: "/products/profi-friseurbedarf/rhein-main.jpg",                       attributes: {}, variants: [{ id: "rhein-standard",           title: "Standard", color: null, sku: "KERATIN-HEAT-SHIELD-CLEAR",    image_url: "/products/profi-friseurbedarf/rhein-main.jpg",                       attributes: {}, retail_price_cents: 1490,  wholesale_price_cents: 1043, inventory_quantity: 20 }] },
-    { id: "ruhrstahl",       title: "BiziLuxe Gold Scissors",                  slug: "ruhrstahl",       description: "BiziLuxe professional gold-finish hairdressing scissors. Precision blades for clean, sharp cuts. Lightweight ergonomic design.",                                          image_url: "/products/profi-friseurbedarf/ruhrstahl-main.jpg",                   attributes: {}, variants: [{ id: "ruhrstahl-standard",       title: "Standard", color: null, sku: "GOLD-SCISSORS",               image_url: "/products/profi-friseurbedarf/ruhrstahl-main.jpg",                   attributes: {}, retail_price_cents: 3990,  wholesale_price_cents: 2793, inventory_quantity: 15 }] },
-    { id: "solingen",        title: "BiziLuxe Hair Straightener",              slug: "solingen",        description: "BiziLuxe professional hair straightener with rose gold plates and digital temperature control. Suitable for all hair types.",                                             image_url: "/products/profi-friseurbedarf/solingen-main.jpg",                    attributes: {}, variants: [{ id: "solingen-standard",        title: "Standard", color: null, sku: "HAIR-STRAIGHTENER-ROSEGOLD",   image_url: "/products/profi-friseurbedarf/solingen-main.jpg",                    attributes: {}, retail_price_cents: 7990,  wholesale_price_cents: 5593, inventory_quantity: 10 }] },
-    { id: "speicherstadt",   title: "BiziLuxe Tape Scraper",                   slug: "speicherstadt",   description: "BiziLuxe tape scraper tool for easy removal of tape-in extension tabs. Ergonomic handle with dual-blade head.",                                                           image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",               attributes: {}, variants: [{ id: "speicherstadt-standard",   title: "Standard", color: null, sku: "TAPE-SCRAPER",                 image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",               attributes: {}, retail_price_cents:  990,  wholesale_price_cents:  693, inventory_quantity: 25 }] },
-    { id: "taunus",          title: "BiziLuxe K-Tip Remover",                  slug: "taunus",          description: "BiziLuxe K-Tip hair extension remover spray. 100ml. Gently dissolves keratin bonds for clean, damage-free removal.",                                                     image_url: "/products/profi-friseurbedarf/taunus-main.jpg",                      attributes: {}, variants: [{ id: "taunus-standard",          title: "Standard", color: null, sku: "KTIP-REMOVER",                 image_url: "/products/profi-friseurbedarf/taunus-main.jpg",                      attributes: {}, retail_price_cents: 1990,  wholesale_price_cents: 1393, inventory_quantity: 20 }] },
-    { id: "waldenburg",      title: "BiziLuxe Hair Dryer & Straightener Set",  slug: "waldenburg",      description: "BiziLuxe professional hair dryer and straightener set in a luxury gift box. Rose gold accents.",                                                                           image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg",                  attributes: {}, variants: [{ id: "waldenburg-standard",      title: "Standard", color: null, sku: "DRYER-STRAIGHTENER-SET",       image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg",                  attributes: {}, retail_price_cents: 14990, wholesale_price_cents: 10493, inventory_quantity: 5 }] },
-    { id: "wiesbaden",       title: "BiziLuxe Hair Dryer",                     slug: "wiesbaden",       description: "BiziLuxe professional ionic hair dryer with rose gold accents. Lightweight design with multiple heat and speed settings.",                                                 image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",                   attributes: {}, variants: [{ id: "wiesbaden-standard",       title: "Standard", color: null, sku: "HAIR-DRYER-BIZILUXE",          image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",                   attributes: {}, retail_price_cents: 8990,  wholesale_price_cents: 6293, inventory_quantity: 10 }] },
-    { id: "zollverein",      title: "BiziLuxe Extension Tool Kit",             slug: "zollverein",      description: "BiziLuxe complete hair extension tool kit in a luxury zipper case. Includes gold scissors, pliers, latch hook tools and section clips.",                                  image_url: "/products/profi-friseurbedarf/zollverein-main.jpg",                  attributes: {}, variants: [{ id: "zollverein-standard",      title: "Standard", color: null, sku: "EXTENSION-TOOL-KIT",           image_url: "/products/profi-friseurbedarf/zollverein-main.jpg",                  attributes: {}, retail_price_cents: 9990,  wholesale_price_cents: 6993, inventory_quantity: 10 }] },
+    { id: "paderborn", title: "Cross-Back Salon Apron", slug: "paderborn", description: "Professional cross-back salon apron in dark navy with front pocket. Comfortable, adjustable fit for long salon shifts.", image_url: "/products/profi-friseurbedarf/paderborn-main.jpg", attributes: {}, variants: [{ id: "paderborn-standard", title: "Standard", color: null, sku: "CROSS-BACK-APRON", image_url: "/products/profi-friseurbedarf/paderborn-main.jpg", attributes: {}, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 15 }] },
   ];
   return [
     ...items.map((item) => ({
@@ -169,10 +144,15 @@ function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
       id: "gator-grip-clips",
       title: "Gator Grip Clips",
       slug: "gator-grip-clips",
-      description: "Professional metal Gator Grip sectioning clips. Strong spring mechanism for secure hold. Pack of 12.",
-      image_url: "/products/accessories/gator-grip-clips/gator-grip-clips-main.jpg",
+      description: "BiziLuxe professional Gator Grip sectioning clips. Strong spring mechanism for secure hold. Pack of 6. Available in 4 colours.",
+      image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg",
       attributes: {},
-      variants: [{ id: "gator-grip-clips-standard", title: "Standard", color: null, sku: "GATOR-GRIP-CLIPS", image_url: "/products/accessories/gator-grip-clips/gator-grip-clips-main.jpg", attributes: {}, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 25 }]
+      variants: [
+        { id: "gator-grip-clips-silver", title: "Silver", color: "Silver", sku: "GATOR-GRIP-CLIPS-SILVER", image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg", attributes: { colour_hex: "#C0C0C0" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-white",  title: "White",  color: "White",  sku: "GATOR-GRIP-CLIPS-WHITE",  image_url: "/products/profi-friseurbedarf/hagen/hagen-main.jpg",           attributes: { colour_hex: "#F5F5F5" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-clear",  title: "Clear",  color: "Clear",  sku: "GATOR-GRIP-CLIPS-CLEAR",  image_url: "/products/profi-friseurbedarf/minden/minden-main.jpg",         attributes: { colour_hex: "#E8E8E8" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-black",  title: "Black",  color: "Black",  sku: "GATOR-GRIP-CLIPS-BLACK",  image_url: "/products/profi-friseurbedarf/witten/witten-main.jpg",         attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+      ]
     },
     {
       id: "matte-section-clips",
@@ -196,10 +176,13 @@ function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
       id: "fine-mist-spray-bottle",
       title: "Fine Mist Spray Bottle",
       slug: "fine-mist-spray-bottle",
-      description: "BiziLuxe fine mist continuous spray bottle. 300ml capacity. Ideal for moisturising and styling.",
+      description: "BiziLuxe fine mist continuous spray bottle. 300ml capacity. 360° spray for even moisture distribution. Available in 2 colours.",
       image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg",
       attributes: {},
-      variants: [{ id: "fine-mist-spray-bottle-standard", title: "Standard", color: null, sku: "FINE-MIST-SPRAY", image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg", attributes: {}, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 20 }]
+      variants: [
+        { id: "fine-mist-spray-bottle-standard",       title: "Standard",       color: "Standard",       sku: "FINE-MIST-SPRAY-STD",        image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg", attributes: { colour_hex: "#FFFFFF" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 20 },
+        { id: "fine-mist-spray-bottle-champagne-gold", title: "Champagne Gold", color: "Champagne Gold", sku: "FINE-MIST-SPRAY-CHAMPAGNE",   image_url: "/products/profi-friseurbedarf/soest/soest-champagnergold-main.jpg",             attributes: { colour_hex: "#C9A96E" }, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 },
+      ]
     },
     {
       id: "hair-extension-thread",
@@ -244,7 +227,89 @@ function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
       image_url: "/products/accessories/tie-up-bonnet/tie-up-bonnet-main.jpg",
       attributes: {},
       variants: makeBonnetVariants("tie-up-bonnet", "tie-up-bonnet", TIE_UP_BONNET_COLOURS, 2490)
-    }
+    },
+    {
+      id: "dortmund",
+      title: "Slip-On Bonnet (Black)",
+      slug: "dortmund",
+      description: "Lightweight slip-on hair bonnet in black for protecting styles overnight. Smooth lining reduces frizz and breakage.",
+      image_url: "/products/profi-friseurbedarf/dortmund/dortmund-main.jpg",
+      attributes: {},
+      variants: [{ id: "dortmund-standard", title: "Black", color: "Black", sku: "SLIP-ON-BONNET-BLACK", image_url: "/products/profi-friseurbedarf/dortmund/dortmund-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 25 }]
+    },
+    {
+      id: "bocholt",
+      title: "Professional Elastic Hair Bands",
+      slug: "bocholt",
+      description: "BiziLuxe professional elastic hair bands. Gentle on hair with no metal parts. Pack of 6.",
+      image_url: "/products/profi-friseurbedarf/bocholt/bocholt-main.jpg",
+      attributes: {},
+      variants: [{ id: "bocholt-standard", title: "Standard", color: null, sku: "ELASTIC-HAIR-BANDS-6", image_url: "/products/profi-friseurbedarf/bocholt/bocholt-main.jpg", attributes: {}, retail_price_cents: 690, wholesale_price_cents: 483, inventory_quantity: 30 }]
+    },
+    {
+      id: "neuschwanstein",
+      title: "BiziLuxe Gold Clips (20 pcs)",
+      slug: "neuschwanstein",
+      description: "BiziLuxe gold metal sectioning clips in a luxury round tin. 20 pcs per tin.",
+      image_url: "/products/profi-friseurbedarf/neuschwanstein-main.jpg",
+      attributes: {},
+      variants: [{ id: "neuschwanstein-standard", title: "Standard", color: null, sku: "GOLD-CLIPS-TIN", image_url: "/products/profi-friseurbedarf/neuschwanstein-main.jpg", attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 }]
+    },
+    {
+      id: "drachenfels",
+      title: "Rose Gold Sectioning Clips",
+      slug: "drachenfels",
+      description: "BiziLuxe rose gold metal sectioning clips with open-slot design. Set of 5 in a branded bag.",
+      image_url: "/products/profi-friseurbedarf/drachenfels-main.jpg",
+      attributes: {},
+      variants: [{ id: "drachenfels-standard", title: "Standard", color: null, sku: "ROSE-GOLD-SECTION-CLIPS", image_url: "/products/profi-friseurbedarf/drachenfels-main.jpg", attributes: {}, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 }]
+    },
+    {
+      id: "wesel",
+      title: "Micro Rings Set",
+      slug: "wesel",
+      description: "Professional micro ring set for hair extensions. Comes in 4 shades: Blonde, Light Brown, Dark Brown and Black.",
+      image_url: "/products/profi-friseurbedarf/wesel/wesel-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "wesel-blonde",      title: "Blonde",      color: "Blonde",      sku: "MICRO-RINGS-BLONDE",      image_url: "/products/profi-friseurbedarf/wesel/wesel-main.jpg", attributes: { colour_hex: "#D4A843" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 },
+        { id: "wesel-light-brown", title: "Light Brown", color: "Light Brown", sku: "MICRO-RINGS-LIGHT-BROWN",  image_url: "/products/profi-friseurbedarf/wesel/wesel-main.jpg", attributes: { colour_hex: "#8B6340" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 },
+        { id: "wesel-dark-brown",  title: "Dark Brown",  color: "Dark Brown",  sku: "MICRO-RINGS-DARK-BROWN",  image_url: "/products/profi-friseurbedarf/wesel/wesel-main.jpg", attributes: { colour_hex: "#4A2C17" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 },
+        { id: "wesel-black",       title: "Black",       color: "Black",       sku: "MICRO-RINGS-BLACK",        image_url: "/products/profi-friseurbedarf/wesel/wesel-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 },
+      ]
+    },
+    {
+      id: "keratin-heat-shield",
+      title: "Keratin Heat Shield",
+      slug: "keratin-heat-shield",
+      description: "BiziLuxe keratin bond heat shield protectors. 10 pcs per box. Protects bonds during heat styling. Available in Black and Clear.",
+      image_url: "/products/profi-friseurbedarf/bavaria-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "keratin-heat-shield-black", title: "Black", color: "Black", sku: "KERATIN-HEAT-SHIELD-BLACK", image_url: "/products/profi-friseurbedarf/bavaria-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 },
+        { id: "keratin-heat-shield-clear", title: "Clear", color: "Clear", sku: "KERATIN-HEAT-SHIELD-CLEAR", image_url: "/products/profi-friseurbedarf/rhein-main.jpg",   attributes: { colour_hex: "#E8E8E8" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 },
+      ]
+    },
+    {
+      id: "berghain",
+      title: "BiziLuxe Cotton Thread for Sew-In",
+      slug: "berghain",
+      description: "Professional cotton thread for sew-in extensions. 1000 yards per spool. Available in 5 colours: Beige, Light Brown, Brown, Dark Brown and Black.",
+      image_url: "/products/profi-friseurbedarf/berghain-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "berghain-beige",       title: "Beige",       color: "Beige",       sku: "COTTON-THREAD-BEIGE",       image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#D4BFA0" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-light-brown", title: "Light Brown", color: "Light Brown", sku: "COTTON-THREAD-LIGHT-BROWN",  image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#A07850" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-brown",       title: "Brown",       color: "Brown",       sku: "COTTON-THREAD-BROWN",        image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#6B4226" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-dark-brown",  title: "Dark Brown",  color: "Dark Brown",  sku: "COTTON-THREAD-DARK-BROWN",   image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#3D1F0A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-black",       title: "Black",       color: "Black",       sku: "COTTON-THREAD-BLACK",        image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+      ]
+    },
+    { id: "eisenach",        title: "BiziLuxe Removal Tonic",     slug: "eisenach",        description: "BiziLuxe tape extension removal tonic. 100ml spray bottle. Gently dissolves tape adhesive for clean, damage-free removal.",                                              image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",       attributes: {}, variants: [{ id: "eisenach-standard",        title: "Standard", color: null, sku: "REMOVAL-TONIC-TAPE",      image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",       attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 }] },
+    { id: "taunus",          title: "BiziLuxe K-Tip Remover",     slug: "taunus",          description: "BiziLuxe K-Tip hair extension remover spray. 100ml. Gently dissolves keratin bonds for clean, damage-free removal.",                                                     image_url: "/products/profi-friseurbedarf/taunus-main.jpg",         attributes: {}, variants: [{ id: "taunus-standard",          title: "Standard", color: null, sku: "KTIP-REMOVER",            image_url: "/products/profi-friseurbedarf/taunus-main.jpg",         attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 }] },
+    { id: "mannheim",        title: "BiziLuxe Double Sided Tape",  slug: "mannheim",        description: "BiziLuxe double sided tape tabs for tape-in hair extensions. 60 tabs per pack (4.0 cm × 0.8 cm). Ultra-strong hold.",                                                    image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",        attributes: {}, variants: [{ id: "mannheim-standard",        title: "Standard", color: null, sku: "DOUBLE-SIDED-TAPE-60",    image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",        attributes: {}, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 30 }] },
+    { id: "speicherstadt",   title: "BiziLuxe Tape Scraper",       slug: "speicherstadt",   description: "BiziLuxe tape scraper tool for easy removal of tape-in extension tabs. Ergonomic handle with dual-blade head.",                                                           image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",  attributes: {}, variants: [{ id: "speicherstadt-standard",   title: "Standard", color: null, sku: "TAPE-SCRAPER",             image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",  attributes: {}, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 25 }] },
+    { id: "hamburger-hafen", title: "BiziLuxe Latch Hook Tool",    slug: "hamburger-hafen", description: "BiziLuxe professional latch hook tool with gold handle. Includes 3 interchangeable needle sizes for micro ring and nano ring installations. Comes with BiziLuxe case.", image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg", attributes: {}, variants: [{ id: "hamburger-hafen-standard", title: "Standard", color: null, sku: "LATCH-HOOK-TOOL",          image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg", attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 15 }] },
   ];
 }
 
@@ -511,6 +576,15 @@ function getBrushesProducts(): CatalogProduct[] {
       image_url: "/products/buersten-und-kaemme/bremen-main.jpg",
       attributes: {},
       variants: [{ id: "bremen-standard", title: "Standard", color: null, sku: "BIZILUXE-FLEX-VENT-BRUSH", image_url: "/products/buersten-und-kaemme/bremen-main.jpg", attributes: {}, retail_price_cents: 2190, wholesale_price_cents: 1533, inventory_quantity: 20 }]
+    },
+    {
+      id: "bielefeld",
+      title: "BiziLuxe Metal Tail Comb",
+      slug: "bielefeld",
+      description: "BiziLuxe Styling Comb Collection. Fine-tooth comb with precision stainless steel rat-tail pin. Chemical & heat resistant.",
+      image_url: "/products/profi-friseurbedarf/bielefeld/bielefeld-main.jpg",
+      attributes: {},
+      variants: [{ id: "bielefeld-standard", title: "Standard", color: null, sku: "BIZILUXE-METAL-TAIL-COMB", image_url: "/products/profi-friseurbedarf/bielefeld/bielefeld-main.jpg", attributes: {}, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 }]
     }
   ];
 }
@@ -563,11 +637,23 @@ function getBiziHairProducts(): CatalogProduct[] {
   ];
 }
 
+function getBiziLuxeStylingToolProducts(): CatalogProduct[] {
+  return [
+    { id: "solingen",    title: "BiziLuxe Hair Straightener",              slug: "solingen",    description: "BiziLuxe professional hair straightener with rose gold plates and digital temperature control. Suitable for all hair types.",                                            image_url: "/products/profi-friseurbedarf/solingen-main.jpg",    attributes: {}, variants: [{ id: "solingen-standard",    title: "Standard", color: null, sku: "HAIR-STRAIGHTENER-ROSEGOLD",  image_url: "/products/profi-friseurbedarf/solingen-main.jpg",    attributes: {}, retail_price_cents: 7990,  wholesale_price_cents: 5593, inventory_quantity: 10 }] },
+    { id: "wiesbaden",   title: "BiziLuxe Hair Dryer",                     slug: "wiesbaden",   description: "BiziLuxe professional ionic hair dryer with rose gold accents. Lightweight design with multiple heat and speed settings.",                                              image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",   attributes: {}, variants: [{ id: "wiesbaden-standard",   title: "Standard", color: null, sku: "HAIR-DRYER-BIZILUXE",         image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",   attributes: {}, retail_price_cents: 8990,  wholesale_price_cents: 6293, inventory_quantity: 10 }] },
+    { id: "waldenburg",  title: "BiziLuxe Hair Dryer & Straightener Set",  slug: "waldenburg",  description: "BiziLuxe professional hair dryer and straightener set in a luxury gift box. Rose gold accents.",                                                                        image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg",  attributes: {}, variants: [{ id: "waldenburg-standard",  title: "Standard", color: null, sku: "DRYER-STRAIGHTENER-SET",      image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg",  attributes: {}, retail_price_cents: 14990, wholesale_price_cents: 10493, inventory_quantity: 5 }] },
+    { id: "glashuette",  title: "Keratin Bond Fusion Iron",                slug: "glashuette",  description: "Professional keratin bond fusion iron for applying and removing bonded extensions. Temperature-controlled with LCD display. Comes with carrying case.",                 image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",  attributes: {}, variants: [{ id: "glashuette-standard",  title: "Standard", color: null, sku: "KERATIN-FUSION-IRON",         image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",  attributes: {}, retail_price_cents: 5990,  wholesale_price_cents: 4193, inventory_quantity: 10 }] },
+    { id: "ruhrstahl",   title: "BiziLuxe Gold Scissors",                  slug: "ruhrstahl",   description: "BiziLuxe professional gold-finish hairdressing scissors. Precision blades for clean, sharp cuts. Lightweight ergonomic design.",                                        image_url: "/products/profi-friseurbedarf/ruhrstahl-main.jpg",   attributes: {}, variants: [{ id: "ruhrstahl-standard",   title: "Standard", color: null, sku: "GOLD-SCISSORS",               image_url: "/products/profi-friseurbedarf/ruhrstahl-main.jpg",   attributes: {}, retail_price_cents: 3990,  wholesale_price_cents: 2793, inventory_quantity: 15 }] },
+    { id: "zollverein",  title: "BiziLuxe Extension Tool Kit",             slug: "zollverein",  description: "BiziLuxe complete hair extension tool kit in a luxury zipper case. Includes gold scissors, pliers, latch hook tools and section clips.",                               image_url: "/products/profi-friseurbedarf/zollverein-main.jpg",  attributes: {}, variants: [{ id: "zollverein-standard",  title: "Standard", color: null, sku: "EXTENSION-TOOL-KIT",          image_url: "/products/profi-friseurbedarf/zollverein-main.jpg",  attributes: {}, retail_price_cents: 9990,  wholesale_price_cents: 6993, inventory_quantity: 10 }] },
+  ];
+}
+
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
   if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
   if (categorySlug === "bizihair-extensions") return getBiziHairProducts();
   if (categorySlug === "buersten-und-kaemme") return getBrushesProducts();
   if (categorySlug === "accessories" || categorySlug === "biziluxe-accessoires") return getBiziLuxeAccessoryProducts();
+  if (categorySlug === "biziluxe-stylinggeraete") return getBiziLuxeStylingToolProducts();
   if (categorySlug === "profi-friseurbedarf") return getProSalonProducts();
 
   const supabase = await createSupabaseServerClient();
@@ -634,7 +720,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
   }
-  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb-yellow", "edge-brush-comb-blue", "wide-tint-brush-white", "wide-tint-brush-black", "celle", "goslar", "hameln", "hildesheim", "luebeck", "lueneburg", "wolfenbuettel", "bremen"];
+  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb-yellow", "edge-brush-comb-blue", "wide-tint-brush-white", "wide-tint-brush-black", "celle", "goslar", "hameln", "hildesheim", "luebeck", "lueneburg", "wolfenbuettel", "bremen", "bielefeld"];
   if (brushSlugs.includes(slug)) {
     return getBrushesProducts().find((p) => p.slug === slug) || null;
   }
@@ -642,11 +728,15 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (biziHairSlugs.includes(slug)) {
     return getBiziHairProducts().find((p) => p.slug === slug) || null;
   }
-  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "gator-grip-clips", "matte-section-clips", "sectioning-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles"];
+  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "gator-grip-clips", "matte-section-clips", "sectioning-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "wesel", "keratin-heat-shield", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
   if (accessorySlugs.includes(slug)) {
     return getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
   }
-  const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray-white", "tinting-tray-black", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "arnsberg", "bielefeld", "bocholt", "detmold", "dortmund", "essen", "hagen", "herford", "minden", "muenster", "recklinghausen", "soest", "wesel", "witten", "bavaria", "berghain", "drachenfels", "eisenach", "glashuette", "hamburger-hafen", "mannheim", "neuschwanstein", "paderborn", "rhein", "ruhrstahl", "solingen", "speicherstadt", "taunus", "waldenburg", "wiesbaden", "zollverein"];
+  const stylingToolSlugs = ["solingen", "wiesbaden", "waldenburg", "glashuette", "ruhrstahl", "zollverein"];
+  if (stylingToolSlugs.includes(slug)) {
+    return getBiziLuxeStylingToolProducts().find((p) => p.slug === slug) || null;
+  }
+  const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray-white", "tinting-tray-black", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "detmold", "essen", "herford", "muenster", "recklinghausen", "paderborn"];
   if (proSalonSlugs.includes(slug)) {
     return getProSalonProducts().find((p) => p.slug === slug) || null;
   }
