@@ -95,13 +95,107 @@ function makeBonnetVariants(slug: string, folder: string, colours: { name: strin
   }));
 }
 
+function getProSalonProducts(): CatalogProduct[] {
+  const items = [
+    { id: "salon-apron",           title: "Professional Salon Apron",        price: 2990, desc: "Professional waterproof salon apron. Comfortable fit with pocket. Protects clothing during colouring and styling services." },
+    { id: "smart-bowl",            title: "Smart Bowl",                       price: 1990, desc: "Smart colour mixing bowl designed to attach directly to the shampoo bowl. Includes mixing spatula and anti-slip tray. Available in black and white." },
+    { id: "tinting-tray-white",    title: "Tinting Tray White",              price:  990, desc: "Professional white colour mixing tray with measurement markings. Lightweight and easy to clean." },
+    { id: "tinting-tray-black",    title: "Tinting Tray Black",              price:  990, desc: "Professional black colour mixing tray with measurement markings. Lightweight and easy to clean." },
+    { id: "salon-trolley-drawers", title: "Salon Trolley with Drawers",      price: 12900, desc: "Professional salon trolley with 5 pull-out drawers. Wood-effect panels with metal frame and lockable castors." },
+    { id: "salon-service-trolley", title: "Salon Service Trolley",           price: 9900, desc: "3-shelf black salon service trolley with top tray, tool holder and lockable castors. Ideal for colouring services." },
+    { id: "colour-mixing-trolley", title: "Colour Mixing Trolley",           price: 14900, desc: "Premium acrylic colour mixing trolley with 3 mixing bowl holders, tool holder and lower storage shelf." },
+    { id: "hair-cutting-cape",     title: "Professional Hair Cutting Cape",  price: 1490, desc: "Waterproof professional hair cutting cape. Full-length coverage with adjustable neck closure. Salon quality." },
+  ];
+  return items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    slug: item.id,
+    description: item.desc,
+    image_url: `/products/profi-friseurbedarf/${item.id}/${item.id}-main.jpg`,
+    attributes: {},
+    variants: [{
+      id: `${item.id}-standard`,
+      title: "Standard",
+      color: null,
+      sku: item.id.toUpperCase(),
+      image_url: `/products/profi-friseurbedarf/${item.id}/${item.id}-main.jpg`,
+      attributes: {},
+      retail_price_cents: item.price,
+      wholesale_price_cents: Math.round(item.price * 0.7),
+      inventory_quantity: 15
+    }]
+  }));
+}
+
 function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
+  const proAccessories: CatalogProduct[] = [
+    {
+      id: "gator-grip-clips",
+      title: "Gator Grip Clips",
+      slug: "gator-grip-clips",
+      description: "Professional metal Gator Grip sectioning clips. Strong spring mechanism for secure hold. Pack of 12.",
+      image_url: "/products/accessories/gator-grip-clips/gator-grip-clips-main.jpg",
+      attributes: {},
+      variants: [{ id: "gator-grip-clips-standard", title: "Standard", color: null, sku: "GATOR-GRIP-CLIPS", image_url: "/products/accessories/gator-grip-clips/gator-grip-clips-main.jpg", attributes: {}, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 25 }]
+    },
+    {
+      id: "matte-section-clips",
+      title: "Matte Section Clips",
+      slug: "matte-section-clips",
+      description: "Matte black professional sectioning clips. Soft-grip finish, strong hold. Pack of 6.",
+      image_url: "/products/accessories/matte-section-clips/matte-section-clips-main.jpg",
+      attributes: {},
+      variants: [{ id: "matte-section-clips-standard", title: "Standard", color: null, sku: "MATTE-SECTION-CLIPS", image_url: "/products/accessories/matte-section-clips/matte-section-clips-main.jpg", attributes: {}, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 25 }]
+    },
+    {
+      id: "sectioning-clips",
+      title: "Sectioning Clips (6 Pack)",
+      slug: "sectioning-clips",
+      description: "Professional white sectioning clips. Lightweight with strong spring. Pack of 6.",
+      image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg",
+      attributes: {},
+      variants: [{ id: "sectioning-clips-standard", title: "Standard", color: null, sku: "SECTIONING-CLIPS-6", image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg", attributes: {}, retail_price_cents: 790, wholesale_price_cents: 553, inventory_quantity: 30 }]
+    },
+    {
+      id: "fine-mist-spray-bottle",
+      title: "Fine Mist Spray Bottle",
+      slug: "fine-mist-spray-bottle",
+      description: "BiziLuxe fine mist continuous spray bottle. 300ml capacity. Ideal for moisturising and styling.",
+      image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg",
+      attributes: {},
+      variants: [{ id: "fine-mist-spray-bottle-standard", title: "Standard", color: null, sku: "FINE-MIST-SPRAY", image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg", attributes: {}, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 20 }]
+    },
+    {
+      id: "hair-extension-thread",
+      title: "Hair Extension Thread",
+      slug: "hair-extension-thread",
+      description: "Professional hair extension thread in Black, Brown and Clear. Strong elastic thread for weaving and Brazilian knot techniques.",
+      image_url: "/products/accessories/hair-extension-thread/hair-extension-thread-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "hair-extension-thread-black",  title: "Black",  color: "Black",  sku: "HAIR-THREAD-BLACK",  image_url: "/products/accessories/hair-extension-thread/hair-extension-thread-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
+        { id: "hair-extension-thread-brown",  title: "Brown",  color: "Brown",  sku: "HAIR-THREAD-BROWN",  image_url: "/products/accessories/hair-extension-thread/hair-extension-thread-main.jpg", attributes: { colour_hex: "#5C3A1E" }, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
+        { id: "hair-extension-thread-clear",  title: "Clear",  color: "Clear",  sku: "HAIR-THREAD-CLEAR",  image_url: "/products/accessories/hair-extension-thread/hair-extension-thread-main.jpg", attributes: { colour_hex: "#ECECEC" }, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
+      ]
+    },
+    {
+      id: "hair-weaving-needles",
+      title: "Hair Weaving Needles",
+      slug: "hair-weaving-needles",
+      description: "Professional curved hair weaving needles. Set of 3 sizes for different weaving and extension techniques.",
+      image_url: "/products/accessories/hair-weaving-needles/hair-weaving-needles-main.jpg",
+      attributes: {},
+      variants: [{ id: "hair-weaving-needles-standard", title: "Set of 3", color: null, sku: "HAIR-WEAVING-NEEDLES", image_url: "/products/accessories/hair-weaving-needles/hair-weaving-needles-main.jpg", attributes: {}, retail_price_cents: 690, wholesale_price_cents: 483, inventory_quantity: 30 }]
+    },
+  ];
+
   return [
+    ...proAccessories,
     {
       id: "slip-on-bonnet",
       title: "Premium Slip-On Bonnet",
       slug: "slip-on-bonnet",
-      description: "Luxuriöse Satin-Schlafhauben zum Schutz der Haare über Nacht. Easy Slip-On, bequemer Sitz, atmungsaktiv. Erhältlich in 3 Farben.",
+      description: "Luxurious satin sleep bonnet. Easy slip-on, comfortable fit, breathable. Available in 3 colours.",
       image_url: "/products/accessories/slip-on-bonnet/slip-on-bonnet-main.jpg",
       attributes: {},
       variants: makeBonnetVariants("slip-on-bonnet", "slip-on-bonnet", SLIP_ON_BONNET_COLOURS, 1990)
@@ -110,7 +204,7 @@ function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
       id: "tie-up-bonnet",
       title: "Premium Tie-Up Bonnet",
       slug: "tie-up-bonnet",
-      description: "Premium-Satin-Schlaufhauben mit breitem Bindeband für sicheren Halt. Luxuriöses Satin für schönes Haar jeden Tag. Erhältlich in 5 Farben.",
+      description: "Premium satin bonnet with wide tie band for a secure hold. Luxurious satin for beautiful hair every day. Available in 5 colours.",
       image_url: "/products/accessories/tie-up-bonnet/tie-up-bonnet-main.jpg",
       attributes: {},
       variants: makeBonnetVariants("tie-up-bonnet", "tie-up-bonnet", TIE_UP_BONNET_COLOURS, 2490)
@@ -233,6 +327,82 @@ function getBrushesProducts(): CatalogProduct[] {
         wholesale_price_cents: 1393,
         inventory_quantity: 30
       }]
+    },
+    {
+      id: "edge-brush-comb-yellow",
+      title: "Edge Brush & Comb (Yellow)",
+      slug: "edge-brush-comb-yellow",
+      description: "Dual-ended edge brush and comb for precise edge styling and baby hair control. Firm bristles with fine-tooth comb end.",
+      image_url: "/products/buersten-und-kaemme/edge-brush-comb-yellow/edge-brush-comb-yellow-main.jpg",
+      attributes: {},
+      variants: [{
+        id: "edge-brush-comb-yellow-standard",
+        title: "Standard",
+        color: null,
+        sku: "EDGE-BRUSH-COMB-YELLOW",
+        image_url: "/products/buersten-und-kaemme/edge-brush-comb-yellow/edge-brush-comb-yellow-main.jpg",
+        attributes: {},
+        retail_price_cents: 990,
+        wholesale_price_cents: 693,
+        inventory_quantity: 30
+      }]
+    },
+    {
+      id: "edge-brush-comb-blue",
+      title: "Edge Brush & Comb (Blue)",
+      slug: "edge-brush-comb-blue",
+      description: "Dual-ended edge brush and comb for precise edge styling and baby hair control. Firm bristles with fine-tooth comb end.",
+      image_url: "/products/buersten-und-kaemme/edge-brush-comb-blue/edge-brush-comb-blue-main.jpg",
+      attributes: {},
+      variants: [{
+        id: "edge-brush-comb-blue-standard",
+        title: "Standard",
+        color: null,
+        sku: "EDGE-BRUSH-COMB-BLUE",
+        image_url: "/products/buersten-und-kaemme/edge-brush-comb-blue/edge-brush-comb-blue-main.jpg",
+        attributes: {},
+        retail_price_cents: 990,
+        wholesale_price_cents: 693,
+        inventory_quantity: 30
+      }]
+    },
+    {
+      id: "wide-tint-brush-white",
+      title: "Wide Tint Brush (White)",
+      slug: "wide-tint-brush-white",
+      description: "Professional wide tint brush for colour application. Flexible bristles for even distribution of colour products.",
+      image_url: "/products/buersten-und-kaemme/wide-tint-brush-white/wide-tint-brush-white-main.jpg",
+      attributes: {},
+      variants: [{
+        id: "wide-tint-brush-white-standard",
+        title: "Standard",
+        color: null,
+        sku: "WIDE-TINT-BRUSH-WHITE",
+        image_url: "/products/buersten-und-kaemme/wide-tint-brush-white/wide-tint-brush-white-main.jpg",
+        attributes: {},
+        retail_price_cents: 1290,
+        wholesale_price_cents: 903,
+        inventory_quantity: 25
+      }]
+    },
+    {
+      id: "wide-tint-brush-black",
+      title: "Wide Tint Brush (Black)",
+      slug: "wide-tint-brush-black",
+      description: "Professional wide tint brush for colour application. Flexible bristles for even distribution of colour products.",
+      image_url: "/products/buersten-und-kaemme/wide-tint-brush-black/wide-tint-brush-black-main.jpg",
+      attributes: {},
+      variants: [{
+        id: "wide-tint-brush-black-standard",
+        title: "Standard",
+        color: null,
+        sku: "WIDE-TINT-BRUSH-BLACK",
+        image_url: "/products/buersten-und-kaemme/wide-tint-brush-black/wide-tint-brush-black-main.jpg",
+        attributes: {},
+        retail_price_cents: 1290,
+        wholesale_price_cents: 903,
+        inventory_quantity: 25
+      }]
     }
   ];
 }
@@ -268,6 +438,7 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
   if (categorySlug === "bizihair-extensions") return getBiziHairProducts();
   if (categorySlug === "buersten-und-kaemme") return getBrushesProducts();
   if (categorySlug === "accessories" || categorySlug === "biziluxe-accessoires") return getBiziLuxeAccessoryProducts();
+  if (categorySlug === "profi-friseurbedarf") return getProSalonProducts();
 
   const supabase = await createSupabaseServerClient();
   let productIds: string[] | null = null;
@@ -333,16 +504,20 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
   }
-  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush"];
+  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb-yellow", "edge-brush-comb-blue", "wide-tint-brush-white", "wide-tint-brush-black"];
   if (brushSlugs.includes(slug)) {
     return getBrushesProducts().find((p) => p.slug === slug) || null;
   }
   if (slug === "bizihair-weft-extensions") {
     return getBiziHairProducts()[0];
   }
-  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet"];
+  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "gator-grip-clips", "matte-section-clips", "sectioning-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles"];
   if (accessorySlugs.includes(slug)) {
     return getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
+  }
+  const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray-white", "tinting-tray-black", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape"];
+  if (proSalonSlugs.includes(slug)) {
+    return getProSalonProducts().find((p) => p.slug === slug) || null;
   }
   const products = await getCatalogProducts();
   return products.find((product) => product.slug === slug) || getLocalPublicProductBySlug(slug);
