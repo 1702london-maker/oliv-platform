@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const STORE_B_REOPEN_SCRIPT = `<script>
 (function(){
-  var reopenDate=new Date('2026-08-04T00:00:00+02:00');
+  var reopenDate=new Date('2026-09-01T00:00:00+02:00');
   if(new Date()>=reopenDate){
     var banner=document.getElementById('oappt-store-b-closed');
     if(banner)banner.remove();
