@@ -34,25 +34,25 @@ const shopCollections = [
     image: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg"
   },
   {
-    title: "BiziLuxe Accessoires",
+    title: "BiziLuxe Accessories",
     slug: "biziluxe-accessoires",
     desc: "Finishing accessories, care pieces and refined essentials for maintaining your BiziLuxe look.",
     image: "/products/accessories/slip-on-bonnet/slip-on-bonnet-main.jpg"
   },
   {
-    title: "BiziLuxe Stylinggeräte",
+    title: "BiziLuxe Styling Tools",
     slug: "biziluxe-stylinggeraete",
     desc: "Styling tools selected for controlled heat, polished results and daily salon-level care.",
     image: "/products/accessories/tie-up-bonnet/tie-up-bonnet-main.jpg"
   },
   {
-    title: "Bürsten & Kämme",
+    title: "Brushes & Combs",
     slug: "buersten-und-kaemme",
     desc: "Brushes and combs for gentle detangling, blending and extension-safe daily maintenance.",
     image: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg"
   },
   {
-    title: "Profi Friseurbedarf",
+    title: "Pro Salon Supplies",
     slug: "profi-friseurbedarf",
     desc: "Professional supplies and appliances for salon workflows, installation and precision finishing.",
     image: "/products/profi-friseurbedarf/herford/herford-main.jpg"
