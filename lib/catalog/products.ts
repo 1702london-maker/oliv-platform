@@ -150,6 +150,68 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
   ];
 }
 
+function getBrushesProducts(): CatalogProduct[] {
+  return [
+    {
+      id: "vent-brush",
+      title: "BiziLuxe Vent Brush",
+      slug: "vent-brush",
+      description: "Professional hair brush designed for smooth detangling, comfortable styling and everyday salon or home use.",
+      image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg",
+      attributes: {},
+      variants: [{
+        id: "vent-brush-standard",
+        title: "Standard",
+        color: null,
+        sku: "BIZILUXE-VENT-BRUSH",
+        image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg",
+        attributes: {},
+        retail_price_cents: 2490,
+        wholesale_price_cents: 1743,
+        inventory_quantity: 30
+      }]
+    },
+    {
+      id: "wooden-paddle-brush",
+      title: "BiziLuxe Wooden Paddle Brush",
+      slug: "wooden-paddle-brush",
+      description: "Professional hair brush designed for smooth detangling, comfortable styling and everyday salon or home use.",
+      image_url: "/products/buersten-und-kaemme/wooden-paddle-brush/wooden-paddle-brush-main.jpg",
+      attributes: {},
+      variants: [{
+        id: "wooden-paddle-brush-standard",
+        title: "Standard",
+        color: null,
+        sku: "BIZILUXE-WOODEN-PADDLE-BRUSH",
+        image_url: "/products/buersten-und-kaemme/wooden-paddle-brush/wooden-paddle-brush-main.jpg",
+        attributes: {},
+        retail_price_cents: 2990,
+        wholesale_price_cents: 2093,
+        inventory_quantity: 30
+      }]
+    },
+    {
+      id: "detangling-brush",
+      title: "BiziLuxe Detangling Brush",
+      slug: "detangling-brush",
+      description: "Professional hair brush designed for smooth detangling, comfortable styling and everyday salon or home use.",
+      image_url: "/products/buersten-und-kaemme/detangling-brush/detangling-brush-main.jpg",
+      attributes: {},
+      variants: [{
+        id: "detangling-brush-standard",
+        title: "Standard",
+        color: null,
+        sku: "BIZILUXE-DETANGLING-BRUSH",
+        image_url: "/products/buersten-und-kaemme/detangling-brush/detangling-brush-main.jpg",
+        attributes: {},
+        retail_price_cents: 1990,
+        wholesale_price_cents: 1393,
+        inventory_quantity: 30
+      }]
+    }
+  ];
+}
+
 function getBiziHairProducts(): CatalogProduct[] {
   return [
     {
@@ -179,6 +241,7 @@ function getBiziHairProducts(): CatalogProduct[] {
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
   if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
   if (categorySlug === "bizihair-extensions") return getBiziHairProducts();
+  if (categorySlug === "buersten-und-kaemme") return getBrushesProducts();
   if (categorySlug === "accessories" || categorySlug === "biziluxe-accessoires") return getBiziLuxeAccessoryProducts();
 
   const supabase = await createSupabaseServerClient();
@@ -244,6 +307,10 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   const extensionSlugs = ["tape-in-extensions", "weft-extensions", "utip-extensions"];
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
+  }
+  const brushSlugs = ["vent-brush", "wooden-paddle-brush", "detangling-brush"];
+  if (brushSlugs.includes(slug)) {
+    return getBrushesProducts().find((p) => p.slug === slug) || null;
   }
   if (slug === "bizihair-weft-extensions") {
     return getBiziHairProducts()[0];

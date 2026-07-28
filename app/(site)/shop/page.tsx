@@ -49,7 +49,7 @@ const shopCollections = [
     title: "Brushes & Combs",
     slug: "buersten-und-kaemme",
     desc: "Brushes and combs for gentle detangling, blending and extension-safe daily maintenance.",
-    image: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg"
+    image: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg"
   },
   {
     title: "Pro Salon Supplies",
