@@ -403,6 +403,78 @@ function getBrushesProducts(): CatalogProduct[] {
         wholesale_price_cents: 903,
         inventory_quantity: 25
       }]
+    },
+    {
+      id: "celle",
+      title: "9-Row Styling Brush",
+      slug: "celle",
+      description: "Professional 9-row styling brush with nylon pins. Ideal for smoothing and finishing all hair types.",
+      image_url: "/products/buersten-und-kaemme/celle/celle-main.jpg",
+      attributes: {},
+      variants: [{ id: "celle-standard", title: "Standard", color: null, sku: "STYLING-BRUSH-9ROW", image_url: "/products/buersten-und-kaemme/celle/celle-main.jpg", attributes: {}, retail_price_cents: 1690, wholesale_price_cents: 1183, inventory_quantity: 25 }]
+    },
+    {
+      id: "goslar",
+      title: "BiziLuxe Rat-Tail Comb",
+      slug: "goslar",
+      description: "BiziLuxe Styling Comb Collection. Premium rat-tail comb for precise sectioning and styling. Chemical & heat resistant.",
+      image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg",
+      attributes: {},
+      variants: [{ id: "goslar-standard", title: "Standard", color: null, sku: "BIZILUXE-RAT-TAIL-COMB", image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg", attributes: {}, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 }]
+    },
+    {
+      id: "hameln",
+      title: "Metal Pick Comb",
+      slug: "hameln",
+      description: "Professional metal pin pick comb with decorative handle. Wide-spaced metal tines ideal for detangling and styling all hair types.",
+      image_url: "/products/buersten-und-kaemme/hameln/hameln-main.jpg",
+      attributes: {},
+      variants: [{ id: "hameln-standard", title: "Standard", color: null, sku: "METAL-PICK-COMB", image_url: "/products/buersten-und-kaemme/hameln/hameln-main.jpg", attributes: {}, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 30 }]
+    },
+    {
+      id: "hildesheim",
+      title: "BiziLuxe Styling Comb",
+      slug: "hildesheim",
+      description: "BiziLuxe Styling Comb Collection. Fine-tooth tail comb for precise parting, backcombing and finishing. Chemical & heat resistant.",
+      image_url: "/products/buersten-und-kaemme/hildesheim/hildesheim-main.jpg",
+      attributes: {},
+      variants: [{ id: "hildesheim-standard", title: "Standard", color: null, sku: "BIZILUXE-STYLING-COMB", image_url: "/products/buersten-und-kaemme/hildesheim/hildesheim-main.jpg", attributes: {}, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 }]
+    },
+    {
+      id: "luebeck",
+      title: "BiziLuxe Vent Brush (Wood Handle)",
+      slug: "luebeck",
+      description: "BiziLuxe premium vent brush with natural wood handle. Cushion base with ball-tipped pins for gentle detangling and blow-dry styling.",
+      image_url: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg",
+      attributes: {},
+      variants: [{ id: "luebeck-standard", title: "Standard", color: null, sku: "BIZILUXE-VENT-BRUSH-WOOD", image_url: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg", attributes: {}, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 20 }]
+    },
+    {
+      id: "lueneburg",
+      title: "BiziLuxe Pocket Comb",
+      slug: "lueneburg",
+      description: "BiziLuxe compact folding pocket comb with mixed boar and nylon bristles. Folds flat for handbag or travel. Comes in BiziLuxe gift packaging.",
+      image_url: "/products/buersten-und-kaemme/lueneburg/lueneburg-main.jpg",
+      attributes: {},
+      variants: [{ id: "lueneburg-standard", title: "Standard", color: null, sku: "BIZILUXE-POCKET-COMB", image_url: "/products/buersten-und-kaemme/lueneburg/lueneburg-main.jpg", attributes: {}, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 25 }]
+    },
+    {
+      id: "wolfenbuettel",
+      title: "BiziLuxe Dressing Comb",
+      slug: "wolfenbuettel",
+      description: "BiziLuxe Styling Comb Collection. Professional dressing comb with fine teeth and metal rat-tail pin. For all hair types. Chemical & heat resistant.",
+      image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg",
+      attributes: {},
+      variants: [{ id: "wolfenbuettel-standard", title: "Standard", color: null, sku: "BIZILUXE-DRESSING-COMB", image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg", attributes: {}, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 }]
+    },
+    {
+      id: "bremen",
+      title: "BiziLuxe Flexible Vent Brush",
+      slug: "bremen",
+      description: "BiziLuxe flexible vent brush with open-slot base and ball-tipped pins. Reduces breakage during blow-drying and detangling.",
+      image_url: "/products/buersten-und-kaemme/bremen-main.jpg",
+      attributes: {},
+      variants: [{ id: "bremen-standard", title: "Standard", color: null, sku: "BIZILUXE-FLEX-VENT-BRUSH", image_url: "/products/buersten-und-kaemme/bremen-main.jpg", attributes: {}, retail_price_cents: 2190, wholesale_price_cents: 1533, inventory_quantity: 20 }]
     }
   ];
 }
@@ -504,7 +576,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
   }
-  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb-yellow", "edge-brush-comb-blue", "wide-tint-brush-white", "wide-tint-brush-black"];
+  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb-yellow", "edge-brush-comb-blue", "wide-tint-brush-white", "wide-tint-brush-black", "celle", "goslar", "hameln", "hildesheim", "luebeck", "lueneburg", "wolfenbuettel", "bremen"];
   if (brushSlugs.includes(slug)) {
     return getBrushesProducts().find((p) => p.slug === slug) || null;
   }
