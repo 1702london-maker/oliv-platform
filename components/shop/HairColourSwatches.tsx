@@ -23,18 +23,21 @@ export function HairColourSwatches({
   }
 
   return (
-    <div className="ohs-swatches" aria-label="Farbauswahl">
-      {colours.map((c, i) => (
-        <button
-          key={c.name}
-          title={c.name}
-          aria-label={c.name}
-          aria-pressed={i === active}
-          onClick={() => select(i)}
-          className={`ohs-swatch${i === active ? " ohs-swatch--active" : ""}`}
-          style={{ background: c.hex }}
-        />
-      ))}
+    <div className="ohs-swatches-wrap">
+      <div className="ohs-swatches" aria-label="Farbauswahl">
+        {colours.map((c, i) => (
+          <button
+            key={c.name}
+            title={c.name}
+            aria-label={c.name}
+            aria-pressed={i === active}
+            onClick={() => select(i)}
+            className={`ohs-swatch${i === active ? " ohs-swatch--active" : ""}`}
+            style={{ background: c.hex }}
+          />
+        ))}
+      </div>
+      <span className="ohs-swatch-label">{colours[active]?.name}</span>
     </div>
   );
 }

@@ -36,11 +36,8 @@ export function HairProductCard({ title, href, mainImage, price, colours }: Prop
         {colours.length > 0 && (
           <HairColourSwatches colours={colours} onColourChange={handleColourChange} />
         )}
-        <p>{colourName ? colourName : price}</p>
         <p className="ohs-product-price">{price}</p>
-        <a href={href} className="ohs-product-btn">
-          View Product
-        </a>
+        <a href={href} className="ohs-product-btn">View Product</a>
       </div>
     </article>
   );

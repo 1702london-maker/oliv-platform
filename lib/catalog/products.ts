@@ -27,22 +27,32 @@ export type CatalogProduct = {
   attributes?: Record<string, unknown>;
 };
 
-const EXTENSION_COLOURS = [
-  { name: "1 Tiefschwarz",       hex: "#1C1008",                          img: "colour-1.jpg" },
-  { name: "1A Naturschwarz",     hex: "#231A10",                          img: "colour-1a.jpg" },
-  { name: "2 Schokobraun",       hex: "#3D2314",                          img: "colour-2.jpg" },
-  { name: "4 Mittelbraun",       hex: "#6B3A22",                          img: "colour-4.jpg" },
-  { name: "8 Dunkelblond",       hex: "#9B7040",                          img: "colour-8.jpg" },
-  { name: "8/22 Highlights",     hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)", img: "colour-8-22.jpg" },
-  { name: "613 Platinblond",     hex: "#EDE0C0",                          img: "colour-613.jpg" },
-  { name: "SB Balayage",         hex: "linear-gradient(135deg,#3D2314 50%,#EDE0C0 50%)", img: "colour-sb.jpg" },
-  { name: "4/6/8 Highlights",   hex: "linear-gradient(135deg,#6B3A22 50%,#C09060 50%)", img: "colour-4-6-8.jpg" },
-  { name: "60A Goldblond",       hex: "#D4A83A",                          img: "colour-60a.jpg" },
+// BiziLuxe colour codes — exactly as written in the product documents
+const BIZILUXE_COLOURS = [
+  { name: "1",      hex: "#1C1008",                                           img: "colour-1.jpg" },
+  { name: "1B",     hex: "#2C1A0E",                                           img: "colour-1a.jpg" },
+  { name: "2",      hex: "#5A3520",                                           img: "colour-2.jpg" },
+  { name: "Ice",    hex: "#EDE8DE",                                           img: "colour-613.jpg" },
+  { name: "Silver", hex: "#C8BFA8",                                           img: "colour-60a.jpg" },
+  { name: "18/60B", hex: "linear-gradient(135deg,#3D2314 50%,#EDE0C0 50%)",  img: "colour-sb.jpg" },
+  { name: "4/6/8",  hex: "linear-gradient(135deg,#8B5E3C 40%,#C8A870 60%)",  img: "colour-4-6-8.jpg" },
+  { name: "8/22",   hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)",  img: "colour-8-22.jpg" },
+];
+
+// BiziHair colour codes — exactly as written in the product documents
+const BIZIHAIR_COLOURS = [
+  { name: "1",   hex: "#1C1008", img: "colour-1.jpg" },
+  { name: "1A",  hex: "#231A10", img: "colour-1a.jpg" },
+  { name: "1B",  hex: "#3D2314", img: "colour-1b.jpg" },
+  { name: "2",   hex: "#6B3A22", img: "colour-2.jpg" },
+  { name: "4",   hex: "#8B5E3C", img: "colour-4.jpg" },
+  { name: "8",   hex: "#9B7040", img: "colour-8.jpg" },
+  { name: "Red", hex: "#8B1A1A", img: "colour-red.jpg" },
 ];
 const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
 
 function makeExtensionVariants(slug: string, folder: string, basePrice: number): CatalogVariant[] {
-  return EXTENSION_COLOURS.flatMap((colour) =>
+  return BIZILUXE_COLOURS.flatMap((colour) =>
     LENGTHS.map((length) => ({
       id: `${slug}-${colour.name}-${length}`.toLowerCase().replace(/[\s/]+/g,"-"),
       title: `${colour.name} / ${length}`,
@@ -140,8 +150,35 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
   ];
 }
 
+function getBiziHairProducts(): CatalogProduct[] {
+  return [
+    {
+      id: "bizihair-weft",
+      title: "BiziHair Genius Weft Extensions",
+      slug: "bizihair-weft-extensions",
+      description: "BiziHair Genius Weft Echthaar Extensions. Erhältlich in 7 Farben und 8 Längen.",
+      image_url: "/products/bizihair-extensions/weft/weft-main.jpg",
+      attributes: {},
+      variants: BIZIHAIR_COLOURS.flatMap((colour) =>
+        LENGTHS.map((length) => ({
+          id: `bizihair-weft-${colour.name}-${length}`.toLowerCase().replace(/[\s/]+/g, "-"),
+          title: `${colour.name} / ${length}`,
+          color: colour.name,
+          sku: `BIZIHAIR-WEFT-${colour.name}-${length}`.toUpperCase().replace(/[\s/]+/g, "-"),
+          image_url: `/products/bizihair-extensions/weft/${colour.img}`,
+          attributes: { length, colour_hex: colour.hex },
+          retail_price_cents: 8900 + (LENGTHS.indexOf(length) * 1000),
+          wholesale_price_cents: Math.round((8900 + LENGTHS.indexOf(length) * 1000) * 0.7),
+          inventory_quantity: 20
+        }))
+      )
+    }
+  ];
+}
+
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
   if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
+  if (categorySlug === "bizihair-extensions") return getBiziHairProducts();
   if (categorySlug === "accessories" || categorySlug === "biziluxe-accessoires") return getBiziLuxeAccessoryProducts();
 
   const supabase = await createSupabaseServerClient();
@@ -207,6 +244,9 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   const extensionSlugs = ["tape-in-extensions", "weft-extensions", "utip-extensions"];
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
+  }
+  if (slug === "bizihair-weft-extensions") {
+    return getBiziHairProducts()[0];
   }
   const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet"];
   if (accessorySlugs.includes(slug)) {
