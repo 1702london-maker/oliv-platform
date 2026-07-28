@@ -41,13 +41,15 @@ const BIZILUXE_COLOURS = [
 
 // BiziHair colour codes — exactly as written in the product documents
 const BIZIHAIR_COLOURS = [
-  { name: "1",   hex: "#1C1008", img: "colour-1.jpg" },
-  { name: "1A",  hex: "#231A10", img: "colour-1a.jpg" },
-  { name: "1B",  hex: "#3D2314", img: "colour-1b.jpg" },
-  { name: "2",   hex: "#6B3A22", img: "colour-2.jpg" },
-  { name: "4",   hex: "#8B5E3C", img: "colour-4.jpg" },
-  { name: "8",   hex: "#9B7040", img: "colour-8.jpg" },
-  { name: "Red", hex: "#8B1A1A", img: "colour-red.jpg" },
+  { name: "1",              hex: "#1C1008",                                          img: "colour-1.jpg" },
+  { name: "1A",             hex: "#231A10",                                          img: "colour-1a.jpg" },
+  { name: "1B",             hex: "#3D2314",                                          img: "colour-1b.jpg" },
+  { name: "2",              hex: "#6B3A22",                                          img: "colour-2.jpg" },
+  { name: "4",              hex: "#8B5E3C",                                          img: "colour-4.jpg" },
+  { name: "8",              hex: "#9B7040",                                          img: "colour-8.jpg" },
+  { name: "Red",            hex: "#8B1A1A",                                          img: "colour-red.jpg" },
+  { name: "Highlights 6/8", hex: "linear-gradient(135deg,#8B5E3C 50%,#9B7040 50%)", img: "colour-highlights-6-8.jpg" },
+  { name: "613",            hex: "#EDE0B0",                                          img: "colour-613.jpg" },
 ];
 const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
 
@@ -499,7 +501,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-weft",
       title: "BiziHair Genius Weft Extensions",
       slug: "bizihair-weft-extensions",
-      description: "BiziHair Genius Weft Echthaar Extensions. Erhältlich in 7 Farben und 8 Längen.",
+      description: "BiziHair Genius Weft Echthaar Extensions. Erhältlich in 9 Farben und 8 Längen.",
       image_url: "/products/bizihair-extensions/weft/weft-main.jpg",
       attributes: {},
       variants: makeBiziHairVariants("bizihair-weft", "weft", 8900)
@@ -508,7 +510,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-tape-in",
       title: "BiziHair Tape-In Extensions",
       slug: "bizihair-tape-in-extensions",
-      description: "BiziHair Tape-In Echthaar Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Erhältlich in 7 Farben und 8 Längen.",
+      description: "BiziHair Tape-In Echthaar Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Erhältlich in 9 Farben und 8 Längen.",
       image_url: "/products/bizihair-extensions/tape-in/tape-in-main.jpg",
       attributes: {},
       variants: makeBiziHairVariants("bizihair-tape-in", "weft", 9900)
@@ -517,7 +519,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-utip",
       title: "BiziHair U-Tip Extensions",
       slug: "bizihair-utip-extensions",
-      description: "BiziHair U-Tip Keratin Bonding Echthaar Extensions. Natürlich anmutendes Ergebnis durch Keratinbindung. Erhältlich in 7 Farben und 8 Längen.",
+      description: "BiziHair U-Tip Keratin Bonding Echthaar Extensions. Natürlich anmutendes Ergebnis durch Keratinbindung. Erhältlich in 9 Farben und 8 Längen.",
       image_url: "/products/bizihair-extensions/utip/utip-main.jpg",
       attributes: {},
       variants: makeBiziHairVariants("bizihair-utip", "weft", 10900)
