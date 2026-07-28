@@ -37,13 +37,13 @@ const shopCollections = [
     title: "BiziLuxe Accessoires",
     slug: "biziluxe-accessoires",
     desc: "Finishing accessories, care pieces and refined essentials for maintaining your BiziLuxe look.",
-    image: "/products/biziluxe-accessoires/parchim/parchim-gold-main.jpg"
+    image: "/products/accessories/slip-on-bonnet/slip-on-bonnet-main.jpg"
   },
   {
     title: "BiziLuxe Stylinggeräte",
     slug: "biziluxe-stylinggeraete",
     desc: "Styling tools selected for controlled heat, polished results and daily salon-level care.",
-    image: "/products/biziluxe-accessoires/ludwigslust/ludwigslust-schwarz-main.jpg"
+    image: "/products/accessories/tie-up-bonnet/tie-up-bonnet-main.jpg"
   },
   {
     title: "Bürsten & Kämme",

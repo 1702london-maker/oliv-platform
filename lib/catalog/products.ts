@@ -57,6 +57,57 @@ function makeExtensionVariants(slug: string, folder: string, basePrice: number):
   );
 }
 
+const SLIP_ON_BONNET_COLOURS = [
+  { name: "Black",  hex: "#1A1A1A", img: "black.jpg" },
+  { name: "Rose",   hex: "#D4A0A0", img: "rose.jpg" },
+  { name: "Pink",   hex: "#E8257A", img: "pink.jpg" },
+];
+
+const TIE_UP_BONNET_COLOURS = [
+  { name: "Champagne Gold", hex: "#C9A96E", img: "champagne-gold.jpg" },
+  { name: "Pink",           hex: "#C0607A", img: "pink.jpg" },
+  { name: "Light Pink",     hex: "#F2C4C4", img: "light-pink.jpg" },
+  { name: "Black",          hex: "#1A1A1A", img: "black.jpg" },
+  { name: "Dark Blue",      hex: "#1B2D5B", img: "dark-blue.jpg" },
+];
+
+function makeBonnetVariants(slug: string, folder: string, colours: { name: string; hex: string; img: string }[], priceBase: number): CatalogVariant[] {
+  return colours.map((colour) => ({
+    id: `${slug}-${colour.name}`.toLowerCase().replace(/\s+/g, "-"),
+    title: colour.name,
+    color: colour.name,
+    sku: `${slug}-${colour.name}`.toUpperCase().replace(/\s+/g, "-"),
+    image_url: `/products/accessories/${folder}/${colour.img}`,
+    attributes: { colour_hex: colour.hex },
+    retail_price_cents: priceBase,
+    wholesale_price_cents: Math.round(priceBase * 0.7),
+    inventory_quantity: 20
+  }));
+}
+
+function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
+  return [
+    {
+      id: "slip-on-bonnet",
+      title: "Premium Slip-On Bonnet",
+      slug: "slip-on-bonnet",
+      description: "Luxuriöse Satin-Schlafhauben zum Schutz der Haare über Nacht. Easy Slip-On, bequemer Sitz, atmungsaktiv. Erhältlich in 3 Farben.",
+      image_url: "/products/accessories/slip-on-bonnet/slip-on-bonnet-main.jpg",
+      attributes: {},
+      variants: makeBonnetVariants("slip-on-bonnet", "slip-on-bonnet", SLIP_ON_BONNET_COLOURS, 1990)
+    },
+    {
+      id: "tie-up-bonnet",
+      title: "Premium Tie-Up Bonnet",
+      slug: "tie-up-bonnet",
+      description: "Premium-Satin-Schlaufhauben mit breitem Bindeband für sicheren Halt. Luxuriöses Satin für schönes Haar jeden Tag. Erhältlich in 5 Farben.",
+      image_url: "/products/accessories/tie-up-bonnet/tie-up-bonnet-main.jpg",
+      attributes: {},
+      variants: makeBonnetVariants("tie-up-bonnet", "tie-up-bonnet", TIE_UP_BONNET_COLOURS, 2490)
+    }
+  ];
+}
+
 function getBiziLuxeExtensionProducts(): CatalogProduct[] {
   return [
     {
@@ -91,6 +142,7 @@ function getBiziLuxeExtensionProducts(): CatalogProduct[] {
 
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
   if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
+  if (categorySlug === "accessories" || categorySlug === "biziluxe-accessoires") return getBiziLuxeAccessoryProducts();
 
   const supabase = await createSupabaseServerClient();
   let productIds: string[] | null = null;
@@ -155,6 +207,10 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   const extensionSlugs = ["tape-in-extensions", "weft-extensions", "utip-extensions"];
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
+  }
+  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet"];
+  if (accessorySlugs.includes(slug)) {
+    return getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
   }
   const products = await getCatalogProducts();
   return products.find((product) => product.slug === slug) || getLocalPublicProductBySlug(slug);
