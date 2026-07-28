@@ -34,9 +34,9 @@ const BIZILUXE_COLOURS = [
   { name: "2",      hex: "#5A3520",                                           img: "colour-2.jpg" },
   { name: "Ice",    hex: "#EDE8DE",                                           img: "colour-613.jpg" },
   { name: "Silver", hex: "#C8BFA8",                                           img: "colour-60a.jpg" },
-  { name: "18/60B", hex: "linear-gradient(135deg,#3D2314 50%,#EDE0C0 50%)",  img: "colour-sb.jpg" },
-  { name: "4/6/8",  hex: "linear-gradient(135deg,#8B5E3C 40%,#C8A870 60%)",  img: "colour-4-6-8.jpg" },
-  { name: "8/22",   hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)",  img: "colour-8-22.jpg" },
+  { name: "Ombré 18/60B",   hex: "linear-gradient(135deg,#3D2314 50%,#EDE0C0 50%)",  img: "colour-sb.jpg" },
+  { name: "4/6/8",          hex: "linear-gradient(135deg,#8B5E3C 40%,#C8A870 60%)",  img: "colour-4-6-8.jpg" },
+  { name: "Balayage 8/22",  hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)",  img: "colour-8-22.jpg" },
 ];
 
 // BiziHair colour codes — exactly as written in the product documents
