@@ -99,8 +99,6 @@ function getProSalonProducts(): CatalogProduct[] {
   const items = [
     { id: "salon-apron",           title: "Professional Salon Apron",        price: 2990, desc: "Professional waterproof salon apron. Comfortable fit with pocket. Protects clothing during colouring and styling services." },
     { id: "smart-bowl",            title: "Smart Bowl",                       price: 1990, desc: "Smart colour mixing bowl designed to attach directly to the shampoo bowl. Includes mixing spatula and anti-slip tray. Available in black and white." },
-    { id: "tinting-tray-white",    title: "Tinting Tray White",              price:  990, desc: "Professional white colour mixing tray with measurement markings. Lightweight and easy to clean." },
-    { id: "tinting-tray-black",    title: "Tinting Tray Black",              price:  990, desc: "Professional black colour mixing tray with measurement markings. Lightweight and easy to clean." },
     { id: "salon-trolley-drawers", title: "Salon Trolley with Drawers",      price: 12900, desc: "Professional salon trolley with 5 pull-out drawers. Wood-effect panels with metal frame and lockable castors." },
     { id: "salon-service-trolley", title: "Salon Service Trolley",           price: 9900, desc: "3-shelf black salon service trolley with top tray, tool holder and lockable castors. Ideal for colouring services." },
     { id: "colour-mixing-trolley", title: "Colour Mixing Trolley",           price: 14900, desc: "Premium acrylic colour mixing trolley with 3 mixing bowl holders, tool holder and lower storage shelf." },
@@ -112,7 +110,19 @@ function getProSalonProducts(): CatalogProduct[] {
     { id: "recklinghausen",        title: "Open Shelf Salon Trolley",         price: 18990, desc: "Professional rolling salon trolley with three open shelves. Holds bowls, colour products and styling tools. Lockable wheels." },
   ];
   const extraProducts: CatalogProduct[] = [
-    { id: "paderborn", title: "Cross-Back Salon Apron", slug: "paderborn", description: "Professional cross-back salon apron in dark navy with front pocket. Comfortable, adjustable fit for long salon shifts.", image_url: "/products/profi-friseurbedarf/paderborn-main.jpg", attributes: {}, variants: [{ id: "paderborn-standard", title: "Standard", color: null, sku: "CROSS-BACK-APRON", image_url: "/products/profi-friseurbedarf/paderborn-main.jpg", attributes: {}, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 15 }] },
+    { id: "paderborn",    title: "Cross-Back Salon Apron", slug: "paderborn",    description: "Professional cross-back salon apron in dark navy with front pocket. Comfortable, adjustable fit for long salon shifts.", image_url: "/products/profi-friseurbedarf/paderborn-main.jpg", attributes: {}, variants: [{ id: "paderborn-standard", title: "Standard", color: null, sku: "CROSS-BACK-APRON", image_url: "/products/profi-friseurbedarf/paderborn-main.jpg", attributes: {}, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 15 }] },
+    {
+      id: "tinting-tray",
+      title: "Tinting Tray",
+      slug: "tinting-tray",
+      description: "Professional colour mixing tray with measurement markings. Lightweight and easy to clean. Available in White and Black.",
+      image_url: "/products/profi-friseurbedarf/tinting-tray-white/tinting-tray-white-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "tinting-tray-white", title: "White", color: "White", sku: "TINTING-TRAY-WHITE", image_url: "/products/profi-friseurbedarf/tinting-tray-white/tinting-tray-white-main.jpg", attributes: { colour_hex: "#F5F5F5" }, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 20 },
+        { id: "tinting-tray-black", title: "Black", color: "Black", sku: "TINTING-TRAY-BLACK", image_url: "/products/profi-friseurbedarf/tinting-tray-black/tinting-tray-black-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 20 },
+      ]
+    },
   ];
   return [
     ...items.map((item) => ({
@@ -141,36 +151,20 @@ function getProSalonProducts(): CatalogProduct[] {
 function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
   const proAccessories: CatalogProduct[] = [
     {
-      id: "gator-grip-clips",
-      title: "Gator Grip Clips",
-      slug: "gator-grip-clips",
-      description: "BiziLuxe professional Gator Grip sectioning clips. Strong spring mechanism for secure hold. Pack of 6. Available in 4 colours.",
-      image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg",
-      attributes: {},
-      variants: [
-        { id: "gator-grip-clips-silver", title: "Silver", color: "Silver", sku: "GATOR-GRIP-CLIPS-SILVER", image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg", attributes: { colour_hex: "#C0C0C0" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
-        { id: "gator-grip-clips-white",  title: "White",  color: "White",  sku: "GATOR-GRIP-CLIPS-WHITE",  image_url: "/products/profi-friseurbedarf/hagen/hagen-main.jpg",           attributes: { colour_hex: "#F5F5F5" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
-        { id: "gator-grip-clips-clear",  title: "Clear",  color: "Clear",  sku: "GATOR-GRIP-CLIPS-CLEAR",  image_url: "/products/profi-friseurbedarf/minden/minden-main.jpg",         attributes: { colour_hex: "#E8E8E8" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
-        { id: "gator-grip-clips-black",  title: "Black",  color: "Black",  sku: "GATOR-GRIP-CLIPS-BLACK",  image_url: "/products/profi-friseurbedarf/witten/witten-main.jpg",         attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
-      ]
-    },
-    {
-      id: "matte-section-clips",
-      title: "Matte Section Clips",
-      slug: "matte-section-clips",
-      description: "Matte black professional sectioning clips. Soft-grip finish, strong hold. Pack of 6.",
-      image_url: "/products/accessories/matte-section-clips/matte-section-clips-main.jpg",
-      attributes: {},
-      variants: [{ id: "matte-section-clips-standard", title: "Standard", color: null, sku: "MATTE-SECTION-CLIPS", image_url: "/products/accessories/matte-section-clips/matte-section-clips-main.jpg", attributes: {}, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 25 }]
-    },
-    {
       id: "sectioning-clips",
-      title: "Sectioning Clips (6 Pack)",
+      title: "Sectioning Clips",
       slug: "sectioning-clips",
-      description: "Professional white sectioning clips. Lightweight with strong spring. Pack of 6.",
+      description: "BiziLuxe professional sectioning clips. Standard White, Matte Black, and Gator Grip in Silver, White, Clear and Black. All packs of 6.",
       image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg",
       attributes: {},
-      variants: [{ id: "sectioning-clips-standard", title: "Standard", color: null, sku: "SECTIONING-CLIPS-6", image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg", attributes: {}, retail_price_cents: 790, wholesale_price_cents: 553, inventory_quantity: 30 }]
+      variants: [
+        { id: "sectioning-clips-standard",    title: "Standard White",  color: "Standard White",  sku: "SECTIONING-CLIPS-WHITE",      image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg",       attributes: { colour_hex: "#F5F5F5" }, retail_price_cents:  790, wholesale_price_cents:  553, inventory_quantity: 30 },
+        { id: "sectioning-clips-matte-black", title: "Matte Black",     color: "Matte Black",     sku: "SECTIONING-CLIPS-MATTE-BLACK", image_url: "/products/accessories/matte-section-clips/matte-section-clips-main.jpg", attributes: { colour_hex: "#2C2C2C" }, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 25 },
+        { id: "gator-grip-clips-silver",      title: "Gator — Silver",  color: "Gator — Silver",  sku: "GATOR-GRIP-CLIPS-SILVER",      image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg",               attributes: { colour_hex: "#C0C0C0" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-white",       title: "Gator — White",   color: "Gator — White",   sku: "GATOR-GRIP-CLIPS-WHITE",       image_url: "/products/profi-friseurbedarf/hagen/hagen-main.jpg",                     attributes: { colour_hex: "#F0F0F0" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-clear",       title: "Gator — Clear",   color: "Gator — Clear",   sku: "GATOR-GRIP-CLIPS-CLEAR",       image_url: "/products/profi-friseurbedarf/minden/minden-main.jpg",                   attributes: { colour_hex: "#D8D8D8" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-black",       title: "Gator — Black",   color: "Gator — Black",   sku: "GATOR-GRIP-CLIPS-BLACK",       image_url: "/products/profi-friseurbedarf/witten/witten-main.jpg",                   attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
+      ]
     },
     {
       id: "fine-mist-spray-bottle",
@@ -355,155 +349,79 @@ function getBrushesProducts(): CatalogProduct[] {
   return [
     {
       id: "mini-travel-brush",
-      title: "BiziLuxe Mini Travel Brush",
+      title: "BiziLuxe Travel Brush & Comb",
       slug: "mini-travel-brush",
-      description: "Compact folding travel hair brush with soft nylon bristles. Ideal for handbags, travel and everyday styling. Available in 3 colours.",
+      description: "BiziLuxe compact travel essentials. Choose the folding mini travel brush in 3 colours, or the pocket comb with mixed boar and nylon bristles.",
       image_url: "/products/buersten-und-kaemme/mini-travel-brush/white-ivory/mini-travel-brush-main.jpg",
       attributes: {},
-      variants: MINI_BRUSH_COLOURS.map((colour) => ({
-        id: `mini-travel-brush-${colour.name}`.toLowerCase().replace(/[\s/]+/g, "-"),
-        title: colour.name,
-        color: colour.name,
-        sku: `BIZILUXE-MINI-BRUSH-${colour.name}`.toUpperCase().replace(/[\s/]+/g, "-"),
-        image_url: `/products/buersten-und-kaemme/mini-travel-brush/${colour.img}`,
-        attributes: { colour_hex: colour.hex },
-        retail_price_cents: 1490,
-        wholesale_price_cents: 1043,
-        inventory_quantity: 30
-      }))
+      variants: [
+        ...MINI_BRUSH_COLOURS.map((colour) => ({
+          id: `mini-travel-brush-${colour.name}`.toLowerCase().replace(/[\s/]+/g, "-"),
+          title: colour.name,
+          color: colour.name,
+          sku: `BIZILUXE-MINI-BRUSH-${colour.name}`.toUpperCase().replace(/[\s/]+/g, "-"),
+          image_url: `/products/buersten-und-kaemme/mini-travel-brush/${colour.img}`,
+          attributes: { colour_hex: colour.hex },
+          retail_price_cents: 1490,
+          wholesale_price_cents: 1043,
+          inventory_quantity: 30
+        })),
+        { id: "mini-travel-brush-pocket-comb", title: "Pocket Comb", color: "Pocket Comb", sku: "BIZILUXE-POCKET-COMB", image_url: "/products/buersten-und-kaemme/lueneburg/lueneburg-main.jpg", attributes: { colour_hex: "#8B6340" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 25 }
+      ]
     },
     {
       id: "vent-brush",
       title: "BiziLuxe Vent Brush",
       slug: "vent-brush",
-      description: "Professional hair brush designed for smooth detangling, comfortable styling and everyday salon or home use.",
+      description: "Professional BiziLuxe vent brush for smooth detangling and everyday styling. Choose Classic or Flexible.",
       image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg",
       attributes: {},
-      variants: [{
-        id: "vent-brush-standard",
-        title: "Standard",
-        color: null,
-        sku: "BIZILUXE-VENT-BRUSH",
-        image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg",
-        attributes: {},
-        retail_price_cents: 2490,
-        wholesale_price_cents: 1743,
-        inventory_quantity: 30
-      }]
+      variants: [
+        { id: "vent-brush-classic",  title: "Classic",  color: "Classic",  sku: "BIZILUXE-VENT-BRUSH-CLASSIC",  image_url: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 30 },
+        { id: "vent-brush-flexible", title: "Flexible", color: "Flexible", sku: "BIZILUXE-VENT-BRUSH-FLEXIBLE", image_url: "/products/buersten-und-kaemme/bremen-main.jpg",                 attributes: { colour_hex: "#3D5A3E" }, retail_price_cents: 2190, wholesale_price_cents: 1533, inventory_quantity: 20 },
+      ]
     },
     {
       id: "wooden-paddle-brush",
       title: "BiziLuxe Wooden Paddle Brush",
       slug: "wooden-paddle-brush",
-      description: "Professional hair brush designed for smooth detangling, comfortable styling and everyday salon or home use.",
+      description: "Professional wooden paddle brush for smooth detangling, blow-drying and everyday styling.",
       image_url: "/products/buersten-und-kaemme/wooden-paddle-brush/wooden-paddle-brush-main.jpg",
       attributes: {},
-      variants: [{
-        id: "wooden-paddle-brush-standard",
-        title: "Standard",
-        color: null,
-        sku: "BIZILUXE-WOODEN-PADDLE-BRUSH",
-        image_url: "/products/buersten-und-kaemme/wooden-paddle-brush/wooden-paddle-brush-main.jpg",
-        attributes: {},
-        retail_price_cents: 2990,
-        wholesale_price_cents: 2093,
-        inventory_quantity: 30
-      }]
+      variants: [{ id: "wooden-paddle-brush-standard", title: "Standard", color: null, sku: "BIZILUXE-WOODEN-PADDLE-BRUSH", image_url: "/products/buersten-und-kaemme/wooden-paddle-brush/wooden-paddle-brush-main.jpg", attributes: {}, retail_price_cents: 2990, wholesale_price_cents: 2093, inventory_quantity: 30 }]
     },
     {
       id: "detangling-brush",
       title: "BiziLuxe Detangling Brush",
       slug: "detangling-brush",
-      description: "Professional hair brush designed for smooth detangling, comfortable styling and everyday salon or home use.",
+      description: "Professional hair brush designed for smooth, pain-free detangling on wet or dry hair.",
       image_url: "/products/buersten-und-kaemme/detangling-brush/detangling-brush-main.jpg",
       attributes: {},
-      variants: [{
-        id: "detangling-brush-standard",
-        title: "Standard",
-        color: null,
-        sku: "BIZILUXE-DETANGLING-BRUSH",
-        image_url: "/products/buersten-und-kaemme/detangling-brush/detangling-brush-main.jpg",
-        attributes: {},
-        retail_price_cents: 1990,
-        wholesale_price_cents: 1393,
-        inventory_quantity: 30
-      }]
+      variants: [{ id: "detangling-brush-standard", title: "Standard", color: null, sku: "BIZILUXE-DETANGLING-BRUSH", image_url: "/products/buersten-und-kaemme/detangling-brush/detangling-brush-main.jpg", attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 30 }]
     },
     {
-      id: "edge-brush-comb-yellow",
-      title: "Edge Brush & Comb (Yellow)",
-      slug: "edge-brush-comb-yellow",
-      description: "Dual-ended edge brush and comb for precise edge styling and baby hair control. Firm bristles with fine-tooth comb end.",
+      id: "edge-brush-comb",
+      title: "Edge Brush & Comb",
+      slug: "edge-brush-comb",
+      description: "Dual-ended edge brush and comb for precise edge styling and baby hair control. Firm bristles with fine-tooth comb end. Available in Yellow and Blue.",
       image_url: "/products/buersten-und-kaemme/edge-brush-comb-yellow/edge-brush-comb-yellow-main.jpg",
       attributes: {},
-      variants: [{
-        id: "edge-brush-comb-yellow-standard",
-        title: "Standard",
-        color: null,
-        sku: "EDGE-BRUSH-COMB-YELLOW",
-        image_url: "/products/buersten-und-kaemme/edge-brush-comb-yellow/edge-brush-comb-yellow-main.jpg",
-        attributes: {},
-        retail_price_cents: 990,
-        wholesale_price_cents: 693,
-        inventory_quantity: 30
-      }]
+      variants: [
+        { id: "edge-brush-comb-yellow", title: "Yellow", color: "Yellow", sku: "EDGE-BRUSH-COMB-YELLOW", image_url: "/products/buersten-und-kaemme/edge-brush-comb-yellow/edge-brush-comb-yellow-main.jpg", attributes: { colour_hex: "#F5C842" }, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 30 },
+        { id: "edge-brush-comb-blue",   title: "Blue",   color: "Blue",   sku: "EDGE-BRUSH-COMB-BLUE",   image_url: "/products/buersten-und-kaemme/edge-brush-comb-blue/edge-brush-comb-blue-main.jpg",   attributes: { colour_hex: "#2B5EA7" }, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 30 },
+      ]
     },
     {
-      id: "edge-brush-comb-blue",
-      title: "Edge Brush & Comb (Blue)",
-      slug: "edge-brush-comb-blue",
-      description: "Dual-ended edge brush and comb for precise edge styling and baby hair control. Firm bristles with fine-tooth comb end.",
-      image_url: "/products/buersten-und-kaemme/edge-brush-comb-blue/edge-brush-comb-blue-main.jpg",
-      attributes: {},
-      variants: [{
-        id: "edge-brush-comb-blue-standard",
-        title: "Standard",
-        color: null,
-        sku: "EDGE-BRUSH-COMB-BLUE",
-        image_url: "/products/buersten-und-kaemme/edge-brush-comb-blue/edge-brush-comb-blue-main.jpg",
-        attributes: {},
-        retail_price_cents: 990,
-        wholesale_price_cents: 693,
-        inventory_quantity: 30
-      }]
-    },
-    {
-      id: "wide-tint-brush-white",
-      title: "Wide Tint Brush (White)",
-      slug: "wide-tint-brush-white",
-      description: "Professional wide tint brush for colour application. Flexible bristles for even distribution of colour products.",
+      id: "wide-tint-brush",
+      title: "Wide Tint Brush",
+      slug: "wide-tint-brush",
+      description: "Professional wide tint brush for colour application. Flexible bristles for even, precise distribution. Available in White and Black.",
       image_url: "/products/buersten-und-kaemme/wide-tint-brush-white/wide-tint-brush-white-main.jpg",
       attributes: {},
-      variants: [{
-        id: "wide-tint-brush-white-standard",
-        title: "Standard",
-        color: null,
-        sku: "WIDE-TINT-BRUSH-WHITE",
-        image_url: "/products/buersten-und-kaemme/wide-tint-brush-white/wide-tint-brush-white-main.jpg",
-        attributes: {},
-        retail_price_cents: 1290,
-        wholesale_price_cents: 903,
-        inventory_quantity: 25
-      }]
-    },
-    {
-      id: "wide-tint-brush-black",
-      title: "Wide Tint Brush (Black)",
-      slug: "wide-tint-brush-black",
-      description: "Professional wide tint brush for colour application. Flexible bristles for even distribution of colour products.",
-      image_url: "/products/buersten-und-kaemme/wide-tint-brush-black/wide-tint-brush-black-main.jpg",
-      attributes: {},
-      variants: [{
-        id: "wide-tint-brush-black-standard",
-        title: "Standard",
-        color: null,
-        sku: "WIDE-TINT-BRUSH-BLACK",
-        image_url: "/products/buersten-und-kaemme/wide-tint-brush-black/wide-tint-brush-black-main.jpg",
-        attributes: {},
-        retail_price_cents: 1290,
-        wholesale_price_cents: 903,
-        inventory_quantity: 25
-      }]
+      variants: [
+        { id: "wide-tint-brush-white", title: "White", color: "White", sku: "WIDE-TINT-BRUSH-WHITE", image_url: "/products/buersten-und-kaemme/wide-tint-brush-white/wide-tint-brush-white-main.jpg", attributes: { colour_hex: "#F5F5F5" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+        { id: "wide-tint-brush-black", title: "Black", color: "Black", sku: "WIDE-TINT-BRUSH-BLACK", image_url: "/products/buersten-und-kaemme/wide-tint-brush-black/wide-tint-brush-black-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+      ]
     },
     {
       id: "celle",
@@ -515,13 +433,16 @@ function getBrushesProducts(): CatalogProduct[] {
       variants: [{ id: "celle-standard", title: "Standard", color: null, sku: "STYLING-BRUSH-9ROW", image_url: "/products/buersten-und-kaemme/celle/celle-main.jpg", attributes: {}, retail_price_cents: 1690, wholesale_price_cents: 1183, inventory_quantity: 25 }]
     },
     {
-      id: "goslar",
-      title: "BiziLuxe Rat-Tail Comb",
-      slug: "goslar",
-      description: "BiziLuxe Styling Comb Collection. Premium rat-tail comb for precise sectioning and styling. Chemical & heat resistant.",
+      id: "biziluxe-styling-combs",
+      title: "BiziLuxe Styling Combs",
+      slug: "biziluxe-styling-combs",
+      description: "BiziLuxe Styling Comb Collection. Choose the Rat-Tail Comb for precise sectioning or the Styling Comb for parting and backcombing. Chemical & heat resistant.",
       image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg",
       attributes: {},
-      variants: [{ id: "goslar-standard", title: "Standard", color: null, sku: "BIZILUXE-RAT-TAIL-COMB", image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg", attributes: {}, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 }]
+      variants: [
+        { id: "biziluxe-styling-combs-rat-tail", title: "Rat-Tail Comb", color: "Rat-Tail Comb", sku: "BIZILUXE-RAT-TAIL-COMB",  image_url: "/products/buersten-und-kaemme/goslar/goslar-main.jpg",       attributes: { colour_hex: "#2C1A0E" }, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
+        { id: "biziluxe-styling-combs-styling",  title: "Styling Comb",  color: "Styling Comb",  sku: "BIZILUXE-STYLING-COMB",   image_url: "/products/buersten-und-kaemme/hildesheim/hildesheim-main.jpg", attributes: { colour_hex: "#3D2C1E" }, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 },
+      ]
     },
     {
       id: "hameln",
@@ -533,15 +454,6 @@ function getBrushesProducts(): CatalogProduct[] {
       variants: [{ id: "hameln-standard", title: "Standard", color: null, sku: "METAL-PICK-COMB", image_url: "/products/buersten-und-kaemme/hameln/hameln-main.jpg", attributes: {}, retail_price_cents: 990, wholesale_price_cents: 693, inventory_quantity: 30 }]
     },
     {
-      id: "hildesheim",
-      title: "BiziLuxe Styling Comb",
-      slug: "hildesheim",
-      description: "BiziLuxe Styling Comb Collection. Fine-tooth tail comb for precise parting, backcombing and finishing. Chemical & heat resistant.",
-      image_url: "/products/buersten-und-kaemme/hildesheim/hildesheim-main.jpg",
-      attributes: {},
-      variants: [{ id: "hildesheim-standard", title: "Standard", color: null, sku: "BIZILUXE-STYLING-COMB", image_url: "/products/buersten-und-kaemme/hildesheim/hildesheim-main.jpg", attributes: {}, retail_price_cents: 890, wholesale_price_cents: 623, inventory_quantity: 30 }]
-    },
-    {
       id: "luebeck",
       title: "BiziLuxe Vent Brush (Wood Handle)",
       slug: "luebeck",
@@ -551,41 +463,17 @@ function getBrushesProducts(): CatalogProduct[] {
       variants: [{ id: "luebeck-standard", title: "Standard", color: null, sku: "BIZILUXE-VENT-BRUSH-WOOD", image_url: "/products/buersten-und-kaemme/luebeck/luebeck-main.jpg", attributes: {}, retail_price_cents: 2490, wholesale_price_cents: 1743, inventory_quantity: 20 }]
     },
     {
-      id: "lueneburg",
-      title: "BiziLuxe Pocket Comb",
-      slug: "lueneburg",
-      description: "BiziLuxe compact folding pocket comb with mixed boar and nylon bristles. Folds flat for handbag or travel. Comes in BiziLuxe gift packaging.",
-      image_url: "/products/buersten-und-kaemme/lueneburg/lueneburg-main.jpg",
-      attributes: {},
-      variants: [{ id: "lueneburg-standard", title: "Standard", color: null, sku: "BIZILUXE-POCKET-COMB", image_url: "/products/buersten-und-kaemme/lueneburg/lueneburg-main.jpg", attributes: {}, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 25 }]
-    },
-    {
-      id: "wolfenbuettel",
-      title: "BiziLuxe Dressing Comb",
-      slug: "wolfenbuettel",
-      description: "BiziLuxe Styling Comb Collection. Professional dressing comb with fine teeth and metal rat-tail pin. For all hair types. Chemical & heat resistant.",
+      id: "biziluxe-professional-combs",
+      title: "BiziLuxe Professional Combs",
+      slug: "biziluxe-professional-combs",
+      description: "BiziLuxe Styling Comb Collection. Choose the Dressing Comb for fine-tooth finishing or the Metal Tail Comb with precision stainless steel rat-tail pin. Chemical & heat resistant.",
       image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg",
       attributes: {},
-      variants: [{ id: "wolfenbuettel-standard", title: "Standard", color: null, sku: "BIZILUXE-DRESSING-COMB", image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg", attributes: {}, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 }]
+      variants: [
+        { id: "biziluxe-professional-combs-dressing",   title: "Dressing Comb",   color: "Dressing Comb",   sku: "BIZILUXE-DRESSING-COMB",   image_url: "/products/buersten-und-kaemme/wolfenbuettel/wolfenbuettel-main.jpg",  attributes: { colour_hex: "#8B7355" }, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 },
+        { id: "biziluxe-professional-combs-metal-tail", title: "Metal Tail Comb", color: "Metal Tail Comb", sku: "BIZILUXE-METAL-TAIL-COMB",  image_url: "/products/profi-friseurbedarf/bielefeld/bielefeld-main.jpg",         attributes: { colour_hex: "#C0C0C0" }, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 },
+      ]
     },
-    {
-      id: "bremen",
-      title: "BiziLuxe Flexible Vent Brush",
-      slug: "bremen",
-      description: "BiziLuxe flexible vent brush with open-slot base and ball-tipped pins. Reduces breakage during blow-drying and detangling.",
-      image_url: "/products/buersten-und-kaemme/bremen-main.jpg",
-      attributes: {},
-      variants: [{ id: "bremen-standard", title: "Standard", color: null, sku: "BIZILUXE-FLEX-VENT-BRUSH", image_url: "/products/buersten-und-kaemme/bremen-main.jpg", attributes: {}, retail_price_cents: 2190, wholesale_price_cents: 1533, inventory_quantity: 20 }]
-    },
-    {
-      id: "bielefeld",
-      title: "BiziLuxe Metal Tail Comb",
-      slug: "bielefeld",
-      description: "BiziLuxe Styling Comb Collection. Fine-tooth comb with precision stainless steel rat-tail pin. Chemical & heat resistant.",
-      image_url: "/products/profi-friseurbedarf/bielefeld/bielefeld-main.jpg",
-      attributes: {},
-      variants: [{ id: "bielefeld-standard", title: "Standard", color: null, sku: "BIZILUXE-METAL-TAIL-COMB", image_url: "/products/profi-friseurbedarf/bielefeld/bielefeld-main.jpg", attributes: {}, retail_price_cents: 1090, wholesale_price_cents: 763, inventory_quantity: 30 }]
-    }
   ];
 }
 
@@ -640,8 +528,18 @@ function getBiziHairProducts(): CatalogProduct[] {
 function getBiziLuxeStylingToolProducts(): CatalogProduct[] {
   return [
     { id: "solingen",    title: "BiziLuxe Hair Straightener",              slug: "solingen",    description: "BiziLuxe professional hair straightener with rose gold plates and digital temperature control. Suitable for all hair types.",                                            image_url: "/products/profi-friseurbedarf/solingen-main.jpg",    attributes: {}, variants: [{ id: "solingen-standard",    title: "Standard", color: null, sku: "HAIR-STRAIGHTENER-ROSEGOLD",  image_url: "/products/profi-friseurbedarf/solingen-main.jpg",    attributes: {}, retail_price_cents: 7990,  wholesale_price_cents: 5593, inventory_quantity: 10 }] },
-    { id: "wiesbaden",   title: "BiziLuxe Hair Dryer",                     slug: "wiesbaden",   description: "BiziLuxe professional ionic hair dryer with rose gold accents. Lightweight design with multiple heat and speed settings.",                                              image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",   attributes: {}, variants: [{ id: "wiesbaden-standard",   title: "Standard", color: null, sku: "HAIR-DRYER-BIZILUXE",         image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",   attributes: {}, retail_price_cents: 8990,  wholesale_price_cents: 6293, inventory_quantity: 10 }] },
-    { id: "waldenburg",  title: "BiziLuxe Hair Dryer & Straightener Set",  slug: "waldenburg",  description: "BiziLuxe professional hair dryer and straightener set in a luxury gift box. Rose gold accents.",                                                                        image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg",  attributes: {}, variants: [{ id: "waldenburg-standard",  title: "Standard", color: null, sku: "DRYER-STRAIGHTENER-SET",      image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg",  attributes: {}, retail_price_cents: 14990, wholesale_price_cents: 10493, inventory_quantity: 5 }] },
+    {
+      id: "wiesbaden",
+      title: "BiziLuxe Hair Dryer",
+      slug: "wiesbaden",
+      description: "BiziLuxe professional ionic hair dryer with rose gold accents. Available as Hair Dryer only or as a Dryer & Straightener Set.",
+      image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "wiesbaden-hair-dryer",    title: "Hair Dryer",             color: "Hair Dryer",             sku: "HAIR-DRYER-BIZILUXE",     image_url: "/products/profi-friseurbedarf/wiesbaden-main.jpg",  attributes: { colour_hex: "#C0607A" }, retail_price_cents:  8990, wholesale_price_cents: 6293,  inventory_quantity: 10 },
+        { id: "waldenburg-dryer-set",    title: "Dryer & Straightener Set", color: "Dryer & Straightener Set", sku: "DRYER-STRAIGHTENER-SET",  image_url: "/products/profi-friseurbedarf/waldenburg-main.jpg", attributes: { colour_hex: "#B8860B" }, retail_price_cents: 14990, wholesale_price_cents: 10493, inventory_quantity: 5  },
+      ]
+    },
     { id: "glashuette",  title: "Keratin Bond Fusion Iron",                slug: "glashuette",  description: "Professional keratin bond fusion iron for applying and removing bonded extensions. Temperature-controlled with LCD display. Comes with carrying case.",                 image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",  attributes: {}, variants: [{ id: "glashuette-standard",  title: "Standard", color: null, sku: "KERATIN-FUSION-IRON",         image_url: "/products/profi-friseurbedarf/glashuette-main.jpg",  attributes: {}, retail_price_cents: 5990,  wholesale_price_cents: 4193, inventory_quantity: 10 }] },
     { id: "ruhrstahl",   title: "BiziLuxe Gold Scissors",                  slug: "ruhrstahl",   description: "BiziLuxe professional gold-finish hairdressing scissors. Precision blades for clean, sharp cuts. Lightweight ergonomic design.",                                        image_url: "/products/profi-friseurbedarf/ruhrstahl-main.jpg",   attributes: {}, variants: [{ id: "ruhrstahl-standard",   title: "Standard", color: null, sku: "GOLD-SCISSORS",               image_url: "/products/profi-friseurbedarf/ruhrstahl-main.jpg",   attributes: {}, retail_price_cents: 3990,  wholesale_price_cents: 2793, inventory_quantity: 15 }] },
     { id: "zollverein",  title: "BiziLuxe Extension Tool Kit",             slug: "zollverein",  description: "BiziLuxe complete hair extension tool kit in a luxury zipper case. Includes gold scissors, pliers, latch hook tools and section clips.",                               image_url: "/products/profi-friseurbedarf/zollverein-main.jpg",  attributes: {}, variants: [{ id: "zollverein-standard",  title: "Standard", color: null, sku: "EXTENSION-TOOL-KIT",          image_url: "/products/profi-friseurbedarf/zollverein-main.jpg",  attributes: {}, retail_price_cents: 9990,  wholesale_price_cents: 6993, inventory_quantity: 10 }] },
@@ -720,7 +618,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (extensionSlugs.includes(slug)) {
     return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
   }
-  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb-yellow", "edge-brush-comb-blue", "wide-tint-brush-white", "wide-tint-brush-black", "celle", "goslar", "hameln", "hildesheim", "luebeck", "lueneburg", "wolfenbuettel", "bremen", "bielefeld"];
+  const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb", "wide-tint-brush", "celle", "biziluxe-styling-combs", "hameln", "luebeck", "biziluxe-professional-combs"];
   if (brushSlugs.includes(slug)) {
     return getBrushesProducts().find((p) => p.slug === slug) || null;
   }
@@ -728,15 +626,15 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (biziHairSlugs.includes(slug)) {
     return getBiziHairProducts().find((p) => p.slug === slug) || null;
   }
-  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "gator-grip-clips", "matte-section-clips", "sectioning-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "wesel", "keratin-heat-shield", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
+  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "wesel", "keratin-heat-shield", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
   if (accessorySlugs.includes(slug)) {
     return getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
   }
-  const stylingToolSlugs = ["solingen", "wiesbaden", "waldenburg", "glashuette", "ruhrstahl", "zollverein"];
+  const stylingToolSlugs = ["solingen", "wiesbaden", "glashuette", "ruhrstahl", "zollverein"];
   if (stylingToolSlugs.includes(slug)) {
     return getBiziLuxeStylingToolProducts().find((p) => p.slug === slug) || null;
   }
-  const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray-white", "tinting-tray-black", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "detmold", "essen", "herford", "muenster", "recklinghausen", "paderborn"];
+  const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "detmold", "essen", "herford", "muenster", "recklinghausen", "paderborn"];
   if (proSalonSlugs.includes(slug)) {
     return getProSalonProducts().find((p) => p.slug === slug) || null;
   }
