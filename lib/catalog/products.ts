@@ -557,16 +557,51 @@ function getBiziLuxeStylingToolProducts(): CatalogProduct[] {
   ];
 }
 
+// Supabase product slugs that belong in pro-salon (bypasses collection assignments)
+const SUPABASE_PRO_SALON_SLUGS = [
+  "removal-toner", "parchim", "ruegen", "neubrandenburg",
+  "guestrow", "usedom", "waren", "greifswald", "wismar",
+];
+// Supabase product slugs that belong in brushes
+const SUPABASE_BRUSH_SLUGS = ["schwerin-brush"];
+// Slugs that must NOT appear in accessories (they live in other categories)
+const NON_ACCESSORY_SUPABASE_SLUGS = new Set([...SUPABASE_PRO_SALON_SLUGS, ...SUPABASE_BRUSH_SLUGS]);
+
+async function fetchSupabaseProductsBySlugs(slugs: string[]): Promise<CatalogProduct[]> {
+  if (!slugs.length) return [];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("products")
+    .select("id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,color,sku,retail_price_cents,wholesale_price_cents,inventory_quantity,image_url,attributes,position)")
+    .in("slug", slugs)
+    .eq("status", "active");
+  return (data || []).map((product): CatalogProduct => ({
+    id: product.id,
+    shopify_id: product.shopify_id,
+    title: product.title,
+    slug: product.slug,
+    description: product.description,
+    image_url: product.image_url,
+    variants: (product.product_variants || []).sort((a: any, b: any) => (a.position ?? 99) - (b.position ?? 99))
+  }));
+}
+
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
   if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
   if (categorySlug === "bizihair-extensions") return getBiziHairProducts();
-  if (categorySlug === "buersten-und-kaemme") return getBrushesProducts();
+  if (categorySlug === "buersten-und-kaemme") {
+    const supabaseBrushes = await fetchSupabaseProductsBySlugs(SUPABASE_BRUSH_SLUGS);
+    return mergeCatalogProducts(getBrushesProducts(), supabaseBrushes);
+  }
   const localAccessoryProducts =
     categorySlug === "accessories" || categorySlug === "biziluxe-accessoires"
       ? getBiziLuxeAccessoryProducts()
       : null;
   if (categorySlug === "biziluxe-stylinggeraete") return getBiziLuxeStylingToolProducts();
-  if (categorySlug === "profi-friseurbedarf") return getProSalonProducts();
+  if (categorySlug === "profi-friseurbedarf") {
+    const supabaseProSalon = await fetchSupabaseProductsBySlugs(SUPABASE_PRO_SALON_SLUGS);
+    return mergeCatalogProducts(getProSalonProducts(), supabaseProSalon);
+  }
 
   const supabase = await createSupabaseServerClient();
   let productIds: string[] | null = null;
@@ -621,11 +656,17 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
 
   if (categorySlug && needsPathCategoryFallback) {
     const pathMatches = products.filter((product) => product.image_url?.includes(`/products/${categorySlug}/`));
-    if (localAccessoryProducts) return mergeCatalogProducts(localAccessoryProducts, pathMatches);
+    if (localAccessoryProducts) {
+      const filtered = pathMatches.filter((p) => !NON_ACCESSORY_SUPABASE_SLUGS.has(p.slug));
+      return mergeCatalogProducts(localAccessoryProducts, filtered);
+    }
     return pathMatches.length ? pathMatches : getLocalPublicProducts(categorySlug);
   }
 
-  if (localAccessoryProducts) return mergeCatalogProducts(localAccessoryProducts, products);
+  if (localAccessoryProducts) {
+    const filtered = products.filter((p) => !NON_ACCESSORY_SUPABASE_SLUGS.has(p.slug));
+    return mergeCatalogProducts(localAccessoryProducts, filtered);
+  }
   return products.length ? products : getLocalPublicProducts(categorySlug);
 }
 
