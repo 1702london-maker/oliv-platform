@@ -1,22 +1,10 @@
-import fs from "node:fs";
-import path from "node:path";
 import { WholesaleLoginForm } from "./WholesaleLoginForm";
 import { WholesaleLoginHeader, WholesaleLoginFooter } from "./WholesaleLoginHeader";
 import { LocaleInterceptor } from "@/components/auth/LocaleInterceptor";
-
-function getShell() {
-  const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
-  const marker = '<div class="template-404 page-width page-margin center">';
-  const start = html.indexOf(marker);
-  const end = html.indexOf("</div>", start) + "</div>".length;
-  return {
-    before: start > -1 ? html.slice(0, start) : html,
-    after: start > -1 ? html.slice(end) : ""
-  };
-}
+import { getAuthPageShell } from "@/lib/shopify-shell";
 
 export default function WholesaleLoginPage() {
-  const { before, after } = getShell();
+  const { before, after } = getAuthPageShell();
 
   return (
     <>

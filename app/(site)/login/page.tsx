@@ -1,19 +1,7 @@
-import fs from "node:fs";
-import path from "node:path";
 import { forgotPasswordAction } from "@/app/(site)/login/actions";
 import { LoginCard } from "@/components/auth/LoginCard";
 import { LocaleInterceptor } from "@/components/auth/LocaleInterceptor";
-
-function getShell() {
-  const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");
-  const marker = '<div class="template-404 page-width page-margin center">';
-  const start = html.indexOf(marker);
-  const end = html.indexOf("</div>", start) + "</div>".length;
-  return {
-    before: start > -1 ? html.slice(0, start) : html,
-    after: start > -1 ? html.slice(end) : ""
-  };
-}
+import { getAuthPageShell } from "@/lib/shopify-shell";
 
 export default async function LoginPage({
   searchParams
@@ -26,7 +14,7 @@ export default async function LoginPage({
   const detail = (params as Record<string, string | undefined>).detail;
   const message = params.message;
   const showForgot = error === "reset-missing" || message === "reset-sent";
-  const { before, after } = getShell();
+  const { before, after } = getAuthPageShell();
 
   return (
     <>
