@@ -156,28 +156,37 @@ function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
       id: "sectioning-clips",
       title: "Sectioning Clips",
       slug: "sectioning-clips",
-      description: "BiziLuxe professional sectioning clips. Standard White, Matte Black, and Gator Grip in Silver, White, Clear and Black. All packs of 6.",
+      description: "BiziLuxe professional sectioning clips. Pack of 6. Available in Standard White and Matte Black.",
       image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg",
       attributes: {},
       variants: [
-        { id: "sectioning-clips-standard",    title: "Standard White",  color: "Standard White",  sku: "SECTIONING-CLIPS-WHITE",      image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg",       attributes: { colour_hex: "#F5F5F5" }, retail_price_cents:  790, wholesale_price_cents:  553, inventory_quantity: 30 },
-        { id: "sectioning-clips-matte-black", title: "Matte Black",     color: "Matte Black",     sku: "SECTIONING-CLIPS-MATTE-BLACK", image_url: "/products/accessories/matte-section-clips/matte-section-clips-main.jpg", attributes: { colour_hex: "#2C2C2C" }, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 25 },
-        { id: "gator-grip-clips-silver",      title: "Gator — Silver",  color: "Gator — Silver",  sku: "GATOR-GRIP-CLIPS-SILVER",      image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg",               attributes: { colour_hex: "#C0C0C0" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
-        { id: "gator-grip-clips-white",       title: "Gator — White",   color: "Gator — White",   sku: "GATOR-GRIP-CLIPS-WHITE",       image_url: "/products/profi-friseurbedarf/hagen/hagen-main.jpg",                     attributes: { colour_hex: "#F0F0F0" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
-        { id: "gator-grip-clips-clear",       title: "Gator — Clear",   color: "Gator — Clear",   sku: "GATOR-GRIP-CLIPS-CLEAR",       image_url: "/products/profi-friseurbedarf/minden/minden-main.jpg",                   attributes: { colour_hex: "#D8D8D8" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
-        { id: "gator-grip-clips-black",       title: "Gator — Black",   color: "Gator — Black",   sku: "GATOR-GRIP-CLIPS-BLACK",       image_url: "/products/profi-friseurbedarf/witten/witten-main.jpg",                   attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents:  903, inventory_quantity: 25 },
+        { id: "sectioning-clips-standard",    title: "White",      color: "White",      sku: "SECTIONING-CLIPS-WHITE",      image_url: "/products/accessories/sectioning-clips/sectioning-clips-main.jpg",       attributes: { colour_hex: "#F5F5F5" }, retail_price_cents:  790, wholesale_price_cents:  553, inventory_quantity: 30 },
+        { id: "sectioning-clips-matte-black", title: "Matte Black", color: "Matte Black", sku: "SECTIONING-CLIPS-MATTE-BLACK", image_url: "/products/accessories/matte-section-clips/matte-section-clips-main.jpg", attributes: { colour_hex: "#2C2C2C" }, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 25 },
+      ]
+    },
+    {
+      id: "gator-grip-clips",
+      title: "Gator Grip Clips",
+      slug: "gator-grip-clips",
+      description: "Professional salon-grade alligator sectioning clips. Strong hold for thick sections. Pack of 6. Available in Silver, White, Clear and Black.",
+      image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "gator-grip-clips-silver", title: "Silver", color: "Silver", sku: "GATOR-GRIP-CLIPS-SILVER", image_url: "/products/profi-friseurbedarf/arnsberg/arnsberg-main.jpg", attributes: { colour_hex: "#C0C0C0" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-white",  title: "White",  color: "White",  sku: "GATOR-GRIP-CLIPS-WHITE",  image_url: "/products/profi-friseurbedarf/hagen/hagen-main.jpg",    attributes: { colour_hex: "#F0F0F0" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-clear",  title: "Clear",  color: "Clear",  sku: "GATOR-GRIP-CLIPS-CLEAR",  image_url: "/products/profi-friseurbedarf/minden/minden-main.jpg",  attributes: { colour_hex: "#D8D8D8" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
+        { id: "gator-grip-clips-black",  title: "Black",  color: "Black",  sku: "GATOR-GRIP-CLIPS-BLACK",  image_url: "/products/profi-friseurbedarf/witten/witten-main.jpg",  attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 25 },
       ]
     },
     {
       id: "fine-mist-spray-bottle",
       title: "Fine Mist Spray Bottle",
       slug: "fine-mist-spray-bottle",
-      description: "BiziLuxe fine mist continuous spray bottle. 300ml capacity. 360° spray for even moisture distribution. Available in 2 colours.",
+      description: "BiziLuxe fine mist continuous spray bottle. 300ml capacity. 360° spray for even moisture distribution.",
       image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg",
       attributes: {},
       variants: [
-        { id: "fine-mist-spray-bottle-standard",       title: "Standard",       color: "Standard",       sku: "FINE-MIST-SPRAY-STD",        image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg", attributes: { colour_hex: "#FFFFFF" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 20 },
-        { id: "fine-mist-spray-bottle-champagne-gold", title: "Champagne Gold", color: "Champagne Gold", sku: "FINE-MIST-SPRAY-CHAMPAGNE",   image_url: "/products/profi-friseurbedarf/soest/soest-champagnergold-main.jpg",             attributes: { colour_hex: "#C9A96E" }, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 },
+        { id: "fine-mist-spray-bottle-black", title: "Black", color: "Black", sku: "FINE-MIST-SPRAY-BLACK", image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 20 },
       ]
     },
     {
@@ -645,7 +654,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (biziHairSlugs.includes(slug)) {
     return getBiziHairProducts().find((p) => p.slug === slug) || null;
   }
-  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "wesel", "keratin-heat-shield", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
+  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "gator-grip-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "wesel", "keratin-heat-shield", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
   if (accessorySlugs.includes(slug)) {
     return getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
   }
