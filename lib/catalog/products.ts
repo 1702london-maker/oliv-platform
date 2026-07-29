@@ -152,26 +152,6 @@ function getProSalonProducts(): CatalogProduct[] {
         { id: "keratin-heat-shield-clear", title: "Clear", color: "Clear", sku: "KERATIN-HEAT-SHIELD-CLEAR", image_url: "/products/profi-friseurbedarf/rhein-main.jpg",   attributes: { colour_hex: "#E8E8E8" }, retail_price_cents: 1490, wholesale_price_cents: 1043, inventory_quantity: 20 },
       ]
     },
-    {
-      id: "berghain",
-      title: "BiziLuxe Cotton Thread for Sew-In",
-      slug: "berghain",
-      description: "Professional cotton thread for sew-in extensions. 1000 yards per spool. Available in 5 colours: Beige, Light Brown, Brown, Dark Brown and Black.",
-      image_url: "/products/profi-friseurbedarf/berghain-main.jpg",
-      attributes: {},
-      variants: [
-        { id: "berghain-beige",       title: "Beige",       color: "Beige",       sku: "COTTON-THREAD-BEIGE",      image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#D4BFA0" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
-        { id: "berghain-light-brown", title: "Light Brown", color: "Light Brown", sku: "COTTON-THREAD-LIGHT-BROWN", image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#A07850" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
-        { id: "berghain-brown",       title: "Brown",       color: "Brown",       sku: "COTTON-THREAD-BROWN",       image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#6B4226" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
-        { id: "berghain-dark-brown",  title: "Dark Brown",  color: "Dark Brown",  sku: "COTTON-THREAD-DARK-BROWN",  image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#3D1F0A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
-        { id: "berghain-black",       title: "Black",       color: "Black",       sku: "COTTON-THREAD-BLACK",       image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
-      ]
-    },
-    { id: "eisenach",        title: "BiziLuxe Removal Tonic",    slug: "eisenach",        description: "BiziLuxe tape extension removal tonic. 100ml spray bottle. Gently dissolves tape adhesive for clean, damage-free removal.",                                              image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",        attributes: {}, variants: [{ id: "eisenach-standard",        title: "Standard", color: null, sku: "REMOVAL-TONIC-TAPE",   image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",        attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 }] },
-    { id: "taunus",          title: "BiziLuxe K-Tip Remover",    slug: "taunus",          description: "BiziLuxe K-Tip hair extension remover spray. 100ml. Gently dissolves keratin bonds for clean, damage-free removal.",                                                     image_url: "/products/profi-friseurbedarf/taunus-main.jpg",          attributes: {}, variants: [{ id: "taunus-standard",          title: "Standard", color: null, sku: "KTIP-REMOVER",         image_url: "/products/profi-friseurbedarf/taunus-main.jpg",          attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 }] },
-    { id: "mannheim",        title: "BiziLuxe Double Sided Tape", slug: "mannheim",        description: "BiziLuxe double sided tape tabs for tape-in hair extensions. 60 tabs per pack (4.0 cm × 0.8 cm). Ultra-strong hold.",                                                    image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",         attributes: {}, variants: [{ id: "mannheim-standard",        title: "Standard", color: null, sku: "DOUBLE-SIDED-TAPE-60", image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",         attributes: {}, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 30 }] },
-    { id: "speicherstadt",   title: "BiziLuxe Tape Scraper",      slug: "speicherstadt",   description: "BiziLuxe tape scraper tool for easy removal of tape-in extension tabs. Ergonomic handle with dual-blade head.",                                                           image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",   attributes: {}, variants: [{ id: "speicherstadt-standard",   title: "Standard", color: null, sku: "TAPE-SCRAPER",        image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",   attributes: {}, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 25 }] },
-    { id: "hamburger-hafen", title: "BiziLuxe Latch Hook Tool",   slug: "hamburger-hafen", description: "BiziLuxe professional latch hook tool with gold handle. Includes 3 interchangeable needle sizes for micro ring and nano ring installations. Comes with BiziLuxe case.", image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg", attributes: {}, variants: [{ id: "hamburger-hafen-standard", title: "Standard", color: null, sku: "LATCH-HOOK-TOOL",      image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg", attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 15 }] },
   ];
   return [
     ...items.map((item) => ({
@@ -315,6 +295,27 @@ function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
       attributes: {},
       variants: [{ id: "hair-weaving-needles-standard", title: "Set of 3", color: null, sku: "HAIR-WEAVING-NEEDLES", image_url: "/products/accessories/hair-weaving-needles/hair-weaving-needles-main.jpg", attributes: {}, retail_price_cents: 690, wholesale_price_cents: 483, inventory_quantity: 30 }]
     },
+    // ── Extension Application & Removal ─────────────────────────────────────
+    {
+      id: "berghain",
+      title: "BiziLuxe Cotton Thread for Sew-In",
+      slug: "berghain",
+      description: "Professional cotton thread for sew-in extensions. 1000 yards per spool. Available in 5 colours: Beige, Light Brown, Brown, Dark Brown and Black.",
+      image_url: "/products/profi-friseurbedarf/berghain-main.jpg",
+      attributes: {},
+      variants: [
+        { id: "berghain-beige",       title: "Beige",       color: "Beige",       sku: "COTTON-THREAD-BEIGE",      image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#D4BFA0" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-light-brown", title: "Light Brown", color: "Light Brown", sku: "COTTON-THREAD-LIGHT-BROWN", image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#A07850" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-brown",       title: "Brown",       color: "Brown",       sku: "COTTON-THREAD-BROWN",      image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#6B4226" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-dark-brown",  title: "Dark Brown",  color: "Dark Brown",  sku: "COTTON-THREAD-DARK-BROWN", image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#3D1F0A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+        { id: "berghain-black",       title: "Black",       color: "Black",       sku: "COTTON-THREAD-BLACK",      image_url: "/products/profi-friseurbedarf/berghain-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 30 },
+      ]
+    },
+    { id: "eisenach",        title: "BiziLuxe Removal Tonic",    slug: "eisenach",        description: "BiziLuxe tape extension removal tonic. 100ml spray bottle. Gently dissolves tape adhesive for clean, damage-free removal.",                                              image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",        attributes: {}, variants: [{ id: "eisenach-standard",        title: "Standard", color: null, sku: "REMOVAL-TONIC-TAPE",   image_url: "/products/profi-friseurbedarf/eisenach-main.jpg",        attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 }] },
+    { id: "taunus",          title: "BiziLuxe K-Tip Remover",    slug: "taunus",          description: "BiziLuxe K-Tip hair extension remover spray. 100ml. Gently dissolves keratin bonds for clean, damage-free removal.",                                                     image_url: "/products/profi-friseurbedarf/taunus-main.jpg",          attributes: {}, variants: [{ id: "taunus-standard",          title: "Standard", color: null, sku: "KTIP-REMOVER",         image_url: "/products/profi-friseurbedarf/taunus-main.jpg",          attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 20 }] },
+    { id: "mannheim",        title: "BiziLuxe Double Sided Tape", slug: "mannheim",        description: "BiziLuxe double sided tape tabs for tape-in hair extensions. 60 tabs per pack (4.0 cm × 0.8 cm). Ultra-strong hold.",                                                    image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",         attributes: {}, variants: [{ id: "mannheim-standard",        title: "Standard", color: null, sku: "DOUBLE-SIDED-TAPE-60", image_url: "/products/profi-friseurbedarf/mannheim-main.jpg",         attributes: {}, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 30 }] },
+    { id: "speicherstadt",   title: "BiziLuxe Tape Scraper",      slug: "speicherstadt",   description: "BiziLuxe tape scraper tool for easy removal of tape-in extension tabs. Ergonomic handle with dual-blade head.",                                                           image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",   attributes: {}, variants: [{ id: "speicherstadt-standard",   title: "Standard", color: null, sku: "TAPE-SCRAPER",        image_url: "/products/profi-friseurbedarf/speicherstadt-main.jpg",   attributes: {}, retail_price_cents:  990, wholesale_price_cents:  693, inventory_quantity: 25 }] },
+    { id: "hamburger-hafen", title: "BiziLuxe Latch Hook Tool",   slug: "hamburger-hafen", description: "BiziLuxe professional latch hook tool with gold handle. Includes 3 interchangeable needle sizes for micro ring and nano ring installations. Comes with BiziLuxe case.", image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg", attributes: {}, variants: [{ id: "hamburger-hafen-standard", title: "Standard", color: null, sku: "LATCH-HOOK-TOOL",      image_url: "/products/profi-friseurbedarf/hamburger-hafen-main.jpg", attributes: {}, retail_price_cents: 1990, wholesale_price_cents: 1393, inventory_quantity: 15 }] },
   ];
 }
 
@@ -557,15 +558,25 @@ function getBiziLuxeStylingToolProducts(): CatalogProduct[] {
   ];
 }
 
-// Supabase product slugs that belong in pro-salon (bypasses collection assignments)
+// Supabase product slugs that belong in pro-salon (professional equipment only)
 const SUPABASE_PRO_SALON_SLUGS = [
-  "removal-toner", "parchim", "ruegen", "neubrandenburg",
-  "guestrow", "usedom", "waren", "greifswald", "wismar",
+  "parchim",        // Extension Pliers
+  "ruegen",         // Extension Scissors
+  "guestrow",       // Keratin Beads
+  "usedom",         // Loop Needle
+  "neubrandenburg", // K-Tips Remover
 ];
 // Supabase product slugs that belong in brushes
 const SUPABASE_BRUSH_SLUGS = ["schwerin-brush"];
-// Slugs that must NOT appear in accessories (they live in other categories)
-const NON_ACCESSORY_SUPABASE_SLUGS = new Set([...SUPABASE_PRO_SALON_SLUGS, ...SUPABASE_BRUSH_SLUGS]);
+// Slugs that must NOT appear in accessories (they live in other categories or are duplicates)
+const NON_ACCESSORY_SUPABASE_SLUGS = new Set([
+  ...SUPABASE_PRO_SALON_SLUGS,
+  ...SUPABASE_BRUSH_SLUGS,
+  // Duplicates of hardcoded accessories — block the Supabase version
+  "removal-toner", "wismar", "waren", "greifswald",
+  // Claw clips and sectioning clips — not wanted in accessories
+  "demmin", "anklam", "biziluxe-claw-clip", "biziluxe-lace-front-tape",
+]);
 
 async function fetchSupabaseProductsBySlugs(slugs: string[]): Promise<CatalogProduct[]> {
   if (!slugs.length) return [];
@@ -695,7 +706,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (biziHairSlugs.includes(slug)) {
     return getBiziHairProducts().find((p) => p.slug === slug) || null;
   }
-  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "gator-grip-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels"];
+  const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "gator-grip-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
   if (accessorySlugs.includes(slug)) {
     return getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
   }
@@ -703,7 +714,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   if (stylingToolSlugs.includes(slug)) {
     return getBiziLuxeStylingToolProducts().find((p) => p.slug === slug) || null;
   }
-  const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "detmold", "essen", "herford", "muenster", "recklinghausen", "paderborn", "wesel", "keratin-heat-shield", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
+  const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "detmold", "essen", "herford", "muenster", "recklinghausen", "paderborn", "wesel", "keratin-heat-shield"];
   if (proSalonSlugs.includes(slug)) {
     return getProSalonProducts().find((p) => p.slug === slug) || null;
   }
