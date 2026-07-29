@@ -3096,7 +3096,7 @@ first.parentNode.insertBefore(script, first);
           <p class="oappt-summary-empty">Select a location to begin.</p>
         </div>
         <div class="oappt-summary-total" id="oappt-summary-total" style="display:none;">
-          <span class="oappt-summary-total-label">Geschätzte Gesamtsumme</span>
+          <span class="oappt-summary-total-label">Estimated Total</span>
           <span class="oappt-summary-total-val" id="oappt-summary-total-val">&euro;0</span>
         </div>
       </div>
@@ -3110,44 +3110,44 @@ first.parentNode.insertBefore(script, first);
 var OAPPT_SERVICES = [
   {
     id: 'weft-braided',
-    name: 'Tresse Einnähen',
+    name: 'Weft Sewing',
     desc: 'Professionelle Tresseninstallation auf geflochtenem Untergrund.',
     optionLabel: 'Anzahl Reihen',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
-      { label: 'Tresse Einnähen 1 Reihe — €40',  value: '1-row',  price: 40  },
-      { label: 'Tresse Einnähen 2 Reihen — €70',  value: '2-rows', price: 70  },
-      { label: 'Tresse Einnähen 3 Reihen — €95',  value: '3-rows', price: 95  },
-      { label: 'Tresse Einnähen 4 Reihen — €120', value: '4-rows', price: 120 },
-      { label: 'Tresse Einnähen 5 Reihen — €140', value: '5-rows', price: 140 }
+      { label: 'Please select...', value: '', price: 0 },
+      { label: 'Weft Sewing 1 Row — €40',  value: '1-row',  price: 40  },
+      { label: 'Weft Sewing 2 Rows — €70',  value: '2-rows', price: 70  },
+      { label: 'Weft Sewing 3 Rows — €95',  value: '3-rows', price: 95  },
+      { label: 'Weft Sewing 4 Rows — €120', value: '4-rows', price: 120 },
+      { label: 'Weft Sewing 5 Rows — €140', value: '5-rows', price: 140 }
     ],
     hasPurchase: true
   },
   {
     id: 'weft-no-braid',
-    name: 'Tresse Einnähen Ohne Flechten',
+    name: 'Weft Sewing Without Braiding',
     desc: 'Tresseninstallation ohne Flechtunterlage.',
     optionLabel: 'Anzahl Reihen',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
-      { label: 'Tresse Einnähen Ohne Flechten 1 Reihe — €35',  value: '1-row',  price: 35  },
-      { label: 'Tresse Einnähen Ohne Flechten 2 Reihen — €70', value: '2-rows', price: 70  },
-      { label: 'Tresse Einnähen Ohne Flechten 3 Reihen — €105',value: '3-rows', price: 105 },
-      { label: 'Tresse Einnähen Ohne Flechten 4 Reihen — €140',value: '4-rows', price: 140 }
+      { label: 'Please select...', value: '', price: 0 },
+      { label: 'Weft Sewing Without Braiding 1 Row — €35',  value: '1-row',  price: 35  },
+      { label: 'Weft Sewing Without Braiding 2 Rows — €70', value: '2-rows', price: 70  },
+      { label: 'Weft Sewing Without Braiding 3 Rows — €105',value: '3-rows', price: 105 },
+      { label: 'Weft Sewing Without Braiding 4 Rows — €140',value: '4-rows', price: 140 }
     ],
     hasPurchase: true
   },
   {
     id: 'tape-full',
     name: 'Tapes Hochsetzen',
-    desc: 'Vollständige Tape-Extension-Anwendung inkl. Haare.',
+    desc: 'Full tape extension application incl. hair.',
     optionLabel: 'Anzahl Tapes',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
-      { label: 'Tapes Hochsetzen 20 Stück — €70',      value: '20',     price: 70  },
-      { label: 'Tapes Hochsetzen 40 Stück — €130',     value: '40',     price: 130 },
-      { label: 'Tapes Hochsetzen 60 Stück — €175',     value: '60',     price: 175 },
-      { label: 'Tapes Hochsetzen 80/100 Stück — €220', value: '80-100', price: 220 }
+      { label: 'Please select...', value: '', price: 0 },
+      { label: 'Tapes Installation 20 Pieces — €70',      value: '20',     price: 70  },
+      { label: 'Tapes Installation 40 Pieces — €130',     value: '40',     price: 130 },
+      { label: 'Tapes Installation 60 Pieces — €175',     value: '60',     price: 175 },
+      { label: 'Tapes Installation 80/100 Pieces — €220', value: '80-100', price: 220 }
     ],
     hasPurchase: false
   },
@@ -3157,11 +3157,11 @@ var OAPPT_SERVICES = [
     desc: 'Tape-Extension-Einarbeitung mit eigenen Haaren.',
     optionLabel: 'Anzahl Tapes',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
-      { label: 'Tapes Nur Einarbeitung 20 Stück — €35',  value: '20', price: 35  },
-      { label: 'Tapes Nur Einarbeitung 40 Stück — €70',  value: '40', price: 70  },
-      { label: 'Tapes Nur Einarbeitung 60 Stück — €100', value: '60', price: 100 },
-      { label: 'Tapes Nur Einarbeitung 80 Stück — €130', value: '80', price: 130 }
+      { label: 'Please select...', value: '', price: 0 },
+      { label: 'Tape Application Only 20 Pieces — €35',  value: '20', price: 35  },
+      { label: 'Tape Application Only 40 Pieces — €70',  value: '40', price: 70  },
+      { label: 'Tape Application Only 60 Pieces — €100', value: '60', price: 100 },
+      { label: 'Tape Application Only 80 Pieces — €130', value: '80', price: 130 }
     ],
     hasPurchase: true
   },
@@ -3169,13 +3169,13 @@ var OAPPT_SERVICES = [
     id: 'bonding',
     name: 'Bondings Einarbeiten',
     desc: 'Professionelle Bonding-Extension-Anwendung.',
-    optionLabel: 'Anzahl Stück',
+    optionLabel: 'Quantity',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
-      { label: 'Bondings Einarbeiten 50 Stück — €90',  value: '50',  price: 90  },
-      { label: 'Bondings Einarbeiten 100 Stück — €170', value: '100', price: 170 },
-      { label: 'Bondings Einarbeiten 150 Stück — €240', value: '150', price: 240 },
-      { label: 'Bondings Einarbeiten 200 Stück — €290', value: '200', price: 290 }
+      { label: 'Please select...', value: '', price: 0 },
+      { label: 'Bondings Installation 50 Pieces — €90',  value: '50',  price: 90  },
+      { label: 'Bondings Installation 100 Pieces — €170', value: '100', price: 170 },
+      { label: 'Bondings Installation 150 Pieces — €240', value: '150', price: 240 },
+      { label: 'Bondings Installation 200 Pieces — €290', value: '200', price: 290 }
     ],
     hasPurchase: true
   },
@@ -3185,7 +3185,7 @@ var OAPPT_SERVICES = [
     desc: 'Extension-Anwendung nach der brasilianischen Methode.',
     optionLabel: 'Haargewicht (g)',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
+      { label: 'Please select...', value: '', price: 0 },
       { label: 'Brasilianische Methode 100g — €170', value: '100g', price: 170 },
       { label: 'Brasilianische Methode 150g — €210', value: '150g', price: 210 },
       { label: 'Brasilianische Methode 200g — €250', value: '200g', price: 250 }
@@ -3198,7 +3198,7 @@ var OAPPT_SERVICES = [
     desc: 'Komplette Full-Weave-Installation mit oder ohne Closure.',
     optionLabel: 'Weave-Typ',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
+      { label: 'Please select...', value: '', price: 0 },
       { label: 'Full Weave Mit Oder Ohne Closure — €140', value: 'closure', price: 140 }
     ],
     hasPurchase: true
@@ -3209,17 +3209,17 @@ var OAPPT_SERVICES = [
     desc: 'Professionelle Flechtservice.',
     optionLabel: 'Braid-Typ',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
+      { label: 'Please select...', value: '', price: 0 },
       { label: 'Braids — €290',                         value: 'standard', price: 290 },
-      { label: 'Braids Dünn — €380',                    value: 'thin',     price: 380 },
+      { label: 'Braids Thin — €380',                    value: 'thin',     price: 380 },
       { label: 'Open Braids — €290',                    value: 'open',     price: 290 },
       { label: 'Braids for Kids Bis 10 Jahre — €220',   value: 'kids',     price: 220 },
       { label: 'Feedin Braids With Rastas — €250',      value: 'feedin',   price: 250 },
       { label: 'Feed-in Ponytail — €230',               value: 'ponytail', price: 230 },
       { label: 'Micro/Million Braids — €600',           value: 'micro',    price: 600 },
-      { label: 'Boxer Braids 2 Stück — €60',            value: '2-boxer',  price: 60  },
-      { label: 'Boxer Braids 4 Strähnen — €75',         value: '4-boxer',  price: 75  },
-      { label: 'Boxer Braids 6 Strähnen — €95',         value: '6-boxer',  price: 95  },
+      { label: 'Boxer Braids 2 Pieces — €60',            value: '2-boxer',  price: 60  },
+      { label: 'Boxer Braids 4 Strands — €75',         value: '4-boxer',  price: 75  },
+      { label: 'Boxer Braids 6 Strands — €95',         value: '6-boxer',  price: 95  },
       { label: 'Cornrows — €50',                        value: 'cornrows', price: 50  }
     ],
     hasPurchase: false
@@ -3230,7 +3230,7 @@ var OAPPT_SERVICES = [
     desc: 'Crochet-Installationsservice.',
     optionLabel: 'Crochet-Typ',
     options: [
-      { label: 'Bitte wählen...', value: '', price: 0 },
+      { label: 'Please select...', value: '', price: 0 },
       { label: 'Crochet Ohne Haare — €240',   value: 'no-hair',   price: 240 },
       { label: 'Crochet All Inclusive — €270', value: 'inclusive', price: 270 }
     ],
@@ -3793,7 +3793,7 @@ function oapptBuildBookingSummary() {
     if (!r.val) return;
     html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">' + r.label + '</span><span class="oappt-confirm-row-val">' + r.val + '</span></div>';
   });
-  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Geschätzte Gesamtsumme</span><span class="oappt-confirm-total-val">&euro;' + total + '</span></div>';
+  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Estimated Total</span><span class="oappt-confirm-total-val">&euro;' + total + '</span></div>';
   wrap.innerHTML = html;
 }
 
@@ -3860,7 +3860,7 @@ function oapptSubmitBooking(event) {
       html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r[0] + '</span><span class="oappt-confirm-detail-val">' + r[1] + '</span></div>';
     });
     html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
-    html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (isDe ? 'Geschätzte Gesamtsumme' : 'Estimated Total') + '</span>';
+    html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (isDe ? 'Estimated Total' : 'Estimated Total') + '</span>';
     html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + total + '</span>';
     html += '</div>';
     detailsEl.innerHTML = html;
@@ -4053,7 +4053,7 @@ function oapptSubmitBooking(event) {
     oapptState.submitting = false;
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = oapptLang() === 'de' ? 'Termin bestätigen' : 'Confirm Appointment';
+      submitBtn.textContent = oapptLang() === 'de' ? 'Confirm Appointment' : 'Confirm Appointment';
     }
   });
 }
@@ -4084,7 +4084,7 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
     html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r[0] + '</span><span class="oappt-confirm-detail-val">' + r[1] + '</span></div>';
   });
   html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
-  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">Geschätzte Gesamtsumme</span>';
+  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">Estimated Total</span>';
   html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + total + '</span>';
   html += '</div>';
   detailsEl.innerHTML = html;
@@ -4263,7 +4263,7 @@ OAPPT_SERVICES = [
     name: 'Feed-In Ponytail',
     deName: 'Feed-In Ponytail',
     desc: 'Feed-In Ponytail. Price may increase.',
-    deDesc: 'Feed-In Ponytail. Preis kann sich erhöhen.',
+    deDesc: 'Feed-In Ponytail. Price may vary.',
     optionLabel: 'Style',
     deOptionLabel: 'Style',
     options: [
@@ -4287,9 +4287,9 @@ OAPPT_SERVICES = [
     name: 'Boxer Braids',
     deName: 'Boxer Braids',
     desc: 'Boxer Braids in 2, 4 or 6 sections.',
-    deDesc: 'Boxer Braids in 2, 4 oder 6 Strähnen.',
+    deDesc: 'Boxer Braids in 2, 4 or 6 strands.',
     optionLabel: 'Sections',
-    deOptionLabel: 'Strähnen',
+    deOptionLabel: 'Strands',
     options: [
       { label: '2 Pieces — €60',   deLabel: '2 Stück — 60,00 €',    value: 'boxer-2', price: 60, durationMinutes: 45 },
       { label: '4 Strands — €75',  deLabel: '4 Strähnen — 75,00 €', value: 'boxer-4', price: 75, durationMinutes: 60 },
@@ -4301,7 +4301,7 @@ OAPPT_SERVICES = [
     name: 'Cornrows',
     deName: 'Cornrows',
     desc: 'Cornrows. Price may increase.',
-    deDesc: 'Cornrows. Preis kann sich erhöhen.',
+    deDesc: 'Cornrows. Price may vary.',
     optionLabel: 'Style',
     deOptionLabel: 'Style',
     options: [
@@ -4788,7 +4788,7 @@ function oapptBuildBookingSummary() {
     html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">' + r.label + '</span><span class="oappt-confirm-row-val">' + r.val + '</span></div>';
   });
   html += '<div class="oappt-confirm-row"><span class="oappt-confirm-row-label">Price</span><span class="oappt-confirm-row-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
-  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Geschätzte Gesamtsumme</span><span class="oappt-confirm-total-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
+  html += '<div class="oappt-confirm-total-row"><span class="oappt-confirm-total-label">Estimated Total</span><span class="oappt-confirm-total-val">&euro;' + oapptMoney(oapptGetTotal()) + '</span></div>';
   wrap.innerHTML = html;
 }
 
@@ -4894,7 +4894,7 @@ function oapptShowConfirmedDetails(svc, stylist, total) {
     html += '<div class="oappt-confirm-detail-row"><span class="oappt-confirm-detail-label">' + r.label + '</span><span class="oappt-confirm-detail-val">' + r.val + '</span></div>';
   });
   html += '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:2px solid #2B2620;margin-top:4px;gap:16px;">';
-  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (oapptLang() === 'de' ? 'Geschätzte Gesamtsumme' : 'Estimated Total') + '</span>';
+  html += '<span style="font-family:\'Montserrat\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2B2620;">' + (oapptLang() === 'de' ? 'Estimated Total' : 'Estimated Total') + '</span>';
   html += '<span style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:32px;color:#2B2620;">&euro;' + oapptMoney(total) + '</span>';
   html += '</div>';
   detailsEl.innerHTML = html;
@@ -4919,87 +4919,87 @@ function oapptTranslateUI() {
   function tall(sel, html) { var els = document.querySelectorAll(sel); els.forEach(function(el) { el.innerHTML = html; }); }
 
   // Confirmation screen
-  t('.oappt-confirm-title', 'Termin <em>bestätigt</em>');
+  t('.oappt-confirm-title', 'Appointment <em>Confirmed</em>');
   t('.oappt-confirm-sub', 'Dein Termin ist bestätigt. Eine Bestätigungs-E-Mail mit deinen Buchungsdetails wurde verschickt.');
-  t('.oappt-confirm-btn-dark', 'Zurück zur Startseite');
+  t('.oappt-confirm-btn-dark', 'Back to Home');
 
   // Step 1
-  t('#oappt-step-1 .oappt-step-title', 'Wähle deinen <em>Standort</em>');
+  t('#oappt-step-1 .oappt-step-title', 'Choose your <em>Location</em>');
   t('#oappt-step-1 .oappt-step-sub', 'Wähle deinen bevorzugten OlivHairSupply-Standort. Preise können je nach Standort variieren.');
   t('#oappt-step-1 .oappt-btn-next', 'Weiter');
   t('#oappt-err-1', 'Bitte wähle einen Standort aus, um fortzufahren.');
 
   // Step 2
-  t('#oappt-step-2 .oappt-step-title', 'Wähle deinen <em>Service</em>');
+  t('#oappt-step-2 .oappt-step-title', 'Choose your <em>Service</em>');
   t('#oappt-step-2 .oappt-step-sub', 'Wähle die Servicekategorie, die du buchen möchtest.');
-  t('#oappt-step-2 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-2 .oappt-btn-back', 'Back');
   t('#oappt-step-2 .oappt-btn-next', 'Weiter');
   t('#oappt-err-2', 'Bitte wähle einen Service aus, um fortzufahren.');
 
   // Step 3
   t('#oappt-step-3 .oappt-step-title', 'Konfiguriere deinen <em>Service</em>');
   t('#oappt-step-3 .oappt-step-sub', 'Wähle deine Optionen. Deine geschätzte Gesamtsumme wird aktualisiert.');
-  t('#oappt-step-3 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-3 .oappt-btn-back', 'Back');
   t('#oappt-step-3 .oappt-btn-next', 'Weiter');
   t('#oappt-err-3', 'Bitte vervollständige alle erforderlichen Angaben.');
 
   // Step 4
-  t('#oappt-step-4 .oappt-step-title', 'Wähle deine <em>Stylistin</em>');
+  t('#oappt-step-4 .oappt-step-title', 'Choose your <em>Stylist</em>');
   t('#oappt-step-4 .oappt-step-sub', 'Wähle die Spezialistin, mit der du arbeiten möchtest.');
-  t('#oappt-step-4 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-4 .oappt-btn-back', 'Back');
   t('#oappt-step-4 .oappt-btn-next', 'Weiter');
   t('#oappt-err-4', 'Bitte wähle eine Stylistin aus, um fortzufahren.');
 
   // Step 5
-  t('#oappt-step-5 .oappt-step-title', 'Wähle ein <em>Datum</em>');
+  t('#oappt-step-5 .oappt-step-title', 'Choose a <em>Date</em>');
   t('#oappt-step-5 .oappt-step-sub', 'Tage mit einem goldenen Punkt haben freie Termine. Wir sind Montag bis Samstag geöffnet.');
-  t('#oappt-step-5 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-5 .oappt-btn-back', 'Back');
   t('#oappt-step-5 .oappt-btn-next', 'Weiter');
   t('#oappt-err-5', 'Bitte wähle ein Datum aus, um fortzufahren.');
   // Calendar legend
   var legendItems = document.querySelectorAll('#oappt-step-5 .oappt-cal-legend-item');
-  var legendTexts = ['Verfügbar', 'Nicht verfügbar', 'Ausgewählt'];
+  var legendTexts = ['Available', 'Not available', 'Selected'];
   legendItems.forEach(function(item, i) {
     var dot = item.querySelector('.oappt-cal-legend-dot');
     if (dot && legendTexts[i]) item.innerHTML = dot.outerHTML + ' ' + legendTexts[i];
   });
 
   // Step 6
-  t('#oappt-step-6 .oappt-step-title', 'Wähle eine <em>Uhrzeit</em>');
+  t('#oappt-step-6 .oappt-step-title', 'Choose a <em>Time</em>');
   t('#oappt-step-6 .oappt-step-sub', 'Verfügbare Zeiten für deine gewählte Stylistin und dein Datum.');
   t('.oappt-slots-note', 'Alle Zeiten in Berliner Ortszeit (CET/CEST). Bitte 5 Minuten früher erscheinen.');
-  t('#oappt-step-6 .oappt-btn-back', 'Zurück');
+  t('#oappt-step-6 .oappt-btn-back', 'Back');
   t('#oappt-step-6 .oappt-btn-next', 'Weiter');
   t('#oappt-err-6', 'Bitte wähle eine Uhrzeit aus, um fortzufahren.');
 
   // Step 7
   t('#oappt-step-7 .oappt-step-title', 'Deine <em>Angaben</em>');
   t('#oappt-step-7 .oappt-step-sub', 'Bitte gib deine Kontaktdaten für deine automatische Terminbestätigung ein.');
-  t('label[for="oappt-full-name"]', 'Vollständiger Name');
+  t('label[for="oappt-full-name"]', 'Full Name');
   t('label[for="oappt-email"]', 'E-Mail-Adresse');
   t('label[for="oappt-phone"]', 'Telefonnummer');
   t('label[for="oappt-notes"]', 'Anmerkungen (optional)');
   ta('#oappt-full-name', 'placeholder', 'Dein vollständiger Name');
   ta('#oappt-notes', 'placeholder', 'Allergien, besondere Wünsche oder sonstige Hinweise...');
-  t('#oappt-step-7 .oappt-btn-back', 'Zurück');
-  t('#oappt-step-7 .oappt-btn-next', 'Buchung prüfen');
+  t('#oappt-step-7 .oappt-btn-back', 'Back');
+  t('#oappt-step-7 .oappt-btn-next', 'Review Booking');
   t('#oappt-err-7', 'Bitte fülle alle Pflichtfelder korrekt aus.');
 
   // Step 8
-  t('#oappt-step-8 .oappt-step-title', 'Termin <em>bestätigen</em>');
+  t('#oappt-step-8 .oappt-step-title', 'Confirm <em>Appointment</em>');
   t('#oappt-step-8 .oappt-step-sub', 'Bitte überprüfe deine Buchungsdetails und akzeptiere die Terminbedingungen.');
   var bookingNote = document.querySelector('.oappt-booking-note p');
   if (bookingNote) bookingNote.innerHTML = '<strong>Dein Termin wird automatisch bestätigt.</strong> Wenn du deinen Termin verpasst oder ohne vorherige Absage nicht erscheinst, stimmst du zu, eine Ausfallgebühr in Höhe von 50 % des geschätzten Terminwerts zu zahlen. Diese Vereinbarung wird mit deiner Buchung gespeichert.';
   var legalSpan = document.querySelector('.oappt-legal-check span');
   if (legalSpan) legalSpan.textContent = 'Ich habe gelesen und stimme zu, dass ich eine Ausfallgebühr in Höhe von 50 % des geschätzten Terminwerts zahle, wenn ich diesen Termin verpasse oder ohne vorherige Absage nicht erscheine.';
   t('#oappt-err-8', 'Bitte akzeptiere die Ausfallgebühren-Vereinbarung, bevor du bestätigst.');
-  t('#oappt-submit-btn', 'Termin bestätigen');
-  t('#oappt-step-8 .oappt-btn-back', 'Zurück');
+  t('#oappt-submit-btn', 'Confirm Appointment');
+  t('#oappt-step-8 .oappt-btn-back', 'Back');
 
   // Sidebar
   t('.oappt-summary-title', 'Deine Buchung');
   t('.oappt-summary-subtitle', 'Zusammenfassung');
-  t('.oappt-summary-total-label', 'Geschätzter Gesamtpreis');
+  t('.oappt-summary-total-label', 'Estimated Total');
 
   // Store A address — with hours in German
   var storeAAddr = document.querySelector('#oappt-step-1 .oappt-location-card[data-loc="a"] .oappt-location-address');
@@ -5011,7 +5011,7 @@ function oapptTranslateUI() {
 
   // Store B opening banner — translate to German
   var storeBBanner = document.getElementById('oappt-store-b-closed');
-  if (storeBBanner) storeBBanner.textContent = 'Eröffnung 1. September 2026';
+  if (storeBBanner) storeBBanner.textContent = 'Opening 1st September 2026';
 }
 
 document.addEventListener('DOMContentLoaded', function() {

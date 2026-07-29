@@ -13,18 +13,18 @@ export default async function RegisterPage({
 
   const errorMsg =
     error === "taken"
-      ? "Ein Konto mit dieser E-Mail-Adresse existiert bereits. Bitte melde dich stattdessen an."
+      ? "An account with this email address already exists. Please sign in instead."
       : error === "weak-password"
-      ? "Dein Passwort muss mindestens 8 Zeichen lang sein."
+      ? "Your password must be at least 8 characters long."
       : error === "failed"
-      ? "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+      ? "Something went wrong. Please try again."
       : error === "missing"
-      ? "Bitte fülle alle Pflichtfelder aus."
+      ? "Please fill in all required fields."
       : null;
 
   const successMsg =
     message === "check-email"
-      ? "Konto erstellt! Bitte überprüfe deinen Posteingang und klicke auf den Bestätigungslink, bevor du dich anmeldest."
+      ? "Account created! Please check your inbox and click the confirmation link before signing in."
       : null;
 
   return (
@@ -174,13 +174,13 @@ export default async function RegisterPage({
         `}</style>
 
         <div className="ohs-auth-card">
-          <p className="ohs-auth-eyebrow">Konto</p>
-          <h1 className="ohs-auth-title">Konto erstellen</h1>
+          <p className="ohs-auth-eyebrow">Account</p>
+          <h1 className="ohs-auth-title">Create Account</h1>
 
           {errorMsg && <div className="ohs-auth-error">{errorMsg}</div>}
           {successMsg && (
             <div className="ohs-auth-success">
-              <strong style={{ display: "block", marginBottom: "6px" }}>E-Mail überprüfen</strong>
+              <strong style={{ display: "block", marginBottom: "6px" }}>Check your email</strong>
               {successMsg}
             </div>
           )}
@@ -188,41 +188,41 @@ export default async function RegisterPage({
           {!successMsg && <form action={registerAction}>
             <div className="ohs-auth-row">
               <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-reg-fname">Vorname</label>
+                <label className="ohs-auth-label" htmlFor="ohs-reg-fname">First Name</label>
                 <input className="ohs-auth-input" id="ohs-reg-fname" name="first_name" type="text" autoComplete="given-name" />
               </div>
               <div className="ohs-auth-field">
-                <label className="ohs-auth-label" htmlFor="ohs-reg-lname">Nachname</label>
+                <label className="ohs-auth-label" htmlFor="ohs-reg-lname">Last Name</label>
                 <input className="ohs-auth-input" id="ohs-reg-lname" name="last_name" type="text" autoComplete="family-name" />
               </div>
             </div>
             <div className="ohs-auth-field">
-              <label className="ohs-auth-label" htmlFor="ohs-reg-email">E-Mail-Adresse</label>
+              <label className="ohs-auth-label" htmlFor="ohs-reg-email">Email Address</label>
               <input className="ohs-auth-input" id="ohs-reg-email" name="email" type="email" autoComplete="email" required />
             </div>
             <div className="ohs-auth-field">
-              <label className="ohs-auth-label" htmlFor="ohs-reg-password">Passwort</label>
+              <label className="ohs-auth-label" htmlFor="ohs-reg-password">Password</label>
               <input className="ohs-auth-input" id="ohs-reg-password" name="password" type="password" autoComplete="new-password" required />
-              <p className="ohs-auth-hint">Mindestens 8 Zeichen</p>
+              <p className="ohs-auth-hint">At least 8 characters</p>
             </div>
-            <button className="ohs-auth-btn" type="submit">Konto erstellen</button>
+            <button className="ohs-auth-btn" type="submit">Create Account</button>
             <p className="ohs-auth-terms">
-              Mit der Erstellung eines Kontos stimmst du unseren{" "}
-              <a href="/pages/terms">AGB</a> und der{" "}
-              <a href="/pages/privacy-policy">Datenschutzerklärung</a> zu.
+              By creating an account you agree to our{" "}
+              <a href="/pages/terms">Terms</a> and{" "}
+              <a href="/pages/privacy-policy">Privacy Policy</a>.
             </p>
           </form>}
 
           {successMsg && (
             <a href="/login" className="ohs-auth-btn" style={{ display: "block", textAlign: "center", textDecoration: "none", marginBottom: "8px" }}>
-              Anmelden
+              Sign In
             </a>
           )}
 
           <hr className="ohs-auth-divider" />
           <p className="ohs-auth-footer-text">
-            Bereits ein Konto?{" "}
-            <a href="/login">Jetzt anmelden</a>
+            Already have an account?{" "}
+            <a href="/login">Sign in</a>
           </p>
         </div>
       </div>
