@@ -552,7 +552,10 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
   if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
   if (categorySlug === "bizihair-extensions") return getBiziHairProducts();
   if (categorySlug === "buersten-und-kaemme") return getBrushesProducts();
-  if (categorySlug === "accessories" || categorySlug === "biziluxe-accessoires") return getBiziLuxeAccessoryProducts();
+  const localAccessoryProducts =
+    categorySlug === "accessories" || categorySlug === "biziluxe-accessoires"
+      ? getBiziLuxeAccessoryProducts()
+      : null;
   if (categorySlug === "biziluxe-stylinggeraete") return getBiziLuxeStylingToolProducts();
   if (categorySlug === "profi-friseurbedarf") return getProSalonProducts();
 
@@ -609,10 +612,24 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
 
   if (categorySlug && needsPathCategoryFallback) {
     const pathMatches = products.filter((product) => product.image_url?.includes(`/products/${categorySlug}/`));
+    if (localAccessoryProducts) return mergeCatalogProducts(localAccessoryProducts, pathMatches);
     return pathMatches.length ? pathMatches : getLocalPublicProducts(categorySlug);
   }
 
+  if (localAccessoryProducts) return mergeCatalogProducts(localAccessoryProducts, products);
   return products.length ? products : getLocalPublicProducts(categorySlug);
+}
+
+function mergeCatalogProducts(primary: CatalogProduct[], secondary: CatalogProduct[]) {
+  const seen = new Set(primary.map((product) => product.slug));
+  return [
+    ...primary,
+    ...secondary.filter((product) => {
+      if (seen.has(product.slug)) return false;
+      seen.add(product.slug);
+      return true;
+    })
+  ];
 }
 
 export async function getCatalogProductBySlug(slug: string): Promise<CatalogProduct | null> {
