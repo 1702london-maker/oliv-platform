@@ -723,30 +723,50 @@ function mergeCatalogProducts(primary: CatalogProduct[], secondary: CatalogProdu
 export async function getCatalogProductBySlug(slug: string): Promise<CatalogProduct | null> {
   const extensionSlugs = ["tape-in-extensions", "weft-extensions", "utip-extensions"];
   if (extensionSlugs.includes(slug)) {
-    return getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null);
   }
   const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb", "wide-tint-brush", "celle", "biziluxe-styling-combs", "hameln", "luebeck", "biziluxe-professional-combs"];
   if (brushSlugs.includes(slug)) {
-    return getBrushesProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(getBrushesProducts().find((p) => p.slug === slug) || null);
   }
-  const biziHairSlugs = ["bizihair-weft-extensions", "bizihair-tape-in-extensions", "bizihair-utip-extensions"];
+  const biziHairSlugs = ["bizihair-weft-extensions", "bizihair-tape-in-extensions", "bizihair-keratin-extensions"];
   if (biziHairSlugs.includes(slug)) {
-    return getBiziHairProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(getBiziHairProducts().find((p) => p.slug === slug) || null);
   }
   const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "gator-grip-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
   if (accessorySlugs.includes(slug)) {
-    return getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null);
   }
   const stylingToolSlugs = ["solingen", "wiesbaden", "glashuette", "ruhrstahl", "zollverein"];
   if (stylingToolSlugs.includes(slug)) {
-    return getBiziLuxeStylingToolProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(getBiziLuxeStylingToolProducts().find((p) => p.slug === slug) || null);
   }
   const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "detmold", "essen", "herford", "muenster", "recklinghausen", "paderborn", "wesel", "keratin-heat-shield"];
   if (proSalonSlugs.includes(slug)) {
-    return getProSalonProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(getProSalonProducts().find((p) => p.slug === slug) || null);
   }
   const products = await getCatalogProducts();
-  return products.find((product) => product.slug === slug) || getLocalPublicProductBySlug(slug);
+  return mergeAdminImages(products.find((product) => product.slug === slug) || getLocalPublicProductBySlug(slug));
+}
+
+async function mergeAdminImages(product: CatalogProduct | null): Promise<CatalogProduct | null> {
+  if (!product) return null;
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase
+      .from("product_images")
+      .select("url, position")
+      .eq("product_id", product.id)
+      .order("position", { ascending: true });
+
+    if (data && data.length > 0) {
+      const adminGallery = data.map((r: { url: string; position: number }) => r.url);
+      return { ...product, gallery: adminGallery, image_url: adminGallery[0] };
+    }
+  } catch {
+    // Fall back to static gallery silently
+  }
+  return product;
 }
 
 export async function getCatalogVariantsByIds(ids: string[]): Promise<CatalogVariant[]> {
