@@ -5,8 +5,8 @@ const APPROVAL_BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://oliv-platform
 export default async function ApplicationsPage() {
   const admin = createSupabaseAdminClient();
 
-  const safe = <T,>(p: Promise<{ data: T | null }>): Promise<{ data: T | null }> =>
-    p.catch(() => ({ data: null }));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const safe = (p: PromiseLike<any>) => Promise.resolve(p).catch(() => ({ data: null }));
 
   const [{ data: affiliates }, { data: wholesale }, { data: training }] = await Promise.all([
     safe(admin

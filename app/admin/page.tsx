@@ -3,7 +3,8 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export default async function AdminHomePage() {
   const admin = createSupabaseAdminClient();
-  const safe = <T,>(p: Promise<T>): Promise<T | null> => p.catch(() => null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const safe = (p: PromiseLike<any>) => Promise.resolve(p).catch(() => null);
 
   const [
     handover,
