@@ -8,7 +8,7 @@ export default function AdminLoginPage() {
         </div>
 
         <form action="/api/auth/login-form" method="POST" style={{ display: "grid", gap: 16 }}>
-          <input type="hidden" name="return_to" value="/admin" />
+          <input type="hidden" name="next" value="/admin" />
 
           <label style={labelStyle}>
             <span style={spanStyle}>Email</span>
