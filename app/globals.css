@@ -485,13 +485,13 @@ a {
   text-transform: uppercase;
 }
 
-/* Colour swatch circles with label */
-.ohs-swatch-group {
+/* Colour reference swatches (non-interactive, informational) */
+.ohs-swatch-reference {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
-.ohs-swatch-label {
+.ohs-swatch-ref-label {
   margin: 0;
   color: #5f5045;
   font-family: Montserrat, sans-serif;
@@ -501,56 +501,34 @@ a {
   text-transform: uppercase;
 }
 
-.ohs-swatch-label strong {
-  color: #2a211b;
-  font-weight: 700;
-}
-
-.ohs-swatch-row {
+.ohs-swatch-ref-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
 }
 
-.ohs-swatch-btn {
+.ohs-swatch-ref-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 0;
+  gap: 4px;
 }
 
-.ohs-swatch-circle {
+.ohs-swatch-ref-circle {
   display: block;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.18);
-  transition: transform 0.15s;
 }
 
-.ohs-swatch-btn:hover .ohs-swatch-circle {
-  transform: scale(1.1);
-}
-
-.ohs-swatch-btn.active .ohs-swatch-circle {
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2a211b;
-}
-
-.ohs-swatch-name {
+.ohs-swatch-ref-name {
   font-family: Montserrat, sans-serif;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #5f5045;
   text-transform: uppercase;
-}
-
-.ohs-swatch-btn.active .ohs-swatch-name {
-  color: #2a211b;
 }
 
 /* Length select */

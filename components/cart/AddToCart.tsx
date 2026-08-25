@@ -134,34 +134,38 @@ export function AddToCart({
 
   return (
     <div className="ohs-buy-box">
-      {optionValues.colours.length ? (
-        hasColourHexes ? (
-          <div className="ohs-swatch-group">
-            <p className="ohs-swatch-label">
-              Colour: <strong>{colour}</strong>
-            </p>
-            <div className="ohs-swatch-row">
-              {optionValues.colours.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  className={`ohs-swatch-btn${c === colour ? " active" : ""}`}
-                  onClick={() => setColour(c)}
-                  aria-label={`Colour ${c}`}
-                  title={c}
-                >
-                  <span
-                    className="ohs-swatch-circle"
-                    style={{ backgroundColor: colourHexMap![c] || "#888" }}
-                  />
-                  <span className="ohs-swatch-name">{c}</span>
-                </button>
-              ))}
-            </div>
+      {optionValues.colours.length && hasColourHexes ? (
+        <div className="ohs-swatch-reference">
+          <p className="ohs-swatch-ref-label">Colour Reference</p>
+          <div className="ohs-swatch-ref-row">
+            {optionValues.colours.map((c) => (
+              <div key={c} className="ohs-swatch-ref-item">
+                <span
+                  className="ohs-swatch-ref-circle"
+                  style={{ backgroundColor: colourHexMap![c] || "#888" }}
+                />
+                <span className="ohs-swatch-ref-name">{c}</span>
+              </div>
+            ))}
           </div>
-        ) : (
-          <OptionGroup label="Colour" options={optionValues.colours} value={colour} onChange={setColour} />
-        )
+        </div>
+      ) : null}
+
+      {optionValues.colours.length ? (
+        <div className="ohs-select-group">
+          <label htmlFor="ohs-colour-select">
+            <span>Colour</span>
+            <select
+              id="ohs-colour-select"
+              value={colour}
+              onChange={(e) => setColour(e.target.value)}
+            >
+              {optionValues.colours.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </label>
+        </div>
       ) : null}
 
       {optionValues.lengths.length ? (
