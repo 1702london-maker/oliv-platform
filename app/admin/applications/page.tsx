@@ -5,22 +5,25 @@ const APPROVAL_BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://oliv-platform
 export default async function ApplicationsPage() {
   const admin = createSupabaseAdminClient();
 
+  const safe = <T,>(p: Promise<{ data: T | null }>): Promise<{ data: T | null }> =>
+    p.catch(() => ({ data: null }));
+
   const [{ data: affiliates }, { data: wholesale }, { data: training }] = await Promise.all([
-    admin
+    safe(admin
       .from("affiliates")
       .select("id,email,display_name,status,tier,code,created_at")
       .order("created_at", { ascending: false })
-      .limit(100),
-    admin
+      .limit(100)),
+    safe(admin
       .from("wholesale_accounts")
       .select("id,email,business_name,status,created_at")
       .order("created_at", { ascending: false })
-      .limit(100),
-    admin
+      .limit(100)),
+    safe(admin
       .from("training_applications")
       .select("id,email,full_name,programme,status,created_at")
       .order("created_at", { ascending: false })
-      .limit(100),
+      .limit(100)),
   ]);
 
   const secret = process.env.SUPABASE_WEBHOOK_SECRET || "";

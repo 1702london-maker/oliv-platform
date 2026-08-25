@@ -3,6 +3,8 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export default async function AdminHomePage() {
   const admin = createSupabaseAdminClient();
+  const safe = <T,>(p: Promise<T>): Promise<T | null> => p.catch(() => null);
+
   const [
     handover,
     requests,
@@ -13,18 +15,18 @@ export default async function AdminHomePage() {
     upcomingBookings,
     paidOrders,
   ] = await Promise.all([
-    admin.from("ai_reception_conversations").select("id", { count: "exact", head: true }).eq("handover_required", true),
-    admin.from("ai_reception_appointment_requests").select("id", { count: "exact", head: true }).in("status", ["new", "needs_review"]),
-    admin.from("ai_reception_conversations").select("id", { count: "exact", head: true }),
-    admin.from("affiliates").select("id", { count: "exact", head: true }).eq("status", "pending"),
-    admin.from("wholesale_accounts").select("id", { count: "exact", head: true }).eq("status", "pending"),
-    admin.from("training_applications").select("id", { count: "exact", head: true }).eq("status", "pending"),
-    admin.from("appointments").select("id", { count: "exact", head: true }).neq("status", "cancelled").gte("starts_at", new Date().toISOString()),
-    admin.from("orders").select("id,total_cents").eq("status", "paid"),
+    safe(admin.from("ai_reception_conversations").select("id", { count: "exact", head: true }).eq("handover_required", true)),
+    safe(admin.from("ai_reception_appointment_requests").select("id", { count: "exact", head: true }).in("status", ["new", "needs_review"])),
+    safe(admin.from("ai_reception_conversations").select("id", { count: "exact", head: true })),
+    safe(admin.from("affiliates").select("id", { count: "exact", head: true }).eq("status", "pending")),
+    safe(admin.from("wholesale_accounts").select("id", { count: "exact", head: true }).eq("status", "pending")),
+    safe(admin.from("training_applications").select("id", { count: "exact", head: true }).eq("status", "pending")),
+    safe(admin.from("appointments").select("id", { count: "exact", head: true }).neq("status", "cancelled").gte("starts_at", new Date().toISOString())),
+    safe(admin.from("orders").select("id,total_cents").eq("status", "paid")),
   ]);
 
-  const totalRevenue = (paidOrders.data || []).reduce((s, o) => s + (o.total_cents || 0), 0);
-  const totalPending = (pendingAffiliates.count || 0) + (pendingWholesale.count || 0) + (pendingTraining.count || 0);
+  const totalRevenue = (paidOrders?.data || []).reduce((s, o) => s + (o.total_cents || 0), 0);
+  const totalPending = (pendingAffiliates?.count || 0) + (pendingWholesale?.count || 0) + (pendingTraining?.count || 0);
 
   return (
     <section style={{ maxWidth: 1180, margin: "0 auto", padding: "42px 24px" }}>
@@ -34,15 +36,15 @@ export default async function AdminHomePage() {
       <SectionLabel>Needs Attention</SectionLabel>
       <div style={metricGrid}>
         <Metric label="Pending Applications" value={totalPending} href="/admin/applications" urgent={totalPending > 0} />
-        <Metric label="Handover Required" value={handover.count || 0} href="/admin/ai-reception?filter=handover" urgent={(handover.count || 0) > 0} />
-        <Metric label="Requests to Review" value={requests.count || 0} href="/admin/appointments/requests" urgent={(requests.count || 0) > 0} />
+        <Metric label="Handover Required" value={handover?.count || 0} href="/admin/ai-reception?filter=handover" urgent={(handover?.count || 0) > 0} />
+        <Metric label="Requests to Review" value={requests?.count || 0} href="/admin/appointments/requests" urgent={(requests?.count || 0) > 0} />
       </div>
 
       <SectionLabel>Overview</SectionLabel>
       <div style={metricGrid}>
-        <Metric label="Upcoming Bookings" value={upcomingBookings.count || 0} href="/admin/bookings" />
+        <Metric label="Upcoming Bookings" value={upcomingBookings?.count || 0} href="/admin/bookings" />
         <Metric label="Revenue (Paid)" value={`€${(totalRevenue / 100).toFixed(0)}`} href="/admin/orders" />
-        <Metric label="WhatsApp Conversations" value={conversations.count || 0} href="/admin/ai-reception" />
+        <Metric label="WhatsApp Conversations" value={conversations?.count || 0} href="/admin/ai-reception" />
       </div>
 
       <SectionLabel>Quick Links</SectionLabel>
