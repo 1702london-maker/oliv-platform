@@ -485,6 +485,177 @@ a {
   text-transform: uppercase;
 }
 
+/* Colour swatch circles with label */
+.ohs-swatch-group {
+  display: grid;
+  gap: 12px;
+}
+
+.ohs-swatch-label {
+  margin: 0;
+  color: #5f5045;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ohs-swatch-label strong {
+  color: #2a211b;
+  font-weight: 700;
+}
+
+.ohs-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.ohs-swatch-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ohs-swatch-circle {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.18);
+  transition: transform 0.15s;
+}
+
+.ohs-swatch-btn:hover .ohs-swatch-circle {
+  transform: scale(1.1);
+}
+
+.ohs-swatch-btn.active .ohs-swatch-circle {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2a211b;
+}
+
+.ohs-swatch-name {
+  font-family: Montserrat, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #5f5045;
+  text-transform: uppercase;
+}
+
+.ohs-swatch-btn.active .ohs-swatch-name {
+  color: #2a211b;
+}
+
+/* Length select */
+.ohs-select-group label {
+  display: grid;
+  gap: 8px;
+}
+
+.ohs-select-group label span {
+  color: #5f5045;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ohs-select-group select {
+  min-height: 48px;
+  border: 1px solid #dfceb5;
+  background: #fffaf4;
+  color: #2a211b;
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+/* Qty label */
+.ohs-qty-label {
+  display: grid;
+  gap: 8px;
+}
+
+.ohs-qty-label span {
+  color: #5f5045;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Buy actions row */
+.ohs-buy-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ohs-btn-cart {
+  min-height: 50px;
+  border: 1px solid #2a211b;
+  background: transparent;
+  color: #2a211b;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.ohs-btn-cart:hover {
+  background: #2a211b;
+  color: #fffaf4;
+}
+
+.ohs-btn-buy {
+  min-height: 50px;
+  border: 1px solid #2a211b;
+  background: #2a211b;
+  color: #fffaf4;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ohs-btn-buy:hover {
+  background: #b68a45;
+  border-color: #b68a45;
+}
+
+.ohs-btn-cart:disabled,
+.ohs-btn-buy:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ohs-view-cart-link {
+  display: inline-block;
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #b68a45;
+  text-decoration: none;
+}
+
 .ohs-buy-box a,
 .ohs-cart-link,
 .ohs-checkout-status a {

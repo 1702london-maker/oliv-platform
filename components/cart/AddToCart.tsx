@@ -24,6 +24,7 @@ type AddToCartProps = {
   variants: Variant[];
   priceMode?: "retail" | "wholesale";
   currency?: string;
+  colourHexMap?: Record<string, string>;
   onImageChange?: (imageUrl: string | null) => void;
   onPriceChange?: (priceCents: number) => void;
 };
@@ -47,6 +48,7 @@ export function AddToCart({
   variants,
   priceMode = "retail",
   currency = "EUR",
+  colourHexMap,
   onImageChange,
   onPriceChange
 }: AddToCartProps) {
@@ -88,22 +90,29 @@ export function AddToCart({
     onPriceChange?.(selectedPrice);
   }, [onImageChange, onPriceChange, selectedImage, selectedPrice]);
 
-  function addToCart() {
-    if (!selected) return;
-
-    const existing = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]") as CartItem[];
+  function buildCartItem() {
+    if (!selected) return null;
     const optionTitle = optionLabel(selected, { colour, length, texture });
     const cartKey = `${selected.id}:${optionTitle}`;
-    const index = existing.findIndex((item) => (item.cartKey || item.variantId) === cartKey);
+    return { cartKey, optionTitle };
+  }
+
+  function addToCart() {
+    if (!selected) return;
+    const meta = buildCartItem();
+    if (!meta) return;
+
+    const existing = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]") as CartItem[];
+    const index = existing.findIndex((item) => (item.cartKey || item.variantId) === meta.cartKey);
     if (index >= 0) {
       existing[index].quantity += quantity;
     } else {
       existing.push({
-        cartKey,
+        cartKey: meta.cartKey,
         variantId: selected.id,
         productId: product.id,
         title: product.title,
-        variantTitle: optionTitle,
+        variantTitle: meta.optionTitle,
         priceCents: selectedPrice,
         priceMode,
         imageUrl: selectedImage,
@@ -116,14 +125,60 @@ export function AddToCart({
     setAdded(true);
   }
 
+  function buyNow() {
+    addToCart();
+    window.location.href = "/cart";
+  }
+
+  const hasColourHexes = colourHexMap && Object.keys(colourHexMap).length > 0;
+
   return (
     <div className="ohs-buy-box">
       {optionValues.colours.length ? (
-        <OptionGroup label="Colour" options={optionValues.colours} value={colour} onChange={setColour} />
+        hasColourHexes ? (
+          <div className="ohs-swatch-group">
+            <p className="ohs-swatch-label">
+              Colour: <strong>{colour}</strong>
+            </p>
+            <div className="ohs-swatch-row">
+              {optionValues.colours.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={`ohs-swatch-btn${c === colour ? " active" : ""}`}
+                  onClick={() => setColour(c)}
+                  aria-label={`Colour ${c}`}
+                  title={c}
+                >
+                  <span
+                    className="ohs-swatch-circle"
+                    style={{ backgroundColor: colourHexMap![c] || "#888" }}
+                  />
+                  <span className="ohs-swatch-name">{c}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <OptionGroup label="Colour" options={optionValues.colours} value={colour} onChange={setColour} />
+        )
       ) : null}
 
       {optionValues.lengths.length ? (
-        <OptionGroup label="Length" options={optionValues.lengths} value={length} onChange={setLength} />
+        <div className="ohs-select-group">
+          <label htmlFor="ohs-length-select">
+            <span>Length</span>
+            <select
+              id="ohs-length-select"
+              value={length}
+              onChange={(e) => setLength(e.target.value)}
+            >
+              {optionValues.lengths.map((l) => (
+                <option key={l} value={l}>{l}</option>
+              ))}
+            </select>
+          </label>
+        </div>
       ) : null}
 
       {optionValues.textures.length ? (
@@ -136,7 +191,7 @@ export function AddToCart({
           <select value={variantId} onChange={(event) => setVariantId(event.target.value)}>
             {variants.map((variant) => (
               <option key={variant.id} value={variant.id}>
-                {variant.title} - {formatMoney(variant.retail_price_cents, currency)}
+                {variant.title} — {formatMoney(variant.retail_price_cents, currency)}
                 {priceMode === "wholesale" && variant.wholesale_price_cents
                   ? ` / Wholesale ${formatMoney(variant.wholesale_price_cents, currency)}`
                   : ""}
@@ -150,7 +205,7 @@ export function AddToCart({
         <p className="ohs-buy-note">Wholesale pricing is active for this account.</p>
       ) : null}
 
-      <label>
+      <label className="ohs-qty-label">
         <span>Quantity</span>
         <input
           min={1}
@@ -160,11 +215,16 @@ export function AddToCart({
         />
       </label>
 
-      <button type="button" onClick={addToCart} disabled={!selected}>
-        Add to Cart
-      </button>
+      <div className="ohs-buy-actions">
+        <button type="button" className="ohs-btn-cart" onClick={addToCart} disabled={!selected}>
+          Add to Cart
+        </button>
+        <button type="button" className="ohs-btn-buy" onClick={buyNow} disabled={!selected}>
+          Buy Now
+        </button>
+      </div>
 
-      {added ? <a href="/cart">View Cart</a> : null}
+      {added ? <a href="/cart" className="ohs-view-cart-link">View Cart →</a> : null}
     </div>
   );
 }

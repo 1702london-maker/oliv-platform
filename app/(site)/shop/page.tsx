@@ -348,9 +348,7 @@ function shopLandingOverrides() {
   padding: 24px !important;
 }
 .oshp-col-tile-num {
-  color: #2B2620 !important;
-  font-weight: 800 !important;
-  opacity: 1 !important;
+  display: none !important;
 }
 @media (max-width: 900px) {
   .oshp-col-grid,
