@@ -26,7 +26,7 @@ export default async function AdminHomePage() {
     safe(admin.from("orders").select("id,total_cents").eq("status", "paid")),
   ]);
 
-  const totalRevenue = (paidOrders?.data || []).reduce((s, o) => s + (o.total_cents || 0), 0);
+  const totalRevenue = (paidOrders?.data || []).reduce((s: number, o: Record<string, number>) => s + (o.total_cents || 0), 0);
   const totalPending = (pendingAffiliates?.count || 0) + (pendingWholesale?.count || 0) + (pendingTraining?.count || 0);
 
   return (
