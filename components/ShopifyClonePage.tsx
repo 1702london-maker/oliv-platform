@@ -194,6 +194,7 @@ const INLINE_I18N_SCRIPT = `<script>
     document.body.dataset.ohsLang=lang;
     document.querySelectorAll('select[name="locale_code"]').forEach(function(s){s.value=lang;});
     try{localStorage.setItem('ohs-lang',lang);}catch(e){}
+    document.cookie='ohs_lang='+lang+';path=/;max-age=31536000;samesite=lax';
   }
 
   function storePrices(){
@@ -228,7 +229,11 @@ const INLINE_I18N_SCRIPT = `<script>
       document.head.appendChild(deStyle);
     }
 
-    var lang;try{lang=localStorage.getItem('ohs-lang')||'en';}catch(e){lang='en';}
+    var lang;
+    try{
+      var ck=document.cookie.match(/ohs_lang=([^;]+)/);
+      lang=ck?ck[1]:(localStorage.getItem('ohs-lang')||'de');
+    }catch(e){lang='de';}
     if(lang==='de')setLang('de');
     else document.querySelectorAll('select[name="locale_code"]').forEach(function(s){s.value='en';});
 

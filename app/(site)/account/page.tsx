@@ -4,6 +4,7 @@ import { logoutAction } from "@/app/(site)/login/actions";
 import { requireProfile } from "@/lib/auth/session";
 import { formatEuro } from "@/lib/catalog/money";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getLang, getAccountStrings } from "@/lib/i18n/t";
 
 function getShell() {
   const html = fs.readFileSync(
@@ -29,6 +30,8 @@ type AddressData = {
 
 export default async function AccountPage() {
   const profile = await requireProfile();
+  const lang = await getLang();
+  const s = getAccountStrings(lang);
 
   type OrderRow = {
     id: string;
@@ -413,16 +416,16 @@ export default async function AccountPage() {
         <div className="ohs-acct-hero">
           <div className="ohs-acct-hero-inner">
             <div>
-              <p className="ohs-acct-eyebrow">Mein Konto</p>
+              <p className="ohs-acct-eyebrow">{s.title}</p>
               <h1 className="ohs-acct-title">
-                Willkommen zurück{displayName ? `, ${displayName}` : ","}
+                {s.welcome}{displayName ? `, ${displayName}` : ","}
               </h1>
               <p className="ohs-acct-meta">
-                Angemeldet als <strong>{profile.email}</strong>
+                {lang === "de" ? "Angemeldet als" : "Signed in as"} <strong>{profile.email}</strong>
               </p>
             </div>
             <form action={logoutAction}>
-              <button className="ohs-logout-btn" type="submit">Abmelden</button>
+              <button className="ohs-logout-btn" type="submit">{s.signout}</button>
             </form>
           </div>
         </div>
@@ -436,78 +439,108 @@ export default async function AccountPage() {
             {/* Shopping */}
             <div className="ohs-acct-card">
               <p className="ohs-card-eyebrow">Shopping</p>
-              <h2 className="ohs-card-title">Meine Bestellungen</h2>
+              <h2 className="ohs-card-title">{s.orders}</h2>
               <p className="ohs-card-desc">
-                Bestellungen ansehen und verfolgen. Deine gesamte Bestellhistorie und Versandupdates auf einen Blick.
+                {lang === "de"
+                  ? "Bestellungen ansehen und verfolgen. Deine gesamte Bestellhistorie und Versandupdates auf einen Blick."
+                  : "View and track your orders. Your full order history and shipping updates in one place."}
               </p>
-              <a href="#order-history" className="ohs-btn ohs-btn--dark">Zu den Bestellungen</a>
+              <a href="#order-history" className="ohs-btn ohs-btn--dark">
+                {lang === "de" ? "Zu den Bestellungen" : "View Orders"}
+              </a>
             </div>
 
             {/* Services */}
             <div className="ohs-acct-card">
               <p className="ohs-card-eyebrow">Services</p>
-              <h2 className="ohs-card-title">Meine Termine</h2>
+              <h2 className="ohs-card-title">{s.appointments}</h2>
               <p className="ohs-card-desc">
                 {upcomingAppointments.length > 0
-                  ? `Du hast ${upcomingAppointments.length} bevorstehende${upcomingAppointments.length > 1 ? "" : "n"} Termin${upcomingAppointments.length > 1 ? "e" : ""}. Buchungen ansehen oder einen neuen Termin in unseren Berliner Salons buchen.`
-                  : pastAppointments.length > 0
-                  ? `Du hast ${pastAppointments.length} vergangene${pastAppointments.length > 1 ? "" : "n"} Termin${pastAppointments.length > 1 ? "e" : ""}. Buche deine nächste Session in einem unserer Berliner Salons.`
-                  : "Buche einen neuen Termin in einem unserer Berliner Salons."}
+                  ? lang === "de"
+                    ? `Du hast ${upcomingAppointments.length} bevorstehende${upcomingAppointments.length > 1 ? "" : "n"} Termin${upcomingAppointments.length > 1 ? "e" : ""}.`
+                    : `You have ${upcomingAppointments.length} upcoming appointment${upcomingAppointments.length > 1 ? "s" : ""}.`
+                  : lang === "de"
+                  ? "Buche einen neuen Termin in einem unserer Berliner Salons."
+                  : "Book a new appointment at one of our Berlin salons."}
               </p>
               <a href="/appointments" className="ohs-btn ohs-btn--gold">
-                {upcomingAppointments.length > 0 ? "Termine ansehen" : "Termin buchen"}
+                {upcomingAppointments.length > 0
+                  ? (lang === "de" ? "Termine ansehen" : "View Appointments")
+                  : s.bookNow}
               </a>
             </div>
 
             {/* Academy */}
             <div className="ohs-acct-card">
               <p className="ohs-card-eyebrow">Academy</p>
-              <h2 className="ohs-card-title">Meine Schulungen</h2>
+              <h2 className="ohs-card-title">{s.training}</h2>
               <p className="ohs-card-desc">
-                Zugang zu deinen Schulungsterminen, Kursmaterialien und Academy-Ressourcen von OlivHairSupply.
+                {lang === "de"
+                  ? "Zugang zu deinen Schulungsterminen, Kursmaterialien und Academy-Ressourcen von OlivHairSupply."
+                  : "Access your training sessions, course materials and Academy resources from OlivHairSupply."}
               </p>
-              <a href="/training" className="ohs-btn ohs-btn--outline">Schulungen ansehen</a>
+              <a href="/training" className="ohs-btn ohs-btn--outline">{s.browseTraining}</a>
             </div>
 
             {/* Affiliate */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Programm</p>
-              <h2 className="ohs-card-title">Affiliate-Zugang</h2>
-              <p className="ohs-card-desc">
-                Verdiene Provision durch Empfehlungen von Kunden an OlivHairSupply. Bewerbe dich für unser Affiliate-Programm oder melde dich in deinem Dashboard an.
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">
+                {lang === "de" ? "Programm" : "Program"}
               </p>
-              <a href="/affiliate" className="ohs-btn ohs-btn--outline">Affiliate-Programm</a>
+              <h2 className="ohs-card-title">{s.affiliateProgram}</h2>
+              <p className="ohs-card-desc">
+                {lang === "de"
+                  ? "Verdiene Provision durch Empfehlungen von Kunden an OlivHairSupply."
+                  : "Earn commission by referring customers to OlivHairSupply."}
+              </p>
+              <a href="/affiliate" className="ohs-btn ohs-btn--outline">{s.affiliateProgram}</a>
             </div>
 
             {/* Wholesale */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">Geschäftskunden</p>
-              <h2 className="ohs-card-title">Großhandel</h2>
-              <p className="ohs-card-desc">
-                B2B-Preise für Salons, Stylisten und Fachkunden. Beantrage ein Großhandelskonto oder melde dich in deinem Großhandelsportal an.
+              <p className="ohs-card-eyebrow ohs-card-eyebrow--muted">
+                {lang === "de" ? "Geschäftskunden" : "Business"}
               </p>
-              <a href="/wholesale" className="ohs-btn ohs-btn--outline">Großhandelsportal</a>
+              <h2 className="ohs-card-title">{s.wholesale}</h2>
+              <p className="ohs-card-desc">
+                {lang === "de"
+                  ? "B2B-Preise für Salons, Stylisten und Fachkunden."
+                  : "B2B prices for salons, stylists and professional clients."}
+              </p>
+              <a href="/wholesale" className="ohs-btn ohs-btn--outline">
+                {lang === "de" ? "Großhandelsportal" : "Wholesale Portal"}
+              </a>
             </div>
 
             {/* Account Details shortcut */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow">Persönlich</p>
-              <h2 className="ohs-card-title">Kontodaten</h2>
+              <p className="ohs-card-eyebrow">{lang === "de" ? "Persönlich" : "Personal"}</p>
+              <h2 className="ohs-card-title">
+                {lang === "de" ? "Kontodaten" : "Account Details"}
+              </h2>
               <p className="ohs-card-desc">
-                Name, E-Mail-Adresse, Passwort und gespeicherte Lieferadressen aktualisieren.
+                {lang === "de"
+                  ? "Name, E-Mail-Adresse, Passwort und gespeicherte Lieferadressen aktualisieren."
+                  : "Update your name, email, password and saved delivery addresses."}
               </p>
-              <a href="#account-details" className="ohs-btn ohs-btn--outline">Konto verwalten</a>
+              <a href="#account-details" className="ohs-btn ohs-btn--outline">
+                {lang === "de" ? "Konto verwalten" : "Manage Account"}
+              </a>
             </div>
 
             {/* Support */}
             <div className="ohs-acct-card">
-              <p className="ohs-card-eyebrow">Hilfe</p>
+              <p className="ohs-card-eyebrow">{lang === "de" ? "Hilfe" : "Help"}</p>
               <h2 className="ohs-card-title">Support</h2>
               <p className="ohs-card-desc">
-                Fragen zu Bestellungen, Terminen oder deinem Konto? Unser Team ist Montag bis Samstag für dich da.
+                {lang === "de"
+                  ? "Fragen zu Bestellungen, Terminen oder deinem Konto? Unser Team ist Montag bis Samstag für dich da."
+                  : "Questions about orders, appointments or your account? Our team is available Monday to Saturday."}
               </p>
               <div className="ohs-btn-row">
-                <a href="/pages/contact" className="ohs-btn ohs-btn--dark">Kontakt</a>
+                <a href="/pages/contact" className="ohs-btn ohs-btn--dark">
+                  {lang === "de" ? "Kontakt" : "Contact"}
+                </a>
                 <a href="https://wa.me/4915786283439" className="ohs-btn ohs-btn--outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
               </div>
             </div>
@@ -516,19 +549,21 @@ export default async function AccountPage() {
 
           {/* ── Order History ── */}
           <div id="order-history" className="ohs-acct-section">
-            <h2 className="ohs-section-heading">Bestell<em>historie</em></h2>
+            <h2 className="ohs-section-heading">
+              {lang === "de" ? <>Bestell<em>historie</em></> : <>Order <em>History</em></>}
+            </h2>
             {orders?.length ? (
               <div className="ohs-order-table">
                 <div className="ohs-order-head">
-                  <span>Datum</span>
+                  <span>{lang === "de" ? "Datum" : "Date"}</span>
                   <span>Status</span>
-                  <span>Gesamt</span>
+                  <span>{lang === "de" ? "Gesamt" : "Total"}</span>
                   <span>Ref</span>
                 </div>
                 {orders.map((order) => (
                   <div className="ohs-order-row" key={order.id}>
                     <span className="ohs-order-date">
-                      {new Date(order.created_at).toLocaleDateString("en-GB", {
+                      {new Date(order.created_at).toLocaleDateString(lang === "de" ? "de-DE" : "en-GB", {
                         day: "numeric",
                         month: "long",
                         year: "numeric",
@@ -549,46 +584,64 @@ export default async function AccountPage() {
               </div>
             ) : (
               <div className="ohs-orders-empty">
-                <p className="ohs-orders-empty-title">Noch keine Bestellungen</p>
+                <p className="ohs-orders-empty-title">{s.noOrders}</p>
                 <p className="ohs-orders-empty-sub">
-                  Deine Bestellhistorie erscheint hier, sobald du deinen ersten Einkauf getätigt hast.
+                  {lang === "de"
+                    ? "Deine Bestellhistorie erscheint hier, sobald du deinen ersten Einkauf getätigt hast."
+                    : "Your order history will appear here once you've made your first purchase."}
                 </p>
-                <a href="/shop" className="ohs-btn ohs-btn--dark">Jetzt einkaufen</a>
+                <a href="/shop" className="ohs-btn ohs-btn--dark">{s.shopNow}</a>
               </div>
             )}
           </div>
 
           {/* ── Account Details ── */}
           <div id="account-details" className="ohs-acct-section">
-            <h2 className="ohs-section-heading">Konto<em>daten</em></h2>
+            <h2 className="ohs-section-heading">
+              {lang === "de" ? <>Konto<em>daten</em></> : <>Account <em>Details</em></>}
+            </h2>
             <div className="ohs-details-grid">
               <div className="ohs-details-card">
-                <p className="ohs-details-eyebrow">Persönliche Daten</p>
+                <p className="ohs-details-eyebrow">
+                  {lang === "de" ? "Persönliche Daten" : "Personal Details"}
+                </p>
                 <p className="ohs-details-value">{profile.email}</p>
                 {(profile.first_name || profile.last_name) && (
                   <p className="ohs-details-value">
                     {[profile.first_name, profile.last_name].filter(Boolean).join(" ")}
                   </p>
                 )}
-                <a href="/account/details" className="ohs-details-link">Daten bearbeiten</a>
+                <a href="/account/details" className="ohs-details-link">
+                  {lang === "de" ? "Daten bearbeiten" : "Edit Details"}
+                </a>
               </div>
               <div className="ohs-details-card">
-                <p className="ohs-details-eyebrow">Standardadresse</p>
+                <p className="ohs-details-eyebrow">
+                  {lang === "de" ? "Standardadresse" : "Default Address"}
+                </p>
                 {savedAddress?.line1 ? (
                   <>
                     <p className="ohs-details-value">{savedAddress.line1}</p>
                     {savedAddress.line2 && <p className="ohs-details-value">{savedAddress.line2}</p>}
                     <p className="ohs-details-value">{[savedAddress.city, savedAddress.postcode].filter(Boolean).join(" ")}</p>
                     <p className="ohs-details-value">{savedAddress.country}</p>
-                    <a href="/account/address" className="ohs-details-link">Adresse bearbeiten</a>
+                    <a href="/account/address" className="ohs-details-link">
+                      {lang === "de" ? "Adresse bearbeiten" : "Edit Address"}
+                    </a>
                   </>
                 ) : (
                   <>
-                    <p className="ohs-details-empty">Keine Adresse gespeichert</p>
-                    <p className="ohs-details-hint">
-                      Füge eine Standard-Lieferadresse für schnelleres Bezahlen hinzu.
+                    <p className="ohs-details-empty">
+                      {lang === "de" ? "Keine Adresse gespeichert" : "No address saved"}
                     </p>
-                    <a href="/account/address" className="ohs-details-link">Adresse hinzufügen</a>
+                    <p className="ohs-details-hint">
+                      {lang === "de"
+                        ? "Füge eine Standard-Lieferadresse für schnelleres Bezahlen hinzu."
+                        : "Add a default delivery address for faster checkout."}
+                    </p>
+                    <a href="/account/address" className="ohs-details-link">
+                      {lang === "de" ? "Adresse hinzufügen" : "Add Address"}
+                    </a>
                   </>
                 )}
               </div>
@@ -599,6 +652,19 @@ export default async function AccountPage() {
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: after }} />
+      {/* Fix localization forms: correct return_to and sync selected locale */}
+      <script dangerouslySetInnerHTML={{ __html: `
+        (function(){
+          var lang = ${JSON.stringify(lang)};
+          var forms = document.querySelectorAll('form[action="/localization"]');
+          forms.forEach(function(f){
+            var ret = f.querySelector('input[name="return_to"]');
+            if(ret) ret.value = window.location.pathname;
+            var sel = f.querySelector('select[name="locale_code"]');
+            if(sel) sel.value = lang;
+          });
+        })();
+      `}} />
     </>
   );
 }
