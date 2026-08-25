@@ -41,15 +41,13 @@ const BIZILUXE_COLOURS = [
 
 // BiziHair colour codes — exactly as written in the product documents
 const BIZIHAIR_COLOURS = [
-  { name: "1",              hex: "#1C1008",                                          img: "colour-1.png" },
-  { name: "1A",             hex: "#231A10",                                          img: "colour-1a.png" },
-  { name: "1B",             hex: "#3D2314",                                          img: "colour-1b.png" },
-  { name: "2",              hex: "#6B3A22",                                          img: "colour-2.png" },
-  { name: "4",              hex: "#8B5E3C",                                          img: "colour-4.png" },
-  { name: "8",              hex: "#9B7040",                                          img: "colour-8.png" },
-  { name: "Red",            hex: "#8B1A1A",                                          img: "colour-red.png" },
-  { name: "Highlights 6/8", hex: "linear-gradient(135deg,#8B5E3C 50%,#9B7040 50%)", img: "colour-highlights-6-8.jpg" },
-  { name: "613",            hex: "#EDE0B0",                                          img: "colour-613.jpg" },
+  { name: "1",   hex: "#140E08", img: "colour-1.png" },
+  { name: "1A",  hex: "#131010", img: "colour-1a.png" },
+  { name: "1B",  hex: "#473326", img: "colour-1b.png" },
+  { name: "2",   hex: "#4C3E34", img: "colour-2.png" },
+  { name: "4",   hex: "#C6BC9F", img: "colour-4.png" },
+  { name: "8",   hex: "#DDC599", img: "colour-8.png" },
+  { name: "Red", hex: "#8B1A1A", img: "colour-red.png" },
 ];
 const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
 
@@ -529,10 +527,19 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-utip",
       title: "BiziHair U-Tip Extensions",
       slug: "bizihair-utip-extensions",
-      description: "BiziHair U-Tip Keratin Bonding Echthaar Extensions. Natürlich anmutendes Ergebnis durch Keratinbindung. Erhältlich in 9 Farben und 8 Längen.",
+      description: "BiziHair U-Tip Keratin Bonding Human Hair Extensions. Natural finish through keratin bonding. Available in 7 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/utip/utip-main.jpg",
       attributes: {},
       variants: makeBiziHairVariants("bizihair-utip", "weft", 10900)
+    },
+    {
+      id: "bizihair-keratin",
+      title: "BiziHair Keratin Bonding Extensions",
+      slug: "bizihair-keratin-extensions",
+      description: "BiziHair Keratin Bonding Human Hair Extensions. Individual strand application for the most natural, seamless result. Available in 7 colours and 8 lengths.",
+      image_url: "/products/bizihair-extensions/keratin/keratin-main.jpg",
+      attributes: {},
+      variants: makeBiziHairVariants("bizihair-keratin", "weft", 11900)
     }
   ];
 }
