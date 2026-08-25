@@ -45,7 +45,7 @@ export default async function ApplicationsPage() {
       <h2 style={section}>Affiliate Applications</h2>
       <div style={grid}>
         {(affiliates || []).length === 0 && <Empty text="No affiliate applications yet" />}
-        {(affiliates || []).map((row) => (
+        {(affiliates || []).map((row: Record<string, string>) => (
           <div key={row.id} style={card}>
             <div style={{ flex: 1 }}>
               <p style={name}>{row.display_name || row.email}</p>
@@ -71,7 +71,7 @@ export default async function ApplicationsPage() {
       <h2 style={section}>Wholesale Applications</h2>
       <div style={grid}>
         {(wholesale || []).length === 0 && <Empty text="No wholesale applications yet" />}
-        {(wholesale || []).map((row) => (
+        {(wholesale || []).map((row: Record<string, string>) => (
           <div key={row.id} style={card}>
             <div style={{ flex: 1 }}>
               <p style={name}>{row.business_name || row.email}</p>
@@ -97,7 +97,7 @@ export default async function ApplicationsPage() {
       <h2 style={section}>Training Applications</h2>
       <div style={grid}>
         {(training || []).length === 0 && <Empty text="No training applications yet" />}
-        {(training || []).map((row) => (
+        {(training || []).map((row: Record<string, string>) => (
           <div key={row.id} style={card}>
             <div style={{ flex: 1 }}>
               <p style={name}>{row.full_name || row.email}</p>
