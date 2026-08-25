@@ -11,6 +11,12 @@ type ProductDetailViewProps = {
   currency: string;
 };
 
+type ColourOption = {
+  name: string;
+  hex: string;
+  swatchUrl: string;
+};
+
 export function ProductDetailView({ product, isWholesale, currency }: ProductDetailViewProps) {
   const firstVariant = product.variants[0];
   const initialPrice = firstVariant
@@ -18,23 +24,39 @@ export function ProductDetailView({ product, isWholesale, currency }: ProductDet
       ? firstVariant.wholesale_price_cents || firstVariant.retail_price_cents
       : firstVariant.retail_price_cents
     : 0;
+
   const galleryImages = useMemo(() => getProductGalleryImages(product.image_url, product.variants, product.gallery), [product.image_url, product.variants, product.gallery]);
+
+  const colours = useMemo(() => getColourOptions(product.variants), [product.variants]);
+
   const [selectedImage, setSelectedImage] = useState(galleryImages[0] || product.image_url);
+  const [selectedColour, setSelectedColour] = useState<ColourOption | null>(null);
   const [selectedPrice, setSelectedPrice] = useState(initialPrice);
+
+  const displayedImage = selectedColour ? selectedColour.swatchUrl : selectedImage;
+
+  function handleColourSelect(colour: ColourOption) {
+    setSelectedColour(colour);
+  }
+
+  function handleThumbClick(image: string) {
+    setSelectedColour(null);
+    setSelectedImage(image);
+  }
 
   return (
     <section className="ohs-product-detail page-width page-margin">
       <div className="ohs-product-gallery">
         <div className="ohs-product-detail-media">
-          {selectedImage ? <img src={selectedImage} alt={product.title} /> : <span />}
+          {displayedImage ? <img src={displayedImage} alt={product.title} /> : <span />}
         </div>
         <div className="ohs-product-thumbs">
           {galleryImages.map((image, index) => (
             <button
               key={`${image}-${index}`}
               type="button"
-              className={image === selectedImage ? "active" : ""}
-              onClick={() => setSelectedImage(image)}
+              className={image === selectedImage && !selectedColour ? "active" : ""}
+              onClick={() => handleThumbClick(image)}
               aria-label={`${product.title} image ${index + 1}`}
             >
               <img src={image} alt={`${product.title} ${index + 1}`} />
@@ -57,9 +79,46 @@ export function ProductDetailView({ product, isWholesale, currency }: ProductDet
         ) : (
           <span>Premium OlivHairSupply product.</span>
         )}
+
+        {colours.length > 0 && (
+          <div className="ohs-colour-selector">
+            <p className="ohs-colour-label">
+              Colour{selectedColour ? `: ${selectedColour.name}` : ""}
+            </p>
+            <div className="ohs-colour-swatches">
+              {colours.map((colour) => (
+                <button
+                  key={colour.name}
+                  type="button"
+                  className={`ohs-colour-swatch${selectedColour?.name === colour.name ? " active" : ""}`}
+                  style={{ backgroundColor: colour.hex }}
+                  onClick={() => handleColourSelect(colour)}
+                  aria-label={`Colour ${colour.name}`}
+                  title={colour.name}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
+}
+
+function getColourOptions(variants: CatalogProduct["variants"]): ColourOption[] {
+  const seen = new Set<string>();
+  const colours: ColourOption[] = [];
+  for (const v of variants) {
+    if (v.color && !seen.has(v.color)) {
+      seen.add(v.color);
+      colours.push({
+        name: v.color,
+        hex: (v.attributes?.colour_hex as string) || "#888",
+        swatchUrl: v.image_url || "",
+      });
+    }
+  }
+  return colours;
 }
 
 function getProductGalleryImages(imageUrl: string | null, variants: { image_url?: string | null }[] = [], galleryOverride?: string[]) {

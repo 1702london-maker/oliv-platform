@@ -510,7 +510,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-weft",
       title: "BiziHair Genius Weft Extensions",
       slug: "bizihair-weft-extensions",
-      description: "BiziHair Genius Weft Echthaar Extensions. Erhältlich in 7 Farben und 8 Längen.",
+      description: "BiziHair Genius Weft Human Hair Extensions. Available in 7 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/weft/weft-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/weft/weft-1.jpeg",
@@ -531,7 +531,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-tape-in",
       title: "BiziHair Tape-In Extensions",
       slug: "bizihair-tape-in-extensions",
-      description: "BiziHair Tape-In Echthaar Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Erhältlich in 7 Farben und 8 Längen.",
+      description: "BiziHair Tape-In Human Hair Extensions. Invisible adhesive strips for seamless blending. Available in 7 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
