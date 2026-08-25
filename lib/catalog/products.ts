@@ -23,6 +23,7 @@ export type CatalogProduct = {
   slug: string;
   description: string | null;
   image_url: string | null;
+  gallery?: string[];
   variants: CatalogVariant[];
   attributes?: Record<string, unknown>;
 };
@@ -509,8 +510,20 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-weft",
       title: "BiziHair Genius Weft Extensions",
       slug: "bizihair-weft-extensions",
-      description: "BiziHair Genius Weft Echthaar Extensions. Erhältlich in 9 Farben und 8 Längen.",
+      description: "BiziHair Genius Weft Echthaar Extensions. Erhältlich in 7 Farben und 8 Längen.",
       image_url: "/products/bizihair-extensions/weft/weft-1.jpeg",
+      gallery: [
+        "/products/bizihair-extensions/weft/weft-1.jpeg",
+        "/products/bizihair-extensions/weft/weft-2.jpeg",
+        "/products/bizihair-extensions/weft/weft-3.jpeg",
+        "/products/bizihair-extensions/weft/weft-4.jpeg",
+        "/products/bizihair-extensions/weft/weft-5.jpeg",
+        "/products/bizihair-extensions/weft/weft-6.jpeg",
+        "/products/bizihair-extensions/weft/weft-7.jpeg",
+        "/products/bizihair-extensions/weft/weft-8.jpeg",
+        "/products/bizihair-extensions/weft/weft-9.jpeg",
+        "/products/bizihair-extensions/weft/weft-10.jpeg",
+      ],
       attributes: {},
       variants: makeBiziHairVariants("bizihair-weft", "weft", 8900)
     },
@@ -518,19 +531,20 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-tape-in",
       title: "BiziHair Tape-In Extensions",
       slug: "bizihair-tape-in-extensions",
-      description: "BiziHair Tape-In Echthaar Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Erhältlich in 9 Farben und 8 Längen.",
+      description: "BiziHair Tape-In Echthaar Extensions. Unsichtbare Klebestreifen für nahtloses Blending. Erhältlich in 7 Farben und 8 Längen.",
       image_url: "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
+      gallery: [
+        "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
+        "/products/bizihair-extensions/tape-in/tape-in-2.jpeg",
+        "/products/bizihair-extensions/tape-in/tape-in-3.jpeg",
+        "/products/bizihair-extensions/tape-in/tape-in-4.jpeg",
+        "/products/bizihair-extensions/tape-in/tape-in-5.jpeg",
+        "/products/bizihair-extensions/tape-in/tape-in-6.jpeg",
+        "/products/bizihair-extensions/tape-in/tape-in-7.jpeg",
+        "/products/bizihair-extensions/tape-in/tape-in-8.jpeg",
+      ],
       attributes: {},
       variants: makeBiziHairVariants("bizihair-tape-in", "weft", 9900)
-    },
-    {
-      id: "bizihair-utip",
-      title: "BiziHair U-Tip Extensions",
-      slug: "bizihair-utip-extensions",
-      description: "BiziHair U-Tip Keratin Bonding Human Hair Extensions. Natural finish through keratin bonding. Available in 7 colours and 8 lengths.",
-      image_url: "/products/bizihair-extensions/utip/utip-main.jpg",
-      attributes: {},
-      variants: makeBiziHairVariants("bizihair-utip", "weft", 10900)
     },
     {
       id: "bizihair-keratin",
@@ -538,6 +552,12 @@ function getBiziHairProducts(): CatalogProduct[] {
       slug: "bizihair-keratin-extensions",
       description: "BiziHair Keratin Bonding Human Hair Extensions. Individual strand application for the most natural, seamless result. Available in 7 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/keratin/keratin-1.jpeg",
+      gallery: [
+        "/products/bizihair-extensions/keratin/keratin-1.jpeg",
+        "/products/bizihair-extensions/keratin/keratin-2.jpeg",
+        "/products/bizihair-extensions/keratin/keratin-3.jpeg",
+        "/products/bizihair-extensions/keratin/keratin-4.jpeg",
+      ],
       attributes: {},
       variants: makeBiziHairVariants("bizihair-keratin", "weft", 11900)
     }

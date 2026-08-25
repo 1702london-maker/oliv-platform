@@ -18,7 +18,7 @@ export function ProductDetailView({ product, isWholesale, currency }: ProductDet
       ? firstVariant.wholesale_price_cents || firstVariant.retail_price_cents
       : firstVariant.retail_price_cents
     : 0;
-  const galleryImages = useMemo(() => getProductGalleryImages(product.image_url, product.variants), [product.image_url, product.variants]);
+  const galleryImages = useMemo(() => getProductGalleryImages(product.image_url, product.variants, product.gallery), [product.image_url, product.variants, product.gallery]);
   const [selectedImage, setSelectedImage] = useState(galleryImages[0] || product.image_url);
   const [selectedPrice, setSelectedPrice] = useState(initialPrice);
 
@@ -62,7 +62,11 @@ export function ProductDetailView({ product, isWholesale, currency }: ProductDet
   );
 }
 
-function getProductGalleryImages(imageUrl: string | null, variants: { image_url?: string | null }[] = []) {
+function getProductGalleryImages(imageUrl: string | null, variants: { image_url?: string | null }[] = [], galleryOverride?: string[]) {
+  if (galleryOverride && galleryOverride.length > 0) {
+    return galleryOverride;
+  }
+
   const variantImages = variants
     .map((v) => v.image_url)
     .filter((url): url is string => Boolean(url));
