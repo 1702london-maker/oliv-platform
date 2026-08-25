@@ -34,6 +34,9 @@ export async function middleware(request: NextRequest) {
 
   await supabase.auth.getUser();
 
+  // Pass pathname to server components via header (used by admin layout to skip auth on login page)
+  response.headers.set("x-pathname", request.nextUrl.pathname);
+
   return response;
 }
 

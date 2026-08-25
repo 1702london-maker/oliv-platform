@@ -1,12 +1,22 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { getCurrentProfile } from "@/lib/auth/session";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const profile = await getCurrentProfile();
+  const hdrs = await headers();
+  const pathname = hdrs.get("x-pathname") || "";
+  const isLoginPage = pathname === "/admin/login";
 
-  if (!profile || !profile.roles.includes("admin")) {
+  const profile = isLoginPage ? null : await getCurrentProfile();
+
+  if (!isLoginPage && (!profile || !profile.roles.includes("admin"))) {
     redirect("/admin/login");
+  }
+
+  // Render login page without the admin chrome
+  if (isLoginPage || !profile) {
+    return <>{children}</>;
   }
 
   const adminName = profile.first_name || profile.email?.split("@")[0] || "Admin";
