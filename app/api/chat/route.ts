@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -457,6 +458,9 @@ Exact pricing per pack (25g) will be confirmed at the appointment.`;
 }
 
 export async function POST(request: Request) {
+  const rl = await checkRateLimit({ key: "ip", value: getClientIp(request), endpoint: "chat", limit: 30, windowSecs: 3600 });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   try {
     const body = await request.json();
     const messages: Message[] = Array.isArray(body.messages) ? body.messages : [];

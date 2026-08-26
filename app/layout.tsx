@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     default: "OlivHairSupply Berlin — Echthaar Extensions & BiziLuxe Kollektion",
     template: "%s | OlivHairSupply Berlin"
   },
-  description: "Premium Echthaar Extensions aus Berlin. Entdecke die BiziLuxe Kollektion — Remy Haarverlängerungen, Clip-In Extensions, Perücken & Zubehör. Kostenloser EU-Versand ab 200 €. Professionelle Saloninstallation verfügbar.",
+  description: "Premium Echthaar Extensions aus Berlin. Entdecke die BiziLuxe Kollektion — Echthaar Haarverlängerungen, Clip-In Extensions, Perücken & Zubehör. Kostenloser EU-Versand ab 200 €. Professionelle Saloninstallation verfügbar.",
   keywords: [
     "Echthaar Extensions kaufen", "Haarverlängerung Berlin", "BiziLuxe Extensions",
-    "Remy Hair Extensions kaufen", "Echthaar Extensions Berlin", "Bonding Extensions Echthaar Berlin",
+    "Echthaar Extensions kaufen", "Echthaar Extensions Berlin", "Bonding Extensions Echthaar Berlin",
     "Clip In Extensions Echthaar kaufen", "Tape Extensions Berlin kaufen",
     "Premium Echthaar Extensions Deutschland", "Haarverdichtung Extensions",
     "OlivHairSupply", "BiziLuxe Kollektion", "Extensions Zubehör kaufen",
@@ -39,13 +39,13 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "OlivHairSupply",
     title: "OlivHairSupply Berlin — Echthaar Extensions & BiziLuxe Kollektion",
-    description: "Premium Echthaar Extensions aus Berlin. BiziLuxe Kollektion — Remy Haarverlängerungen, Clip-In Extensions & Zubehör. Kostenloser EU-Versand ab 200 €.",
+    description: "Premium Echthaar Extensions aus Berlin. BiziLuxe Kollektion — Echthaar Haarverlängerungen, Clip-In Extensions & Zubehör. Kostenloser EU-Versand ab 200 €.",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "OlivHairSupply — BiziLuxe Echthaar Extensions Berlin" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "OlivHairSupply Berlin — Echthaar Extensions & BiziLuxe Kollektion",
-    description: "Premium Echthaar Extensions aus Berlin. BiziLuxe Kollektion — Remy Haarverlängerungen, Clip-In Extensions & Zubehör.",
+    description: "Premium Echthaar Extensions aus Berlin. BiziLuxe Kollektion — Echthaar Haarverlängerungen, Clip-In Extensions & Zubehör.",
     images: ["/og-image.jpg"],
     creator: "@olivhairsupply"
   },

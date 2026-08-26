@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 import {
   sendApplicationTeamNotification,
   sendTrainingApplicationReceivedEmail,
@@ -7,6 +9,15 @@ import {
 import { buildApplicationApprovalUrl } from "@/lib/applications/approval-url";
 
 export async function POST(request: Request) {
+  const rl = await checkFormRateLimit({
+    ip: getClientIp(request),
+    endpoint: "training-apply",
+    ipLimit: 5,
+    emailLimit: 2,
+    windowSecs: 3600,
+  });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   const formData = await request.formData();
   const email = value(formData, "contact[email]").toLowerCase();
   const fullName = value(formData, "contact[name]") || value(formData, "contact[Full Name]");

@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = (searchParams.get("email") || "").trim().toLowerCase();
+
+  const rl = await checkFormRateLimit({ ip: getClientIp(request), email: email || undefined, endpoint: "order-track", ipLimit: 20, emailLimit: 10, windowSecs: 3600 });
+  if (!rl.allowed) return rateLimitResponse(rl);
 
   if (!email || !email.includes("@")) {
     return NextResponse.json({ error: "invalid_email" }, { status: 400 });

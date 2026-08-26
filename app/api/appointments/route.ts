@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createCalendarEvent } from "@/lib/google-calendar";
+import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 import {
   sendAppointmentConfirmationEmail,
   sendAppointmentTeamNotification,
@@ -10,9 +11,21 @@ import {
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
+  const body = await request.json().catch(() => null);
+  if (!body) return NextResponse.json({ error: "invalid_json" }, { status: 400 });
 
+  const rl = await checkFormRateLimit({
+    ip: getClientIp(request),
+    email: typeof body.customerEmail === "string" ? body.customerEmail : undefined,
+    phone: typeof body.customerPhone === "string" ? body.customerPhone : undefined,
+    endpoint: "appointment",
+    ipLimit: 10,
+    emailLimit: 3,
+    windowSecs: 3600,
+  });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
+  try {
     const {
       customerName,
       customerEmail,

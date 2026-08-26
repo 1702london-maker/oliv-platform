@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 import {
   sendApplicationTeamNotification,
   sendWholesaleApplicationReceivedEmail,
@@ -7,6 +8,15 @@ import {
 import { buildApplicationApprovalUrl } from "@/lib/applications/approval-url";
 
 export async function POST(request: Request) {
+  const rl = await checkFormRateLimit({
+    ip: getClientIp(request),
+    endpoint: "wholesale-apply",
+    ipLimit: 5,
+    emailLimit: 2,
+    windowSecs: 3600,
+  });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   const formData = await request.formData();
   const email = value(formData, "contact[email]").toLowerCase();
   const businessName = value(formData, "contact[Business Name]");

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { verifyApprovalToken } from "@/lib/applications/approval-url";
 import {
   generateAffiliatePassword,
   hashAffiliatePassword,
@@ -16,18 +17,14 @@ import {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret") || "";
-  const expectedSecret = process.env.SUPABASE_WEBHOOK_SECRET || "";
-  const type = searchParams.get("type");
-  const id = searchParams.get("id");
+  const token = searchParams.get("token") || "";
 
-  if (!expectedSecret || secret !== expectedSecret) {
+  const decoded = verifyApprovalToken(token);
+  if (!decoded) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  if (!id || !type) {
-    return NextResponse.json({ error: "missing_type_or_id" }, { status: 400 });
-  }
+  const { type, id } = decoded;
 
   if (type === "affiliate") return approveAffiliate(id);
   if (type === "wholesale") return approveWholesale(id);

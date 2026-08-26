@@ -2,7 +2,15 @@ import { cookies } from "next/headers";
 import { createHmac, timingSafeEqual, randomBytes } from "node:crypto";
 
 export const WHOLESALE_SESSION_COOKIE = "ohs_whl_session";
-const SECRET = process.env.APP_SESSION_SECRET || "oliv-platform-session-v1";
+function getSecret() {
+  const s = process.env.APP_SESSION_SECRET;
+  if (!s) {
+    if (process.env.NODE_ENV === "production") throw new Error("APP_SESSION_SECRET is required in production");
+    return "oliv-platform-session-dev-only";
+  }
+  return s;
+}
+const SECRET = getSecret();
 export const WHOLESALE_SESSION_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
 export type WholesaleSession = {

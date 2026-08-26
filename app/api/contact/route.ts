@@ -1,10 +1,20 @@
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsupply.de";
 const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
 
 export async function POST(request: Request) {
+  const rl = await checkFormRateLimit({
+    ip: getClientIp(request),
+    endpoint: "contact",
+    ipLimit: 8,
+    emailLimit: 3,
+    windowSecs: 3600,
+  });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   const formData = await request.formData();
   const returnTo = request.headers.get("referer") || "/";
 
