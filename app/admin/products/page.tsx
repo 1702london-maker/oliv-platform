@@ -22,7 +22,7 @@ export default async function AdminProductsPage() {
       <p style={eyebrow}>Admin</p>
       <h1 style={title}>Products</h1>
       <p style={{ color: "#6b5c4e", fontSize: 13, margin: "8px 0 32px" }}>
-        Click any product to manage its gallery images — upload, delete, and reorder photos.
+        Click any product to edit its <strong>description</strong>, set <strong>retail &amp; wholesale prices</strong>, and manage its gallery images.
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 18 }}>
