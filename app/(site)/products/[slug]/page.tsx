@@ -31,7 +31,7 @@ export default async function ProductPage({ params }: PageProps) {
       .order("position", { ascending: true }),
     admin
       .from("product_overrides")
-      .select("title, description")
+      .select("title, description, retail_price_cents, wholesale_price_cents")
       .eq("slug", slug)
       .maybeSingle(),
   ]);
@@ -53,6 +53,24 @@ export default async function ProductPage({ params }: PageProps) {
     ...staticGallery.filter((url) => !uploadedImages.includes(url)),
   ];
 
+  // Apply price overrides: shift all variant prices from the base variant price
+  let variants = product.variants;
+  if (override?.retail_price_cents != null && product.variants.length > 0) {
+    const baseRetail = product.variants[0].retail_price_cents;
+    const baseWholesale = product.variants[0].wholesale_price_cents ?? 0;
+    const retailShift = override.retail_price_cents - baseRetail;
+    const wholesaleShift = override.wholesale_price_cents != null
+      ? override.wholesale_price_cents - baseWholesale
+      : 0;
+    variants = product.variants.map((v) => ({
+      ...v,
+      retail_price_cents: v.retail_price_cents + retailShift,
+      wholesale_price_cents: v.wholesale_price_cents != null
+        ? v.wholesale_price_cents + wholesaleShift
+        : null,
+    }));
+  }
+
   // Apply merged gallery + description/title overrides
   const productWithMergedGallery = {
     ...product,
@@ -60,6 +78,7 @@ export default async function ProductPage({ params }: PageProps) {
     description: override?.description || product.description,
     image_url: mergedGallery[0] || product.image_url,
     gallery: mergedGallery.length > 0 ? mergedGallery : product.gallery,
+    variants,
   };
 
   const shell = fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8");

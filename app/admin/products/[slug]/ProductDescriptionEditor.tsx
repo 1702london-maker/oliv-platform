@@ -6,24 +6,41 @@ export function ProductDescriptionEditor({
   slug,
   initialTitle,
   initialDescription,
+  initialRetailCents,
+  initialWholesaleCents,
+  baseRetailCents,
+  baseWholesaleCents,
 }: {
   slug: string;
   initialTitle: string;
   initialDescription: string;
+  initialRetailCents: number | null;
+  initialWholesaleCents: number | null;
+  baseRetailCents: number;
+  baseWholesaleCents: number | null;
 }) {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
+  const [retail, setRetail] = useState(
+    initialRetailCents != null ? (initialRetailCents / 100).toFixed(2) : ""
+  );
+  const [wholesale, setWholesale] = useState(
+    initialWholesaleCents != null ? (initialWholesaleCents / 100).toFixed(2) : ""
+  );
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
 
   async function save() {
     setSaving(true);
     setMsg(null);
+    const body: Record<string, unknown> = { slug, title, description };
+    if (retail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(retail) * 100);
+    if (wholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(wholesale) * 100);
     try {
       const res = await fetch("/api/admin/products/description", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, title, description }),
+        body: JSON.stringify(body),
       });
       const j = await res.json();
       if (!res.ok) setMsg({ type: "err", text: j.error || "Save failed" });
@@ -37,17 +54,13 @@ export function ProductDescriptionEditor({
 
   return (
     <div style={{ background: "#fff", border: "1px solid #e2d5c0", padding: "28px 28px 24px", marginBottom: 32 }}>
-      <p style={{ margin: "0 0 18px", color: "#b68a45", fontSize: 10, fontWeight: 700, letterSpacing: ".24em", textTransform: "uppercase" }}>
-        Product Content
+      <p style={{ margin: "0 0 20px", color: "#b68a45", fontSize: 10, fontWeight: 700, letterSpacing: ".24em", textTransform: "uppercase" }}>
+        Product Content & Pricing
       </p>
 
       <label style={labelStyle}>
         Product Title
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          style={inputStyle}
-        />
+        <input value={title} onChange={(e) => setTitle(e.target.value)} style={inputStyle} />
       </label>
 
       <label style={{ ...labelStyle, marginTop: 16 }}>
@@ -55,16 +68,63 @@ export function ProductDescriptionEditor({
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          rows={5}
+          rows={6}
+          placeholder="Enter product description here — this appears on the live product page."
           style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit" }}
         />
       </label>
 
+      {/* Pricing */}
+      <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid #f0e8dc" }}>
+        <p style={{ margin: "0 0 14px", color: "#6b5c4e", fontSize: 10, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>
+          Pricing (€ — overrides default prices on site)
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <label style={labelStyle}>
+            Retail Price (€)
+            <div style={{ position: "relative" }}>
+              <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#9b8878", fontSize: 13 }}>€</span>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={retail}
+                onChange={(e) => setRetail(e.target.value)}
+                placeholder={(baseRetailCents / 100).toFixed(2)}
+                style={{ ...inputStyle, paddingLeft: 26 }}
+              />
+            </div>
+            <span style={{ fontSize: 10, color: "#b4a090" }}>
+              Current default: €{(baseRetailCents / 100).toFixed(2)}
+            </span>
+          </label>
+          <label style={labelStyle}>
+            Wholesale Price (€)
+            <div style={{ position: "relative" }}>
+              <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#9b8878", fontSize: 13 }}>€</span>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={wholesale}
+                onChange={(e) => setWholesale(e.target.value)}
+                placeholder={baseWholesaleCents ? (baseWholesaleCents / 100).toFixed(2) : "–"}
+                style={{ ...inputStyle, paddingLeft: 26 }}
+              />
+            </div>
+            <span style={{ fontSize: 10, color: "#b4a090" }}>
+              Current default: {baseWholesaleCents ? `€${(baseWholesaleCents / 100).toFixed(2)}` : "Not set"}
+            </span>
+          </label>
+        </div>
+        <p style={{ margin: "10px 0 0", fontSize: 11, color: "#9b8878" }}>
+          Leave blank to keep existing prices. For products with multiple lengths/variants, this sets the starting price and all length increments are preserved.
+        </p>
+      </div>
+
       {msg && (
         <div style={{
-          margin: "12px 0 0",
-          padding: "8px 14px",
-          fontSize: 12,
+          margin: "16px 0 0", padding: "8px 14px", fontSize: 12,
           background: msg.type === "ok" ? "#e4eddf" : "#f4e4e0",
           color: msg.type === "ok" ? "#315f38" : "#8b3535",
         }}>
@@ -76,16 +136,9 @@ export function ProductDescriptionEditor({
         onClick={save}
         disabled={saving}
         style={{
-          marginTop: 16,
-          background: saving ? "#9b8878" : "#2b2620",
-          color: "#fff",
-          border: "none",
-          padding: "10px 22px",
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: ".14em",
-          textTransform: "uppercase",
-          cursor: saving ? "default" : "pointer",
+          marginTop: 16, background: saving ? "#9b8878" : "#2b2620", color: "#fff",
+          border: "none", padding: "11px 24px", fontSize: 11, fontWeight: 700,
+          letterSpacing: ".14em", textTransform: "uppercase", cursor: saving ? "default" : "pointer",
         }}
       >
         {saving ? "Saving…" : "Save & Publish"}
@@ -95,23 +148,10 @@ export function ProductDescriptionEditor({
 }
 
 const labelStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 6,
-  fontSize: 11,
-  fontWeight: 700,
-  letterSpacing: ".1em",
-  textTransform: "uppercase",
-  color: "#6b5c4e",
+  display: "flex", flexDirection: "column", gap: 6, fontSize: 11,
+  fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "#6b5c4e",
 };
-
 const inputStyle: React.CSSProperties = {
-  width: "100%",
-  border: "1px solid #e2d5c0",
-  padding: "10px 12px",
-  fontSize: 13,
-  color: "#2b2620",
-  background: "#faf7f2",
-  outline: "none",
-  boxSizing: "border-box",
+  width: "100%", border: "1px solid #e2d5c0", padding: "10px 12px", fontSize: 13,
+  color: "#2b2620", background: "#faf7f2", outline: "none", boxSizing: "border-box",
 };

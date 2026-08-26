@@ -20,10 +20,12 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
       .order("position", { ascending: true }),
     admin
       .from("product_overrides")
-      .select("title, description")
+      .select("title, description, retail_price_cents, wholesale_price_cents")
       .eq("slug", slug)
       .maybeSingle(),
   ]);
+
+  const baseVariant = product.variants[0];
 
   const staticGallery: string[] = product.gallery || (product.image_url ? [product.image_url] : []);
 
@@ -40,6 +42,10 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
         slug={product.slug}
         initialTitle={override?.title || product.title}
         initialDescription={override?.description || product.description || ""}
+        initialRetailCents={override?.retail_price_cents ?? null}
+        initialWholesaleCents={override?.wholesale_price_cents ?? null}
+        baseRetailCents={baseVariant?.retail_price_cents ?? 0}
+        baseWholesaleCents={baseVariant?.wholesale_price_cents ?? null}
       />
 
       <p style={eyebrow}>Product Images</p>
