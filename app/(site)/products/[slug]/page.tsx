@@ -21,13 +21,20 @@ export default async function ProductPage({ params }: PageProps) {
   const country = (await cookies()).get("ohs_country")?.value;
   const currency = country === "GB" ? "GBP" : country === "US" ? "USD" : "EUR";
 
-  // Query DB: hidden catalog images to exclude + admin-uploaded images to include
+  // Query DB: hidden images, uploaded images, description/title overrides
   const admin = createSupabaseAdminClient();
-  const { data: dbImages } = await admin
-    .from("product_images")
-    .select("url, hidden, product_id, is_catalog")
-    .or(`product_id.eq.${product.id},is_catalog.eq.true`)
-    .order("position", { ascending: true });
+  const [{ data: dbImages }, { data: override }] = await Promise.all([
+    admin
+      .from("product_images")
+      .select("url, hidden, product_id, is_catalog")
+      .or(`product_id.eq.${product.id},is_catalog.eq.true`)
+      .order("position", { ascending: true }),
+    admin
+      .from("product_overrides")
+      .select("title, description")
+      .eq("slug", slug)
+      .maybeSingle(),
+  ]);
 
   const hiddenUrls = new Set(
     (dbImages || []).filter((r) => r.hidden === true).map((r) => r.url)
@@ -46,9 +53,11 @@ export default async function ProductPage({ params }: PageProps) {
     ...staticGallery.filter((url) => !uploadedImages.includes(url)),
   ];
 
-  // Apply merged gallery back to product
+  // Apply merged gallery + description/title overrides
   const productWithMergedGallery = {
     ...product,
+    title: override?.title || product.title,
+    description: override?.description || product.description,
     image_url: mergedGallery[0] || product.image_url,
     gallery: mergedGallery.length > 0 ? mergedGallery : product.gallery,
   };
