@@ -15,10 +15,10 @@ export function ApplicationActions({ type, id }: Props) {
     setLoading(action);
     setError("");
     try {
-      const res = await fetch(`/api/admin/applications/${action}`, {
+      const res = await fetch(`/api/admin/applications/approve`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, id }),
+        body: JSON.stringify({ type, id, action }),
       });
       const j = await res.json().catch(() => ({}));
       if (!res.ok) {

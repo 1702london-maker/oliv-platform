@@ -34,7 +34,7 @@ export function ProductImageManager({ productId, productSlug, productTitle, dbIm
         form.append("productId", productId);
         form.append("position", String(images.length));
 
-        const res = await fetch("/api/admin/products/upload", { method: "POST", body: form });
+        const res = await fetch("/api/admin/products/images", { method: "POST", body: form });
         const json = await res.json();
         if (!res.ok) throw new Error(json.error || "Upload failed");
         setImages((prev) => [...prev, json.image]);

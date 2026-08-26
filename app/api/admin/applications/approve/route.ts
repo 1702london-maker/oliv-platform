@@ -167,24 +167,42 @@ function approvalHtml(title: string, email: string) {
 }
 
 // POST handler — called from the admin UI inline buttons (returns JSON, not HTML)
+// action: "approve" (default) or "reject"
 export async function POST(request: Request) {
   const { getCurrentProfile } = await import("@/lib/auth/session");
   const profile = await getCurrentProfile();
   if (!profile?.roles.includes("admin")) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
-  const { type, id } = await request.json();
+  const { type, id, action } = await request.json();
   if (!id || !type) return NextResponse.json({ error: "missing_type_or_id" }, { status: 400 });
 
-  // Run the same logic but return JSON instead of HTML
+  if (action === "reject") {
+    // Inline reject logic (was /api/admin/applications/reject)
+    const { createSupabaseAdminClient } = await import("@/lib/supabase/admin");
+    const { sendApplicationRejectionEmail } = await import("@/lib/email/resend");
+    const admin = createSupabaseAdminClient();
+    const tableMap: Record<string, string> = { affiliate: "affiliates", wholesale: "wholesale_accounts", training: "training_applications" };
+    const nameField: Record<string, string> = { affiliate: "display_name", wholesale: "business_name", training: "full_name" };
+    const table = tableMap[type];
+    if (!table) return NextResponse.json({ error: "invalid_type" }, { status: 400 });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: rec } = await (admin.from(table) as any).select(`email,status,${nameField[type]}`).eq("id", id).maybeSingle() as { data: Record<string, string> | null };
+    if (!rec) return NextResponse.json({ error: "not_found" }, { status: 404 });
+    if (rec.status !== "pending") return NextResponse.json({ error: "already_reviewed" }, { status: 409 });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (admin.from(table) as any).update({ status: "rejected" }).eq("id", id);
+    try { await sendApplicationRejectionEmail({ to: rec.email, name: rec[nameField[type]] || rec.email, type: type as "affiliate" | "wholesale" | "training" }); } catch {}
+    return NextResponse.json({ ok: true });
+  }
+
+  // Default: approve
   const htmlRes = await (
     type === "affiliate" ? approveAffiliate(id) :
     type === "wholesale" ? approveWholesale(id) :
     type === "training"  ? approveTraining(id)  :
     NextResponse.json({ error: "invalid_type" }, { status: 400 })
   );
-  // If it returned a 4xx/5xx JSON already, pass it through
   if (htmlRes instanceof NextResponse) return htmlRes;
-  // Otherwise it was an HTML success — return JSON ok
   return NextResponse.json({ ok: true });
 }

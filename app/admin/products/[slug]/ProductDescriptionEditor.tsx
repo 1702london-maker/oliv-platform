@@ -37,7 +37,7 @@ export function ProductDescriptionEditor({
     if (retail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(retail) * 100);
     if (wholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(wholesale) * 100);
     try {
-      const res = await fetch("/api/admin/products/description", {
+      const res = await fetch("/api/admin/products/images", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
