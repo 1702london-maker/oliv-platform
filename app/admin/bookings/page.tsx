@@ -1,4 +1,7 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { BookingActions } from "./BookingActions";
+
+export const dynamic = "force-dynamic";
 
 export default async function BookingsPage() {
   const admin = createSupabaseAdminClient();
@@ -51,7 +54,7 @@ function BookingTable({ rows }: { rows: Record<string, unknown>[] }) {
       <table style={table}>
         <thead>
           <tr>
-            {["Client", "Service", "Stylist", "Location", "Date & Time", "Source", "Status"].map(h => (
+            {["Client", "Service", "Stylist", "Location", "Date & Time", "Status", "Actions"].map(h => (
               <th key={h} style={th}>{h}</th>
             ))}
           </tr>
@@ -77,11 +80,13 @@ function BookingTable({ rows }: { rows: Record<string, unknown>[] }) {
                     </>
                   ) : "—"}
                 </td>
-                <td style={td}>{String(a.source || "website")}</td>
                 <td style={td}>
                   <span style={status === "confirmed" ? badgeGreen : status === "cancelled" ? badgeRed : badgeGold}>
                     {status}
                   </span>
+                </td>
+                <td style={td}>
+                  <BookingActions id={String(a.id)} status={status} />
                 </td>
               </tr>
             );

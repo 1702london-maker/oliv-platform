@@ -165,3 +165,26 @@ function approvalHtml(title: string, email: string) {
     { headers: { "Content-Type": "text/html" } }
   );
 }
+
+// POST handler — called from the admin UI inline buttons (returns JSON, not HTML)
+export async function POST(request: Request) {
+  const { getCurrentProfile } = await import("@/lib/auth/session");
+  const profile = await getCurrentProfile();
+  if (!profile?.roles.includes("admin")) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+  const { type, id } = await request.json();
+  if (!id || !type) return NextResponse.json({ error: "missing_type_or_id" }, { status: 400 });
+
+  // Run the same logic but return JSON instead of HTML
+  const htmlRes = await (
+    type === "affiliate" ? approveAffiliate(id) :
+    type === "wholesale" ? approveWholesale(id) :
+    type === "training"  ? approveTraining(id)  :
+    NextResponse.json({ error: "invalid_type" }, { status: 400 })
+  );
+  // If it returned a 4xx/5xx JSON already, pass it through
+  if (htmlRes instanceof NextResponse) return htmlRes;
+  // Otherwise it was an HTML success — return JSON ok
+  return NextResponse.json({ ok: true });
+}
