@@ -26,8 +26,8 @@ export default async function ProductPage({ params }: PageProps) {
   const [{ data: dbImages }, { data: override }] = await Promise.all([
     admin
       .from("product_images")
-      .select("url, hidden, product_id, is_catalog")
-      .or(`product_id.eq.${product.id},is_catalog.eq.true`)
+      .select("url, hidden, product_id, is_catalog, product_slug")
+      .or(`product_id.eq.${product.id},is_catalog.eq.true,product_slug.eq.${slug}`)
       .order("position", { ascending: true }),
     admin
       .from("product_overrides")
@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: PageProps) {
     (dbImages || []).filter((r) => r.hidden === true).map((r) => r.url)
   );
   const uploadedImages = (dbImages || [])
-    .filter((r) => !r.is_catalog && r.product_id === product.id && !r.hidden)
+    .filter((r) => !r.hidden && !r.is_catalog && (r.product_id === product.id || r.product_slug === slug))
     .map((r) => r.url);
 
   // Merge: uploaded first, then static gallery with hidden ones removed

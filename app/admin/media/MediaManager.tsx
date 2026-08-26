@@ -4,13 +4,16 @@ import { useRef, useState } from "react";
 import type { ManagedImage } from "./page";
 
 type Category = { key: string; label: string };
+type Product = { slug: string; title: string };
 
 export function MediaManager({
   initialImages,
   categories,
+  products,
 }: {
   initialImages: ManagedImage[];
   categories: Category[];
+  products: Product[];
 }) {
   const [images, setImages] = useState(initialImages);
   const [activeTab, setActiveTab] = useState(categories[0]?.key || "");
@@ -19,6 +22,7 @@ export function MediaManager({
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [labelVal, setLabelVal] = useState("");
   const [movingKey, setMovingKey] = useState<string | null>(null);
+  const [assigningKey, setAssigningKey] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const tabImages = images.filter((img) => img.category === activeTab);
@@ -51,6 +55,7 @@ export function MediaManager({
             label: file.name.replace(/\.[^.]+$/, ""),
             isCatalog: false,
             category: activeTab,
+            productSlug: null,
           },
         ]);
         ok++;
@@ -80,7 +85,7 @@ export function MediaManager({
       if (!res.ok) { flash("err", "Delete failed"); return; }
       setImages((prev) => prev.filter((i) => imgKey(i) !== key));
     }
-    flash("ok", "Image removed");
+    flash("ok", "Image removed from site");
   }
 
   async function handleRename(img: ManagedImage, newLabel: string) {
@@ -98,7 +103,7 @@ export function MediaManager({
     const key = imgKey(img);
     setImages((prev) => prev.map((i) => imgKey(i) === key ? { ...i, label: trimmed } : i));
     setEditingKey(null);
-    flash("ok", "Renamed successfully");
+    flash("ok", "Renamed");
   }
 
   async function handleMove(img: ManagedImage, newCat: string) {
@@ -116,6 +121,27 @@ export function MediaManager({
     setMovingKey(null);
     const destLabel = categories.find((c) => c.key === newCat)?.label || newCat;
     flash("ok", `Moved to ${destLabel}`);
+  }
+
+  async function handleAssignProduct(img: ManagedImage, productSlug: string | null) {
+    const body = img.isCatalog
+      ? { src: img.src, product_slug: productSlug }
+      : { id: img.id, product_slug: productSlug };
+    const res = await fetch("/api/admin/media", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) { flash("err", "Assign failed"); return; }
+    const key = imgKey(img);
+    setImages((prev) => prev.map((i) => imgKey(i) === key ? { ...i, productSlug } : i));
+    setAssigningKey(null);
+    if (productSlug) {
+      const prod = products.find((p) => p.slug === productSlug);
+      flash("ok", `Assigned to ${prod?.title || productSlug} — now live on that product page`);
+    } else {
+      flash("ok", "Product assignment removed");
+    }
   }
 
   return (
@@ -139,7 +165,7 @@ export function MediaManager({
           return (
             <button
               key={cat.key}
-              onClick={() => { setActiveTab(cat.key); setMovingKey(null); setEditingKey(null); }}
+              onClick={() => { setActiveTab(cat.key); setMovingKey(null); setEditingKey(null); setAssigningKey(null); }}
               style={{
                 background: "none", border: "none", padding: "11px 18px", fontSize: 11,
                 fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer",
@@ -180,11 +206,13 @@ export function MediaManager({
       </div>
 
       {/* Image grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
         {tabImages.map((img) => {
           const key = imgKey(img);
           const isEditing = editingKey === key;
           const isMoving = movingKey === key;
+          const isAssigning = assigningKey === key;
+          const assignedProduct = img.productSlug ? products.find((p) => p.slug === img.productSlug) : null;
 
           return (
             <div key={key} style={{ background: "#fff", border: "1px solid #e2d5c0", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -195,8 +223,15 @@ export function MediaManager({
                 fontSize: 8, fontWeight: 700, letterSpacing: ".14em",
                 textTransform: "uppercase", padding: "3px 10px", flexShrink: 0,
               }}>
-                {img.isCatalog ? "Catalog Image" : "Uploaded"}
+                {img.isCatalog ? "Catalog" : "Uploaded"}
               </div>
+
+              {/* Assigned product badge */}
+              {assignedProduct && (
+                <div style={{ background: "#e4eddf", color: "#315f38", fontSize: 8, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: "3px 10px" }}>
+                  → {assignedProduct.title}
+                </div>
+              )}
 
               {/* Thumbnail */}
               <a href={img.src} target="_blank" rel="noopener noreferrer" style={{ display: "block", flexShrink: 0 }}>
@@ -213,7 +248,7 @@ export function MediaManager({
                 />
               </a>
 
-              {/* Label (click to rename) */}
+              {/* Label */}
               <div style={{ padding: "8px 10px 4px", flex: 1 }}>
                 {isEditing ? (
                   <div style={{ display: "flex", gap: 4 }}>
@@ -227,14 +262,8 @@ export function MediaManager({
                       }}
                       style={{ flex: 1, border: "1px solid #c9a96e", padding: "4px 6px", fontSize: 11, outline: "none", minWidth: 0 }}
                     />
-                    <button
-                      onClick={() => handleRename(img, labelVal)}
-                      style={{ background: "#c9a96e", color: "#fff", border: "none", padding: "4px 8px", fontSize: 11, cursor: "pointer", flexShrink: 0 }}
-                    >✓</button>
-                    <button
-                      onClick={() => setEditingKey(null)}
-                      style={{ background: "#f0e8dc", color: "#6b5c4e", border: "none", padding: "4px 8px", fontSize: 11, cursor: "pointer", flexShrink: 0 }}
-                    >✕</button>
+                    <button onClick={() => handleRename(img, labelVal)} style={iconBtn}>✓</button>
+                    <button onClick={() => setEditingKey(null)} style={iconBtn}>✕</button>
                   </div>
                 ) : (
                   <p
@@ -247,7 +276,7 @@ export function MediaManager({
                 )}
               </div>
 
-              {/* Move dropdown */}
+              {/* Move category dropdown */}
               {isMoving && (
                 <div style={{ padding: "0 10px 6px" }}>
                   <select
@@ -265,25 +294,41 @@ export function MediaManager({
                 </div>
               )}
 
+              {/* Assign to product dropdown */}
+              {isAssigning && (
+                <div style={{ padding: "0 10px 6px" }}>
+                  <select
+                    autoFocus
+                    defaultValue={img.productSlug || ""}
+                    onChange={(e) => handleAssignProduct(img, e.target.value || null)}
+                    onBlur={() => setAssigningKey(null)}
+                    style={{ width: "100%", border: "1px solid #315f38", padding: "6px", fontSize: 11, background: "#fff", outline: "none" }}
+                  >
+                    <option value="">No product (remove assignment)</option>
+                    {products.map((p) => (
+                      <option key={p.slug} value={p.slug}>{p.title}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {/* Actions */}
-              <div style={{ padding: "6px 10px 10px", display: "flex", gap: 6 }}>
+              <div style={{ padding: "6px 10px 10px", display: "flex", gap: 5, flexWrap: "wrap" }}>
                 <button
-                  onClick={() => setMovingKey(isMoving ? null : key)}
-                  style={{
-                    flex: 1, background: isMoving ? "#f0e8dc" : "none", border: "1px solid #e2d5c0",
-                    color: "#6b5c4e", padding: "5px 8px", fontSize: 9, letterSpacing: ".1em",
-                    textTransform: "uppercase", cursor: "pointer", fontWeight: 700,
-                  }}
+                  onClick={() => { setMovingKey(isMoving ? null : key); setAssigningKey(null); }}
+                  style={{ ...actionBtn, background: isMoving ? "#f0e8dc" : "none" }}
                 >
                   {isMoving ? "Cancel" : "Move"}
                 </button>
                 <button
+                  onClick={() => { setAssigningKey(isAssigning ? null : key); setMovingKey(null); }}
+                  style={{ ...actionBtn, background: isAssigning ? "#e4eddf" : "none", color: isAssigning ? "#315f38" : "#6b5c4e" }}
+                >
+                  {isAssigning ? "Cancel" : assignedProduct ? "Reassign" : "→ Product"}
+                </button>
+                <button
                   onClick={() => handleDelete(img)}
-                  style={{
-                    background: "none", border: "1px solid #f4ddd8", color: "#c0392b",
-                    padding: "5px 10px", fontSize: 9, letterSpacing: ".1em",
-                    textTransform: "uppercase", cursor: "pointer", fontWeight: 700,
-                  }}
+                  style={{ ...actionBtn, color: "#c0392b", borderColor: "#f4ddd8", marginLeft: "auto" }}
                 >
                   Delete
                 </button>
@@ -301,3 +346,6 @@ export function MediaManager({
     </div>
   );
 }
+
+const iconBtn: React.CSSProperties = { background: "#f0e8dc", border: "none", padding: "4px 8px", fontSize: 11, cursor: "pointer", flexShrink: 0 };
+const actionBtn: React.CSSProperties = { border: "1px solid #e2d5c0", color: "#6b5c4e", padding: "5px 8px", fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer", fontWeight: 700, background: "none" };

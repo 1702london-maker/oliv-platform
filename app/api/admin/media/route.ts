@@ -30,10 +30,10 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ image: row });
 }
 
-// PATCH → update label / category / hidden (for uploaded OR catalog images)
+// PATCH → update label / category / hidden / product_slug (for uploaded OR catalog images)
 export async function PATCH(req: NextRequest) {
-  const body = await req.json() as { id?: string; src?: string; label?: string; hidden?: boolean; category?: string };
-  const { id, src, label, hidden, category } = body;
+  const body = await req.json() as { id?: string; src?: string; label?: string; hidden?: boolean; category?: string; product_slug?: string | null };
+  const { id, src, label, hidden, category, product_slug } = body;
   if (!id && !src) return NextResponse.json({ error: "Missing id or src" }, { status: 400 });
 
   const admin = createSupabaseAdminClient();
@@ -41,6 +41,7 @@ export async function PATCH(req: NextRequest) {
   if (label !== undefined) update.label = label;
   if (hidden !== undefined) update.hidden = hidden;
   if (category !== undefined) update.category = category;
+  if (product_slug !== undefined) update.product_slug = product_slug;
 
   if (src) {
     const { data: existing } = await admin.from("product_images").select("id").eq("url", src).eq("is_catalog", true).maybeSingle();
