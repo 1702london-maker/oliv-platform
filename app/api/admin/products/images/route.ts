@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireRole, getCurrentProfile } from "@/lib/auth/session";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
+// GET /api/admin/products/images?slug=xxx — fetch override data for a product
+export async function GET(req: NextRequest) {
+  const profile = await getCurrentProfile();
+  if (!profile?.roles.includes("admin")) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const slug = req.nextUrl.searchParams.get("slug");
+  if (!slug) return NextResponse.json({ error: "missing slug" }, { status: 400 });
+  const admin = createSupabaseAdminClient();
+  const { data } = await admin
+    .from("product_overrides")
+    .select("title, description, retail_price_cents, wholesale_price_cents")
+    .eq("slug", slug)
+    .maybeSingle();
+  return NextResponse.json({ override: data ?? null });
+}
+
 // POST — either file upload (FormData) or description/price update (JSON)
 export async function POST(req: NextRequest) {
   const contentType = req.headers.get("content-type") || "";
