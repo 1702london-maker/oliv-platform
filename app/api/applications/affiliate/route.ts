@@ -15,6 +15,11 @@ export async function POST(request: Request) {
     redirect("/affiliate?application=missing");
   }
 
+  // Bot / spam protection
+  if (isSpam(fullName) || isSpam(email)) {
+    redirect("/affiliate?application=submitted"); // silent reject — don't tip off bots
+  }
+
   const supabase = createSupabaseAdminClient();
   const code = generateAffiliateCode(fullName, email);
   const { data, error } = await supabase
@@ -58,6 +63,19 @@ export async function POST(request: Request) {
   ]);
 
   redirect("/affiliate?application=submitted");
+}
+
+const SPAM_PATTERNS = [
+  /https?:\/\//i,
+  /\.(net|com|org|io|co)\//i,
+  /bitcoin|btc|eth|crypto|usdt|coinbase|binance|wallet/i,
+  /GET\s*[-=>/]+/i,
+  /atlassian|wiki\/external/i,
+  /[Ѐ-ӿ]{3,}/, // Cyrillic spam (ВТС etc)
+];
+
+function isSpam(value: string): boolean {
+  return SPAM_PATTERNS.some((p) => p.test(value));
 }
 
 function value(formData: FormData, key: string) {
