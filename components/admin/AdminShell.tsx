@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: "◻" },
   { href: "/admin/media", label: "Media Library", icon: "🖼" },
-  { href: "/admin/products", label: "Products", icon: "📦" },
   { href: "/admin/orders", label: "Orders", icon: "🛒" },
   { href: "/admin/bookings", label: "Bookings", icon: "📅" },
   { href: "/admin/applications", label: "Applications", icon: "📋" },
@@ -14,7 +14,8 @@ const NAV = [
   { href: "/admin/appointments/requests", label: "Requests", icon: "📩" },
 ];
 
-export function AdminShell({ pathname, children }: { pathname: string; children: React.ReactNode }) {
+export function AdminShell({ children }: { pathname?: string; children: React.ReactNode }) {
+  const pathname = usePathname();
   return (
     <div style={{ display: "flex", minHeight: "100vh", fontFamily: "Montserrat, Arial, sans-serif" }}>
       {/* Sidebar */}
