@@ -1,15 +1,8 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { SHOP_CATEGORIES } from "@/lib/admin/categories";
 import { MediaManager } from "./MediaManager";
 
 export const dynamic = "force-dynamic";
-
-export const CATEGORIES = [
-  { key: "bizihair-extensions", label: "BiziHair Extensions" },
-  { key: "biziluxe-extensions", label: "BiziLuxe Extensions" },
-  { key: "biziluxe-accessories", label: "BiziLuxe Accessories" },
-  { key: "brushes-combs", label: "Brushes & Combs" },
-  { key: "pro-salon-supplies", label: "Pro Salon Supplies" },
-];
 
 export default async function MediaPage() {
   const admin = createSupabaseAdminClient();
@@ -24,9 +17,9 @@ export default async function MediaPage() {
       <p style={eyebrow}>Admin</p>
       <h1 style={title}>Media Library</h1>
       <p style={{ color: "#6b5c4e", fontSize: 13, margin: "6px 0 28px" }}>
-        Upload images to any category. Drag to reorder. Move images between categories.
+        Upload images to any category. Move images between categories.
       </p>
-      <MediaManager initialImages={images || []} categories={CATEGORIES} />
+      <MediaManager initialImages={images || []} categories={SHOP_CATEGORIES} />
     </section>
   );
 }
