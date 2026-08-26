@@ -1,162 +1,303 @@
 "use client";
 
 import { useRef, useState } from "react";
+import type { ManagedImage } from "./page";
 
-type Image = { id: string; url: string; position: number; category: string | null; product_id: string | null; created_at: string };
 type Category = { key: string; label: string };
 
-export function MediaManager({ initialImages, categories }: { initialImages: Image[]; categories: Category[] }) {
-  const [images, setImages] = useState<Image[]>(initialImages);
-  const [activeCategory, setActiveCategory] = useState(categories[0].key);
-  const [uploading, setUploading] = useState(false);
+export function MediaManager({
+  initialImages,
+  categories,
+}: {
+  initialImages: ManagedImage[];
+  categories: Category[];
+}) {
+  const [images, setImages] = useState(initialImages);
+  const [activeTab, setActiveTab] = useState(categories[0]?.key || "");
   const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
-  const [moving, setMoving] = useState<string | null>(null); // image id being moved
+  const [uploading, setUploading] = useState(false);
+  const [editingKey, setEditingKey] = useState<string | null>(null);
+  const [labelVal, setLabelVal] = useState("");
+  const [movingKey, setMovingKey] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const categoryImages = images.filter((img) => img.category === activeCategory);
+  const tabImages = images.filter((img) => img.category === activeTab);
+
+  function imgKey(img: ManagedImage) {
+    return img.id || img.src;
+  }
 
   function flash(type: "ok" | "err", text: string) {
     setMsg({ type, text });
-    setTimeout(() => setMsg(null), 3500);
+    setTimeout(() => setMsg(null), 4500);
   }
 
-  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
+  async function handleUpload(files: FileList) {
     setUploading(true);
-    try {
-      for (const file of files) {
-        const form = new FormData();
-        form.append("file", file);
-        form.append("category", activeCategory);
+    let ok = 0;
+    for (const file of Array.from(files)) {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("category", activeTab);
+      try {
         const res = await fetch("/api/admin/media/upload", { method: "POST", body: form });
         const json = await res.json();
-        if (!res.ok) throw new Error(json.error || "Upload failed");
-        setImages((prev) => [json.image, ...prev]);
+        if (!res.ok) throw new Error(json.error);
+        setImages((prev) => [
+          ...prev,
+          {
+            id: json.image.id,
+            src: json.image.url,
+            label: file.name.replace(/\.[^.]+$/, ""),
+            isCatalog: false,
+            category: activeTab,
+          },
+        ]);
+        ok++;
+      } catch (e) {
+        flash("err", `Failed: ${e instanceof Error ? e.message : "Unknown error"}`);
       }
-      flash("ok", `${files.length} image${files.length > 1 ? "s" : ""} uploaded to ${categories.find(c => c.key === activeCategory)?.label}`);
-    } catch (err) {
-      flash("err", err instanceof Error ? err.message : "Upload failed");
-    } finally {
-      setUploading(false);
-      if (fileRef.current) fileRef.current.value = "";
     }
+    setUploading(false);
+    if (fileRef.current) fileRef.current.value = "";
+    if (ok > 0) flash("ok", `${ok} image${ok > 1 ? "s" : ""} uploaded`);
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm("Delete this image permanently?")) return;
-    const res = await fetch(`/api/admin/media/delete?id=${id}`, { method: "DELETE" });
-    if (!res.ok) { flash("err", "Delete failed"); return; }
-    setImages((prev) => prev.filter((img) => img.id !== id));
-    flash("ok", "Image deleted.");
+  async function handleDelete(img: ManagedImage) {
+    if (!confirm(`Delete "${img.label}"? This cannot be undone.`)) return;
+    const key = imgKey(img);
+
+    if (img.isCatalog) {
+      const res = await fetch("/api/admin/media/update", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ src: img.src, hidden: true }),
+      });
+      if (!res.ok) { flash("err", "Delete failed"); return; }
+      setImages((prev) => prev.filter((i) => i.src !== img.src));
+    } else {
+      const res = await fetch(`/api/admin/media/delete?id=${img.id}`, { method: "DELETE" });
+      if (!res.ok) { flash("err", "Delete failed"); return; }
+      setImages((prev) => prev.filter((i) => imgKey(i) !== key));
+    }
+    flash("ok", "Image removed");
   }
 
-  async function handleMove(id: string, targetCategory: string) {
-    const res = await fetch("/api/admin/media/move", {
+  async function handleRename(img: ManagedImage, newLabel: string) {
+    const trimmed = newLabel.trim();
+    if (!trimmed || trimmed === img.label) { setEditingKey(null); return; }
+    const body = img.isCatalog
+      ? { src: img.src, label: trimmed }
+      : { id: img.id, label: trimmed };
+    const res = await fetch("/api/admin/media/update", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, category: targetCategory }),
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) { flash("err", "Rename failed"); return; }
+    const key = imgKey(img);
+    setImages((prev) => prev.map((i) => imgKey(i) === key ? { ...i, label: trimmed } : i));
+    setEditingKey(null);
+    flash("ok", "Renamed successfully");
+  }
+
+  async function handleMove(img: ManagedImage, newCat: string) {
+    const body = img.isCatalog
+      ? { src: img.src, category: newCat }
+      : { id: img.id, category: newCat };
+    const res = await fetch("/api/admin/media/update", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
     if (!res.ok) { flash("err", "Move failed"); return; }
-    setImages((prev) => prev.map((img) => img.id === id ? { ...img, category: targetCategory } : img));
-    setMoving(null);
-    flash("ok", `Moved to ${categories.find(c => c.key === targetCategory)?.label}`);
+    const key = imgKey(img);
+    setImages((prev) => prev.map((i) => imgKey(i) === key ? { ...i, category: newCat } : i));
+    setMovingKey(null);
+    const destLabel = categories.find((c) => c.key === newCat)?.label || newCat;
+    flash("ok", `Moved to ${destLabel}`);
   }
 
   return (
     <div>
+      {msg && (
+        <div style={{
+          padding: "10px 18px", marginBottom: 20, fontSize: 13,
+          background: msg.type === "ok" ? "#e8f0e4" : "#f5e4e1",
+          color: msg.type === "ok" ? "#2e5c35" : "#8b2020",
+          borderLeft: `3px solid ${msg.type === "ok" ? "#7ab87a" : "#c0392b"}`,
+        }}>
+          {msg.text}
+        </div>
+      )}
+
       {/* Category tabs */}
-      <div style={{ display: "flex", gap: 0, borderBottom: "2px solid #e2d5c0", marginBottom: 28, overflowX: "auto" }}>
+      <div style={{ display: "flex", borderBottom: "2px solid #e2d5c0", marginBottom: 28, gap: 0, overflowX: "auto" }}>
         {categories.map((cat) => {
-          const count = images.filter((img) => img.category === cat.key).length;
-          const active = activeCategory === cat.key;
+          const count = images.filter((i) => i.category === cat.key).length;
+          const active = activeTab === cat.key;
           return (
-            <button key={cat.key} onClick={() => setActiveCategory(cat.key)} style={{
-              background: "none", border: "none", borderBottom: active ? "2px solid #c9a96e" : "2px solid transparent",
-              marginBottom: -2, padding: "10px 18px", fontSize: 11, fontWeight: 700, letterSpacing: ".1em",
-              textTransform: "uppercase", color: active ? "#2b2620" : "#9b8878", cursor: "pointer", whiteSpace: "nowrap",
-            }}>
-              {cat.label} <span style={{ fontSize: 10, color: active ? "#c9a96e" : "#bfb3a3", marginLeft: 4 }}>({count})</span>
+            <button
+              key={cat.key}
+              onClick={() => { setActiveTab(cat.key); setMovingKey(null); setEditingKey(null); }}
+              style={{
+                background: "none", border: "none", padding: "11px 18px", fontSize: 11,
+                fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer",
+                color: active ? "#c9a96e" : "#9b8878",
+                borderBottom: `2px solid ${active ? "#c9a96e" : "transparent"}`,
+                marginBottom: -2, whiteSpace: "nowrap",
+              }}
+            >
+              {cat.label} ({count})
             </button>
           );
         })}
       </div>
 
       {/* Upload zone */}
-      <div style={{ border: "2px dashed #dfceb5", background: "#fffaf4", padding: "28px 24px", textAlign: "center", marginBottom: 24, borderRadius: 2 }}>
-        <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleUpload} style={{ display: "none" }} id="media-upload" />
-        <label htmlFor="media-upload" style={{
-          display: "inline-block", background: "#2b2620", color: "#fff",
-          padding: "12px 32px", fontSize: 11, fontWeight: 700, letterSpacing: ".18em",
-          textTransform: "uppercase", cursor: uploading ? "default" : "pointer",
-          opacity: uploading ? .6 : 1,
-        }}>
-          {uploading ? "Uploading…" : `Upload to ${categories.find(c => c.key === activeCategory)?.label}`}
-        </label>
-        <p style={{ margin: "10px 0 0", fontSize: 12, color: "#9b8878" }}>JPEG or PNG · multiple files OK</p>
+      <div
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => { e.preventDefault(); e.dataTransfer.files?.length && handleUpload(e.dataTransfer.files); }}
+        onClick={() => fileRef.current?.click()}
+        style={{
+          border: "2px dashed #d4c4a8", padding: "22px 16px", textAlign: "center",
+          marginBottom: 28, cursor: "pointer", background: uploading ? "#f7f0e6" : "#faf7f2",
+          transition: "background .2s",
+        }}
+      >
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          multiple
+          style={{ display: "none" }}
+          onChange={(e) => e.target.files && handleUpload(e.target.files)}
+        />
+        <p style={{ margin: 0, fontSize: 13, color: "#9b8878" }}>
+          {uploading ? "Uploading…" : `Click or drag images to upload to ${categories.find((c) => c.key === activeTab)?.label}`}
+        </p>
+        <p style={{ margin: "4px 0 0", fontSize: 10, color: "#c4b49a" }}>JPEG · PNG · WEBP · multiple files OK</p>
       </div>
 
-      {/* Flash message */}
-      {msg && (
-        <div style={{ padding: "10px 16px", marginBottom: 20, fontSize: 13, background: msg.type === "ok" ? "#e4eddf" : "#f4e4e0", color: msg.type === "ok" ? "#315f38" : "#8b3535" }}>
-          {msg.text}
-        </div>
-      )}
-
       {/* Image grid */}
-      {categoryImages.length === 0 ? (
-        <p style={{ color: "#9b8878", fontStyle: "italic", marginTop: 24 }}>
-          No images in this category yet. Upload some above.
-        </p>
-      ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 16 }}>
-          {categoryImages.map((img) => (
-            <div key={img.id} style={{ background: "#fff", border: "1px solid #e2d5c0", overflow: "hidden" }}>
-              <div style={{ position: "relative" }}>
-                <img src={img.url} alt="" style={{ width: "100%", height: 190, objectFit: "cover", display: "block" }} />
-                <a href={img.url} target="_blank" rel="noopener noreferrer" style={{
-                  position: "absolute", top: 8, right: 8, background: "rgba(0,0,0,.55)", color: "#fff",
-                  fontSize: 10, padding: "3px 8px", textDecoration: "none", letterSpacing: ".08em",
-                }}>VIEW ↗</a>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 14 }}>
+        {tabImages.map((img) => {
+          const key = imgKey(img);
+          const isEditing = editingKey === key;
+          const isMoving = movingKey === key;
+
+          return (
+            <div key={key} style={{ background: "#fff", border: "1px solid #e2d5c0", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+              {/* Type badge */}
+              <div style={{
+                background: img.isCatalog ? "#f0e8dc" : "#2b2620",
+                color: img.isCatalog ? "#6b5c4e" : "#c9a96e",
+                fontSize: 8, fontWeight: 700, letterSpacing: ".14em",
+                textTransform: "uppercase", padding: "3px 10px", flexShrink: 0,
+              }}>
+                {img.isCatalog ? "Catalog Image" : "Uploaded"}
               </div>
 
-              <div style={{ padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
-                {/* Move to category */}
-                {moving === img.id ? (
-                  <div>
-                    <p style={{ margin: "0 0 6px", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "#6b5c4e" }}>Move to:</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                      {categories.filter(c => c.key !== activeCategory).map(c => (
-                        <button key={c.key} onClick={() => handleMove(img.id, c.key)} style={moveBtnStyle}>
-                          → {c.label}
-                        </button>
-                      ))}
-                      <button onClick={() => setMoving(null)} style={{ ...moveBtnStyle, color: "#9b8878" }}>Cancel</button>
-                    </div>
+              {/* Thumbnail */}
+              <a href={img.src} target="_blank" rel="noopener noreferrer" style={{ display: "block", flexShrink: 0 }}>
+                <img
+                  src={img.src}
+                  alt={img.label}
+                  style={{ width: "100%", height: 150, objectFit: "cover", display: "block" }}
+                  onError={(e) => {
+                    const el = e.target as HTMLImageElement;
+                    el.style.background = "#f0e8dc";
+                    el.style.height = "80px";
+                    el.removeAttribute("src");
+                  }}
+                />
+              </a>
+
+              {/* Label (click to rename) */}
+              <div style={{ padding: "8px 10px 4px", flex: 1 }}>
+                {isEditing ? (
+                  <div style={{ display: "flex", gap: 4 }}>
+                    <input
+                      autoFocus
+                      value={labelVal}
+                      onChange={(e) => setLabelVal(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleRename(img, labelVal);
+                        if (e.key === "Escape") setEditingKey(null);
+                      }}
+                      style={{ flex: 1, border: "1px solid #c9a96e", padding: "4px 6px", fontSize: 11, outline: "none", minWidth: 0 }}
+                    />
+                    <button
+                      onClick={() => handleRename(img, labelVal)}
+                      style={{ background: "#c9a96e", color: "#fff", border: "none", padding: "4px 8px", fontSize: 11, cursor: "pointer", flexShrink: 0 }}
+                    >✓</button>
+                    <button
+                      onClick={() => setEditingKey(null)}
+                      style={{ background: "#f0e8dc", color: "#6b5c4e", border: "none", padding: "4px 8px", fontSize: 11, cursor: "pointer", flexShrink: 0 }}
+                    >✕</button>
                   </div>
                 ) : (
-                  <div style={{ display: "flex", gap: 6 }}>
-                    <button onClick={() => setMoving(img.id)} style={actionBtn}>Move</button>
-                    <button onClick={() => handleDelete(img.id)} style={{ ...actionBtn, color: "#8b3535", borderColor: "#d9b3b3" }}>Delete</button>
-                  </div>
+                  <p
+                    onClick={() => { setEditingKey(key); setLabelVal(img.label); }}
+                    title="Click to rename"
+                    style={{ margin: 0, fontSize: 10, color: "#6b5c4e", wordBreak: "break-all", lineHeight: 1.4, cursor: "text" }}
+                  >
+                    ✎ {img.label}
+                  </p>
                 )}
               </div>
+
+              {/* Move dropdown */}
+              {isMoving && (
+                <div style={{ padding: "0 10px 6px" }}>
+                  <select
+                    autoFocus
+                    defaultValue=""
+                    onChange={(e) => { if (e.target.value) handleMove(img, e.target.value); }}
+                    onBlur={() => setMovingKey(null)}
+                    style={{ width: "100%", border: "1px solid #c9a96e", padding: "6px", fontSize: 11, background: "#fff", outline: "none" }}
+                  >
+                    <option value="">Move to category…</option>
+                    {categories.filter((c) => c.key !== img.category).map((c) => (
+                      <option key={c.key} value={c.key}>{c.label}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* Actions */}
+              <div style={{ padding: "6px 10px 10px", display: "flex", gap: 6 }}>
+                <button
+                  onClick={() => setMovingKey(isMoving ? null : key)}
+                  style={{
+                    flex: 1, background: isMoving ? "#f0e8dc" : "none", border: "1px solid #e2d5c0",
+                    color: "#6b5c4e", padding: "5px 8px", fontSize: 9, letterSpacing: ".1em",
+                    textTransform: "uppercase", cursor: "pointer", fontWeight: 700,
+                  }}
+                >
+                  {isMoving ? "Cancel" : "Move"}
+                </button>
+                <button
+                  onClick={() => handleDelete(img)}
+                  style={{
+                    background: "none", border: "1px solid #f4ddd8", color: "#c0392b",
+                    padding: "5px 10px", fontSize: 9, letterSpacing: ".1em",
+                    textTransform: "uppercase", cursor: "pointer", fontWeight: 700,
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
+      </div>
+
+      {tabImages.length === 0 && (
+        <p style={{ color: "#9b8878", fontStyle: "italic", textAlign: "center", padding: "48px 0", fontSize: 14 }}>
+          No images in this category. Upload some above.
+        </p>
       )}
     </div>
   );
 }
-
-const actionBtn: React.CSSProperties = {
-  flex: 1, background: "none", border: "1px solid #dfceb5", color: "#2b2620",
-  fontSize: 10, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase",
-  padding: "6px 8px", cursor: "pointer",
-};
-
-const moveBtnStyle: React.CSSProperties = {
-  background: "none", border: "1px solid #e2d5c0", color: "#2b2620",
-  fontSize: 10, fontWeight: 600, padding: "5px 10px", cursor: "pointer",
-  textAlign: "left", letterSpacing: ".06em",
-};

@@ -8,11 +8,20 @@ import { PageImageManager } from "./PageImageManager";
 export const dynamic = "force-dynamic";
 
 function extractImages(html: string): { src: string; label: string }[] {
-  const matches = [...html.matchAll(/src="(https?:\/\/[^"]+\.(jpg|jpeg|png|webp|gif|svg)[^"]*)"/gi)];
+  // Match all img src attributes — absolute (https://), protocol-relative (//), and relative (/)
+  const matches = [...html.matchAll(/src="([^"]{4,}\.(?:jpg|jpeg|png|webp|gif|svg)[^"]*)"/gi)];
   const seen = new Set<string>();
   return matches
-    .map((m) => ({ src: m[1], label: m[1].split("/").pop()?.split("?")[0] || m[1] }))
-    .filter((img) => { if (seen.has(img.src)) return false; seen.add(img.src); return true; });
+    .map((m) => {
+      const src = m[1].split("?")[0]; // strip query strings for dedup
+      return { src: m[1], label: src.split("/").pop() || src };
+    })
+    .filter((img) => {
+      if (img.src.startsWith("data:")) return false; // skip data URIs
+      if (seen.has(img.src)) return false;
+      seen.add(img.src);
+      return true;
+    });
 }
 
 export default async function PageDetail({ params }: { params: Promise<{ pageKey: string }> }) {
