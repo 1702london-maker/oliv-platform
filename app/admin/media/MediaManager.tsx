@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import type { ManagedImage } from "./page";
+import { ColorManager } from "./ColorManager";
 
 type Category = { key: string; label: string };
 type Product = { slug: string; title: string };
@@ -243,6 +244,8 @@ export function MediaManager({
             >
               {editorSaving ? "Saving…" : "Save & Publish"}
             </button>
+
+            <ColorManager productSlug={editorSlug} />
           </div>
         )}
       </div>

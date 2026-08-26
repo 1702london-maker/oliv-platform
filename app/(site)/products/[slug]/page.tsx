@@ -23,7 +23,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   // Query DB: hidden images, uploaded images, description/title overrides
   const admin = createSupabaseAdminClient();
-  const [{ data: dbImages }, { data: override }] = await Promise.all([
+  const [{ data: dbImages }, { data: override }, { data: colorsData }] = await Promise.all([
     admin
       .from("product_images")
       .select("url, hidden, product_id, is_catalog, product_slug")
@@ -34,6 +34,11 @@ export default async function ProductPage({ params }: PageProps) {
       .select("title, description, retail_price_cents, wholesale_price_cents")
       .eq("slug", slug)
       .maybeSingle(),
+    admin
+      .from("product_colors")
+      .select("id, name, hex, image_url, in_stock, position")
+      .eq("product_slug", slug)
+      .order("position", { ascending: true }),
   ]);
 
   const hiddenUrls = new Set(
@@ -88,10 +93,12 @@ export default async function ProductPage({ params }: PageProps) {
   const before = fixShellReturnTo(fixShellCartLinks(shell.slice(0, mainStart + marker.length)), `/products/${slug}`);
   const after = shell.slice(footerStart);
 
+  const colors = (colorsData || []).map((c) => ({ id: c.id, name: c.name, hex: c.hex, imageUrl: c.image_url, inStock: c.in_stock }));
+
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: before }} />
-      <ProductDetailView product={productWithMergedGallery} isWholesale={isWholesale} currency={currency} />
+      <ProductDetailView product={productWithMergedGallery} isWholesale={isWholesale} currency={currency} colors={colors} />
       <div dangerouslySetInnerHTML={{ __html: after }} />
     </>
   );

@@ -5,13 +5,16 @@ import { AddToCart } from "@/components/cart/AddToCart";
 import { formatMoney } from "@/lib/catalog/money";
 import type { CatalogProduct } from "@/lib/catalog/products";
 
+type ColorSwatch = { id: string; name: string; hex: string; imageUrl: string | null; inStock: boolean };
+
 type ProductDetailViewProps = {
   product: CatalogProduct;
   isWholesale: boolean;
   currency: string;
+  colors?: ColorSwatch[];
 };
 
-export function ProductDetailView({ product, isWholesale, currency }: ProductDetailViewProps) {
+export function ProductDetailView({ product, isWholesale, currency, colors = [] }: ProductDetailViewProps) {
   const firstVariant = product.variants[0];
   const initialPrice = firstVariant
     ? isWholesale
@@ -29,6 +32,7 @@ export function ProductDetailView({ product, isWholesale, currency }: ProductDet
   const [selectedThumb, setSelectedThumb] = useState(galleryImages[0] || product.image_url);
   const [variantImage, setVariantImage] = useState<string | null>(null);
   const [selectedPrice, setSelectedPrice] = useState(initialPrice);
+  const [selectedColor, setSelectedColor] = useState<string | null>(colors.length > 0 ? colors[0].id : null);
 
   const displayedImage = variantImage || selectedThumb;
 
@@ -76,6 +80,40 @@ export function ProductDetailView({ product, isWholesale, currency }: ProductDet
           <div dangerouslySetInnerHTML={{ __html: product.description }} />
         ) : (
           <span>Premium OlivHairSupply product.</span>
+        )}
+
+        {colors.length > 0 && (
+          <div style={{ margin: "20px 0" }}>
+            <p style={{ margin: "0 0 10px", fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: "#6b5c4e" }}>
+              Colour: <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>{colors.find((c) => c.id === selectedColor)?.name || ""}</span>
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              {colors.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => { if (c.inStock) { setSelectedColor(c.id); if (c.imageUrl) setVariantImage(c.imageUrl); } }}
+                  title={c.inStock ? c.name : `${c.name} (Out of stock)`}
+                  style={{
+                    width: 34, height: 34, borderRadius: "50%",
+                    background: c.hex,
+                    border: selectedColor === c.id ? "3px solid #2b2620" : "2px solid #e2d5c0",
+                    cursor: c.inStock ? "pointer" : "not-allowed",
+                    opacity: c.inStock ? 1 : 0.4,
+                    position: "relative",
+                    outline: "none",
+                    padding: 0,
+                    flexShrink: 0,
+                  }}
+                  aria-label={c.name}
+                >
+                  {!c.inStock && (
+                    <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#8b3535" }}>✕</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
         )}
 
         <AddToCart
