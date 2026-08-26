@@ -1,6 +1,6 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { SHOP_CATEGORIES } from "@/lib/admin/categories";
-import { getCatalogProducts } from "@/lib/catalog/products";
+import { PRODUCT_SLUGS } from "@/lib/catalog/product-slugs";
 import { MediaManager } from "./MediaManager";
 
 export const dynamic = "force-dynamic";
@@ -17,14 +17,11 @@ export type ManagedImage = {
 export default async function MediaPage() {
   const admin = createSupabaseAdminClient();
 
-  const [{ data: dbRows }, allProducts] = await Promise.all([
-    admin
-      .from("product_images")
-      .select("id, url, label, hidden, is_catalog, category, created_at, product_slug")
-      .neq("hidden", true)
-      .order("created_at", { ascending: false }),
-    getCatalogProducts(),
-  ]);
+  const { data: dbRows } = await admin
+    .from("product_images")
+    .select("id, url, label, hidden, is_catalog, category, created_at, product_slug")
+    .neq("hidden", true)
+    .order("created_at", { ascending: false });
 
   const rows = dbRows || [];
 
@@ -39,7 +36,7 @@ export default async function MediaPage() {
       productSlug: r.product_slug ?? null,
     }));
 
-  const products = allProducts.map((p) => ({ slug: p.slug, title: p.title }));
+  const products = PRODUCT_SLUGS;
 
   return (
     <section style={{ padding: "36px 32px", maxWidth: 1400 }}>
