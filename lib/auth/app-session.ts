@@ -49,5 +49,12 @@ function verify(value: string, signature: string) {
 }
 
 function getSecret() {
-  return process.env.APP_SESSION_SECRET || "oliv-platform-session-v1";
+  const secret = process.env.APP_SESSION_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("APP_SESSION_SECRET env var is required in production");
+    }
+    return "oliv-platform-session-dev-only";
+  }
+  return secret;
 }

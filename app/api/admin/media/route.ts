@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCurrentProfile } from "@/lib/auth/session";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+
+async function requireAdmin() {
+  const profile = await getCurrentProfile();
+  if (!profile?.roles.includes("admin")) throw new Error("unauthorized");
+}
 
 // POST → upload new image
 export async function POST(req: NextRequest) {
+  try { await requireAdmin(); } catch { return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); }
   const formData = await req.formData();
   const file = formData.get("file") as File | null;
   const category = formData.get("category") as string;
@@ -32,6 +39,7 @@ export async function POST(req: NextRequest) {
 
 // PATCH → update label / category / hidden / product_slug (for uploaded OR catalog images)
 export async function PATCH(req: NextRequest) {
+  try { await requireAdmin(); } catch { return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); }
   const body = await req.json() as { id?: string; src?: string; label?: string; hidden?: boolean; category?: string; product_slug?: string | null };
   const { id, src, label, hidden, category, product_slug } = body;
   if (!id && !src) return NextResponse.json({ error: "Missing id or src" }, { status: 400 });
@@ -61,6 +69,7 @@ export async function PATCH(req: NextRequest) {
 
 // DELETE → remove uploaded image (hard delete) or soft-delete via PATCH hidden:true
 export async function DELETE(req: NextRequest) {
+  try { await requireAdmin(); } catch { return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); }
   const id = req.nextUrl.searchParams.get("id");
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 

@@ -37,6 +37,24 @@ export async function middleware(request: NextRequest) {
   // Pass pathname to server components via header (used by admin layout to skip auth on login page)
   response.headers.set("x-pathname", request.nextUrl.pathname);
 
+  // Security headers
+  response.headers.set("X-Frame-Options", "SAMEORIGIN");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+  response.headers.set(
+    "Content-Security-Policy",
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https:",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.resend.com",
+      "frame-ancestors 'none'",
+    ].join("; ")
+  );
+
   return response;
 }
 

@@ -15,6 +15,10 @@ export async function POST(request: Request) {
   const subject = String(formData.get("contact[subject]") || "").trim();
   const tags = String(formData.get("contact[tags]") || "").trim();
 
+  function esc(s: string) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
   // Save to DB
   if (email) {
     try {
@@ -47,13 +51,13 @@ export async function POST(request: Request) {
               <div style="max-width:520px;margin:0 auto;background:#fff;border:1px solid #e0d2bc;padding:32px;">
                 <p style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#B68A45;margin:0 0 20px;">OlivHairSupply — New Contact</p>
                 <table style="width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:13px;">
-                  <tr><td style="padding:6px 0;color:#9B8878;font-weight:700;width:110px;">From</td><td style="padding:6px 0;color:#2B2620;">${name || "—"}</td></tr>
-                  <tr><td style="padding:6px 0;color:#9B8878;font-weight:700;">Email</td><td style="padding:6px 0;"><a href="mailto:${email}" style="color:#B68A45;">${email}</a></td></tr>
-                  ${subject ? `<tr><td style="padding:6px 0;color:#9B8878;font-weight:700;">Subject</td><td style="padding:6px 0;color:#2B2620;">${subject}</td></tr>` : ""}
-                  ${tags ? `<tr><td style="padding:6px 0;color:#9B8878;font-weight:700;">Tags</td><td style="padding:6px 0;color:#2B2620;">${tags}</td></tr>` : ""}
+                  <tr><td style="padding:6px 0;color:#9B8878;font-weight:700;width:110px;">From</td><td style="padding:6px 0;color:#2B2620;">${esc(name) || "—"}</td></tr>
+                  <tr><td style="padding:6px 0;color:#9B8878;font-weight:700;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#B68A45;">${esc(email)}</a></td></tr>
+                  ${subject ? `<tr><td style="padding:6px 0;color:#9B8878;font-weight:700;">Subject</td><td style="padding:6px 0;color:#2B2620;">${esc(subject)}</td></tr>` : ""}
+                  ${tags ? `<tr><td style="padding:6px 0;color:#9B8878;font-weight:700;">Tags</td><td style="padding:6px 0;color:#2B2620;">${esc(tags)}</td></tr>` : ""}
                 </table>
-                ${message ? `<div style="margin-top:20px;background:#F5F0E8;border:1px solid #E2D5C0;padding:16px 20px;font-size:13px;color:#2B2620;line-height:1.7;white-space:pre-wrap;">${message}</div>` : ""}
-                <p style="margin-top:24px;"><a href="mailto:${email}" style="display:inline-block;background:#2B2620;color:#fff;padding:10px 20px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;">Reply to ${name || email}</a></p>
+                ${message ? `<div style="margin-top:20px;background:#F5F0E8;border:1px solid #E2D5C0;padding:16px 20px;font-size:13px;color:#2B2620;line-height:1.7;white-space:pre-wrap;">${esc(message)}</div>` : ""}
+                <p style="margin-top:24px;"><a href="mailto:${esc(email)}" style="display:inline-block;background:#2B2620;color:#fff;padding:10px 20px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;">Reply to ${esc(name) || esc(email)}</a></p>
               </div>
             </div>`,
         }),
@@ -70,7 +74,7 @@ export async function POST(request: Request) {
                     <div style="max-width:520px;margin:0 auto;background:#F6F1E8;padding:52px 44px;">
                       <p style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#B68A45;margin:0 0 20px;">OlivHairSupply</p>
                       <h1 style="font-family:Georgia,serif;font-size:32px;font-weight:300;color:#2B2620;margin:0 0 8px;">Message <em>Received</em></h1>
-                      <p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;margin:0 0 28px;">Hi${name ? ` ${name}` : ""}, thank you for getting in touch.</p>
+                      <p style="font-family:Montserrat,sans-serif;font-size:11px;color:#6B5C4E;margin:0 0 28px;">Hi${name ? ` ${esc(name)}` : ""}, thank you for getting in touch.</p>
                       <p style="font-family:Montserrat,sans-serif;font-size:12px;color:#6B5C4E;line-height:1.7;margin:0 0 28px;">We've received your message and will get back to you within 1–2 business days. Our team is available Monday to Saturday.</p>
                       <p style="font-family:Montserrat,sans-serif;font-size:9px;color:#C0B0A0;letter-spacing:1px;text-transform:uppercase;margin:0;">OlivHairSupply · Berlin · olivhairsupply.de</p>
                     </div>
@@ -84,5 +88,7 @@ export async function POST(request: Request) {
     }
   }
 
-  redirect(`${new URL(returnTo).pathname}?form=submitted`);
+  let redirectPath = "/";
+  try { redirectPath = new URL(returnTo).pathname; } catch { /* returnTo was already a path */ }
+  redirect(`${redirectPath}?form=submitted`);
 }

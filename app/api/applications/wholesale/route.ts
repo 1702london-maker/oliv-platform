@@ -15,6 +15,10 @@ export async function POST(request: Request) {
     redirect("/wholesale?application=missing");
   }
 
+  if (isSpam(email) || isSpam(businessName)) {
+    redirect("/wholesale?application=submitted");
+  }
+
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .from("wholesale_accounts")
@@ -58,3 +62,14 @@ export async function POST(request: Request) {
 function value(formData: FormData, key: string) {
   return String(formData.get(key) || "").trim();
 }
+
+const SPAM_PATTERNS = [
+  /https?:\/\//i,
+  /\.(net|com|org|io|co)\//i,
+  /bitcoin|btc|eth|crypto|usdt|coinbase|binance|wallet/i,
+  /GET\s*[-=>/]+/i,
+  /atlassian|wiki\/external/i,
+  /[Ѐ-ӿ]{3,}/,
+];
+
+function isSpam(v: string) { return SPAM_PATTERNS.some((p) => p.test(v)); }

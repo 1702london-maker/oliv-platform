@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 export const runtime = "nodejs";
 
@@ -7,13 +9,22 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-export async function GET(_request: Request, { params }: Props) {
+export async function GET(request: Request, { params }: Props) {
   try {
     const { id } = await params;
+
+    // Require the session token that was set when the quiz was submitted
+    const cookieStore = await cookies();
+    const sessionToken = cookieStore.get(`hairmatch_session_${id}`)?.value ||
+      new URL(request.url).searchParams.get("token");
+    if (!sessionToken || sessionToken !== id) {
+      return NextResponse.json({ error: "forbidden" }, { status: 403 });
+    }
+
     const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase
       .from("hairmatch_sessions")
-      .select("*")
+      .select("id, recommendations, created_at")
       .eq("id", id)
       .maybeSingle();
 

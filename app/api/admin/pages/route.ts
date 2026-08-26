@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCurrentProfile } from "@/lib/auth/session";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+
+async function requireAdmin() {
+  const profile = await getCurrentProfile();
+  if (!profile?.roles.includes("admin")) throw new Error("unauthorized");
+}
 
 // POST → upload a replacement image for a page
 export async function POST(req: NextRequest) {
+  try { await requireAdmin(); } catch { return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); }
   const form = await req.formData();
   const file = form.get("file") as File | null;
   const pageKey = form.get("pageKey") as string | null;
@@ -35,6 +42,7 @@ export async function POST(req: NextRequest) {
 
 // DELETE → remove a page image override (restores original)
 export async function DELETE(req: NextRequest) {
+  try { await requireAdmin(); } catch { return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); }
   const id = req.nextUrl.searchParams.get("id");
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
