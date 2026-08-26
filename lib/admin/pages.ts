@@ -1,0 +1,15 @@
+export const MANAGED_PAGES = [
+  { key: "home", label: "Home Page", file: "home.html" },
+  { key: "shop", label: "Shop", file: "shop.html" },
+  { key: "collections", label: "Collections", file: "collections.html" },
+  { key: "pages-about", label: "About Us", file: "pages-about.html" },
+  { key: "pages-services", label: "Services", file: "pages-services.html" },
+  { key: "pages-training", label: "Training", file: "pages-training.html" },
+  { key: "appointments", label: "Appointments", file: "appointments.html" },
+  { key: "affiliate", label: "Affiliate", file: "affiliate.html" },
+  { key: "wholesale", label: "Wholesale", file: "wholesale.html" },
+  { key: "pages-social-responsibility", label: "Social Responsibility", file: "pages-social-responsibility.html" },
+  { key: "blogs-journal", label: "Journal", file: "blogs-journal.html" },
+  { key: "pages-careers", label: "Careers", file: "pages-careers.html" },
+  { key: "pages-press", label: "Press", file: "pages-press.html" },
+];

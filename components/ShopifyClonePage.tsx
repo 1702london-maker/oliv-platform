@@ -1,16 +1,31 @@
 import fs from "node:fs";
 import path from "node:path";
 import { ShopifyClonePageClient } from "./ShopifyClonePageClient";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 type ShopifyClonePageProps = {
   page: string;
   injectBeforeClose?: string;
 };
 
-export function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClonePageProps) {
+export async function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClonePageProps) {
   const filePath = path.join(process.cwd(), "shopify-clone", `${page}.html`);
   const rawHtml = fs.readFileSync(fs.existsSync(filePath) ? filePath : path.join(process.cwd(), "shopify-clone", "home.html"), "utf8");
   let html = normalizeShopifyHtml(rawHtml, page);
+
+  // Apply admin image overrides from DB
+  try {
+    const admin = createSupabaseAdminClient();
+    const { data: overrides } = await admin
+      .from("page_images")
+      .select("original_src, replacement_url")
+      .eq("page_key", page);
+    if (overrides?.length) {
+      for (const o of overrides) {
+        html = html.replaceAll(`src="${o.original_src}"`, `src="${o.replacement_url}"`);
+      }
+    }
+  } catch { /* non-fatal — page renders with original images */ }
 
   if (injectBeforeClose) {
     html = html.includes("</body>")
