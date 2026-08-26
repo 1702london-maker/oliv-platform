@@ -40,7 +40,7 @@ export function MediaManager({
       form.append("file", file);
       form.append("category", activeTab);
       try {
-        const res = await fetch("/api/admin/media/upload", { method: "POST", body: form });
+        const res = await fetch("/api/admin/media", { method: "POST", body: form });
         const json = await res.json();
         if (!res.ok) throw new Error(json.error);
         setImages((prev) => [
@@ -68,7 +68,7 @@ export function MediaManager({
     const key = imgKey(img);
 
     if (img.isCatalog) {
-      const res = await fetch("/api/admin/media/update", {
+      const res = await fetch("/api/admin/media", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ src: img.src, hidden: true }),
@@ -76,7 +76,7 @@ export function MediaManager({
       if (!res.ok) { flash("err", "Delete failed"); return; }
       setImages((prev) => prev.filter((i) => i.src !== img.src));
     } else {
-      const res = await fetch(`/api/admin/media/delete?id=${img.id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/media?id=${img.id}`, { method: "DELETE" });
       if (!res.ok) { flash("err", "Delete failed"); return; }
       setImages((prev) => prev.filter((i) => imgKey(i) !== key));
     }
@@ -89,7 +89,7 @@ export function MediaManager({
     const body = img.isCatalog
       ? { src: img.src, label: trimmed }
       : { id: img.id, label: trimmed };
-    const res = await fetch("/api/admin/media/update", {
+    const res = await fetch("/api/admin/media", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -105,7 +105,7 @@ export function MediaManager({
     const body = img.isCatalog
       ? { src: img.src, category: newCat }
       : { id: img.id, category: newCat };
-    const res = await fetch("/api/admin/media/update", {
+    const res = await fetch("/api/admin/media", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

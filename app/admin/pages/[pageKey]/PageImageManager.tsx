@@ -31,7 +31,7 @@ export function PageImageManager({
     form.append("pageKey", pageKey);
     form.append("originalSrc", src);
     try {
-      const res = await fetch("/api/admin/pages/upload", { method: "POST", body: form });
+      const res = await fetch("/api/admin/pages", { method: "POST", body: form });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Upload failed");
       setOverrides((prev) => ({ ...prev, [src]: { id: json.id, replacement_url: json.url } }));
@@ -48,7 +48,7 @@ export function PageImageManager({
   async function handleRestore(src: string) {
     const o = overrides[src];
     if (!o) return;
-    const res = await fetch(`/api/admin/pages/delete?id=${o.id}`, { method: "DELETE" });
+    const res = await fetch(`/api/admin/pages?id=${o.id}`, { method: "DELETE" });
     if (!res.ok) { flash("err", "Restore failed"); return; }
     setOverrides((prev) => { const n = { ...prev }; delete n[src]; return n; });
     flash("ok", "Original image restored.");
