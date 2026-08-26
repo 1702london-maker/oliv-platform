@@ -48,9 +48,9 @@ export function AdminShell({ pathname, children }: { pathname: string; children:
         </nav>
 
         <div style={{ padding: "12px 0", borderTop: "1px solid rgba(255,255,255,.06)" }}>
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 20px", fontSize: 11, color: "#6b5c4e", textDecoration: "none" }}>
+          <a href="https://www.olivhairsupply.de" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 20px", fontSize: 11, color: "#6b5c4e", textDecoration: "none" }}>
             ↗ View Site
-          </Link>
+          </a>
           <a href="/api/auth/logout" style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 20px", fontSize: 11, color: "#6b5c4e", textDecoration: "none" }}>
             ⎋ Sign Out
           </a>
