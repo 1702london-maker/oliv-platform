@@ -27,8 +27,13 @@ export default async function AdminProductsPage() {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 18 }}>
         {products.map((product) => {
-          const heroImage = imagesByProduct[product.id]?.[0] || product.image_url;
-          const imgCount = imagesByProduct[product.id]?.length ?? (product.gallery?.length ?? 0);
+          const dbImgs = imagesByProduct[product.id] || [];
+          const staticImgs = [
+            ...(product.image_url ? [product.image_url] : []),
+            ...(product.gallery || []),
+          ];
+          const heroImage = dbImgs[0] || staticImgs[0];
+          const imgCount = dbImgs.length || staticImgs.length;
           return (
             <Link key={product.id} href={`/admin/products/${product.slug}`} style={card}>
               <div style={{ height: 180, background: "#f0e8dc", overflow: "hidden", position: "relative" }}>
