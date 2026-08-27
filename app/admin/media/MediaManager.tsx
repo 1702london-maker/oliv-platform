@@ -74,6 +74,26 @@ export function MediaManager({
     i.category === activeTab && i.productSlug !== editorSlug
   );
 
+  const activeCategoryImages = images.filter((i) => i.category === activeTab);
+  const activeUnassignedImages = activeCategoryImages.filter((i) => !i.productSlug);
+  const activeProductGroups = Array.from(
+    activeCategoryImages
+      .filter((i) => i.productSlug)
+      .reduce((groups, img) => {
+        const slug = img.productSlug as string;
+        const current = groups.get(slug) || [];
+        current.push(img);
+        groups.set(slug, current);
+        return groups;
+      }, new Map<string, ManagedImage[]>())
+  )
+    .map(([slug, groupImages]) => ({
+      slug,
+      title: products.find((p) => p.slug === slug)?.title || slug,
+      images: groupImages,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
   async function handleSelectProduct(slug: string) {
     setEditorSlug(slug);
     setEditingKey(null); setMovingKey(null); setAssigningKey(null);
@@ -418,7 +438,15 @@ export function MediaManager({
           </div>
 
           <div style={grid}>
-            {images.filter((i) => i.category === activeTab).map((img) => (
+            {activeProductGroups.map((group) => (
+              <ProductGroupCard
+                key={group.slug}
+                title={group.title}
+                images={group.images}
+                onOpen={() => handleSelectProduct(group.slug)}
+              />
+            ))}
+            {activeUnassignedImages.map((img) => (
               <ImageCard
                 key={imgKey(img)}
                 img={img}
@@ -445,11 +473,49 @@ export function MediaManager({
             ))}
           </div>
 
-          {images.filter((i) => i.category === activeTab).length === 0 && (
+          {activeCategoryImages.length === 0 && (
             <p style={{ color: "#9b8878", fontStyle: "italic", textAlign: "center", padding: "48px 0", fontSize: 14 }}>No images in this category.</p>
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+function ProductGroupCard({
+  title,
+  images,
+  onOpen,
+}: {
+  title: string;
+  images: ManagedImage[];
+  onOpen: () => void;
+}) {
+  const previewImages = images.slice(0, 6);
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #d7c7ad", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+      <div style={{ background: "#e4eddf", color: "#315f38", fontSize: 8, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: "5px 10px" }}>
+        Product Group
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, background: "#f0e8dc", minHeight: 140 }}>
+        {previewImages.map((img) => (
+          <img key={img.id || img.src} src={img.src} alt={img.label} style={{ width: "100%", height: previewImages.length > 3 ? 68 : 140, objectFit: "cover", display: "block", background: "#f7f0e6" }} />
+        ))}
+      </div>
+      <div style={{ padding: "10px", flex: 1 }}>
+        <p style={{ margin: "0 0 5px", fontSize: 11, color: "#315f38", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.35 }}>
+          {title}
+        </p>
+        <p style={{ margin: 0, fontSize: 10, color: "#8a7664" }}>
+          {images.length} image{images.length === 1 ? "" : "s"} grouped for this product
+        </p>
+      </div>
+      <div style={{ padding: "0 10px 10px" }}>
+        <button onClick={onOpen} style={{ width: "100%", background: "#2b2620", color: "#fff", border: "none", padding: "8px", fontSize: 9, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", cursor: "pointer" }}>
+          Edit Product Images
+        </button>
+      </div>
     </div>
   );
 }
