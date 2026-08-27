@@ -641,6 +641,7 @@ function ImageCard({
   const isAssigning = assigningKey === key;
   const assignedProduct = img.productSlug ? products.find((p) => p.slug === img.productSlug) : null;
   const assignedPrice = formatCents(assignedProduct?.retailPriceCents);
+  const assignedWholesale = formatCents(assignedProduct?.wholesalePriceCents);
 
   return (
     <div style={{ background: "#fff", border: "1px solid #e2d5c0", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -670,6 +671,25 @@ function ImageCard({
           </div>
         ) : (
           <p onClick={() => onRename(img.label)} title="Click to rename" style={{ margin: 0, fontSize: 10, color: "#6b5c4e", wordBreak: "break-all", lineHeight: 1.4, cursor: "text" }}>✎ {img.label}</p>
+        )}
+        {assignedProduct ? (
+          <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #f0e8dc" }}>
+            <p style={{ margin: "0 0 5px", color: "#2b2620", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
+              {assignedProduct.title}
+            </p>
+            <p style={{ margin: "0 0 5px", color: "#2b2620", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
+              {assignedPrice ? `From ${assignedPrice}` : "Price not set"}{assignedWholesale ? ` · Wholesale ${assignedWholesale}` : ""}
+            </p>
+            {assignedProduct.description && (
+              <p style={{ margin: 0, color: "#8a7664", fontSize: 10, lineHeight: 1.45 }}>
+                {truncate(assignedProduct.description, 96)}
+              </p>
+            )}
+          </div>
+        ) : (
+          <p style={{ margin: "8px 0 0", paddingTop: 8, borderTop: "1px solid #f0e8dc", color: "#a07235", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
+            Not assigned to a product yet
+          </p>
         )}
       </div>
       {isMoving && (
