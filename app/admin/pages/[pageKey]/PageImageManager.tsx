@@ -178,6 +178,6 @@ function getCardKey(img: PageImage) {
 }
 
 function safeDomId(value: string) {
-  if (typeof btoa === "function") return btoa(value).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 24);
-  return value.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 48);
+  if (typeof btoa === "function") return btoa(value).replace(/[^a-zA-Z0-9_-]/g, "");
+  return value.replace(/[^a-zA-Z0-9_-]/g, "-");
 }
