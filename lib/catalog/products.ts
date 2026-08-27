@@ -62,7 +62,7 @@ const BIZIHAIR_COLOURS = [
   { name: "Red",                     hex: "#7D1F1F", img: "colour-red.png" },
   { name: "Colour 4 Mittelbraun",    hex: "#6B4A32", img: "colour-4.png" },
   { name: "Colour 1 Schwarz",        hex: "#140E08", img: "colour-1.png" },
-  { name: "Colour Highlights 8/22",  hex: "linear-gradient(135deg,#8B5E3C 45%,#D8CDB8 55%)", img: "colour-highlights-8-22.png" },
+  { name: "Colour Highlights 8/22",  hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)", img: "colour-highlights-8-22.jpg" },
 ];
 const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
 
