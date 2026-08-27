@@ -8,13 +8,17 @@ export default async function AdminProductsPage() {
   const [products, admin] = [await getCatalogProducts(), createSupabaseAdminClient()];
   const { data: dbImages } = await admin
     .from("product_images")
-    .select("product_id, url, position")
+    .select("product_id, product_slug, url, hidden, position")
+    .neq("hidden", true)
     .order("position", { ascending: true });
 
   const imagesByProduct: Record<string, string[]> = {};
   for (const row of dbImages || []) {
-    if (!imagesByProduct[row.product_id]) imagesByProduct[row.product_id] = [];
-    imagesByProduct[row.product_id].push(row.url);
+    const keys = [row.product_id, row.product_slug].filter(Boolean) as string[];
+    for (const key of keys) {
+      if (!imagesByProduct[key]) imagesByProduct[key] = [];
+      imagesByProduct[key].push(row.url);
+    }
   }
 
   return (
@@ -27,13 +31,17 @@ export default async function AdminProductsPage() {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 18 }}>
         {products.map((product) => {
-          const dbImgs = imagesByProduct[product.id] || [];
+          const dbImgs = distinctImages([
+            ...(imagesByProduct[product.id] || []),
+            ...(imagesByProduct[product.slug] || []),
+          ]);
           const staticImgs = [
             ...(product.image_url ? [product.image_url] : []),
             ...(product.gallery || []),
           ];
-          const heroImage = dbImgs[0] || staticImgs[0];
-          const imgCount = dbImgs.length || staticImgs.length;
+          const mergedImgs = distinctImages([...dbImgs, ...staticImgs]);
+          const heroImage = mergedImgs[0];
+          const imgCount = mergedImgs.length;
           return (
             <Link key={product.id} href={`/admin/products/${product.slug}`} style={card}>
               <div style={{ height: 180, background: "#f0e8dc", overflow: "hidden", position: "relative" }}>
@@ -56,6 +64,10 @@ export default async function AdminProductsPage() {
       </div>
     </section>
   );
+}
+
+function distinctImages(images: Array<string | null | undefined>) {
+  return Array.from(new Set(images.filter((url): url is string => Boolean(url))));
 }
 
 const eyebrow: React.CSSProperties = { color: "#b68a45", fontSize: 10, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", margin: 0 };

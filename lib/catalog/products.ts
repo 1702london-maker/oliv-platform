@@ -874,8 +874,13 @@ async function mergeAdminImages(product: CatalogProduct | null): Promise<Catalog
       .order("position", { ascending: true });
 
     if (data && data.length > 0) {
+      const baseGallery = product.gallery || (product.image_url ? [product.image_url] : []);
       const adminGallery = data.map((r: { url: string; position: number }) => r.url);
-      return { ...product, gallery: adminGallery, image_url: adminGallery[0] };
+      const mergedGallery = [
+        ...adminGallery,
+        ...baseGallery.filter((url) => !adminGallery.includes(url)),
+      ];
+      return { ...product, gallery: mergedGallery, image_url: mergedGallery[0] || product.image_url };
     }
   } catch {
     // Fall back to static gallery silently

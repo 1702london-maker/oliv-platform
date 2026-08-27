@@ -16,7 +16,8 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
     admin
       .from("product_images")
       .select("id, url, position")
-      .eq("product_id", product.id)
+      .or(`product_id.eq.${product.id},product_slug.eq.${slug}`)
+      .neq("hidden", true)
       .order("position", { ascending: true }),
     admin
       .from("product_overrides")
@@ -27,7 +28,11 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
 
   const baseVariant = product.variants[0];
 
-  const staticGallery: string[] = product.gallery || (product.image_url ? [product.image_url] : []);
+  const staticGallery = Array.from(new Set([
+    product.image_url,
+    ...(product.gallery || []),
+    ...product.variants.map((variant) => variant.image_url),
+  ].filter((url): url is string => Boolean(url))));
 
   return (
     <section style={{ maxWidth: 1100, margin: "0 auto", padding: "42px 24px" }}>
