@@ -82,7 +82,7 @@ export function PageImageManager({
           const targetSrc = img.targetSrc || img.src;
           const cardKey = getCardKey(img);
           const inputId = `replace-${safeDomId(cardKey)}`;
-          const override = overrides[targetSrc] || (!img.targetSrc ? overrides[srcKey] : undefined);
+          const override = overrides[targetSrc] || overrides[srcKey];
           const isReplaced = !!override;
           const displayUrl = override?.replacement_url || img.src;
           const isUploading = uploading === cardKey;
@@ -133,17 +133,20 @@ export function PageImageManager({
                   ref={(el) => { fileRefs.current[cardKey] = el; }}
                   onChange={(e) => { const f = e.target.files?.[0]; if (f) handleReplace(img, f); }}
                 />
-                <label
-                  htmlFor={inputId}
+                <button
+                  type="button"
+                  onClick={() => fileRefs.current[cardKey]?.click()}
+                  disabled={isUploading}
                   style={{
                     flex: 1, display: "block", textAlign: "center",
+                    border: 0,
                     background: isUploading ? "#e2d5c0" : "#2b2620", color: "#fff",
                     padding: "8px", fontSize: 10, fontWeight: 700, letterSpacing: ".12em",
                     textTransform: "uppercase", cursor: isUploading ? "default" : "pointer",
                   }}
                 >
                   {isUploading ? "Uploading…" : isReplaced ? "Replace Again" : "Replace Image"}
-                </label>
+                </button>
                 {isReplaced && (
                   <button
                     onClick={() => handleRestore(img)}
