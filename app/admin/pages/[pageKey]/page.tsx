@@ -1,27 +1,56 @@
 import { notFound } from "next/navigation";
-import fs from "node:fs";
-import path from "node:path";
 import { MANAGED_PAGES } from "@/lib/admin/pages";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { PageImageManager } from "./PageImageManager";
 
 export const dynamic = "force-dynamic";
 
-function extractImages(html: string): { src: string; label: string }[] {
-  // Match all img src attributes — absolute (https://), protocol-relative (//), and relative (/)
-  const matches = [...html.matchAll(/src="([^"]{4,}\.(?:jpg|jpeg|png|webp|gif|svg)[^"]*)"/gi)];
+function extractImages(html: string, baseUrl: string): { src: string; label: string }[] {
+  const matches = [...html.matchAll(/<(?:img|source)\b[^>]*(?:src|srcset)=["']([^"']+)["']/gi)];
   const seen = new Set<string>();
-  return matches
-    .map((m) => {
-      const src = m[1].split("?")[0]; // strip query strings for dedup
-      return { src: m[1], label: src.split("/").pop() || src };
-    })
-    .filter((img) => {
-      if (img.src.startsWith("data:")) return false; // skip data URIs
-      if (seen.has(img.src)) return false;
-      seen.add(img.src);
-      return true;
-    });
+  const images: { src: string; label: string }[] = [];
+
+  for (const match of matches) {
+    for (const part of match[1].replaceAll("&amp;", "&").split(",")) {
+      const raw = part.trim().split(/\s+/)[0];
+      if (!raw || raw.startsWith("data:")) continue;
+      const withoutQuery = raw.split("?")[0];
+      if (seen.has(withoutQuery)) continue;
+      seen.add(withoutQuery);
+
+      let src = raw;
+      try {
+        src = new URL(raw, baseUrl).href;
+      } catch {
+        // Keep raw source if URL parsing fails.
+      }
+
+      images.push({ src, label: withoutQuery.split("/").pop() || withoutQuery });
+    }
+  }
+
+  return images;
+}
+
+async function getPageHtml(pagePath: string, file: string) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://olivhairsupply.de";
+  try {
+    const res = await fetch(new URL(pagePath, baseUrl), { cache: "no-store" });
+    if (res.ok) return { html: await res.text(), baseUrl };
+  } catch {
+    // Fall back below.
+  }
+
+  try {
+    const fs = await import("node:fs");
+    const path = await import("node:path");
+    return {
+      html: fs.readFileSync(path.join(process.cwd(), "shopify-clone", file), "utf8"),
+      baseUrl,
+    };
+  } catch {
+    return { html: "", baseUrl };
+  }
 }
 
 export default async function PageDetail({ params }: { params: Promise<{ pageKey: string }> }) {
@@ -29,9 +58,8 @@ export default async function PageDetail({ params }: { params: Promise<{ pageKey
   const managed = MANAGED_PAGES.find((p) => p.key === pageKey);
   if (!managed) notFound();
 
-  const filePath = path.join(process.cwd(), "shopify-clone", managed.file);
-  const html = fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf8") : "";
-  const images = extractImages(html);
+  const { html, baseUrl } = await getPageHtml(managed.path, managed.file);
+  const images = extractImages(html, baseUrl);
 
   const admin = createSupabaseAdminClient();
   const { data: overrides } = await admin

@@ -23,6 +23,7 @@ export async function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClone
     if (overrides?.length) {
       for (const o of overrides) {
         html = html.replaceAll(`src="${o.original_src}"`, `src="${o.replacement_url}"`);
+        html = html.replaceAll(`src="${relativeSrc(o.original_src)}"`, `src="${o.replacement_url}"`);
       }
     }
   } catch { /* non-fatal — page renders with original images */ }
@@ -34,6 +35,15 @@ export async function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClone
   }
 
   return <ShopifyClonePageClient html={html} />;
+}
+
+function relativeSrc(src: string) {
+  try {
+    const url = new URL(src);
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return src;
+  }
 }
 
 function normalizeShopifyHtml(rawHtml: string, page: string) {

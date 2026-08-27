@@ -3,6 +3,7 @@ import path from "node:path";
 import { cookies } from "next/headers";
 import { getShopCategories } from "@/lib/catalog/categories";
 import { formatMoney, getCatalogProducts } from "@/lib/catalog/products";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { HairProductCard } from "@/components/shop/HairProductCard";
 
 export const dynamic = "force-dynamic";
@@ -93,7 +94,7 @@ const categorySlug = params.category;
 const viewAll = params.view === "all";
 
 if (!categorySlug && !viewAll) {
-  const landingHtml = buildShopLandingHtml();
+  const landingHtml = await applyPageImageOverrides("shop", buildShopLandingHtml());
   return <div dangerouslySetInnerHTML={{ __html: landingHtml }} />;
 }
 
@@ -216,6 +217,34 @@ function buildShopLandingHtml() {
   html = html.replace("</style>", `${shopLandingOverrides()}\n</style>`);
 
   return html;
+}
+
+async function applyPageImageOverrides(pageKey: string, html: string) {
+  try {
+    const admin = createSupabaseAdminClient();
+    const { data: overrides } = await admin
+      .from("page_images")
+      .select("original_src, replacement_url")
+      .eq("page_key", pageKey);
+
+    for (const override of overrides || []) {
+      html = html.replaceAll(`src="${override.original_src}"`, `src="${override.replacement_url}"`);
+      html = html.replaceAll(`src="${relativeSrc(override.original_src)}"`, `src="${override.replacement_url}"`);
+    }
+  } catch {
+    // Page image overrides are non-critical; render original shop images if unavailable.
+  }
+
+  return html;
+}
+
+function relativeSrc(src: string) {
+  try {
+    const url = new URL(src);
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return src;
+  }
 }
 
 function buildCollectionCards() {

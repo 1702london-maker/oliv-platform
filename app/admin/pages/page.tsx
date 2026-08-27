@@ -1,16 +1,47 @@
 import Link from "next/link";
 import { MANAGED_PAGES } from "@/lib/admin/pages";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import fs from "node:fs";
-import path from "node:path";
 
 export const dynamic = "force-dynamic";
 
-function countImages(file: string) {
+async function countImages(pagePath: string, file: string) {
+  const html = await getLiveHtml(pagePath, file);
+  return extractImages(html).length;
+}
+
+async function getLiveHtml(pagePath: string, file: string) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://olivhairsupply.de";
   try {
-    const html = fs.readFileSync(path.join(process.cwd(), "shopify-clone", file), "utf8");
-    return (html.match(/src="https?:\/\/[^"]+\.(jpg|jpeg|png|webp|gif|svg)[^"]*"/gi) || []).length;
-  } catch { return 0; }
+    const res = await fetch(new URL(pagePath, baseUrl), { cache: "no-store" });
+    if (res.ok) return res.text();
+  } catch {
+    // Fall back below.
+  }
+
+  try {
+    const fs = await import("node:fs");
+    const path = await import("node:path");
+    return fs.readFileSync(path.join(process.cwd(), "shopify-clone", file), "utf8");
+  } catch {
+    return "";
+  }
+}
+
+function extractImages(html: string) {
+  const seen = new Set<string>();
+  const images: string[] = [];
+  const matches = html.matchAll(/<(?:img|source)\b[^>]*(?:src|srcset)=["']([^"']+)["']/gi);
+
+  for (const match of matches) {
+    for (const part of match[1].replaceAll("&amp;", "&").split(",")) {
+      const src = part.trim().split(/\s+/)[0]?.split("?")[0];
+      if (!src || src.startsWith("data:") || seen.has(src)) continue;
+      seen.add(src);
+      images.push(src);
+    }
+  }
+
+  return images;
 }
 
 export default async function PagesAdmin() {
@@ -30,29 +61,47 @@ export default async function PagesAdmin() {
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 16 }}>
         {MANAGED_PAGES.map((p) => {
-          const imgCount = countImages(p.file);
+          const imgCountPromise = countImages(p.path, p.file);
           const changed = overrideCount[p.key] || 0;
           return (
-            <Link key={p.key} href={`/admin/pages/${p.key}`} style={card}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <span style={{ fontWeight: 700, fontSize: 14, color: "#2b2620" }}>{p.label}</span>
-                {changed > 0 && (
-                  <span style={{ background: "#c9a96e", color: "#fff", fontSize: 9, fontWeight: 700, letterSpacing: ".1em", padding: "3px 8px", textTransform: "uppercase" }}>
-                    {changed} replaced
-                  </span>
-                )}
-              </div>
-              <p style={{ margin: "8px 0 0", fontSize: 11, color: "#9b8878" }}>
-                {imgCount} image{imgCount !== 1 ? "s" : ""} on this page
-              </p>
-              <p style={{ margin: "12px 0 0", fontSize: 10, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", color: "#c9a96e" }}>
-                Manage Images →
-              </p>
-            </Link>
+            <PageCard key={p.key} pageKey={p.key} label={p.label} countPromise={imgCountPromise} changed={changed} />
           );
         })}
       </div>
     </section>
+  );
+}
+
+async function PageCard({
+  pageKey,
+  label,
+  countPromise,
+  changed,
+}: {
+  pageKey: string;
+  label: string;
+  countPromise: Promise<number>;
+  changed: number;
+}) {
+  const imgCount = await countPromise;
+
+  return (
+    <Link href={`/admin/pages/${pageKey}`} style={card}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <span style={{ fontWeight: 700, fontSize: 14, color: "#2b2620" }}>{label}</span>
+        {changed > 0 && (
+          <span style={{ background: "#c9a96e", color: "#fff", fontSize: 9, fontWeight: 700, letterSpacing: ".1em", padding: "3px 8px", textTransform: "uppercase" }}>
+            {changed} replaced
+          </span>
+        )}
+      </div>
+      <p style={{ margin: "8px 0 0", fontSize: 11, color: "#9b8878" }}>
+        {imgCount} image{imgCount !== 1 ? "s" : ""} on this page
+      </p>
+      <p style={{ margin: "12px 0 0", fontSize: 10, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", color: "#c9a96e" }}>
+        Manage Images →
+      </p>
+    </Link>
   );
 }
 
