@@ -37,6 +37,7 @@ export async function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClone
 function applyImageOverrides(html: string, overrides: Array<{ original_src: string; replacement_url: string }>) {
   const replacements = new Map<string, string>();
   for (const override of overrides) {
+    replacements.set(override.original_src, override.replacement_url);
     replacements.set(normalizedSrcKey(override.original_src), override.replacement_url);
   }
 

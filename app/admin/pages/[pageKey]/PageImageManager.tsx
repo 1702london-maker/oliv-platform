@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 
-type PageImage = { src: string; label: string };
+type PageImage = { src: string; label: string; targetSrc?: string };
 type Override = { id: string; replacement_url: string };
 
 export function PageImageManager({
@@ -25,19 +25,22 @@ export function PageImageManager({
   }
 
   async function handleReplace(src: string, file: File) {
+    const targetSrc = images.find((img) => img.src === src)?.targetSrc || src;
     setUploading(src);
     const form = new FormData();
     form.append("file", file);
     form.append("pageKey", pageKey);
-    form.append("originalSrc", src);
+    form.append("originalSrc", targetSrc);
     try {
       const res = await fetch("/api/admin/pages", { method: "POST", body: form });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Upload failed");
+      const override = { id: json.id, replacement_url: json.url };
       setOverrides((prev) => ({
         ...prev,
-        [src]: { id: json.id, replacement_url: json.url },
-        [normalizeSrc(src)]: { id: json.id, replacement_url: json.url },
+        [targetSrc]: override,
+        [src]: override,
+        [normalizeSrc(src)]: override,
       }));
       flash("ok", "Image replaced successfully. Live on site immediately.");
     } catch (e) {
@@ -50,12 +53,14 @@ export function PageImageManager({
   }
 
   async function handleRestore(src: string) {
-    const o = overrides[src];
+    const targetSrc = images.find((img) => img.src === src)?.targetSrc || src;
+    const o = overrides[targetSrc] || overrides[src] || overrides[normalizeSrc(src)];
     if (!o) return;
     const res = await fetch(`/api/admin/pages?id=${o.id}`, { method: "DELETE" });
     if (!res.ok) { flash("err", "Restore failed"); return; }
     setOverrides((prev) => {
       const n = { ...prev };
+      delete n[targetSrc];
       delete n[src];
       delete n[normalizeSrc(src)];
       return n;
@@ -74,7 +79,8 @@ export function PageImageManager({
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
         {images.map((img) => {
           const srcKey = normalizeSrc(img.src);
-          const override = overrides[img.src] || overrides[srcKey];
+          const targetSrc = img.targetSrc || img.src;
+          const override = overrides[targetSrc] || overrides[img.src] || overrides[srcKey];
           const isReplaced = !!override;
           const displayUrl = override?.replacement_url || img.src;
           const isUploading = uploading === img.src;
