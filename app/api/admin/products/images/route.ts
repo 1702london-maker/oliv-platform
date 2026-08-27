@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const admin = createSupabaseAdminClient();
   const { data } = await admin
     .from("product_overrides")
-    .select("title, description, retail_price_cents, wholesale_price_cents")
+    .select("title, description, retail_price_cents, wholesale_price_cents, category_slug, hidden, merged_into_slug")
     .eq("slug", slug)
     .maybeSingle();
   return NextResponse.json({ override: data ?? null });
@@ -52,12 +52,15 @@ export async function POST(req: NextRequest) {
   if (!profile?.roles.includes("admin")) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { slug, description, title, retail_price_cents, wholesale_price_cents } = body;
+  const { slug, description, title, retail_price_cents, wholesale_price_cents, category_slug, hidden, merged_into_slug } = body;
   if (!slug) return NextResponse.json({ error: "missing slug" }, { status: 400 });
 
   const upsertData: Record<string, unknown> = { slug, description, title, updated_at: new Date().toISOString() };
   if (retail_price_cents !== undefined) upsertData.retail_price_cents = retail_price_cents;
   if (wholesale_price_cents !== undefined) upsertData.wholesale_price_cents = wholesale_price_cents;
+  if (category_slug !== undefined) upsertData.category_slug = category_slug || null;
+  if (hidden !== undefined) upsertData.hidden = Boolean(hidden);
+  if (merged_into_slug !== undefined) upsertData.merged_into_slug = merged_into_slug || null;
 
   const admin = createSupabaseAdminClient();
   const { error } = await admin.from("product_overrides").upsert(upsertData, { onConflict: "slug" });

@@ -28,6 +28,17 @@ export type CatalogProduct = {
   attributes?: Record<string, unknown>;
 };
 
+type ProductOverride = {
+  slug: string;
+  title: string | null;
+  description: string | null;
+  retail_price_cents: number | null;
+  wholesale_price_cents: number | null;
+  category_slug: string | null;
+  hidden: boolean | null;
+  merged_into_slug: string | null;
+};
+
 // BiziLuxe colour codes — exactly as written in the product documents
 const BIZILUXE_COLOURS = [
   { name: "1",      hex: "#1C1008",                                           img: "colour-1.jpg" },
@@ -605,6 +616,92 @@ const NON_ACCESSORY_SUPABASE_SLUGS = new Set([
   "demmin", "anklam", "biziluxe-claw-clip", "biziluxe-lace-front-tape",
 ]);
 
+function getCuratedProducts(): CatalogProduct[] {
+  return mergeCatalogProducts(
+    mergeCatalogProducts(
+      mergeCatalogProducts(getBiziLuxeExtensionProducts(), getBiziHairProducts()),
+      mergeCatalogProducts(getBrushesProducts(), getBiziLuxeAccessoryProducts())
+    ),
+    mergeCatalogProducts(getBiziLuxeStylingToolProducts(), getProSalonProducts())
+  );
+}
+
+async function fetchProductOverrides(): Promise<Map<string, ProductOverride>> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase
+      .from("product_overrides")
+      .select("slug,title,description,retail_price_cents,wholesale_price_cents,category_slug,hidden,merged_into_slug");
+    return new Map((data || []).map((row) => [row.slug, row as ProductOverride]));
+  } catch {
+    return new Map();
+  }
+}
+
+async function fetchProductOverride(slug: string): Promise<ProductOverride | null> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase
+      .from("product_overrides")
+      .select("slug,title,description,retail_price_cents,wholesale_price_cents,category_slug,hidden,merged_into_slug")
+      .eq("slug", slug)
+      .maybeSingle();
+    return (data as ProductOverride | null) || null;
+  } catch {
+    return null;
+  }
+}
+
+function applyOverrideToProduct(product: CatalogProduct, override?: ProductOverride | null): CatalogProduct {
+  if (!override) return product;
+  let variants = product.variants;
+  if (override.retail_price_cents != null && product.variants.length > 0) {
+    const baseRetail = product.variants[0].retail_price_cents;
+    const baseWholesale = product.variants[0].wholesale_price_cents ?? 0;
+    const retailShift = override.retail_price_cents - baseRetail;
+    const wholesaleShift = override.wholesale_price_cents != null
+      ? override.wholesale_price_cents - baseWholesale
+      : 0;
+    variants = product.variants.map((variant) => ({
+      ...variant,
+      retail_price_cents: variant.retail_price_cents + retailShift,
+      wholesale_price_cents: variant.wholesale_price_cents != null
+        ? variant.wholesale_price_cents + wholesaleShift
+        : null,
+    }));
+  }
+  return {
+    ...product,
+    title: override.title || product.title,
+    description: override.description || product.description,
+    variants,
+  };
+}
+
+async function applyCatalogOverrides(products: CatalogProduct[], categorySlug?: string): Promise<CatalogProduct[]> {
+  const overrides = await fetchProductOverrides();
+  const seen = new Set<string>();
+  const filtered = products.flatMap((product) => {
+    const override = overrides.get(product.slug);
+    if (override?.hidden || override?.merged_into_slug) return [];
+    if (categorySlug && override?.category_slug && override.category_slug !== categorySlug) return [];
+    seen.add(product.slug);
+    return [applyOverrideToProduct(product, override)];
+  });
+
+  if (!categorySlug) return filtered;
+
+  const movedIn = getCuratedProducts().flatMap((product) => {
+    if (seen.has(product.slug)) return [];
+    const override = overrides.get(product.slug);
+    if (!override || override.hidden || override.merged_into_slug || override.category_slug !== categorySlug) return [];
+    seen.add(product.slug);
+    return [applyOverrideToProduct(product, override)];
+  });
+
+  return [...filtered, ...movedIn];
+}
+
 async function fetchSupabaseProductsBySlugs(slugs: string[]): Promise<CatalogProduct[]> {
   if (!slugs.length) return [];
   const supabase = await createSupabaseServerClient();
@@ -625,20 +722,20 @@ async function fetchSupabaseProductsBySlugs(slugs: string[]): Promise<CatalogPro
 }
 
 export async function getCatalogProducts(categorySlug?: string): Promise<CatalogProduct[]> {
-  if (categorySlug === "biziluxe-extensions") return getBiziLuxeExtensionProducts();
-  if (categorySlug === "bizihair-extensions") return getBiziHairProducts();
+  if (categorySlug === "biziluxe-extensions") return applyCatalogOverrides(getBiziLuxeExtensionProducts(), categorySlug);
+  if (categorySlug === "bizihair-extensions") return applyCatalogOverrides(getBiziHairProducts(), categorySlug);
   if (categorySlug === "buersten-und-kaemme") {
     const supabaseBrushes = await fetchSupabaseProductsBySlugs(SUPABASE_BRUSH_SLUGS);
-    return mergeCatalogProducts(getBrushesProducts(), supabaseBrushes);
+    return applyCatalogOverrides(mergeCatalogProducts(getBrushesProducts(), supabaseBrushes), categorySlug);
   }
   const localAccessoryProducts =
     categorySlug === "accessories" || categorySlug === "biziluxe-accessoires"
       ? getBiziLuxeAccessoryProducts()
       : null;
-  if (categorySlug === "biziluxe-stylinggeraete") return getBiziLuxeStylingToolProducts();
+  if (categorySlug === "biziluxe-stylinggeraete") return applyCatalogOverrides(getBiziLuxeStylingToolProducts(), categorySlug);
   if (categorySlug === "profi-friseurbedarf") {
     const supabaseProSalon = await fetchSupabaseProductsBySlugs(SUPABASE_PRO_SALON_SLUGS);
-    return mergeCatalogProducts(getProSalonProducts(), supabaseProSalon);
+    return applyCatalogOverrides(mergeCatalogProducts(getProSalonProducts(), supabaseProSalon), categorySlug);
   }
 
   const supabase = await createSupabaseServerClient();
@@ -653,7 +750,7 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
 
     if (linksError) {
       console.error("Failed to load category products", linksError);
-      return getLocalPublicProducts(categorySlug);
+      return applyCatalogOverrides(getLocalPublicProducts(categorySlug), categorySlug);
     }
 
     productIds = (links || []).map((link) => link.product_id);
@@ -696,16 +793,16 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
     const pathMatches = products.filter((product) => product.image_url?.includes(`/products/${categorySlug}/`));
     if (localAccessoryProducts) {
       const filtered = pathMatches.filter((p) => !NON_ACCESSORY_SUPABASE_SLUGS.has(p.slug));
-      return mergeCatalogProducts(localAccessoryProducts, filtered);
+      return applyCatalogOverrides(mergeCatalogProducts(localAccessoryProducts, filtered), categorySlug);
     }
-    return pathMatches.length ? pathMatches : getLocalPublicProducts(categorySlug);
+    return applyCatalogOverrides(pathMatches.length ? pathMatches : getLocalPublicProducts(categorySlug), categorySlug);
   }
 
   if (localAccessoryProducts) {
     const filtered = products.filter((p) => !NON_ACCESSORY_SUPABASE_SLUGS.has(p.slug));
-    return mergeCatalogProducts(localAccessoryProducts, filtered);
+    return applyCatalogOverrides(mergeCatalogProducts(localAccessoryProducts, filtered), categorySlug);
   }
-  return products.length ? products : getLocalPublicProducts(categorySlug);
+  return applyCatalogOverrides(products.length ? products : getLocalPublicProducts(categorySlug), categorySlug);
 }
 
 function mergeCatalogProducts(primary: CatalogProduct[], secondary: CatalogProduct[]) {
@@ -721,32 +818,44 @@ function mergeCatalogProducts(primary: CatalogProduct[], secondary: CatalogProdu
 }
 
 export async function getCatalogProductBySlug(slug: string): Promise<CatalogProduct | null> {
+  const override = await fetchProductOverride(slug);
+  if (override?.hidden && !override.merged_into_slug) return null;
+  if (override?.merged_into_slug && override.merged_into_slug !== slug) {
+    return getCatalogProductBySlug(override.merged_into_slug);
+  }
   const extensionSlugs = ["tape-in-extensions", "weft-extensions", "utip-extensions"];
   if (extensionSlugs.includes(slug)) {
-    return mergeAdminImages(getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null);
+    const product = getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
   }
   const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb", "wide-tint-brush", "celle", "biziluxe-styling-combs", "hameln", "luebeck", "biziluxe-professional-combs"];
   if (brushSlugs.includes(slug)) {
-    return mergeAdminImages(getBrushesProducts().find((p) => p.slug === slug) || null);
+    const product = getBrushesProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
   }
   const biziHairSlugs = ["bizihair-weft-extensions", "bizihair-tape-in-extensions", "bizihair-keratin-extensions"];
   if (biziHairSlugs.includes(slug)) {
-    return mergeAdminImages(getBiziHairProducts().find((p) => p.slug === slug) || null);
+    const product = getBiziHairProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
   }
   const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "gator-grip-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
   if (accessorySlugs.includes(slug)) {
-    return mergeAdminImages(getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null);
+    const product = getBiziLuxeAccessoryProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
   }
   const stylingToolSlugs = ["solingen", "wiesbaden", "glashuette", "ruhrstahl", "zollverein"];
   if (stylingToolSlugs.includes(slug)) {
-    return mergeAdminImages(getBiziLuxeStylingToolProducts().find((p) => p.slug === slug) || null);
+    const product = getBiziLuxeStylingToolProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
   }
   const proSalonSlugs = ["salon-apron", "smart-bowl", "tinting-tray", "salon-trolley-drawers", "salon-service-trolley", "colour-mixing-trolley", "hair-cutting-cape", "detmold", "essen", "herford", "muenster", "recklinghausen", "paderborn", "wesel", "keratin-heat-shield"];
   if (proSalonSlugs.includes(slug)) {
-    return mergeAdminImages(getProSalonProducts().find((p) => p.slug === slug) || null);
+    const product = getProSalonProducts().find((p) => p.slug === slug) || null;
+    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
   }
   const products = await getCatalogProducts();
-  return mergeAdminImages(products.find((product) => product.slug === slug) || getLocalPublicProductBySlug(slug));
+  const product = products.find((item) => item.slug === slug) || getLocalPublicProductBySlug(slug);
+  return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
 }
 
 async function mergeAdminImages(product: CatalogProduct | null): Promise<CatalogProduct | null> {
@@ -756,7 +865,8 @@ async function mergeAdminImages(product: CatalogProduct | null): Promise<Catalog
     const { data } = await supabase
       .from("product_images")
       .select("url, position")
-      .eq("product_id", product.id)
+      .or(`product_id.eq.${product.id},product_slug.eq.${product.slug}`)
+      .neq("hidden", true)
       .order("position", { ascending: true });
 
     if (data && data.length > 0) {

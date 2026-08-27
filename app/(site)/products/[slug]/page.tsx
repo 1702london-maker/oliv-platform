@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ProductDetailView } from "@/components/product/ProductDetailView";
 import { getCurrentProfile } from "@/lib/auth/session";
 import { getCatalogProductBySlug } from "@/lib/catalog/products";
@@ -31,7 +31,7 @@ export default async function ProductPage({ params }: PageProps) {
       .order("position", { ascending: true }),
     admin
       .from("product_overrides")
-      .select("title, description, retail_price_cents, wholesale_price_cents")
+      .select("title, description, retail_price_cents, wholesale_price_cents, hidden, merged_into_slug")
       .eq("slug", slug)
       .maybeSingle(),
     admin
@@ -40,6 +40,11 @@ export default async function ProductPage({ params }: PageProps) {
       .eq("product_slug", slug)
       .order("position", { ascending: true }),
   ]);
+
+  if (override?.merged_into_slug && override.merged_into_slug !== slug) {
+    redirect(`/products/${override.merged_into_slug}`);
+  }
+  if (override?.hidden) notFound();
 
   const hiddenUrls = new Set(
     (dbImages || []).filter((r) => r.hidden === true).map((r) => r.url)

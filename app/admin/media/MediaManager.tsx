@@ -6,7 +6,25 @@ import { ColorManager } from "./ColorManager";
 
 type Category = { key: string; label: string };
 type Product = { slug: string; title: string };
-type Override = { title?: string | null; description?: string | null; retail_price_cents?: number | null; wholesale_price_cents?: number | null } | null;
+type Override = {
+  title?: string | null;
+  description?: string | null;
+  retail_price_cents?: number | null;
+  wholesale_price_cents?: number | null;
+  category_slug?: string | null;
+  hidden?: boolean | null;
+  merged_into_slug?: string | null;
+} | null;
+
+const LIVE_CATEGORY_SLUGS: Record<string, string> = {
+  "biziluxe-accessories": "biziluxe-accessoires",
+  "brushes-combs": "buersten-und-kaemme",
+  "pro-salon-supplies": "profi-friseurbedarf",
+};
+
+function liveCategorySlug(key: string) {
+  return LIVE_CATEGORY_SLUGS[key] || key;
+}
 
 export function MediaManager({
   initialImages,
@@ -29,6 +47,10 @@ export function MediaManager({
   const [editorDesc, setEditorDesc] = useState("");
   const [editorRetail, setEditorRetail] = useState("");
   const [editorWholesale, setEditorWholesale] = useState("");
+  const [editorCategory, setEditorCategory] = useState("");
+  const [editorHidden, setEditorHidden] = useState(false);
+  const [editorMergedInto, setEditorMergedInto] = useState("");
+  const [mergeTarget, setMergeTarget] = useState("");
   const [editorLoading, setEditorLoading] = useState(false);
   const [editorSaving, setEditorSaving] = useState(false);
 
@@ -55,7 +77,7 @@ export function MediaManager({
   async function handleSelectProduct(slug: string) {
     setEditorSlug(slug);
     setEditingKey(null); setMovingKey(null); setAssigningKey(null);
-    if (!slug) { setOverride(null); setEditorTitle(""); setEditorDesc(""); setEditorRetail(""); setEditorWholesale(""); return; }
+    if (!slug) { setOverride(null); setEditorTitle(""); setEditorDesc(""); setEditorRetail(""); setEditorWholesale(""); setEditorCategory(""); setEditorHidden(false); setEditorMergedInto(""); setMergeTarget(""); return; }
     setEditorLoading(true);
     try {
       const res = await fetch(`/api/admin/products/images?slug=${encodeURIComponent(slug)}`);
@@ -66,6 +88,10 @@ export function MediaManager({
       setEditorDesc(ov?.description || "");
       setEditorRetail(ov?.retail_price_cents != null ? (ov.retail_price_cents / 100).toFixed(2) : "");
       setEditorWholesale(ov?.wholesale_price_cents != null ? (ov.wholesale_price_cents / 100).toFixed(2) : "");
+      setEditorCategory(ov?.category_slug || "");
+      setEditorHidden(Boolean(ov?.hidden));
+      setEditorMergedInto(ov?.merged_into_slug || "");
+      setMergeTarget("");
     } catch { flash("err", "Could not load product data"); }
     setEditorLoading(false);
   }
@@ -73,7 +99,7 @@ export function MediaManager({
   async function handleSaveProduct() {
     if (!editorSlug) return;
     setEditorSaving(true);
-    const body: Record<string, unknown> = { slug: editorSlug, title: editorTitle, description: editorDesc };
+    const body: Record<string, unknown> = { slug: editorSlug, title: editorTitle, description: editorDesc, category_slug: editorCategory || null, hidden: editorHidden };
     if (editorRetail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(editorRetail) * 100);
     if (editorWholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(editorWholesale) * 100);
     try {
@@ -81,6 +107,29 @@ export function MediaManager({
       if (res.ok) flash("ok", "Saved — live on site immediately.");
       else { const j = await res.json(); flash("err", j.error || "Save failed"); }
     } catch { flash("err", "Network error"); }
+    setEditorSaving(false);
+  }
+
+  async function handleMergeProduct() {
+    if (!editorSlug || !mergeTarget) return;
+    const targetTitle = products.find((p) => p.slug === mergeTarget)?.title || mergeTarget;
+    if (!confirm(`Merge this product into "${targetTitle}"? Images and colour swatches will move to the target product, and this product will be hidden from the live shop.`)) return;
+    setEditorSaving(true);
+    try {
+      const res = await fetch("/api/admin/products/merge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sourceSlug: editorSlug, targetSlug: mergeTarget }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || "Merge failed");
+      setImages((prev) => prev.map((img) => img.productSlug === editorSlug ? { ...img, productSlug: mergeTarget } : img));
+      setEditorHidden(true);
+      setEditorMergedInto(mergeTarget);
+      flash("ok", `Merged into ${targetTitle}. Live shop updated.`);
+    } catch (e) {
+      flash("err", e instanceof Error ? e.message : "Merge failed");
+    }
     setEditorSaving(false);
   }
 
@@ -215,12 +264,46 @@ export function MediaManager({
                   Description
                   <textarea value={editorDesc} onChange={(e) => setEditorDesc(e.target.value)} rows={4} placeholder="Enter product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
                 </label>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, margin: "0 0 16px" }}>
+                  <label style={labelStyle}>
+                    Live Category
+                    <select value={editorCategory} onChange={(e) => setEditorCategory(e.target.value)} style={inputStyle}>
+                      <option value="">Use original category</option>
+                      {categories.map((cat) => <option key={cat.key} value={liveCategorySlug(cat.key)}>{cat.label}</option>)}
+                    </select>
+                  </label>
+                  <label style={{ ...labelStyle, justifyContent: "flex-end" }}>
+                    Visibility
+                    <span style={{ display: "flex", alignItems: "center", gap: 8, minHeight: 40, color: "#2b2620", letterSpacing: 0, textTransform: "none", fontSize: 13, fontWeight: 500 }}>
+                      <input type="checkbox" checked={editorHidden} onChange={(e) => setEditorHidden(e.target.checked)} />
+                      Hide this product from live shop
+                    </span>
+                  </label>
+                </div>
                 <button onClick={handleSaveProduct} disabled={editorSaving} style={saveBtn}>
                   {editorSaving ? "Saving…" : "Save & Publish"}
                 </button>
 
+                <div style={{ marginTop: 18, padding: 14, border: "1px solid #e2d5c0", background: "#faf7f2" }}>
+                  <p style={{ ...eyebrow, marginBottom: 10 }}>Merge Duplicate Colour Product</p>
+                  {editorMergedInto && (
+                    <p style={{ margin: "0 0 10px", color: "#315f38", fontSize: 12 }}>
+                      This product is currently hidden and merged into {products.find((p) => p.slug === editorMergedInto)?.title || editorMergedInto}.
+                    </p>
+                  )}
+                  <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                    <select value={mergeTarget} onChange={(e) => setMergeTarget(e.target.value)} style={{ ...inputStyle, maxWidth: 420 }}>
+                      <option value="">Choose main product to merge into…</option>
+                      {products.filter((p) => p.slug !== editorSlug).map((p) => <option key={p.slug} value={p.slug}>{p.title}</option>)}
+                    </select>
+                    <button onClick={handleMergeProduct} disabled={!mergeTarget || editorSaving} style={{ ...saveBtn, padding: "10px 18px", opacity: !mergeTarget || editorSaving ? 0.5 : 1 }}>
+                      Merge & Hide Duplicate
+                    </button>
+                  </div>
+                </div>
+
                 {/* ── Colour Swatches ── */}
-                <ColorManager productSlug={editorSlug} />
+                <ColorManager productSlug={editorSlug} images={productImages.map((img) => ({ src: img.src, label: img.label }))} />
 
                 {/* ── Product Images ── */}
                 <div style={{ marginTop: 28, paddingTop: 24, borderTop: "1px solid #f0e8dc" }}>
