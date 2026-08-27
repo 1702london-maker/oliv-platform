@@ -88,7 +88,7 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
             <p style={{ margin: "0 0 10px", fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: "#6b5c4e" }}>
               Colour: <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>{selectedColorName}</span>
             </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+            <div className="ohs-product-colour-row">
               {colors.map((c) => (
                 <button
                   key={c.id}

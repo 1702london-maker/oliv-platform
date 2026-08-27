@@ -205,6 +205,25 @@ a {
   transform: scale(1.15);
 }
 
+.ohs-product-colour-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 0 8px;
+  scrollbar-width: thin;
+}
+
+.ohs-product-colour-row::-webkit-scrollbar {
+  height: 5px;
+}
+
+.ohs-product-colour-row::-webkit-scrollbar-thumb {
+  background: rgba(43, 38, 32, 0.22);
+}
+
 .ohs-product-btn {
   display: inline-flex;
   min-height: 34px;
