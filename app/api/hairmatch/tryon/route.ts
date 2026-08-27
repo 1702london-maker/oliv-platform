@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { generateTryOnImage } from "@/lib/hairmatch/ai";
 import type { HairMatchRecommendation } from "@/lib/hairmatch/types";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const rl = await checkRateLimit({ key: "ip", value: getClientIp(request), endpoint: "hairmatch-tryon", limit: 5, windowSecs: 3600 });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   try {
     const body = await request.json();
     const photo = String(body.photo || "");

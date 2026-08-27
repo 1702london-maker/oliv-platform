@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 const trackSchema = z.object({
   code: z.string().trim().min(2),
@@ -10,6 +11,9 @@ const trackSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const rl = await checkRateLimit({ key: "ip", value: getClientIp(request), endpoint: "affiliate-track", limit: 60, windowSecs: 60 });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   const parsed = trackSchema.safeParse(await request.json());
   if (!parsed.success) {
     return NextResponse.json({ ok: false }, { status: 400 });

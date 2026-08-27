@@ -6,8 +6,12 @@ import {
   WHOLESALE_SESSION_COOKIE,
   WHOLESALE_SESSION_MAX_AGE,
 } from "@/lib/auth/wholesale-session";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 export async function POST(request: Request) {
+  const rl = await checkRateLimit({ key: "ip", value: getClientIp(request), endpoint: "wholesale-login", limit: 10, windowSecs: 900 });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   const origin = new URL(request.url).origin;
 
   let email: string;

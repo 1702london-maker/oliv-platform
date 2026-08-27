@@ -32,32 +32,30 @@ export interface RateLimitResult {
 export async function checkRateLimit(rule: RateLimitRule): Promise<RateLimitResult> {
   const { key, value, endpoint, limit, windowSecs } = rule;
   const bucket = `${endpoint}:${key}:${value}`;
-  const windowStart = new Date(Date.now() - windowSecs * 1000).toISOString();
   const admin = createSupabaseAdminClient();
 
-  // Count recent hits in window
-  const { count } = await admin
-    .from("rate_limit_hits")
-    .select("*", { count: "exact", head: true })
-    .eq("bucket", bucket)
-    .gte("hit_at", windowStart);
+  try {
+    const { data, error } = await admin.rpc("rate_limit_check_and_record", {
+      p_bucket: bucket,
+      p_limit: limit,
+      p_window_secs: windowSecs,
+    });
 
-  const hits = count ?? 0;
+    if (error) {
+      // Fail closed on DB errors — don't let a broken rate limiter become an open door
+      console.error("[rate-limit] RPC error:", error);
+      return { allowed: false, remaining: 0, retryAfter: windowSecs };
+    }
 
-  if (hits >= limit) {
+    const hits = (data as number) ?? 0;
+    if (hits > limit) {
+      return { allowed: false, remaining: 0, retryAfter: windowSecs };
+    }
+    return { allowed: true, remaining: limit - hits };
+  } catch (err) {
+    console.error("[rate-limit] unexpected error:", err);
     return { allowed: false, remaining: 0, retryAfter: windowSecs };
   }
-
-  // Record this hit (fire-and-forget — don't block the request)
-  admin.from("rate_limit_hits").insert({ bucket }).then(() => {
-    // Periodically prune old rows (1% of requests)
-    if (Math.random() < 0.01) {
-      const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-      admin.from("rate_limit_hits").delete().lt("hit_at", cutoff).then(() => {});
-    }
-  });
-
-  return { allowed: true, remaining: limit - hits - 1 };
 }
 
 /** Convenience: check IP + email together, reject if either is over limit */

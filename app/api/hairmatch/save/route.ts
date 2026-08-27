@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const rl = await checkRateLimit({ key: "ip", value: getClientIp(request), endpoint: "hairmatch-save", limit: 10, windowSecs: 3600 });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   try {
     const body = await request.json();
     const analysis = body.analysis;

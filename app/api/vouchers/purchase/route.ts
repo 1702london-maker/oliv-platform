@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getStripe } from "@/lib/stripe";
 import { env } from "@/lib/env";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 const VALID_AMOUNTS_CENTS = [
   10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000,
@@ -18,6 +19,9 @@ const schema = z.object({
 });
 
 export async function POST(req: Request) {
+  const rl = await checkRateLimit({ key: "ip", value: getClientIp(req), endpoint: "voucher-purchase", limit: 5, windowSecs: 3600 });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) {

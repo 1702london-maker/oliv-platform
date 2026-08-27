@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 
 export async function POST(req: Request) {
+  const rl = await checkRateLimit({ key: "ip", value: getClientIp(req), endpoint: "voucher-activate", limit: 10, windowSecs: 3600 });
+  if (!rl.allowed) return rateLimitResponse(rl);
+
   const { code } = await req.json().catch(() => ({}));
   if (!code || typeof code !== "string") {
     return NextResponse.json({ error: "Voucher code is required." }, { status: 400 });

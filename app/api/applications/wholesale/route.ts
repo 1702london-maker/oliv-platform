@@ -9,8 +9,12 @@ import {
 import { buildApplicationApprovalUrl } from "@/lib/applications/approval-url";
 
 export async function POST(request: Request) {
+  const formData = await request.formData();
+  const email = value(formData, "contact[email]").toLowerCase();
+
   const rl = await checkFormRateLimit({
     ip: getClientIp(request),
+    email: email || undefined,
     endpoint: "wholesale-apply",
     ipLimit: 5,
     emailLimit: 2,
@@ -18,13 +22,10 @@ export async function POST(request: Request) {
   });
   if (!rl.allowed) return rateLimitResponse(rl);
 
-  const formData = await request.formData();
   const turnstileToken = formData.get("cf-turnstile-response") as string | null;
   if (!await verifyTurnstileToken(turnstileToken)) {
     redirect("/wholesale?application=missing");
   }
-
-  const email = value(formData, "contact[email]").toLowerCase();
   const businessName = value(formData, "contact[Business Name]");
 
   if (!email || !businessName) {

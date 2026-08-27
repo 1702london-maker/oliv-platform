@@ -7,8 +7,12 @@ const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsup
 const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
 
 export async function POST(request: Request) {
+  const formData = await request.formData();
+  const emailForRl = String(formData.get("contact[email]") || "").trim().toLowerCase();
+
   const rl = await checkFormRateLimit({
     ip: getClientIp(request),
+    email: emailForRl || undefined,
     endpoint: "contact",
     ipLimit: 8,
     emailLimit: 3,
@@ -16,7 +20,6 @@ export async function POST(request: Request) {
   });
   if (!rl.allowed) return rateLimitResponse(rl);
 
-  const formData = await request.formData();
   const turnstileToken = formData.get("cf-turnstile-response") as string | null;
   if (!await verifyTurnstileToken(turnstileToken)) {
     let redirectPath = "/";
