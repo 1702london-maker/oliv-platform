@@ -33,6 +33,7 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
   const [variantImage, setVariantImage] = useState<string | null>(null);
   const [selectedPrice, setSelectedPrice] = useState(initialPrice);
   const [selectedColor, setSelectedColor] = useState<string | null>(colors.length > 0 ? colors[0].id : null);
+  const selectedColorName = colors.find((c) => c.id === selectedColor)?.name || "";
 
   const displayedImage = variantImage || selectedThumb;
 
@@ -85,7 +86,7 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
         {colors.length > 0 && (
           <div style={{ margin: "20px 0" }}>
             <p style={{ margin: "0 0 10px", fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: "#6b5c4e" }}>
-              Colour: <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>{colors.find((c) => c.id === selectedColor)?.name || ""}</span>
+              Colour: <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>{selectedColorName}</span>
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
               {colors.map((c) => (
@@ -127,6 +128,8 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
           priceMode={isWholesale ? "wholesale" : "retail"}
           currency={currency}
           colourHexMap={colourHexMap}
+          selectedColour={selectedColorName}
+          hideColourOptions={colors.length > 0}
           onImageChange={handleImageChange}
           onPriceChange={handlePriceChange}
         />

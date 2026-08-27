@@ -25,6 +25,8 @@ type AddToCartProps = {
   priceMode?: "retail" | "wholesale";
   currency?: string;
   colourHexMap?: Record<string, string>;
+  selectedColour?: string;
+  hideColourOptions?: boolean;
   onImageChange?: (imageUrl: string | null) => void;
   onPriceChange?: (priceCents: number) => void;
 };
@@ -49,6 +51,8 @@ export function AddToCart({
   priceMode = "retail",
   currency = "EUR",
   colourHexMap,
+  selectedColour,
+  hideColourOptions = false,
   onImageChange,
   onPriceChange
 }: AddToCartProps) {
@@ -66,6 +70,12 @@ export function AddToCart({
     setTexture((current) => current || optionValues.textures[0] || "");
   }, [optionValues.colours, optionValues.lengths, optionValues.textures]);
 
+  useEffect(() => {
+    if (selectedColour && optionValues.colours.includes(selectedColour)) {
+      setColour(selectedColour);
+    }
+  }, [optionValues.colours, selectedColour]);
+
   const selected =
     findBestVariant(variants, { colour, length, texture, variantId }) ||
     variants.find((variant) => variant.id === variantId) ||
@@ -78,7 +88,7 @@ export function AddToCart({
     : 0;
 
   const selectedImage = selected?.image_url || imageForColour(variants, colour) || product.image_url;
-  const usesStructuredOptions = Boolean(optionValues.colours.length || optionValues.lengths.length || optionValues.textures.length);
+  const usesStructuredOptions = Boolean((!hideColourOptions && optionValues.colours.length) || optionValues.lengths.length || optionValues.textures.length);
 
   useEffect(() => {
     if (!selected?.id || selected.id === variantId) return;
@@ -134,7 +144,7 @@ export function AddToCart({
 
   return (
     <div className="ohs-buy-box">
-      {optionValues.colours.length && hasColourHexes ? (
+      {!hideColourOptions && optionValues.colours.length && hasColourHexes ? (
         <div className="ohs-swatch-reference">
           <p className="ohs-swatch-ref-label">Colour Reference</p>
           <div className="ohs-swatch-ref-row">
@@ -151,7 +161,7 @@ export function AddToCart({
         </div>
       ) : null}
 
-      {optionValues.colours.length ? (
+      {!hideColourOptions && optionValues.colours.length ? (
         <div className="ohs-select-group">
           <label htmlFor="ohs-colour-select">
             <span>Colour</span>
