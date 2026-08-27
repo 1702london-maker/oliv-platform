@@ -53,13 +53,13 @@ const BIZILUXE_COLOURS = [
 
 // BiziHair colour codes — exactly as written in the product documents
 const BIZIHAIR_COLOURS = [
-  { name: "1",   hex: "#140E08", img: "colour-1.png" },
-  { name: "1A",  hex: "#131010", img: "colour-1a.png" },
-  { name: "1B",  hex: "#473326", img: "colour-1b.png" },
-  { name: "2",   hex: "#4C3E34", img: "colour-2.png" },
-  { name: "4",   hex: "#C6BC9F", img: "colour-4.png" },
-  { name: "8",   hex: "#DDC599", img: "colour-8.png" },
-  { name: "Red", hex: "#8B1A1A", img: "colour-red.png" },
+  { name: "Colour 1 Schwarz",        hex: "#140E08", img: "colour-1.png" },
+  { name: "1A",                      hex: "#131010", img: "colour-1a.png" },
+  { name: "1B",                      hex: "#473326", img: "colour-1b.png" },
+  { name: "2",                       hex: "#4C3E34", img: "colour-2.png" },
+  { name: "Colour 4 Mittelbraun",    hex: "#6B4A32", img: "colour-4.png" },
+  { name: "8",                       hex: "#DDC599", img: "colour-8.png" },
+  { name: "Colour Highlights 8/22",  hex: "linear-gradient(135deg,#8B5E3C 45%,#D8CDB8 55%)", img: "colour-highlights-8-22.png" },
 ];
 const LENGTHS = ["40cm","45cm","50cm","55cm","60cm","65cm","70cm","75cm"];
 

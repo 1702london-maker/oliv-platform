@@ -96,7 +96,7 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
                   onClick={() => { if (c.inStock) { setSelectedColor(c.id); if (c.imageUrl) setVariantImage(c.imageUrl); } }}
                   title={c.inStock ? c.name : `${c.name} (Out of stock)`}
                   style={{
-                    width: 34, height: 34, borderRadius: "50%",
+                    width: 42, height: 42, borderRadius: "50%",
                     background: c.hex,
                     border: selectedColor === c.id ? "3px solid #2b2620" : "2px solid #e2d5c0",
                     cursor: c.inStock ? "pointer" : "not-allowed",
