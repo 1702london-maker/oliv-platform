@@ -24,6 +24,55 @@ export async function GET(req: NextRequest) {
 // POST /api/admin/products/colors — add a colour
 export async function POST(req: NextRequest) {
   if (!(await isAdmin())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const contentType = req.headers.get("content-type") || "";
+  if (contentType.includes("multipart/form-data")) {
+    const formData = await req.formData();
+    const file = formData.get("file") as File | null;
+    const id = formData.get("id") as string | null;
+    const product_slug = formData.get("product_slug") as string | null;
+    const name = formData.get("name") as string | null;
+    const hex = formData.get("hex") as string | null;
+
+    if (!file || !product_slug) return NextResponse.json({ error: "missing file or product" }, { status: 400 });
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const safeSlug = product_slug.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+    const fileName = `swatches/${safeSlug}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const admin = createSupabaseAdminClient();
+
+    const { error: uploadError } = await admin.storage
+      .from("product-images")
+      .upload(fileName, buffer, { contentType: file.type || "image/jpeg", upsert: false });
+    if (uploadError) return NextResponse.json({ error: uploadError.message }, { status: 500 });
+
+    const { data: urlData } = admin.storage.from("product-images").getPublicUrl(fileName);
+    const image_url = urlData.publicUrl;
+
+    if (id) {
+      const { data, error } = await admin
+        .from("product_colors")
+        .update({ image_url })
+        .eq("id", id)
+        .select("id, name, hex, image_url, in_stock, position")
+        .single();
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ color: data });
+    }
+
+    if (!name || !hex) return NextResponse.json({ error: "missing colour name or hex" }, { status: 400 });
+    const { data: existing } = await admin.from("product_colors").select("position").eq("product_slug", product_slug).order("position", { ascending: false }).limit(1).maybeSingle();
+    const position = (existing?.position ?? -1) + 1;
+    const { data, error } = await admin
+      .from("product_colors")
+      .insert({ product_slug, name, hex, image_url, position })
+      .select("id, name, hex, image_url, in_stock, position")
+      .single();
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ color: data });
+  }
+
   const { product_slug, name, hex, image_url } = await req.json();
   if (!product_slug || !name || !hex) return NextResponse.json({ error: "missing fields" }, { status: 400 });
   const admin = createSupabaseAdminClient();
