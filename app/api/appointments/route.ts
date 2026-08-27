@@ -15,6 +15,9 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "invalid_json" }, { status: 400 });
 
+  const turnstileOk = await verifyTurnstileToken(body?.["cf-turnstile-response"] as string | null);
+  if (!turnstileOk) return NextResponse.json({ error: "captcha_failed" }, { status: 403 });
+
   const rl = await checkFormRateLimit({
     ip: getClientIp(request),
     email: typeof body.customerEmail === "string" ? body.customerEmail : undefined,
@@ -25,9 +28,6 @@ export async function POST(request: Request) {
     windowSecs: 3600,
   });
   if (!rl.allowed) return rateLimitResponse(rl);
-
-  const turnstileOk = await verifyTurnstileToken(body?.["cf-turnstile-response"] as string | null);
-  if (!turnstileOk) return NextResponse.json({ error: "captcha_failed" }, { status: 403 });
 
   try {
     const {
