@@ -39,6 +39,41 @@ type ProductOverride = {
   merged_into_slug: string | null;
 };
 
+const LEGACY_IMAGE_FALLBACKS: Array<{ match: RegExp; image: string }> = [
+  {
+    match: /(?:biziluxe-adhesive-remover|walker-c22-solvent|walker.*c-?22.*solvent|adhesive-remover)/i,
+    image: "/products/biziluxe-accessoires/removal-toner/removal-toner-100ml-main.jpg",
+  },
+  {
+    match: /(?:biziluxe-lace-front-tape|walker-tape-lace-front|lace-front-tape)/i,
+    image: "/products/biziluxe-accessoires/double-side-tape/double-side-tape-braun-main.jpg",
+  },
+];
+
+function resolveLegacyImageFallback(product: {
+  title?: string | null;
+  slug?: string | null;
+  image_url?: string | null;
+}) {
+  const haystack = [product.slug, product.title, product.image_url].filter(Boolean).join(" ");
+  return LEGACY_IMAGE_FALLBACKS.find((fallback) => fallback.match.test(haystack))?.image || null;
+}
+
+function normalizeCatalogProductImages(product: CatalogProduct): CatalogProduct {
+  const fallback = resolveLegacyImageFallback(product);
+  if (!fallback) return product;
+
+  return {
+    ...product,
+    image_url: fallback,
+    gallery: product.gallery?.map((image) => resolveLegacyImageFallback({ ...product, image_url: image }) || image),
+    variants: product.variants.map((variant) => ({
+      ...variant,
+      image_url: resolveLegacyImageFallback({ ...product, image_url: variant.image_url }) || variant.image_url || fallback,
+    })),
+  };
+}
+
 // BiziLuxe colour codes — exactly as written in the product documents
 const BIZILUXE_COLOURS = [
   { name: "1",      hex: "#1C1008",                                           img: "colour-1.jpg" },
@@ -51,15 +86,15 @@ const BIZILUXE_COLOURS = [
   { name: "Balayage 8/22",  hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)",  img: "colour-8-22.jpg" },
 ];
 
-// BiziHair colour codes — exactly as written in the product documents
+// BiziHair colour codes — customer-facing names kept explicit for swatches.
 const BIZIHAIR_COLOURS = [
-  { name: "1",                       hex: "#140E08", img: "colour-1.png" },
-  { name: "1A",                      hex: "#131010", img: "colour-1a.png" },
-  { name: "1B",                      hex: "#473326", img: "colour-1b.png" },
-  { name: "2",                       hex: "#4C3E34", img: "colour-2.png" },
-  { name: "4",                       hex: "#6B4A32", img: "colour-4.png" },
-  { name: "8",                       hex: "#DDC599", img: "colour-8.png" },
-  { name: "Red",                     hex: "#7D1F1F", img: "colour-red.png" },
+  { name: "Colour 1 Black",          hex: "#140E08", img: "colour-1.png" },
+  { name: "Colour 1A Natural Black", hex: "#131010", img: "colour-1a.png" },
+  { name: "Colour 1B Off Black",     hex: "#473326", img: "colour-1b.png" },
+  { name: "Colour 2 Dark Brown",     hex: "#4C3E34", img: "colour-2.png" },
+  { name: "Colour 4 Medium Brown",   hex: "#6B4A32", img: "colour-4.png" },
+  { name: "Colour 8 Light Brown",    hex: "#DDC599", img: "colour-8.png" },
+  { name: "Colour Red",              hex: "#7D1F1F", img: "colour-red.png" },
   { name: "Colour 4 Mittelbraun",    hex: "#6B4A32", img: "colour-4.png" },
   { name: "Colour 1 Schwarz",        hex: "#140E08", img: "colour-1.png" },
   { name: "Colour Highlights 8/22",  hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)", img: "colour-highlights-8-22.jpg" },
@@ -525,7 +560,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-weft",
       title: "BiziHair Genius Weft Extensions",
       slug: "bizihair-weft-extensions",
-      description: "BiziHair Genius Weft Human Hair Extensions. Available in 7 colours and 8 lengths.",
+      description: "BiziHair Genius Weft Human Hair Extensions. Available in 10 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/weft/weft-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/weft/weft-1.jpeg",
@@ -546,7 +581,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-tape-in",
       title: "BiziHair Tape-In Extensions",
       slug: "bizihair-tape-in-extensions",
-      description: "BiziHair Tape-In Human Hair Extensions. Invisible adhesive strips for seamless blending. Available in 7 colours and 8 lengths.",
+      description: "BiziHair Tape-In Human Hair Extensions. Invisible adhesive strips for seamless blending. Available in 10 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
@@ -565,7 +600,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-keratin",
       title: "BiziHair Keratin Bonding Extensions",
       slug: "bizihair-keratin-extensions",
-      description: "BiziHair Keratin Bonding Human Hair Extensions. Individual strand application for the most natural, seamless result. Available in 7 colours and 8 lengths.",
+      description: "BiziHair Keratin Bonding Human Hair Extensions. Individual strand application for the most natural, seamless result. Available in 10 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/keratin/keratin-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/keratin/keratin-1.jpeg",
@@ -657,7 +692,7 @@ async function fetchProductOverride(slug: string): Promise<ProductOverride | nul
 }
 
 function applyOverrideToProduct(product: CatalogProduct, override?: ProductOverride | null): CatalogProduct {
-  if (!override) return product;
+  if (!override) return normalizeCatalogProductImages(product);
   let variants = product.variants;
   if (override.retail_price_cents != null && product.variants.length > 0) {
     const baseRetail = product.variants[0].retail_price_cents;
@@ -674,12 +709,12 @@ function applyOverrideToProduct(product: CatalogProduct, override?: ProductOverr
         : null,
     }));
   }
-  return {
+  return normalizeCatalogProductImages({
     ...product,
     title: override.title || product.title,
     description: override.description || product.description,
     variants,
-  };
+  });
 }
 
 async function applyCatalogOverrides(products: CatalogProduct[], categorySlug?: string): Promise<CatalogProduct[]> {
@@ -714,7 +749,7 @@ async function fetchSupabaseProductsBySlugs(slugs: string[]): Promise<CatalogPro
     .select("id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,color,sku,retail_price_cents,wholesale_price_cents,inventory_quantity,image_url,attributes,position)")
     .in("slug", slugs)
     .eq("status", "active");
-  return (data || []).map((product): CatalogProduct => ({
+  return (data || []).map((product): CatalogProduct => normalizeCatalogProductImages({
     id: product.id,
     shopify_id: product.shopify_id,
     title: product.title,
@@ -783,7 +818,7 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
     return getLocalShopifyProducts(categorySlug);
   }
 
-  const products = (data || []).map((product): CatalogProduct => ({
+  const products = (data || []).map((product): CatalogProduct => normalizeCatalogProductImages({
     id: product.id,
     shopify_id: product.shopify_id,
     title: product.title,

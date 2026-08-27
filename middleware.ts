@@ -8,8 +8,20 @@ export async function middleware(request: NextRequest) {
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const needsSupabaseSessionRefresh = [
+    "/account",
+    "/auth",
+    "/cart",
+    "/checkout",
+    "/login",
+    "/register",
+    "/api/auth",
+    "/api/checkout",
+  ].some((path) => request.nextUrl.pathname.startsWith(path));
 
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!supabaseUrl || !supabaseAnonKey || !needsSupabaseSessionRefresh) {
+    response.headers.set("x-pathname", request.nextUrl.pathname);
+    applySecurityHeaders(response);
     return response;
   }
 
@@ -37,7 +49,12 @@ export async function middleware(request: NextRequest) {
   // Pass pathname to server components via header (used by admin layout to skip auth on login page)
   response.headers.set("x-pathname", request.nextUrl.pathname);
 
-  // Security headers
+  applySecurityHeaders(response);
+
+  return response;
+}
+
+function applySecurityHeaders(response: NextResponse) {
   response.headers.set("X-Frame-Options", "SAMEORIGIN");
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
@@ -55,8 +72,6 @@ export async function middleware(request: NextRequest) {
       "frame-ancestors 'none'",
     ].join("; ")
   );
-
-  return response;
 }
 
 export const config = {

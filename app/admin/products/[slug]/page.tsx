@@ -3,6 +3,7 @@ import { getCatalogProductBySlug } from "@/lib/catalog/products";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { ProductImageManager } from "./ProductImageManager";
 import { ProductDescriptionEditor } from "./ProductDescriptionEditor";
+import { ColorManager } from "../../media/ColorManager";
 
 export const dynamic = "force-dynamic";
 
@@ -61,8 +62,32 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
         dbImages={dbImages || []}
         staticGallery={staticGallery}
       />
+
+      <ColorManager
+        productSlug={product.slug}
+        images={staticGallery.map((src) => ({ src, label: src.split("/").pop() || product.title }))}
+        fallbackColors={buildVariantColourSwatches(product)}
+      />
     </section>
   );
+}
+
+function buildVariantColourSwatches(product: Awaited<ReturnType<typeof getCatalogProductBySlug>>) {
+  if (!product) return [];
+  const seen = new Set<string>();
+  return product.variants.flatMap((variant, index) => {
+    if (!variant.color || seen.has(variant.color)) return [];
+    seen.add(variant.color);
+    return [{
+      id: `fallback-${product.slug}-${index}`,
+      name: variant.color,
+      hex: (variant.attributes?.colour_hex as string) || "#888888",
+      image_url: variant.image_url,
+      in_stock: variant.inventory_quantity > 0,
+      position: index,
+      persisted: false,
+    }];
+  });
 }
 
 const eyebrow: React.CSSProperties = { color: "#b68a45", fontSize: 10, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", margin: "24px 0 0", display: "block" };

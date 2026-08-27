@@ -26,36 +26,42 @@ const shopCollections = [
     title: "Bizihair Extensions",
     slug: "bizihair-extensions",
     desc: "Signature hair extensions selected for natural movement, lasting wear and refined everyday styling.",
+    slot: "shop.collection.bizihair-extensions",
     image: "/products/biziluxe-extensions/weft/weft-main.jpg"
   },
   {
     title: "BiziLuxe Extensions",
     slug: "biziluxe-extensions",
     desc: "Luxury Remy human hair extensions in premium textures, lengths and salon-ready finishes.",
+    slot: "shop.collection.biziluxe-extensions",
     image: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg"
   },
   {
     title: "BiziLuxe Accessories",
     slug: "biziluxe-accessoires",
     desc: "Finishing accessories, care pieces and refined essentials for maintaining your BiziLuxe look.",
+    slot: "shop.collection.biziluxe-accessoires",
     image: "/products/accessories/slip-on-bonnet/slip-on-bonnet-main.jpg"
   },
   {
     title: "BiziLuxe Styling Tools",
     slug: "biziluxe-stylinggeraete",
     desc: "Styling tools selected for controlled heat, polished results and daily salon-level care.",
+    slot: "shop.collection.biziluxe-stylinggeraete",
     image: "/products/accessories/tie-up-bonnet/tie-up-bonnet-main.jpg"
   },
   {
     title: "Brushes & Combs",
     slug: "buersten-und-kaemme",
     desc: "Brushes and combs for gentle detangling, blending and extension-safe daily maintenance.",
+    slot: "shop.collection.buersten-und-kaemme",
     image: "/products/buersten-und-kaemme/vent-brush/vent-brush-main.jpg"
   },
   {
     title: "Pro Salon Supplies",
     slug: "profi-friseurbedarf",
     desc: "Professional supplies and appliances for salon workflows, installation and precision finishing.",
+    slot: "shop.collection.profi-friseurbedarf",
     image: "/products/profi-friseurbedarf/herford/herford-main.jpg"
   }
 ];
@@ -66,6 +72,7 @@ const featuredProducts = [
     tag: "BiziLuxe Extensions",
     price: "&euro;89,00",
     href: "/shop?category=biziluxe-extensions",
+    slot: "shop.featured.tape-in-extensions",
     image: "/products/biziluxe-extensions/tape-in/tape-in-main.jpg"
   },
   {
@@ -73,6 +80,7 @@ const featuredProducts = [
     tag: "BiziLuxe Extensions",
     price: "&euro;119,00",
     href: "/shop?category=biziluxe-extensions",
+    slot: "shop.featured.weft-extensions",
     image: "/products/biziluxe-extensions/weft/weft-main.jpg"
   },
   {
@@ -80,6 +88,7 @@ const featuredProducts = [
     tag: "BiziLuxe Extensions",
     price: "&euro;149,00",
     href: "/shop?category=biziluxe-extensions",
+    slot: "shop.featured.utip-extensions",
     image: "/products/biziluxe-extensions/utip/utip-main.jpg"
   }
 ];
@@ -103,17 +112,29 @@ const { data: overrideRows } = await admin
 const overrideMap: Record<string, string> = {};
 for (const row of overrideRows || []) {
   overrideMap[row.original_src] = row.replacement_url;
+  overrideMap[normalizedSrcKey(row.original_src)] = row.replacement_url;
 }
 
 function applyImageOverrides(html: string): string {
-  for (const [orig, repl] of Object.entries(overrideMap)) {
-    html = html.replaceAll(`src="${orig}"`, `src="${repl}"`);
-  }
-  return html;
+  return html.replace(
+    /<img\b[^>]*>/gi,
+    (tag) => {
+      const slot = tag.match(/\bdata-ohs-image-slot=("|\')([^"\']+)\1/i)?.[2];
+      const slotReplacement = slot ? overrideMap[`slot:${slot}`] : null;
+      if (slotReplacement) {
+        return tag.replace(/\bsrc=("|\')([^"\']+)\1/i, `src="${slotReplacement}"`);
+      }
+
+      return tag.replace(/\bsrc=("|\')([^"\']+)\1/i, (match, quote: string, value: string) => {
+        const replacement = overrideMap[value] ?? overrideMap[normalizedSrcKey(value)];
+        return replacement ? `src=${quote}${replacement}${quote}` : match;
+      });
+    }
+  );
 }
 
 function resolveImage(src: string): string {
-  return overrideMap[src] ?? src;
+  return overrideMap[src] ?? overrideMap[normalizedSrcKey(src)] ?? src;
 }
 
 if (!categorySlug && !viewAll) {
@@ -226,7 +247,7 @@ function normalizeShopHtml(html: string) {
 function buildShopLandingHtml(resolveImage: (src: string) => string = (s) => s) {
   let html = normalizeShopHtml(fs.readFileSync(path.join(process.cwd(), "shopify-clone", "collections.html"), "utf8"));
 
-  html = html.replace(/<img class="oshp-hero-img"[\s\S]*?>/, '<img class="oshp-hero-img" src="/heroes/shop-hero.svg" alt="OlivHairSupply Shop" loading="eager" fetchpriority="high">');
+  html = html.replace(/<img class="oshp-hero-img"[\s\S]*?>/, '<img class="oshp-hero-img" data-ohs-image-slot="shop.hero" src="/heroes/shop-hero.svg" alt="OlivHairSupply Shop" loading="eager" fetchpriority="high">');
   html = html.replace("The BiziLuxe <em>Edit</em>", "The BiziLuxe <em>Edit</em>");
   html = html.replace("BiziLuxe by OlivHairSupply", "BiziLuxe by OlivHairSupply");
   html = html.replace('<span class="oshp-hero-meta-val">4</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>', '<span class="oshp-hero-meta-val">6</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>');
@@ -242,11 +263,72 @@ function buildShopLandingHtml(resolveImage: (src: string) => string = (s) => s) 
   return html;
 }
 
+async function applyPageImageOverrides(pageKey: string, html: string) {
+  try {
+    const admin = createSupabaseAdminClient();
+    const { data: overrides } = await admin
+      .from("page_images")
+      .select("original_src, replacement_url")
+      .eq("page_key", pageKey);
+
+    html = applyImageOverrides(html, overrides || []);
+  } catch {
+    // Page image overrides are non-critical; render original shop images if unavailable.
+  }
+
+  return html;
+}
+
+function applyImageOverrides(html: string, overrides: Array<{ original_src: string; replacement_url: string }>) {
+  const replacements = new Map<string, string>();
+  for (const override of overrides) {
+    replacements.set(override.original_src, override.replacement_url);
+    replacements.set(normalizedSrcKey(override.original_src), override.replacement_url);
+  }
+
+  return html.replace(
+    /<img\b[^>]*>/gi,
+    (tag) => {
+      const slot = tag.match(/\bdata-ohs-image-slot=("|\')([^"\']+)\1/i)?.[2];
+      const slotReplacement = slot ? replacements.get(`slot:${slot}`) : null;
+      if (slotReplacement) {
+        return tag.replace(/\bsrc=("|\')([^"\']+)\1/i, `src="${slotReplacement}"`);
+      }
+
+      return tag.replace(/\b(src|srcset)=("|\')([^"\']+)\2/gi, (match, attr: string, quote: string, value: string) => {
+        if (attr.toLowerCase() === "src") {
+          const replacement = replacements.get(normalizedSrcKey(value));
+          return replacement ? `${attr}=${quote}${replacement}${quote}` : match;
+        }
+
+        const nextValue = value
+          .split(",")
+          .map((part) => {
+            const pieces = part.trim().split(/\s+/);
+            const replacement = replacements.get(normalizedSrcKey(pieces[0]));
+            return replacement ? [replacement, ...pieces.slice(1)].join(" ") : part.trim();
+          })
+          .join(", ");
+        return `${attr}=${quote}${nextValue}${quote}`;
+      });
+    }
+  );
+}
+
+function normalizedSrcKey(src: string) {
+  try {
+    const url = new URL(src);
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return src;
+  }
+}
+
 function buildCollectionCards(resolveImage: (src: string) => string = (s) => s) {
   return shopCollections
     .map((collection, index) => {
       const image = collection.image
-        ? `<img class="oshp-col-card-img" src="${resolveImage(collection.image)}" alt="${collection.title}" loading="lazy">`
+        ? `<img class="oshp-col-card-img" data-ohs-image-slot="${collection.slot}" src="${resolveImage(collection.image)}" alt="${collection.title}" loading="lazy">`
         : `<div class="oshp-col-card-img oshp-col-card-ph"></div>`;
 
       return `        <a href="/shop?category=${collection.slug}" class="oshp-col-card">
@@ -283,7 +365,7 @@ function buildFeaturedProducts(resolveImage: (src: string) => string = (s) => s)
         <div class="oshp-featured-grid">
 ${featuredProducts.map((product) => `          <a href="${product.href}" class="oshp-prod-card">
             <div class="oshp-prod-img">
-              <img src="${resolveImage(product.image)}" alt="${product.title}" loading="lazy">
+              <img data-ohs-image-slot="${product.slot}" src="${resolveImage(product.image)}" alt="${product.title}" loading="lazy">
               <span class="oshp-prod-quick">View Product</span>
             </div>
             <div class="oshp-prod-body">

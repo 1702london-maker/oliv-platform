@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
 }
 
 function normalizeOriginalSrc(src: string) {
+  if (src.startsWith("slot:")) return src;
   try {
     const url = new URL(src, "https://olivhairsupply.de");
     return `${url.pathname}${url.search}`;

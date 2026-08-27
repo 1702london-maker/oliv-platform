@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { ManagedImage } from "./page";
+import type { ManagedImage, MediaProduct } from "./page";
 import { ColorManager } from "./ColorManager";
 
 type Category = { key: string; label: string };
-type Product = { slug: string; title: string };
+type Product = MediaProduct;
 type Override = {
   title?: string | null;
   description?: string | null;
@@ -110,6 +110,7 @@ export function MediaManager({
     .map(([slug, groupImages]) => ({
       slug,
       title: products.find((p) => p.slug === slug)?.title || slug,
+      product: products.find((p) => p.slug === slug) || productFromImages(slug, groupImages),
       images: groupImages,
     }))
     .sort((a, b) => a.title.localeCompare(b.title));
@@ -120,14 +121,15 @@ export function MediaManager({
     if (!slug) { setOverride(null); setEditorTitle(""); setEditorDesc(""); setEditorRetail(""); setEditorWholesale(""); setEditorCategory(""); setEditorHidden(false); setEditorMergedInto(""); setMergeTarget(""); return; }
     setEditorLoading(true);
     try {
+      const product = products.find((p) => p.slug === slug);
       const res = await fetch(`/api/admin/products/images?slug=${encodeURIComponent(slug)}`);
       const json = await res.json();
       const ov: Override = json.override;
       setOverride(ov);
-      setEditorTitle(ov?.title || products.find((p) => p.slug === slug)?.title || "");
-      setEditorDesc(ov?.description || "");
-      setEditorRetail(ov?.retail_price_cents != null ? (ov.retail_price_cents / 100).toFixed(2) : "");
-      setEditorWholesale(ov?.wholesale_price_cents != null ? (ov.wholesale_price_cents / 100).toFixed(2) : "");
+      setEditorTitle(ov?.title ?? product?.title ?? "");
+      setEditorDesc(ov?.description ?? product?.description ?? "");
+      setEditorRetail(formatPriceInput(ov?.retail_price_cents ?? product?.retailPriceCents));
+      setEditorWholesale(formatPriceInput(ov?.wholesale_price_cents ?? product?.wholesalePriceCents));
       setEditorCategory(ov?.category_slug || "");
       setEditorHidden(Boolean(ov?.hidden));
       setEditorMergedInto(ov?.merged_into_slug || "");
@@ -502,6 +504,7 @@ export function MediaManager({
               <ProductGroupCard
                 key={group.slug}
                 title={group.title}
+                product={group.product}
                 images={group.images}
                 onOpen={() => handleSelectProduct(group.slug)}
               />
@@ -546,14 +549,18 @@ export function MediaManager({
 
 function ProductGroupCard({
   title,
+  product,
   images,
   onOpen,
 }: {
   title: string;
+  product?: Product | null;
   images: ManagedImage[];
   onOpen: () => void;
 }) {
   const previewImages = images.slice(0, 6);
+  const retailLabel = formatCents(product?.retailPriceCents);
+  const wholesaleLabel = formatCents(product?.wholesalePriceCents);
 
   return (
     <div style={{ background: "#fff", border: "1px solid #d7c7ad", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -569,6 +576,15 @@ function ProductGroupCard({
         <p style={{ margin: "0 0 5px", fontSize: 11, color: "#315f38", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.35 }}>
           {title}
         </p>
+        <p style={{ margin: "0 0 5px", fontSize: 10, color: "#2b2620", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+          {retailLabel ? `From ${retailLabel}` : "Price not set"}
+          {wholesaleLabel ? ` · Wholesale ${wholesaleLabel}` : ""}
+        </p>
+        {product?.description && (
+          <p style={{ margin: "0 0 7px", fontSize: 10, color: "#8a7664", lineHeight: 1.45 }}>
+            {truncate(product.description, 116)}
+          </p>
+        )}
         <p style={{ margin: 0, fontSize: 10, color: "#8a7664" }}>
           {images.length} image{images.length === 1 ? "" : "s"} grouped for this product
         </p>
@@ -603,7 +619,7 @@ function ImageCard({
   assigningKey: string | null;
   selected?: boolean;
   categories: { key: string; label: string }[];
-  products: { slug: string; title: string }[];
+  products: Product[];
   onToggleSelected?: () => void;
   onRename: (label: string) => void;
   onRenameConfirm: (label: string) => void;
@@ -624,6 +640,8 @@ function ImageCard({
   const isMoving = movingKey === key;
   const isAssigning = assigningKey === key;
   const assignedProduct = img.productSlug ? products.find((p) => p.slug === img.productSlug) : null;
+  const assignedPrice = formatCents(assignedProduct?.retailPriceCents);
+  const assignedWholesale = formatCents(assignedProduct?.wholesalePriceCents);
 
   return (
     <div style={{ background: "#fff", border: "1px solid #e2d5c0", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -638,7 +656,7 @@ function ImageCard({
       </div>
       {assignedProduct && (
         <div style={{ background: "#e4eddf", color: "#315f38", fontSize: 8, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: "3px 10px" }}>
-          → {assignedProduct.title}
+          → {assignedProduct.title}{assignedPrice ? ` · ${assignedPrice}` : ""}
         </div>
       )}
       <a href={img.src} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
@@ -653,6 +671,25 @@ function ImageCard({
           </div>
         ) : (
           <p onClick={() => onRename(img.label)} title="Click to rename" style={{ margin: 0, fontSize: 10, color: "#6b5c4e", wordBreak: "break-all", lineHeight: 1.4, cursor: "text" }}>✎ {img.label}</p>
+        )}
+        {assignedProduct ? (
+          <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #f0e8dc" }}>
+            <p style={{ margin: "0 0 5px", color: "#2b2620", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
+              {assignedProduct.title}
+            </p>
+            <p style={{ margin: "0 0 5px", color: "#2b2620", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
+              {assignedPrice ? `From ${assignedPrice}` : "Price not set"}{assignedWholesale ? ` · Wholesale ${assignedWholesale}` : ""}
+            </p>
+            {assignedProduct.description && (
+              <p style={{ margin: 0, color: "#8a7664", fontSize: 10, lineHeight: 1.45 }}>
+                {truncate(assignedProduct.description, 96)}
+              </p>
+            )}
+          </div>
+        ) : (
+          <p style={{ margin: "8px 0 0", paddingTop: 8, borderTop: "1px solid #f0e8dc", color: "#a07235", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
+            Not assigned to a product yet
+          </p>
         )}
       </div>
       {isMoving && (
@@ -683,6 +720,30 @@ function ImageCard({
       </div>
     </div>
   );
+}
+
+function formatPriceInput(value: number | null | undefined) {
+  return value != null ? (value / 100).toFixed(2) : "";
+}
+
+function formatCents(value: number | null | undefined) {
+  return value != null ? `€${(value / 100).toFixed(2)}` : "";
+}
+
+function truncate(text: string, maxLength: number) {
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength - 1).trim()}…`;
+}
+
+function productFromImages(slug: string, images: ManagedImage[]): Product {
+  const first = images.find((image) => image.productSlug === slug);
+  return {
+    slug,
+    title: first?.productTitle || slug,
+    description: first?.productDescription || null,
+    retailPriceCents: first?.retailPriceCents ?? null,
+    wholesalePriceCents: first?.wholesalePriceCents ?? null,
+  };
 }
 
 const grid: React.CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 };

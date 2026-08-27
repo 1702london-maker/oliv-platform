@@ -22,13 +22,13 @@ export async function POST(request: Request) {
     return NextResponse.redirect(`${origin}/login?error=invalid&next=${encodeURIComponent(next)}`, 303);
   }
 
-  const profileReady = await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
-  if (!profileReady) {
+  const profile = await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
+  if (!profile) {
     return NextResponse.redirect(`${origin}/login?error=profile&next=${encodeURIComponent(next)}`, 303);
   }
 
   const response = NextResponse.redirect(`${origin}${next}`, 303);
-  response.cookies.set(APP_SESSION_COOKIE, createAppSessionCookie(data.user.id, data.user.email ?? email), {
+  response.cookies.set(APP_SESSION_COOKIE, createAppSessionCookie(data.user.id, data.user.email ?? email, profile.roles), {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 30,
     path: "/",

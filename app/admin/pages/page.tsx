@@ -5,15 +5,15 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 export const dynamic = "force-dynamic";
 
 async function countImages(pagePath: string, file: string) {
-  const html = await getLiveHtml(pagePath, file);
-  return extractImages(html).length;
+  const { html, baseUrl } = await getLiveHtml(pagePath, file);
+  return extractImages(html, baseUrl).length;
 }
 
 async function getLiveHtml(pagePath: string, file: string) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://olivhairsupply.de";
   try {
     const res = await fetch(new URL(pagePath, baseUrl), { cache: "no-store" });
-    if (res.ok) return res.text();
+    if (res.ok) return { html: await res.text(), baseUrl };
   } catch {
     // Fall back below.
   }
@@ -21,27 +21,40 @@ async function getLiveHtml(pagePath: string, file: string) {
   try {
     const fs = await import("node:fs");
     const path = await import("node:path");
-    return fs.readFileSync(path.join(process.cwd(), "shopify-clone", file), "utf8");
+    return { html: fs.readFileSync(path.join(process.cwd(), "shopify-clone", file), "utf8"), baseUrl };
   } catch {
-    return "";
+    return { html: "", baseUrl };
   }
 }
 
-function extractImages(html: string) {
+function extractImages(html: string, baseUrl: string) {
   const seen = new Set<string>();
   const images: string[] = [];
-  const matches = html.matchAll(/<(?:img|source)\b[^>]*(?:src|srcset)=["']([^"']+)["']/gi);
+  const matches = html.matchAll(/<(?:img|source)\b[^>]*(?:src|srcset)=["']([^"']+)["'][^>]*>/gi);
 
   for (const match of matches) {
+    const tag = match[0];
+    const slot = tag.match(/\bdata-ohs-image-slot=["']([^"']+)["']/i)?.[1];
     for (const part of match[1].replaceAll("&amp;", "&").split(",")) {
-      const src = part.trim().split(/\s+/)[0]?.split("?")[0];
-      if (!src || src.startsWith("data:") || seen.has(src)) continue;
-      seen.add(src);
-      images.push(src);
+      const raw = part.trim().split(/\s+/)[0];
+      if (!raw || raw.startsWith("data:")) continue;
+      const key = slot ? `slot:${slot}` : normalizeSrc(raw, baseUrl);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      images.push(key);
     }
   }
 
   return images;
+}
+
+function normalizeSrc(src: string, baseUrl: string) {
+  try {
+    const url = new URL(src, baseUrl);
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return src;
+  }
 }
 
 export default async function PagesAdmin() {

@@ -5,18 +5,22 @@ import { PageImageManager } from "./PageImageManager";
 
 export const dynamic = "force-dynamic";
 
-function extractImages(html: string, baseUrl: string): { src: string; label: string }[] {
-  const matches = [...html.matchAll(/<(?:img|source)\b[^>]*(?:src|srcset)=["']([^"']+)["']/gi)];
+type PageImage = { src: string; label: string; targetSrc?: string };
+
+function extractImages(html: string, baseUrl: string): PageImage[] {
+  const matches = [...html.matchAll(/<(?:img|source)\b[^>]*(?:src|srcset)=["']([^"']+)["'][^>]*>/gi)];
   const seen = new Set<string>();
-  const images: { src: string; label: string }[] = [];
+  const images: PageImage[] = [];
 
   for (const match of matches) {
+    const tag = match[0];
+    const slot = tag.match(/\bdata-ohs-image-slot=["']([^"']+)["']/i)?.[1];
     for (const part of match[1].replaceAll("&amp;", "&").split(",")) {
       const raw = part.trim().split(/\s+/)[0];
       if (!raw || raw.startsWith("data:")) continue;
-      const withoutQuery = raw.split("?")[0];
-      if (seen.has(withoutQuery)) continue;
-      seen.add(withoutQuery);
+      const targetSrc = slot ? `slot:${slot}` : normalizeSrc(raw, baseUrl);
+      if (seen.has(targetSrc)) continue;
+      seen.add(targetSrc);
 
       let src = raw;
       try {
@@ -25,11 +29,32 @@ function extractImages(html: string, baseUrl: string): { src: string; label: str
         // Keep raw source if URL parsing fails.
       }
 
-      images.push({ src, label: withoutQuery.split("/").pop() || withoutQuery });
+      images.push({
+        src,
+        targetSrc,
+        label: slot ? labelForSlot(slot) : normalizeSrc(raw, baseUrl).split("/").pop() || raw,
+      });
     }
   }
 
   return images;
+}
+
+function labelForSlot(slot: string) {
+  const labels: Record<string, string> = {
+    "shop.hero": "Shop hero image",
+    "shop.collection.bizihair-extensions": "Collection card: Bizihair Extensions",
+    "shop.collection.biziluxe-extensions": "Collection card: BiziLuxe Extensions",
+    "shop.collection.biziluxe-accessoires": "Collection card: BiziLuxe Accessories",
+    "shop.collection.biziluxe-stylinggeraete": "Collection card: BiziLuxe Styling Tools",
+    "shop.collection.buersten-und-kaemme": "Collection card: Brushes & Combs",
+    "shop.collection.profi-friseurbedarf": "Collection card: Pro Salon Supplies",
+    "shop.featured.tape-in-extensions": "Featured product: Tape-In Extensions",
+    "shop.featured.weft-extensions": "Featured product: Weft Extensions",
+    "shop.featured.utip-extensions": "Featured product: U-Tip Extensions",
+  };
+
+  return labels[slot] || slot;
 }
 
 async function getPageHtml(pagePath: string, file: string) {
