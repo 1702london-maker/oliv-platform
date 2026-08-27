@@ -13,18 +13,30 @@ export type ManagedImage = {
   isCatalog: boolean;
   category: string;
   productSlug?: string | null;
+  productTitle?: string | null;
+  productDescription?: string | null;
+  retailPriceCents?: number | null;
+  wholesalePriceCents?: number | null;
+};
+
+export type MediaProduct = {
+  slug: string;
+  title: string;
+  description?: string | null;
+  retailPriceCents?: number | null;
+  wholesalePriceCents?: number | null;
 };
 
 export default async function MediaPage() {
   const admin = createSupabaseAdminClient();
 
-  const [{ data: dbRows }, catalogGroups] = await Promise.all([
+  const [{ data: dbRows }, catalogData] = await Promise.all([
     admin
       .from("product_images")
       .select("id, url, label, hidden, is_catalog, category, created_at, product_slug")
       .neq("hidden", true)
       .order("created_at", { ascending: false }),
-    getAdminCatalogImages(),
+    getAdminCatalogData(),
   ]);
 
   const rows = dbRows || [];
@@ -40,9 +52,12 @@ export default async function MediaPage() {
       productSlug: r.product_slug ?? null,
     }));
 
-  const images = mergeManagedImages([...dbImages, ...catalogGroups]);
+  const images = mergeManagedImages([...dbImages, ...catalogData.images]);
 
-  const products = PRODUCT_SLUGS;
+  const products = mergeMediaProducts([
+    ...PRODUCT_SLUGS.map((product) => ({ ...product, description: null, retailPriceCents: null, wholesalePriceCents: null })),
+    ...catalogData.products,
+  ]);
 
   return (
     <section style={{ padding: "36px 32px", maxWidth: 1400 }}>
@@ -56,7 +71,7 @@ export default async function MediaPage() {
   );
 }
 
-async function getAdminCatalogImages(): Promise<ManagedImage[]> {
+async function getAdminCatalogData(): Promise<{ images: ManagedImage[]; products: MediaProduct[] }> {
   const categoryPairs = [
     ["biziluxe-accessories", "biziluxe-accessoires"],
     ["brushes-combs", "buersten-und-kaemme"],
@@ -68,14 +83,21 @@ async function getAdminCatalogImages(): Promise<ManagedImage[]> {
   const groups = await Promise.all(
     categoryPairs.map(async ([adminCategory, liveCategory]) => {
       const products = await getCatalogProducts(liveCategory);
-      return products.flatMap((product) => catalogImagesForProduct(product, adminCategory));
+      return {
+        images: products.flatMap((product) => catalogImagesForProduct(product, adminCategory)),
+        products: products.map(productToMediaProduct),
+      };
     })
   );
 
-  return groups.flat();
+  return {
+    images: groups.flatMap((group) => group.images),
+    products: mergeMediaProducts(groups.flatMap((group) => group.products)),
+  };
 }
 
 function catalogImagesForProduct(product: CatalogProduct, category: string): ManagedImage[] {
+  const summary = productToMediaProduct(product);
   const urls = [
     product.image_url,
     ...(product.gallery || []),
@@ -88,7 +110,41 @@ function catalogImagesForProduct(product: CatalogProduct, category: string): Man
     isCatalog: true,
     category,
     productSlug: product.slug,
+    productTitle: summary.title,
+    productDescription: summary.description,
+    retailPriceCents: summary.retailPriceCents,
+    wholesalePriceCents: summary.wholesalePriceCents,
   }));
+}
+
+function productToMediaProduct(product: CatalogProduct): MediaProduct {
+  const firstVariant = product.variants[0];
+  return {
+    slug: product.slug,
+    title: product.title,
+    description: stripText(product.description),
+    retailPriceCents: firstVariant?.retail_price_cents ?? null,
+    wholesalePriceCents: firstVariant?.wholesale_price_cents ?? null,
+  };
+}
+
+function stripText(text: string | null | undefined) {
+  return text?.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() || null;
+}
+
+function mergeMediaProducts(products: MediaProduct[]): MediaProduct[] {
+  const merged = new Map<string, MediaProduct>();
+  for (const product of products) {
+    const current = merged.get(product.slug);
+    merged.set(product.slug, {
+      ...current,
+      ...product,
+      description: product.description ?? current?.description ?? null,
+      retailPriceCents: product.retailPriceCents ?? current?.retailPriceCents ?? null,
+      wholesalePriceCents: product.wholesalePriceCents ?? current?.wholesalePriceCents ?? null,
+    });
+  }
+  return Array.from(merged.values()).sort((a, b) => a.title.localeCompare(b.title));
 }
 
 function mergeManagedImages(images: ManagedImage[]): ManagedImage[] {
