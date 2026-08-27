@@ -29,7 +29,8 @@ export function PageImageManager({
     const cardKey = getCardKey(img);
     setUploading(cardKey);
     const form = new FormData();
-    form.append("file", file);
+    const uploadFile = await prepareImageForUpload(file);
+    form.append("file", uploadFile);
     form.append("pageKey", pageKey);
     form.append("originalSrc", targetSrc);
     try {
@@ -180,4 +181,23 @@ function getCardKey(img: PageImage) {
 function safeDomId(value: string) {
   if (typeof btoa === "function") return btoa(value).replace(/[^a-zA-Z0-9_-]/g, "");
   return value.replace(/[^a-zA-Z0-9_-]/g, "-");
+}
+
+async function prepareImageForUpload(file: File) {
+  if (!file.type.startsWith("image/") || file.type === "image/gif" || file.size < 4 * 1024 * 1024) return file;
+
+  const bitmap = await createImageBitmap(file);
+  const maxSide = 1800;
+  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return file;
+  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.86));
+  if (!blob) return file;
+  return new File([blob], file.name.replace(/\.[^.]+$/, ".jpg"), { type: "image/jpeg" });
 }
