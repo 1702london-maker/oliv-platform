@@ -672,7 +672,7 @@ function ImageCard({
         ) : (
           <p onClick={() => onRename(img.label)} title="Click to rename" style={{ margin: 0, fontSize: 10, color: "#6b5c4e", wordBreak: "break-all", lineHeight: 1.4, cursor: "text" }}>✎ {img.label}</p>
         )}
-        {assignedProduct ? (
+        {assignedProduct && (
           <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #f0e8dc" }}>
             <p style={{ margin: "0 0 5px", color: "#2b2620", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
               {assignedProduct.title}
@@ -686,10 +686,6 @@ function ImageCard({
               </p>
             )}
           </div>
-        ) : (
-          <p style={{ margin: "8px 0 0", paddingTop: 8, borderTop: "1px solid #f0e8dc", color: "#a07235", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", lineHeight: 1.4 }}>
-            Not assigned to a product yet
-          </p>
         )}
       </div>
       {isMoving && (
