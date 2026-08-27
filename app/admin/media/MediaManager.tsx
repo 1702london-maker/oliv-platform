@@ -63,6 +63,12 @@ export function MediaManager({
 
   function imgKey(img: ManagedImage) { return img.id || img.src; }
   function flash(type: "ok" | "err", text: string) { setMsg({ type, text }); setTimeout(() => setMsg(null), 4500); }
+  function groupedImageCount(categoryKey: string) {
+    const categoryImages = images.filter((i) => i.category === categoryKey);
+    const assignedProducts = new Set(categoryImages.map((i) => i.productSlug).filter(Boolean));
+    const unassignedImages = categoryImages.filter((i) => !i.productSlug).length;
+    return assignedProducts.size + unassignedImages;
+  }
 
   // Images belonging to the selected product
   const productImages = editorSlug
@@ -421,7 +427,7 @@ export function MediaManager({
 
           <div style={{ display: "flex", borderBottom: "2px solid #e2d5c0", marginBottom: 24, gap: 0, overflowX: "auto" }}>
             {categories.map((cat) => {
-              const count = images.filter((i) => i.category === cat.key).length;
+              const count = groupedImageCount(cat.key);
               const active = activeTab === cat.key;
               return (
                 <button key={cat.key} onClick={() => { setActiveTab(cat.key); setMovingKey(null); setEditingKey(null); setAssigningKey(null); }} style={{ background: "none", border: "none", padding: "11px 18px", fontSize: 11, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer", color: active ? "#c9a96e" : "#9b8878", borderBottom: `2px solid ${active ? "#c9a96e" : "transparent"}`, marginBottom: -2, whiteSpace: "nowrap" }}>
