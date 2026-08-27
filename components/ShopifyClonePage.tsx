@@ -69,25 +69,32 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
     html = html
       .replaceAll('action="/contact#contact_form"', 'action="/api/applications/affiliate"')
       .replaceAll("window.location.href = '/login?next=/affiliate'", "window.location.href = '/affiliate/login'");
+    html = injectTurnstile(html);
   }
 
   if (page === "wholesale") {
     html = html
       .replaceAll('action="/contact#contact_form"', 'action="/api/applications/wholesale"')
       .replaceAll("window.location.href = '/login?next=/wholesale'", "window.location.href = '/wholesale/login'");
+    html = injectTurnstile(html);
   }
 
   if (page === "pages-training") {
     html = html
       .replaceAll('action="/contact#contact_form"', 'action="/api/applications/training"')
       .replaceAll("window.location.href = '/login?next=/training'", "window.location.href = '/training/login'");
+    html = injectTurnstile(html);
   }
 
   if (page === "appointments") {
     html = html.replaceAll('action="/contact#oappt-hidden-form"', 'action="/api/appointments"');
+    html = injectTurnstile(html);
   }
 
   html = html.replace(/action="\/contact#[^"]*"/g, 'action="/api/contact"');
+  if (page === "contact" || page === "pages-contact") {
+    html = injectTurnstile(html);
+  }
 
   // Strip floating WhatsApp / iMessage chat widget scraped from Shopify
   html = html.replace(/<style>\s*\.ohs-chat[\s\S]*?<\/style>\s*<div class="ohs-chat-wrap"[\s\S]*?<\/div>/g, '');
@@ -105,6 +112,26 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
   );
 
   // CSS for OHS AI Match dropdown is injected in ShopifyClonePageClient.tsx
+
+  return html;
+}
+
+// ── TURNSTILE INJECTION ───────────────────────────────────────────────────────
+const TURNSTILE_SITE_KEY = "0x4AAAAAAEdPLirHILzmvtNa";
+
+function injectTurnstile(html: string): string {
+  const widget = `<div class="cf-turnstile" data-sitekey="${TURNSTILE_SITE_KEY}" data-theme="light" style="margin:12px 0;"></div>`;
+  const script = `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer><\/script>`;
+
+  // Insert widget just before the first </form> (covers all forms on the page)
+  html = html.replace("</form>", widget + "</form>");
+
+  // Add script before </body>
+  if (!html.includes("challenges.cloudflare.com/turnstile")) {
+    html = html.includes("</body>")
+      ? html.replace("</body>", script + "</body>")
+      : html + script;
+  }
 
   return html;
 }

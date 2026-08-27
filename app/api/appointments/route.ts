@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createCalendarEvent } from "@/lib/google-calendar";
 import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
+import { verifyTurnstileToken } from "@/lib/security/turnstile";
 import {
   sendAppointmentConfirmationEmail,
   sendAppointmentTeamNotification,
@@ -24,6 +25,9 @@ export async function POST(request: Request) {
     windowSecs: 3600,
   });
   if (!rl.allowed) return rateLimitResponse(rl);
+
+  const turnstileOk = await verifyTurnstileToken(body?.["cf-turnstile-response"] as string | null);
+  if (!turnstileOk) return NextResponse.json({ error: "captcha_failed" }, { status: 403 });
 
   try {
     const {

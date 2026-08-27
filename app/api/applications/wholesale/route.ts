@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
+import { verifyTurnstileToken } from "@/lib/security/turnstile";
 import {
   sendApplicationTeamNotification,
   sendWholesaleApplicationReceivedEmail,
@@ -18,6 +19,11 @@ export async function POST(request: Request) {
   if (!rl.allowed) return rateLimitResponse(rl);
 
   const formData = await request.formData();
+  const turnstileToken = formData.get("cf-turnstile-response") as string | null;
+  if (!await verifyTurnstileToken(turnstileToken)) {
+    redirect("/wholesale?application=missing");
+  }
+
   const email = value(formData, "contact[email]").toLowerCase();
   const businessName = value(formData, "contact[Business Name]");
 

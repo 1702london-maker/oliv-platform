@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
+import { verifyTurnstileToken } from "@/lib/security/turnstile";
 import {
   sendAffiliateApplicationReceivedEmail,
   sendApplicationTeamNotification,
@@ -19,6 +20,11 @@ export async function POST(request: Request) {
   if (!rl.allowed) return rateLimitResponse(rl);
 
   const formData = await request.formData();
+  const turnstileToken = formData.get("cf-turnstile-response") as string | null;
+  if (!await verifyTurnstileToken(turnstileToken)) {
+    redirect("/affiliate?application=missing");
+  }
+
   const email = value(formData, "contact[email]").toLowerCase();
   const fullName = value(formData, "contact[Full Name]");
 

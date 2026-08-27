@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
+import { verifyTurnstileToken } from "@/lib/security/turnstile";
 
 const TEAM_EMAIL = process.env.TEAM_NOTIFICATION_EMAIL || "wholesale@olivhairsupply.de";
 const FROM = process.env.RESEND_FROM_EMAIL || "OlivHairSupply <onboarding@resend.dev>";
@@ -16,6 +17,13 @@ export async function POST(request: Request) {
   if (!rl.allowed) return rateLimitResponse(rl);
 
   const formData = await request.formData();
+  const turnstileToken = formData.get("cf-turnstile-response") as string | null;
+  if (!await verifyTurnstileToken(turnstileToken)) {
+    let redirectPath = "/";
+    try { redirectPath = new URL(request.headers.get("referer") || "/").pathname; } catch { /* noop */ }
+    redirect(`${redirectPath}?form=failed`);
+  }
+
   const returnTo = request.headers.get("referer") || "/";
 
   const email = String(formData.get("contact[email]") || "").trim().toLowerCase();
