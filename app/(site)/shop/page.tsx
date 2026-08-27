@@ -112,17 +112,29 @@ const { data: overrideRows } = await admin
 const overrideMap: Record<string, string> = {};
 for (const row of overrideRows || []) {
   overrideMap[row.original_src] = row.replacement_url;
+  overrideMap[normalizedSrcKey(row.original_src)] = row.replacement_url;
 }
 
 function applyImageOverrides(html: string): string {
-  for (const [orig, repl] of Object.entries(overrideMap)) {
-    html = html.replaceAll(`src="${orig}"`, `src="${repl}"`);
-  }
-  return html;
+  return html.replace(
+    /<img\b[^>]*>/gi,
+    (tag) => {
+      const slot = tag.match(/\bdata-ohs-image-slot=("|\')([^"\']+)\1/i)?.[2];
+      const slotReplacement = slot ? overrideMap[`slot:${slot}`] : null;
+      if (slotReplacement) {
+        return tag.replace(/\bsrc=("|\')([^"\']+)\1/i, `src="${slotReplacement}"`);
+      }
+
+      return tag.replace(/\bsrc=("|\')([^"\']+)\1/i, (match, quote: string, value: string) => {
+        const replacement = overrideMap[value] ?? overrideMap[normalizedSrcKey(value)];
+        return replacement ? `src=${quote}${replacement}${quote}` : match;
+      });
+    }
+  );
 }
 
 function resolveImage(src: string): string {
-  return overrideMap[src] ?? src;
+  return overrideMap[src] ?? overrideMap[normalizedSrcKey(src)] ?? src;
 }
 
 if (!categorySlug && !viewAll) {
