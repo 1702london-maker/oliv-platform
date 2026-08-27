@@ -39,6 +39,41 @@ type ProductOverride = {
   merged_into_slug: string | null;
 };
 
+const LEGACY_IMAGE_FALLBACKS: Array<{ match: RegExp; image: string }> = [
+  {
+    match: /(?:biziluxe-adhesive-remover|walker-c22-solvent|walker.*c-?22.*solvent|adhesive-remover)/i,
+    image: "/products/biziluxe-accessoires/removal-toner/removal-toner-100ml-main.jpg",
+  },
+  {
+    match: /(?:biziluxe-lace-front-tape|walker-tape-lace-front|lace-front-tape)/i,
+    image: "/products/biziluxe-accessoires/double-side-tape/double-side-tape-braun-main.jpg",
+  },
+];
+
+function resolveLegacyImageFallback(product: {
+  title?: string | null;
+  slug?: string | null;
+  image_url?: string | null;
+}) {
+  const haystack = [product.slug, product.title, product.image_url].filter(Boolean).join(" ");
+  return LEGACY_IMAGE_FALLBACKS.find((fallback) => fallback.match.test(haystack))?.image || null;
+}
+
+function normalizeCatalogProductImages(product: CatalogProduct): CatalogProduct {
+  const fallback = resolveLegacyImageFallback(product);
+  if (!fallback) return product;
+
+  return {
+    ...product,
+    image_url: fallback,
+    gallery: product.gallery?.map((image) => resolveLegacyImageFallback({ ...product, image_url: image }) || image),
+    variants: product.variants.map((variant) => ({
+      ...variant,
+      image_url: resolveLegacyImageFallback({ ...product, image_url: variant.image_url }) || variant.image_url || fallback,
+    })),
+  };
+}
+
 // BiziLuxe colour codes — exactly as written in the product documents
 const BIZILUXE_COLOURS = [
   { name: "1",      hex: "#1C1008",                                           img: "colour-1.jpg" },
@@ -657,7 +692,7 @@ async function fetchProductOverride(slug: string): Promise<ProductOverride | nul
 }
 
 function applyOverrideToProduct(product: CatalogProduct, override?: ProductOverride | null): CatalogProduct {
-  if (!override) return product;
+  if (!override) return normalizeCatalogProductImages(product);
   let variants = product.variants;
   if (override.retail_price_cents != null && product.variants.length > 0) {
     const baseRetail = product.variants[0].retail_price_cents;
@@ -674,12 +709,12 @@ function applyOverrideToProduct(product: CatalogProduct, override?: ProductOverr
         : null,
     }));
   }
-  return {
+  return normalizeCatalogProductImages({
     ...product,
     title: override.title || product.title,
     description: override.description || product.description,
     variants,
-  };
+  });
 }
 
 async function applyCatalogOverrides(products: CatalogProduct[], categorySlug?: string): Promise<CatalogProduct[]> {
@@ -714,7 +749,7 @@ async function fetchSupabaseProductsBySlugs(slugs: string[]): Promise<CatalogPro
     .select("id,shopify_id,title,slug,description,image_url,product_variants(id,shopify_id,title,color,sku,retail_price_cents,wholesale_price_cents,inventory_quantity,image_url,attributes,position)")
     .in("slug", slugs)
     .eq("status", "active");
-  return (data || []).map((product): CatalogProduct => ({
+  return (data || []).map((product): CatalogProduct => normalizeCatalogProductImages({
     id: product.id,
     shopify_id: product.shopify_id,
     title: product.title,
@@ -783,7 +818,7 @@ export async function getCatalogProducts(categorySlug?: string): Promise<Catalog
     return getLocalShopifyProducts(categorySlug);
   }
 
-  const products = (data || []).map((product): CatalogProduct => ({
+  const products = (data || []).map((product): CatalogProduct => normalizeCatalogProductImages({
     id: product.id,
     shopify_id: product.shopify_id,
     title: product.title,
