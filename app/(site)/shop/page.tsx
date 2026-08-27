@@ -242,63 +242,7 @@ function buildShopLandingHtml(resolveImage: (src: string) => string = (s) => s) 
   return html;
 }
 
-<<<<<<< HEAD
-async function applyPageImageOverrides(pageKey: string, html: string) {
-  try {
-    const admin = createSupabaseAdminClient();
-    const { data: overrides } = await admin
-      .from("page_images")
-      .select("original_src, replacement_url")
-      .eq("page_key", pageKey);
-
-    html = applyImageOverrides(html, overrides || []);
-  } catch {
-    // Page image overrides are non-critical; render original shop images if unavailable.
-  }
-
-  return html;
-}
-
-function applyImageOverrides(html: string, overrides: Array<{ original_src: string; replacement_url: string }>) {
-  const replacements = new Map<string, string>();
-  for (const override of overrides) {
-    replacements.set(normalizedSrcKey(override.original_src), override.replacement_url);
-  }
-
-  return html.replace(
-    /\b(src|srcset)=("|\')([^"\']+)\2/gi,
-    (match, attr: string, quote: string, value: string) => {
-      if (attr.toLowerCase() === "src") {
-        const replacement = replacements.get(normalizedSrcKey(value));
-        return replacement ? `${attr}=${quote}${replacement}${quote}` : match;
-      }
-
-      const nextValue = value
-        .split(",")
-        .map((part) => {
-          const pieces = part.trim().split(/\s+/);
-          const replacement = replacements.get(normalizedSrcKey(pieces[0]));
-          return replacement ? [replacement, ...pieces.slice(1)].join(" ") : part.trim();
-        })
-        .join(", ");
-      return `${attr}=${quote}${nextValue}${quote}`;
-    }
-  );
-}
-
-function normalizedSrcKey(src: string) {
-  try {
-    const url = new URL(src);
-    return `${url.pathname}${url.search}`;
-  } catch {
-    return src;
-  }
-}
-
-function buildCollectionCards() {
-=======
 function buildCollectionCards(resolveImage: (src: string) => string = (s) => s) {
->>>>>>> e97ceff (feat: apply admin image overrides on main shop page)
   return shopCollections
     .map((collection, index) => {
       const image = collection.image
