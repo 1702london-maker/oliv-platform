@@ -93,12 +93,35 @@ const params = await searchParams;
 const categorySlug = params.category;
 const viewAll = params.view === "all";
 
+// Load admin image overrides for shop and collections pages
+const admin = createSupabaseAdminClient();
+const { data: overrideRows } = await admin
+  .from("page_images")
+  .select("original_src, replacement_url")
+  .in("page_key", ["shop", "collections"]);
+
+const overrideMap: Record<string, string> = {};
+for (const row of overrideRows || []) {
+  overrideMap[row.original_src] = row.replacement_url;
+}
+
+function applyImageOverrides(html: string): string {
+  for (const [orig, repl] of Object.entries(overrideMap)) {
+    html = html.replaceAll(`src="${orig}"`, `src="${repl}"`);
+  }
+  return html;
+}
+
+function resolveImage(src: string): string {
+  return overrideMap[src] ?? src;
+}
+
 if (!categorySlug && !viewAll) {
-  const landingHtml = await applyPageImageOverrides("shop", buildShopLandingHtml());
+  const landingHtml = applyImageOverrides(buildShopLandingHtml(resolveImage));
   return <div dangerouslySetInnerHTML={{ __html: landingHtml }} />;
 }
 
-  const { before, after } = getShopShellHtml();
+  const { before, after } = getShopShellHtml(applyImageOverrides);
   const [products, categories] = await Promise.all([getCatalogProducts(categorySlug), getShopCategories()]);
   const activeCategory = categories.find((category) => category.slug === categorySlug);
   const country = (await cookies()).get("ohs_country")?.value;
@@ -182,8 +205,8 @@ if (!categorySlug && !viewAll) {
   );
 }
 
-function getShopShellHtml() {
-  const html = normalizeShopHtml(fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8"));
+function getShopShellHtml(applyOverrides: (html: string) => string = (h) => h) {
+  const html = applyOverrides(normalizeShopHtml(fs.readFileSync(path.join(process.cwd(), "shopify-clone", "shop.html"), "utf8")));
   const marker = '<div class="template-404 page-width page-margin center">';
   const start = html.indexOf(marker);
   const end = html.indexOf("</div>", start) + "</div>".length;
@@ -200,7 +223,7 @@ function normalizeShopHtml(html: string) {
     .replace(/\s+onchange=(["\'])this\.form\.submit\(\)\1/gi, "");
 }
 
-function buildShopLandingHtml() {
+function buildShopLandingHtml(resolveImage: (src: string) => string = (s) => s) {
   let html = normalizeShopHtml(fs.readFileSync(path.join(process.cwd(), "shopify-clone", "collections.html"), "utf8"));
 
   html = html.replace(/<img class="oshp-hero-img"[\s\S]*?>/, '<img class="oshp-hero-img" src="/heroes/shop-hero.svg" alt="OlivHairSupply Shop" loading="eager" fetchpriority="high">');
@@ -208,9 +231,9 @@ function buildShopLandingHtml() {
   html = html.replace("BiziLuxe by OlivHairSupply", "BiziLuxe by OlivHairSupply");
   html = html.replace('<span class="oshp-hero-meta-val">4</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>', '<span class="oshp-hero-meta-val">6</span>\r\n          <span class="oshp-hero-meta-label">Collections</span>');
   html = html.replace('<span class="oshp-story-stat-val">4</span>\r\n          <span class="oshp-story-stat-label">Collections</span>', '<span class="oshp-story-stat-val">6</span>\r\n          <span class="oshp-story-stat-label">Collections</span>');
-  html = html.replace(/<div class="oshp-col-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-all-cols">/, `<div class="oshp-col-grid">\n${buildCollectionCards()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-all-cols">`);
+  html = html.replace(/<div class="oshp-col-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-all-cols">/, `<div class="oshp-col-grid">\n${buildCollectionCards(resolveImage)}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-all-cols">`);
   html = html.replace(/<div class="oshp-all-cols-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-featured">/, `<div class="oshp-all-cols-grid">\n${buildCollectionTiles()}\n      </div>\n    </div>\n  </div>\n\n  <div class="oshp-featured">`);
-  html = html.replace(/<div class="oshp-featured">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-story">/, buildFeaturedProducts());
+  html = html.replace(/<div class="oshp-featured">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<div class="oshp-story">/, buildFeaturedProducts(resolveImage));
   html = html.replaceAll("/collections/BiziLuxe-hair", "/shop?category=biziluxe-extensions");
   html = html.replace('href="/collections" class="oshp-collections-all"', 'href="/shop?view=all" class="oshp-collections-all"');
   html = html.replaceAll("/collections", "/shop");
@@ -219,6 +242,7 @@ function buildShopLandingHtml() {
   return html;
 }
 
+<<<<<<< HEAD
 async function applyPageImageOverrides(pageKey: string, html: string) {
   try {
     const admin = createSupabaseAdminClient();
@@ -272,10 +296,13 @@ function normalizedSrcKey(src: string) {
 }
 
 function buildCollectionCards() {
+=======
+function buildCollectionCards(resolveImage: (src: string) => string = (s) => s) {
+>>>>>>> e97ceff (feat: apply admin image overrides on main shop page)
   return shopCollections
     .map((collection, index) => {
       const image = collection.image
-        ? `<img class="oshp-col-card-img" src="${collection.image}" alt="${collection.title}" loading="lazy">`
+        ? `<img class="oshp-col-card-img" src="${resolveImage(collection.image)}" alt="${collection.title}" loading="lazy">`
         : `<div class="oshp-col-card-img oshp-col-card-ph"></div>`;
 
       return `        <a href="/shop?category=${collection.slug}" class="oshp-col-card">
@@ -302,7 +329,7 @@ function buildCollectionTiles() {
     .join("\n\n");
 }
 
-function buildFeaturedProducts() {
+function buildFeaturedProducts(resolveImage: (src: string) => string = (s) => s) {
   return `<div class="oshp-featured">
       <div class="oshp-featured-inner">
         <div class="oshp-featured-header">
@@ -312,7 +339,7 @@ function buildFeaturedProducts() {
         <div class="oshp-featured-grid">
 ${featuredProducts.map((product) => `          <a href="${product.href}" class="oshp-prod-card">
             <div class="oshp-prod-img">
-              <img src="${product.image}" alt="${product.title}" loading="lazy">
+              <img src="${resolveImage(product.image)}" alt="${product.title}" loading="lazy">
               <span class="oshp-prod-quick">View Product</span>
             </div>
             <div class="oshp-prod-body">
