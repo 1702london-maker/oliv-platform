@@ -60,6 +60,8 @@ export function MediaManager({
   const [labelVal, setLabelVal] = useState("");
   const [movingKey, setMovingKey] = useState<string | null>(null);
   const [assigningKey, setAssigningKey] = useState<string | null>(null);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [bulkCategory, setBulkCategory] = useState("");
 
   function imgKey(img: ManagedImage) { return img.id || img.src; }
   function flash(type: "ok" | "err", text: string) { setMsg({ type, text }); setTimeout(() => setMsg(null), 4500); }
@@ -68,6 +70,18 @@ export function MediaManager({
     const assignedProducts = new Set(categoryImages.map((i) => i.productSlug).filter(Boolean));
     const unassignedImages = categoryImages.filter((i) => !i.productSlug).length;
     return assignedProducts.size + unassignedImages;
+  }
+  function selectedImages() {
+    const selected = new Set(selectedKeys);
+    return images.filter((img) => selected.has(imgKey(img)));
+  }
+  function toggleSelected(img: ManagedImage) {
+    const key = imgKey(img);
+    setSelectedKeys((current) => current.includes(key) ? current.filter((item) => item !== key) : [...current, key]);
+  }
+  function clearSelection() {
+    setSelectedKeys([]);
+    setBulkCategory("");
   }
 
   // Images belonging to the selected product
@@ -218,6 +232,23 @@ export function MediaManager({
     setImages((prev) => prev.map((i) => imgKey(i) === imgKey(img) ? { ...i, category: newCat } : i));
     setMovingKey(null);
     flash("ok", `Moved to ${categories.find((c) => c.key === newCat)?.label || newCat}`);
+  }
+
+  async function handleBulkMove(newCat: string) {
+    const targets = selectedImages();
+    if (!newCat || targets.length === 0) return;
+    let ok = 0;
+    for (const img of targets) {
+      const body = img.isCatalog ? { src: img.src, category: newCat } : { id: img.id, category: newCat };
+      const res = await fetch("/api/admin/media", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      if (res.ok) ok++;
+    }
+    if (ok > 0) {
+      setImages((prev) => prev.map((img) => selectedKeys.includes(imgKey(img)) ? { ...img, category: newCat } : img));
+      flash("ok", `Moved ${ok} image${ok === 1 ? "" : "s"} to ${categories.find((c) => c.key === newCat)?.label || newCat}`);
+    }
+    if (ok !== targets.length) flash("err", `${targets.length - ok} selected image${targets.length - ok === 1 ? "" : "s"} could not be moved`);
+    clearSelection();
   }
 
   async function handleAssignProduct(img: ManagedImage, productSlug: string | null) {
@@ -430,7 +461,7 @@ export function MediaManager({
               const count = groupedImageCount(cat.key);
               const active = activeTab === cat.key;
               return (
-                <button key={cat.key} onClick={() => { setActiveTab(cat.key); setMovingKey(null); setEditingKey(null); setAssigningKey(null); }} style={{ background: "none", border: "none", padding: "11px 18px", fontSize: 11, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer", color: active ? "#c9a96e" : "#9b8878", borderBottom: `2px solid ${active ? "#c9a96e" : "transparent"}`, marginBottom: -2, whiteSpace: "nowrap" }}>
+                <button key={cat.key} onClick={() => { setActiveTab(cat.key); setMovingKey(null); setEditingKey(null); setAssigningKey(null); clearSelection(); }} style={{ background: "none", border: "none", padding: "11px 18px", fontSize: 11, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer", color: active ? "#c9a96e" : "#9b8878", borderBottom: `2px solid ${active ? "#c9a96e" : "transparent"}`, marginBottom: -2, whiteSpace: "nowrap" }}>
                   {cat.label} ({count})
                 </button>
               );
@@ -441,6 +472,29 @@ export function MediaManager({
             <input ref={fileRef} type="file" accept="image/*" multiple style={{ display: "none" }} onChange={(e) => e.target.files && handleUpload(e.target.files)} />
             <p style={{ margin: 0, fontSize: 13, color: "#9b8878" }}>{uploading ? "Uploading…" : `Click or drag to upload to ${categories.find((c) => c.key === activeTab)?.label}`}</p>
             <p style={{ margin: "4px 0 0", fontSize: 10, color: "#c4b49a" }}>JPEG · PNG · WEBP · multiple files OK</p>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", margin: "0 0 18px", padding: 12, border: "1px solid #e2d5c0", background: "#fffaf4" }}>
+            <button
+              onClick={() => setSelectedKeys(activeUnassignedImages.map(imgKey))}
+              disabled={activeUnassignedImages.length === 0}
+              style={{ ...actionBtn, opacity: activeUnassignedImages.length === 0 ? 0.45 : 1 }}
+            >
+              Select Loose Images
+            </button>
+            <button onClick={clearSelection} disabled={selectedKeys.length === 0} style={{ ...actionBtn, opacity: selectedKeys.length === 0 ? 0.45 : 1 }}>
+              Clear Selection
+            </button>
+            <span style={{ color: "#6b5c4e", fontSize: 12, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+              {selectedKeys.length} selected
+            </span>
+            <select value={bulkCategory} onChange={(e) => setBulkCategory(e.target.value)} disabled={selectedKeys.length === 0} style={{ ...inputStyle, width: 260, padding: "8px 10px", opacity: selectedKeys.length === 0 ? 0.55 : 1 }}>
+              <option value="">Move selected to...</option>
+              {categories.filter((c) => c.key !== activeTab).map((cat) => <option key={cat.key} value={cat.key}>{cat.label}</option>)}
+            </select>
+            <button onClick={() => handleBulkMove(bulkCategory)} disabled={!bulkCategory || selectedKeys.length === 0} style={{ ...saveBtn, padding: "9px 18px", opacity: !bulkCategory || selectedKeys.length === 0 ? 0.45 : 1 }}>
+              Move Selected
+            </button>
           </div>
 
           <div style={grid}>
@@ -461,8 +515,10 @@ export function MediaManager({
                 labelVal={labelVal}
                 movingKey={movingKey}
                 assigningKey={assigningKey}
+                selected={selectedKeys.includes(imgKey(img))}
                 categories={categories}
                 products={products}
+                onToggleSelected={() => toggleSelected(img)}
                 onRename={(label) => { setEditingKey(imgKey(img)); setLabelVal(label); }}
                 onRenameConfirm={(label) => handleRename(img, label)}
                 onRenameCancel={() => setEditingKey(null)}
@@ -529,7 +585,9 @@ function ProductGroupCard({
 // ── Reusable image card ──
 function ImageCard({
   img, imgKey, editingKey, labelVal, movingKey, assigningKey,
+  selected = false,
   categories, products,
+  onToggleSelected,
   onRename, onRenameConfirm, onRenameCancel, onLabelChange,
   onMove, onMoveConfirm, onMoveCancel,
   onAssign, onAssignConfirm, onAssignCancel,
@@ -543,8 +601,10 @@ function ImageCard({
   labelVal: string;
   movingKey: string | null;
   assigningKey: string | null;
+  selected?: boolean;
   categories: { key: string; label: string }[];
   products: { slug: string; title: string }[];
+  onToggleSelected?: () => void;
   onRename: (label: string) => void;
   onRenameConfirm: (label: string) => void;
   onRenameCancel: () => void;
@@ -567,8 +627,14 @@ function ImageCard({
 
   return (
     <div style={{ background: "#fff", border: "1px solid #e2d5c0", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-      <div style={{ background: img.isCatalog ? "#f0e8dc" : "#2b2620", color: img.isCatalog ? "#6b5c4e" : "#c9a96e", fontSize: 8, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", padding: "3px 10px" }}>
-        {img.isCatalog ? "Catalog" : "Uploaded"}
+      <div style={{ background: img.isCatalog ? "#f0e8dc" : "#2b2620", color: img.isCatalog ? "#6b5c4e" : "#c9a96e", fontSize: 8, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", padding: "3px 10px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+        <span>{img.isCatalog ? "Catalog" : "Uploaded"}</span>
+        {onToggleSelected && (
+          <label style={{ display: "inline-flex", alignItems: "center", gap: 4, color: img.isCatalog ? "#6b5c4e" : "#fffaf4", letterSpacing: ".08em", cursor: "pointer" }}>
+            <input type="checkbox" checked={selected} onChange={onToggleSelected} style={{ width: 13, height: 13, margin: 0 }} />
+            Select
+          </label>
+        )}
       </div>
       {assignedProduct && (
         <div style={{ background: "#e4eddf", color: "#315f38", fontSize: 8, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: "3px 10px" }}>
