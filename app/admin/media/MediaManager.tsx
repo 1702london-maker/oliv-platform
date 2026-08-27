@@ -343,7 +343,7 @@ export function MediaManager({
                           onAssignConfirm={(slug) => handleAssignProduct(img, slug)}
                           onAssignCancel={() => setAssigningKey(null)}
                           onDelete={() => handleDelete(img)}
-                          showAssignLabel="Remove from Product"
+                          directUnassign
                           assignLabel={img.productSlug ? "Unassign" : "→ Product"}
                         />
                       ))}
@@ -463,6 +463,7 @@ function ImageCard({
   onAssign, onAssignConfirm, onAssignCancel,
   onDelete,
   assignLabel = "→ Product",
+  directUnassign = false,
 }: {
   img: ManagedImage;
   imgKey: (img: ManagedImage) => string;
@@ -484,7 +485,7 @@ function ImageCard({
   onAssignCancel: () => void;
   onDelete: () => void;
   assignLabel?: string;
-  showAssignLabel?: string;
+  directUnassign?: boolean;
 }) {
   const key = imgKey(img);
   const isEditing = editingKey === key;
@@ -534,7 +535,12 @@ function ImageCard({
       )}
       <div style={{ padding: "6px 10px 10px", display: "flex", gap: 5, flexWrap: "wrap" }}>
         <button onClick={onMove} style={{ ...actionBtn, background: isMoving ? "#f0e8dc" : "none" }}>{isMoving ? "Cancel" : "Move"}</button>
-        <button onClick={onAssign} style={{ ...actionBtn, background: isAssigning ? "#e4eddf" : "none", color: isAssigning ? "#315f38" : "#6b5c4e" }}>{isAssigning ? "Cancel" : assignLabel}</button>
+        <button
+          onClick={() => directUnassign && img.productSlug ? onAssignConfirm(null) : onAssign()}
+          style={{ ...actionBtn, background: isAssigning ? "#e4eddf" : "none", color: isAssigning ? "#315f38" : "#6b5c4e" }}
+        >
+          {isAssigning ? "Cancel" : assignLabel}
+        </button>
         <button onClick={onDelete} style={{ ...actionBtn, color: "#c0392b", borderColor: "#f4ddd8", marginLeft: "auto" }}>Delete</button>
       </div>
     </div>
