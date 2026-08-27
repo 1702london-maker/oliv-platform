@@ -24,9 +24,10 @@ export function PageImageManager({
     setTimeout(() => setMsg(null), 4000);
   }
 
-  async function handleReplace(src: string, file: File) {
-    const targetSrc = images.find((img) => img.src === src)?.targetSrc || src;
-    setUploading(src);
+  async function handleReplace(img: PageImage, file: File) {
+    const targetSrc = img.targetSrc || img.src;
+    const cardKey = getCardKey(img);
+    setUploading(cardKey);
     const form = new FormData();
     form.append("file", file);
     form.append("pageKey", pageKey);
@@ -36,33 +37,31 @@ export function PageImageManager({
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Upload failed");
       const override = { id: json.id, replacement_url: json.url };
-      setOverrides((prev) => ({
-        ...prev,
-        [targetSrc]: override,
-        [src]: override,
-        [normalizeSrc(src)]: override,
-      }));
+      setOverrides((prev) => {
+        const next = { ...prev, [targetSrc]: override };
+        if (!img.targetSrc) next[normalizeSrc(img.src)] = override;
+        return next;
+      });
       flash("ok", "Image replaced successfully. Live on site immediately.");
     } catch (e) {
       flash("err", e instanceof Error ? e.message : "Upload failed");
     } finally {
       setUploading(null);
-      const ref = fileRefs.current[src];
+      const ref = fileRefs.current[cardKey];
       if (ref) ref.value = "";
     }
   }
 
-  async function handleRestore(src: string) {
-    const targetSrc = images.find((img) => img.src === src)?.targetSrc || src;
-    const o = overrides[targetSrc] || overrides[src] || overrides[normalizeSrc(src)];
+  async function handleRestore(img: PageImage) {
+    const targetSrc = img.targetSrc || img.src;
+    const o = overrides[targetSrc] || (!img.targetSrc ? overrides[normalizeSrc(img.src)] : undefined);
     if (!o) return;
     const res = await fetch(`/api/admin/pages?id=${o.id}`, { method: "DELETE" });
     if (!res.ok) { flash("err", "Restore failed"); return; }
     setOverrides((prev) => {
       const n = { ...prev };
       delete n[targetSrc];
-      delete n[src];
-      delete n[normalizeSrc(src)];
+      if (!img.targetSrc) delete n[normalizeSrc(img.src)];
       return n;
     });
     flash("ok", "Original image restored.");
@@ -80,13 +79,15 @@ export function PageImageManager({
         {images.map((img) => {
           const srcKey = normalizeSrc(img.src);
           const targetSrc = img.targetSrc || img.src;
-          const override = overrides[targetSrc] || overrides[img.src] || overrides[srcKey];
+          const cardKey = getCardKey(img);
+          const inputId = `replace-${safeDomId(cardKey)}`;
+          const override = overrides[targetSrc] || (!img.targetSrc ? overrides[srcKey] : undefined);
           const isReplaced = !!override;
           const displayUrl = override?.replacement_url || img.src;
-          const isUploading = uploading === img.src;
+          const isUploading = uploading === cardKey;
 
           return (
-            <div key={img.src} style={{ background: "#fff", border: `2px solid ${isReplaced ? "#c9a96e" : "#e2d5c0"}`, overflow: "hidden" }}>
+            <div key={cardKey} style={{ background: "#fff", border: `2px solid ${isReplaced ? "#c9a96e" : "#e2d5c0"}`, overflow: "hidden" }}>
               {/* Badge */}
               {isReplaced && (
                 <div style={{ background: "#c9a96e", color: "#fff", padding: "4px 12px", fontSize: 9, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase" }}>
@@ -127,12 +128,12 @@ export function PageImageManager({
                   type="file"
                   accept="image/*"
                   style={{ display: "none" }}
-                  id={`replace-${btoa(img.src).slice(0, 16)}`}
-                  ref={(el) => { fileRefs.current[img.src] = el; }}
-                  onChange={(e) => { const f = e.target.files?.[0]; if (f) handleReplace(img.src, f); }}
+                  id={inputId}
+                  ref={(el) => { fileRefs.current[cardKey] = el; }}
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) handleReplace(img, f); }}
                 />
                 <label
-                  htmlFor={`replace-${btoa(img.src).slice(0, 16)}`}
+                  htmlFor={inputId}
                   style={{
                     flex: 1, display: "block", textAlign: "center",
                     background: isUploading ? "#e2d5c0" : "#2b2620", color: "#fff",
@@ -144,7 +145,7 @@ export function PageImageManager({
                 </label>
                 {isReplaced && (
                   <button
-                    onClick={() => handleRestore(img.src)}
+                    onClick={() => handleRestore(img)}
                     style={{ background: "none", border: "1px solid #dfceb5", color: "#8b3535", padding: "8px 12px", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}
                   >
                     Restore
@@ -170,4 +171,13 @@ function normalizeSrc(src: string) {
   } catch {
     return src;
   }
+}
+
+function getCardKey(img: PageImage) {
+  return img.targetSrc || normalizeSrc(img.src);
+}
+
+function safeDomId(value: string) {
+  if (typeof btoa === "function") return btoa(value).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 24);
+  return value.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 48);
 }
