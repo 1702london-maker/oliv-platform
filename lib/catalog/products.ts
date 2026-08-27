@@ -272,6 +272,7 @@ function getBiziLuxeAccessoryProducts(): CatalogProduct[] {
       attributes: {},
       variants: [
         { id: "fine-mist-spray-bottle-black", title: "Black", color: "Black", sku: "FINE-MIST-SPRAY-BLACK", image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg", attributes: { colour_hex: "#1A1A1A" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 20 },
+        { id: "fine-mist-spray-bottle-champagne-gold", title: "Champagne Gold", color: "Champagne Gold", sku: "FINE-MIST-SPRAY-CHAMPAGNE-GOLD", image_url: "/products/accessories/fine-mist-spray-bottle/fine-mist-spray-bottle-main.jpg", attributes: { colour_hex: "#C9A96E" }, retail_price_cents: 1290, wholesale_price_cents: 903, inventory_quantity: 20 },
       ]
     },
     {
