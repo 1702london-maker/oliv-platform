@@ -19,10 +19,11 @@ export async function POST(req: NextRequest) {
   const ext = file.name.split(".").pop() || "jpg";
   const storagePath = `page-overrides/${pageKey}/${Date.now()}.${ext}`;
   const admin = createSupabaseAdminClient();
+  const buffer = Buffer.from(await file.arrayBuffer());
 
   const { error: uploadError } = await admin.storage
     .from("product-images")
-    .upload(storagePath, file, { contentType: file.type, upsert: true });
+    .upload(storagePath, buffer, { contentType: file.type || "image/jpeg", upsert: true });
   if (uploadError) return NextResponse.json({ error: uploadError.message }, { status: 500 });
 
   const { data: urlData } = admin.storage.from("product-images").getPublicUrl(storagePath);
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
   const { data, error: dbError } = await admin
     .from("page_images")
     .upsert(
-      { page_key: pageKey, original_src: originalSrc, replacement_url: urlData.publicUrl },
+      { page_key: pageKey, original_src: normalizeOriginalSrc(originalSrc), replacement_url: urlData.publicUrl },
       { onConflict: "page_key,original_src" }
     )
     .select("id")
@@ -38,6 +39,15 @@ export async function POST(req: NextRequest) {
   if (dbError) return NextResponse.json({ error: dbError.message }, { status: 500 });
 
   return NextResponse.json({ id: data.id, url: urlData.publicUrl });
+}
+
+function normalizeOriginalSrc(src: string) {
+  try {
+    const url = new URL(src, "https://olivhairsupply.de");
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return src;
+  }
 }
 
 // DELETE → remove a page image override (restores original)

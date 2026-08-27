@@ -70,6 +70,7 @@ export default async function PageDetail({ params }: { params: Promise<{ pageKey
   const overrideMap: Record<string, { id: string; replacement_url: string }> = {};
   for (const o of overrides || []) {
     overrideMap[o.original_src] = { id: o.id, replacement_url: o.replacement_url };
+    overrideMap[normalizeSrc(o.original_src, baseUrl)] = { id: o.id, replacement_url: o.replacement_url };
   }
 
   return (
@@ -84,4 +85,13 @@ export default async function PageDetail({ params }: { params: Promise<{ pageKey
       <PageImageManager pageKey={pageKey} images={images} overrideMap={overrideMap} />
     </section>
   );
+}
+
+function normalizeSrc(src: string, baseUrl: string) {
+  try {
+    const url = new URL(src, baseUrl);
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return src;
+  }
 }

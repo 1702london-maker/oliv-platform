@@ -21,10 +21,7 @@ export async function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClone
       .select("original_src, replacement_url")
       .eq("page_key", page);
     if (overrides?.length) {
-      for (const o of overrides) {
-        html = html.replaceAll(`src="${o.original_src}"`, `src="${o.replacement_url}"`);
-        html = html.replaceAll(`src="${relativeSrc(o.original_src)}"`, `src="${o.replacement_url}"`);
-      }
+      html = applyImageOverrides(html, overrides);
     }
   } catch { /* non-fatal — page renders with original images */ }
 
@@ -37,7 +34,34 @@ export async function ShopifyClonePage({ page, injectBeforeClose }: ShopifyClone
   return <ShopifyClonePageClient html={html} />;
 }
 
-function relativeSrc(src: string) {
+function applyImageOverrides(html: string, overrides: Array<{ original_src: string; replacement_url: string }>) {
+  const replacements = new Map<string, string>();
+  for (const override of overrides) {
+    replacements.set(normalizedSrcKey(override.original_src), override.replacement_url);
+  }
+
+  return html.replace(
+    /\b(src|srcset)=("|\')([^"\']+)\2/gi,
+    (match, attr: string, quote: string, value: string) => {
+      if (attr.toLowerCase() === "src") {
+        const replacement = replacements.get(normalizedSrcKey(value));
+        return replacement ? `${attr}=${quote}${replacement}${quote}` : match;
+      }
+
+      const nextValue = value
+        .split(",")
+        .map((part) => {
+          const pieces = part.trim().split(/\s+/);
+          const replacement = replacements.get(normalizedSrcKey(pieces[0]));
+          return replacement ? [replacement, ...pieces.slice(1)].join(" ") : part.trim();
+        })
+        .join(", ");
+      return `${attr}=${quote}${nextValue}${quote}`;
+    }
+  );
+}
+
+function normalizedSrcKey(src: string) {
   try {
     const url = new URL(src);
     return `${url.pathname}${url.search}`;

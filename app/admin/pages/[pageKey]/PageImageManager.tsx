@@ -34,7 +34,11 @@ export function PageImageManager({
       const res = await fetch("/api/admin/pages", { method: "POST", body: form });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Upload failed");
-      setOverrides((prev) => ({ ...prev, [src]: { id: json.id, replacement_url: json.url } }));
+      setOverrides((prev) => ({
+        ...prev,
+        [src]: { id: json.id, replacement_url: json.url },
+        [normalizeSrc(src)]: { id: json.id, replacement_url: json.url },
+      }));
       flash("ok", "Image replaced successfully. Live on site immediately.");
     } catch (e) {
       flash("err", e instanceof Error ? e.message : "Upload failed");
@@ -50,7 +54,12 @@ export function PageImageManager({
     if (!o) return;
     const res = await fetch(`/api/admin/pages?id=${o.id}`, { method: "DELETE" });
     if (!res.ok) { flash("err", "Restore failed"); return; }
-    setOverrides((prev) => { const n = { ...prev }; delete n[src]; return n; });
+    setOverrides((prev) => {
+      const n = { ...prev };
+      delete n[src];
+      delete n[normalizeSrc(src)];
+      return n;
+    });
     flash("ok", "Original image restored.");
   }
 
@@ -64,7 +73,8 @@ export function PageImageManager({
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
         {images.map((img) => {
-          const override = overrides[img.src];
+          const srcKey = normalizeSrc(img.src);
+          const override = overrides[img.src] || overrides[srcKey];
           const isReplaced = !!override;
           const displayUrl = override?.replacement_url || img.src;
           const isUploading = uploading === img.src;
@@ -145,4 +155,13 @@ export function PageImageManager({
       )}
     </div>
   );
+}
+
+function normalizeSrc(src: string) {
+  try {
+    const url = new URL(src, window.location.origin);
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return src;
+  }
 }

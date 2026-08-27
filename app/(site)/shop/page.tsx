@@ -227,10 +227,7 @@ async function applyPageImageOverrides(pageKey: string, html: string) {
       .select("original_src, replacement_url")
       .eq("page_key", pageKey);
 
-    for (const override of overrides || []) {
-      html = html.replaceAll(`src="${override.original_src}"`, `src="${override.replacement_url}"`);
-      html = html.replaceAll(`src="${relativeSrc(override.original_src)}"`, `src="${override.replacement_url}"`);
-    }
+    html = applyImageOverrides(html, overrides || []);
   } catch {
     // Page image overrides are non-critical; render original shop images if unavailable.
   }
@@ -238,7 +235,34 @@ async function applyPageImageOverrides(pageKey: string, html: string) {
   return html;
 }
 
-function relativeSrc(src: string) {
+function applyImageOverrides(html: string, overrides: Array<{ original_src: string; replacement_url: string }>) {
+  const replacements = new Map<string, string>();
+  for (const override of overrides) {
+    replacements.set(normalizedSrcKey(override.original_src), override.replacement_url);
+  }
+
+  return html.replace(
+    /\b(src|srcset)=("|\')([^"\']+)\2/gi,
+    (match, attr: string, quote: string, value: string) => {
+      if (attr.toLowerCase() === "src") {
+        const replacement = replacements.get(normalizedSrcKey(value));
+        return replacement ? `${attr}=${quote}${replacement}${quote}` : match;
+      }
+
+      const nextValue = value
+        .split(",")
+        .map((part) => {
+          const pieces = part.trim().split(/\s+/);
+          const replacement = replacements.get(normalizedSrcKey(pieces[0]));
+          return replacement ? [replacement, ...pieces.slice(1)].join(" ") : part.trim();
+        })
+        .join(", ");
+      return `${attr}=${quote}${nextValue}${quote}`;
+    }
+  );
+}
+
+function normalizedSrcKey(src: string) {
   try {
     const url = new URL(src);
     return `${url.pathname}${url.search}`;
