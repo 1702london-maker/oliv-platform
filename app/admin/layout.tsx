@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { getAppSession } from "@/lib/auth/app-session";
 import { getCurrentProfile } from "@/lib/auth/session";
 import { AdminShell } from "@/components/admin/AdminShell";
 
@@ -8,13 +9,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const pathname = hdrs.get("x-pathname") || "";
   const isLogin = pathname === "/admin/login";
 
-  const profile = isLogin ? null : await getCurrentProfile();
+  const appSession = isLogin ? null : await getAppSession();
+  const hasSignedAdminRole = appSession?.roles?.includes("admin") ?? false;
+  const profile = isLogin || hasSignedAdminRole ? null : await getCurrentProfile();
 
-  if (!isLogin && (!profile || !profile.roles.includes("admin"))) {
+  if (!isLogin && !hasSignedAdminRole && (!profile || !profile.roles.includes("admin"))) {
     redirect("/admin/login");
   }
 
-  if (isLogin || !profile) return <>{children}</>;
+  if (isLogin) return <>{children}</>;
 
   return (
     <AdminShell pathname={pathname}>

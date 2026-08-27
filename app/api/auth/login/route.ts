@@ -28,8 +28,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Incorrect email or password. Please try again." }, { status: 401 });
   }
 
-  const profileReady = await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
-  if (!profileReady) {
+  const profile = await ensureProfile(data.user.id, data.user.email ?? email, data.user.user_metadata);
+  if (!profile) {
     return NextResponse.json(
       { error: "Login worked, but the account profile could not be prepared. Check the Supabase service role key in Vercel." },
       { status: 500 }
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   }
 
   const response = NextResponse.json({ ok: true, next });
-  response.cookies.set(APP_SESSION_COOKIE, createAppSessionCookie(data.user.id, data.user.email ?? email), {
+  response.cookies.set(APP_SESSION_COOKIE, createAppSessionCookie(data.user.id, data.user.email ?? email, profile.roles), {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 30,
     path: "/",

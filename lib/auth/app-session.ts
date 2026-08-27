@@ -6,13 +6,15 @@ export const APP_SESSION_COOKIE = "ohs_app_session";
 type AppSession = {
   id: string;
   email: string;
+  roles?: string[];
   exp: number;
 };
 
-export function createAppSessionCookie(id: string, email: string) {
+export function createAppSessionCookie(id: string, email: string, roles: string[] = ["customer"]) {
   const payload: AppSession = {
     id,
     email,
+    roles,
     exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30
   };
   const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");
