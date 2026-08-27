@@ -123,7 +123,8 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
 
   if (page === "appointments") {
     html = html.replaceAll('action="/contact#oappt-hidden-form"', 'action="/api/appointments"');
-    html = injectTurnstile(html);
+    html = injectAppointmentTurnstile(html);
+    html = wireAppointmentTurnstileToken(html);
   }
 
   html = html.replace(/action="\/contact#[^"]*"/g, 'action="/api/contact"');
@@ -169,6 +170,54 @@ function injectTurnstile(html: string): string {
   }
 
   return html;
+}
+
+function injectAppointmentTurnstile(html: string): string {
+  if (html.includes("oappt-turnstile-wrap")) return ensureTurnstileScript(html);
+
+  const widget = `<div id="oappt-turnstile-wrap" class="cf-turnstile" data-sitekey="${TURNSTILE_SITE_KEY}" data-theme="light" style="margin:18px 0;"></div>`;
+  const target = '<p class="oappt-error" id="oappt-err-8">';
+  const withWidget = html.includes(target)
+    ? html.replace(target, `${widget}${target}`)
+    : html.replace("</form>", widget + "</form>");
+
+  return ensureTurnstileScript(withWidget);
+}
+
+function ensureTurnstileScript(html: string): string {
+  const script = `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer><\/script>`;
+  if (html.includes("challenges.cloudflare.com/turnstile")) return html;
+  return html.includes("</body>") ? html.replace("</body>", script + "</body>") : html + script;
+}
+
+function wireAppointmentTurnstileToken(html: string): string {
+  let next = html.replaceAll(
+    "var submitBtn = document.getElementById('oappt-submit-btn');",
+    `var turnstileToken = '';
+  try {
+    var turnstileInput = document.querySelector('#oappt-step-8 input[name="cf-turnstile-response"], input[name="cf-turnstile-response"]');
+    if (turnstileInput) turnstileToken = turnstileInput.value || '';
+    if (!turnstileToken && window.turnstile && document.getElementById('oappt-turnstile-wrap')) {
+      turnstileToken = window.turnstile.getResponse(document.getElementById('oappt-turnstile-wrap')) || '';
+    }
+  } catch (e) {}
+  if (!turnstileToken) {
+    if (err8) {
+      err8.textContent = oapptLang() === 'de' ? 'Bitte bestaetige die Sicherheitspruefung vor der Buchung.' : 'Please complete the security check before confirming.';
+      err8.classList.add('visible');
+    }
+    return;
+  }
+
+  var submitBtn = document.getElementById('oappt-submit-btn');`
+  );
+
+  next = next.replaceAll(
+    "noShowFeeTerms: termsText",
+    "noShowFeeTerms: termsText,\n      'cf-turnstile-response': turnstileToken"
+  );
+
+  return next;
 }
 
 // ── INLINE TRANSLATION + CURRENCY SCRIPT ─────────────────────────────────────
