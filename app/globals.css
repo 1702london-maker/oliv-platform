@@ -18,7 +18,13 @@ a {
 }
 
 .ohs-catalog {
+  box-sizing: border-box;
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
   padding-top: 48px;
+  padding-left: 56px;
+  padding-right: 56px;
   padding-bottom: 64px;
 }
 
@@ -48,8 +54,8 @@ a {
 
 .ohs-catalog-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
 }
 
 .ohs-category-nav {
@@ -233,6 +239,11 @@ a {
 }
 
 @media (max-width: 900px) {
+  .ohs-catalog {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
   .ohs-catalog-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -241,6 +252,8 @@ a {
 @media (max-width: 640px) {
   .ohs-catalog {
     padding-top: 46px;
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
   .ohs-catalog-grid {
