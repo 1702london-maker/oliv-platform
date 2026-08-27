@@ -29,11 +29,16 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
 
   const colourHexMap = useMemo(() => buildColourHexMap(product.variants), [product.variants]);
 
+  const effectiveColors = useMemo(
+    () => colors.length > 0 ? colors : buildVariantColourSwatches(product.variants),
+    [colors, product.variants]
+  );
+
   const [selectedThumb, setSelectedThumb] = useState(galleryImages[0] || product.image_url);
   const [variantImage, setVariantImage] = useState<string | null>(null);
   const [selectedPrice, setSelectedPrice] = useState(initialPrice);
-  const [selectedColor, setSelectedColor] = useState<string | null>(colors.length > 0 ? colors[0].id : null);
-  const selectedColorName = colors.find((c) => c.id === selectedColor)?.name || "";
+  const [selectedColor, setSelectedColor] = useState<string | null>(effectiveColors.length > 0 ? effectiveColors[0].id : null);
+  const selectedColorName = effectiveColors.find((c) => c.id === selectedColor)?.name || "";
 
   const displayedImage = variantImage || selectedThumb;
 
@@ -83,20 +88,24 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
           <span>Premium OlivHairSupply product.</span>
         )}
 
-        {colors.length > 0 && (
+        {effectiveColors.length > 0 && (
           <div style={{ margin: "20px 0" }}>
             <p style={{ margin: "0 0 10px", fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: "#6b5c4e" }}>
               Colour: <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>{selectedColorName}</span>
             </p>
             <div className="ohs-product-colour-row">
-              {colors.map((c) => (
+              {effectiveColors.map((c) => (
                 <button
                   key={c.id}
                   type="button"
-                  onClick={() => { if (c.inStock) { setSelectedColor(c.id); if (c.imageUrl) setVariantImage(c.imageUrl); } }}
+                  onClick={() => {
+                    if (!c.inStock) return;
+                    setSelectedColor(c.id);
+                    setVariantImage(c.imageUrl || product.image_url);
+                  }}
                   title={c.inStock ? c.name : `${c.name} (Out of stock)`}
                   style={{
-                    width: 42, height: 42, borderRadius: "50%",
+                    width: 48, height: 48, borderRadius: "50%",
                     background: c.hex,
                     border: selectedColor === c.id ? "3px solid #2b2620" : "2px solid #e2d5c0",
                     cursor: c.inStock ? "pointer" : "not-allowed",
@@ -129,13 +138,32 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
           currency={currency}
           colourHexMap={colourHexMap}
           selectedColour={selectedColorName}
-          hideColourOptions={colors.length > 0}
+          hideColourOptions={effectiveColors.length > 0}
           onImageChange={handleImageChange}
           onPriceChange={handlePriceChange}
         />
       </div>
     </section>
   );
+}
+
+function buildVariantColourSwatches(variants: CatalogProduct["variants"]): ColorSwatch[] {
+  const seen = new Set<string>();
+  const swatches: ColorSwatch[] = [];
+
+  for (const variant of variants) {
+    if (!variant.color || seen.has(variant.color)) continue;
+    seen.add(variant.color);
+    swatches.push({
+      id: variant.color,
+      name: variant.color,
+      hex: (variant.attributes?.colour_hex as string) || "#888",
+      imageUrl: variant.image_url || null,
+      inStock: variant.inventory_quantity > 0,
+    });
+  }
+
+  return swatches;
 }
 
 function buildColourHexMap(variants: CatalogProduct["variants"]): Record<string, string> {

@@ -51,15 +51,15 @@ const BIZILUXE_COLOURS = [
   { name: "Balayage 8/22",  hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)",  img: "colour-8-22.jpg" },
 ];
 
-// BiziHair colour codes — exactly as written in the product documents
+// BiziHair colour codes — customer-facing names kept explicit for swatches.
 const BIZIHAIR_COLOURS = [
-  { name: "1",                       hex: "#140E08", img: "colour-1.png" },
-  { name: "1A",                      hex: "#131010", img: "colour-1a.png" },
-  { name: "1B",                      hex: "#473326", img: "colour-1b.png" },
-  { name: "2",                       hex: "#4C3E34", img: "colour-2.png" },
-  { name: "4",                       hex: "#6B4A32", img: "colour-4.png" },
-  { name: "8",                       hex: "#DDC599", img: "colour-8.png" },
-  { name: "Red",                     hex: "#7D1F1F", img: "colour-red.png" },
+  { name: "Colour 1 Black",          hex: "#140E08", img: "colour-1.png" },
+  { name: "Colour 1A Natural Black", hex: "#131010", img: "colour-1a.png" },
+  { name: "Colour 1B Off Black",     hex: "#473326", img: "colour-1b.png" },
+  { name: "Colour 2 Dark Brown",     hex: "#4C3E34", img: "colour-2.png" },
+  { name: "Colour 4 Medium Brown",   hex: "#6B4A32", img: "colour-4.png" },
+  { name: "Colour 8 Light Brown",    hex: "#DDC599", img: "colour-8.png" },
+  { name: "Colour Red",              hex: "#7D1F1F", img: "colour-red.png" },
   { name: "Colour 4 Mittelbraun",    hex: "#6B4A32", img: "colour-4.png" },
   { name: "Colour 1 Schwarz",        hex: "#140E08", img: "colour-1.png" },
   { name: "Colour Highlights 8/22",  hex: "linear-gradient(135deg,#9B7040 50%,#D8CDB8 50%)", img: "colour-highlights-8-22.jpg" },
@@ -525,7 +525,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-weft",
       title: "BiziHair Genius Weft Extensions",
       slug: "bizihair-weft-extensions",
-      description: "BiziHair Genius Weft Human Hair Extensions. Available in 7 colours and 8 lengths.",
+      description: "BiziHair Genius Weft Human Hair Extensions. Available in 10 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/weft/weft-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/weft/weft-1.jpeg",
@@ -546,7 +546,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-tape-in",
       title: "BiziHair Tape-In Extensions",
       slug: "bizihair-tape-in-extensions",
-      description: "BiziHair Tape-In Human Hair Extensions. Invisible adhesive strips for seamless blending. Available in 7 colours and 8 lengths.",
+      description: "BiziHair Tape-In Human Hair Extensions. Invisible adhesive strips for seamless blending. Available in 10 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/tape-in/tape-in-1.jpeg",
@@ -565,7 +565,7 @@ function getBiziHairProducts(): CatalogProduct[] {
       id: "bizihair-keratin",
       title: "BiziHair Keratin Bonding Extensions",
       slug: "bizihair-keratin-extensions",
-      description: "BiziHair Keratin Bonding Human Hair Extensions. Individual strand application for the most natural, seamless result. Available in 7 colours and 8 lengths.",
+      description: "BiziHair Keratin Bonding Human Hair Extensions. Individual strand application for the most natural, seamless result. Available in 10 colours and 8 lengths.",
       image_url: "/products/bizihair-extensions/keratin/keratin-1.jpeg",
       gallery: [
         "/products/bizihair-extensions/keratin/keratin-1.jpeg",
