@@ -153,13 +153,29 @@ function mergeMediaProducts(products: MediaProduct[]): MediaProduct[] {
 }
 
 function mergeManagedImages(images: ManagedImage[]): ManagedImage[] {
-  const seen = new Set<string>();
-  return images.filter((image) => {
-    const key = image.src;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+  const merged = new Map<string, ManagedImage>();
+  for (const image of images) {
+    const current = merged.get(image.src);
+    if (!current) {
+      merged.set(image.src, image);
+      continue;
+    }
+
+    merged.set(image.src, {
+      ...current,
+      ...image,
+      id: current.id ?? image.id,
+      label: current.label || image.label,
+      category: current.category || image.category,
+      isCatalog: current.isCatalog || image.isCatalog,
+      productSlug: current.productSlug ?? image.productSlug ?? null,
+      productTitle: current.productTitle ?? image.productTitle ?? null,
+      productDescription: current.productDescription ?? image.productDescription ?? null,
+      retailPriceCents: current.retailPriceCents ?? image.retailPriceCents ?? null,
+      wholesalePriceCents: current.wholesalePriceCents ?? image.wholesalePriceCents ?? null,
+    });
+  }
+  return Array.from(merged.values());
 }
 
 const eyebrow: React.CSSProperties = { color: "#b68a45", fontSize: 10, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", margin: 0 };
