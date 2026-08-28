@@ -42,7 +42,7 @@ export async function POST(request: Request) {
   const country = (await cookies()).get("ohs_country")?.value;
   const checkoutCurrency = country === "GB" ? "gbp" : country === "US" ? "usd" : "eur";
   const variantIds = parsed.data.items.map((item) => item.variantId);
-  const catalogProducts = await getCatalogProducts();
+  const catalogProducts = await getCheckoutCatalogProducts();
   const catalogVariants = catalogProducts.flatMap((product) =>
     product.variants.map((variant) => ({
       ...variant,
@@ -184,4 +184,24 @@ function isUuid(value: string | null | undefined) {
     value &&
       /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
   );
+}
+
+async function getCheckoutCatalogProducts() {
+  const categorySlugs = [
+    undefined,
+    "bizihair-extensions",
+    "biziluxe-extensions",
+    "biziluxe-accessoires",
+    "biziluxe-stylinggeraete",
+    "buersten-und-kaemme",
+    "profi-friseurbedarf"
+  ];
+  const groups = await Promise.all(categorySlugs.map((slug) => getCatalogProducts(slug)));
+  const seen = new Set<string>();
+
+  return groups.flat().filter((product) => {
+    if (seen.has(product.slug)) return false;
+    seen.add(product.slug);
+    return true;
+  });
 }
