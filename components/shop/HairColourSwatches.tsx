@@ -16,6 +16,7 @@ export function HairColourSwatches({
   onColourChange: (imageUrl: string, colourName: string) => void;
 }) {
   const [active, setActive] = useState(0);
+  const usesPhotoSwatches = colours.some((c) => c.imageUrl.includes("/extension-swatches/"));
 
   function select(index: number) {
     setActive(index);
@@ -32,9 +33,10 @@ export function HairColourSwatches({
             aria-label={c.name}
             aria-pressed={i === active}
             onClick={() => select(i)}
-            className={`ohs-swatch${i === active ? " ohs-swatch--active" : ""}`}
+            className={`ohs-swatch${usesPhotoSwatches ? " ohs-swatch--photo" : ""}${i === active ? " ohs-swatch--active" : ""}`}
+            style={usesPhotoSwatches ? undefined : { background: c.hex }}
           >
-            <img src={c.imageUrl} alt="" loading="lazy" />
+            {usesPhotoSwatches ? <img src={c.imageUrl} alt="" loading="lazy" /> : null}
           </button>
         ))}
       </div>

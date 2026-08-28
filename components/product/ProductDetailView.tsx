@@ -41,6 +41,7 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
   const selectedColorData = effectiveColors.find((c) => c.id === selectedColor) || null;
   const selectedColorName = selectedColorData?.name || "";
   const selectedColorImage = selectedColorData?.imageUrl || null;
+  const usesPhotoSwatches = effectiveColors.some((c) => c.imageUrl?.includes("/extension-swatches/"));
 
   const displayedImage = variantImage || selectedThumb;
 
@@ -106,11 +107,21 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
                     setVariantImage(c.imageUrl || product.image_url);
                   }}
                   title={c.inStock ? c.name : `${c.name} (Out of stock)`}
-                  className={`ohs-product-colour-swatch${selectedColor === c.id ? " active" : ""}`}
-                  style={{ cursor: c.inStock ? "pointer" : "not-allowed", opacity: c.inStock ? 1 : 0.4 }}
+                  className={usesPhotoSwatches ? `ohs-product-colour-swatch${selectedColor === c.id ? " active" : ""}` : undefined}
+                  style={usesPhotoSwatches ? { cursor: c.inStock ? "pointer" : "not-allowed", opacity: c.inStock ? 1 : 0.4 } : {
+                    width: 48, height: 48, borderRadius: "50%",
+                    background: c.hex,
+                    border: selectedColor === c.id ? "3px solid #2b2620" : "2px solid #e2d5c0",
+                    cursor: c.inStock ? "pointer" : "not-allowed",
+                    opacity: c.inStock ? 1 : 0.4,
+                    position: "relative",
+                    outline: "none",
+                    padding: 0,
+                    flexShrink: 0,
+                  }}
                   aria-label={c.name}
                 >
-                  {c.imageUrl ? <img src={c.imageUrl} alt="" loading="lazy" /> : <span style={{ background: c.hex }} />}
+                  {usesPhotoSwatches ? (c.imageUrl ? <img src={c.imageUrl} alt="" loading="lazy" /> : <span style={{ background: c.hex }} />) : null}
                   {!c.inStock && (
                     <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#8b3535" }}>✕</span>
                   )}
