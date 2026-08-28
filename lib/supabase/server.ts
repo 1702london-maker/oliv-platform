@@ -21,9 +21,14 @@ export async function createSupabaseServerClient() {
           options: Parameters<typeof cookieStore.set>[2];
         }>
       ) {
-        cookiesToSet.forEach(({ name, value, options }) => {
-          cookieStore.set(name, value, options);
-        });
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // Server Components can read cookies but cannot write refreshed auth cookies.
+          // Middleware and route handlers still perform the writable cookie updates.
+        }
       }
     }
   });
