@@ -33,8 +33,9 @@ export function HairColourSwatches({
             aria-pressed={i === active}
             onClick={() => select(i)}
             className={`ohs-swatch${i === active ? " ohs-swatch--active" : ""}`}
-            style={{ background: c.hex }}
-          />
+          >
+            <img src={c.imageUrl} alt="" loading="lazy" />
+          </button>
         ))}
       </div>
       <span className="ohs-swatch-label">{colours[active]?.name}</span>
