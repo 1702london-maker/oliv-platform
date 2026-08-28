@@ -3,6 +3,7 @@ import { getCatalogProductBySlug } from "@/lib/catalog/products";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { ProductImageManager } from "./ProductImageManager";
 import { ProductDescriptionEditor } from "./ProductDescriptionEditor";
+import { VariantPriceMatrix } from "./VariantPriceMatrix";
 import { ColorManager } from "../../media/ColorManager";
 
 export const dynamic = "force-dynamic";
@@ -53,6 +54,8 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
         baseRetailCents={baseVariant?.retail_price_cents ?? 0}
         baseWholesaleCents={baseVariant?.wholesale_price_cents ?? null}
       />
+
+      <VariantPriceMatrix productSlug={product.slug} variants={product.variants} />
 
       <p style={eyebrow}>Product Images</p>
       <ProductImageManager

@@ -39,6 +39,17 @@ type ProductOverride = {
   merged_into_slug: string | null;
 };
 
+type VariantOverride = {
+  variant_id: string;
+  title: string | null;
+  color: string | null;
+  retail_price_cents: number | null;
+  wholesale_price_cents: number | null;
+  image_url: string | null;
+  inventory_quantity: number | null;
+  attributes: Record<string, unknown> | null;
+};
+
 const LEGACY_IMAGE_FALLBACKS: Array<{ match: RegExp; image: string }> = [
   {
     match: /(?:biziluxe-adhesive-remover|walker-c22-solvent|walker.*c-?22.*solvent|adhesive-remover)/i,
@@ -717,10 +728,43 @@ function applyOverrideToProduct(product: CatalogProduct, override?: ProductOverr
   });
 }
 
+async function applyVariantOverrides(product: CatalogProduct): Promise<CatalogProduct> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("product_variant_overrides")
+      .select("variant_id,title,color,retail_price_cents,wholesale_price_cents,image_url,inventory_quantity,attributes")
+      .eq("product_slug", product.slug);
+
+    if (error || !data?.length) return product;
+
+    const overrides = new Map((data as VariantOverride[]).map((row) => [row.variant_id, row]));
+    return {
+      ...product,
+      variants: product.variants.map((variant) => {
+        const override = overrides.get(variant.id);
+        if (!override) return variant;
+        return {
+          ...variant,
+          title: override.title || variant.title,
+          color: override.color || variant.color,
+          retail_price_cents: override.retail_price_cents ?? variant.retail_price_cents,
+          wholesale_price_cents: override.wholesale_price_cents ?? variant.wholesale_price_cents,
+          image_url: override.image_url || variant.image_url,
+          inventory_quantity: override.inventory_quantity ?? variant.inventory_quantity,
+          attributes: { ...variant.attributes, ...(override.attributes || {}) },
+        };
+      }),
+    };
+  } catch {
+    return product;
+  }
+}
+
 async function applyCatalogOverrides(products: CatalogProduct[], categorySlug?: string): Promise<CatalogProduct[]> {
   const overrides = await fetchProductOverrides();
   const seen = new Set<string>();
-  const filtered = products.flatMap((product) => {
+  const filteredBase = products.flatMap((product) => {
     const override = overrides.get(product.slug);
     if (override?.hidden || override?.merged_into_slug) return [];
     if (categorySlug && override?.category_slug && override.category_slug !== categorySlug) return [];
@@ -728,15 +772,18 @@ async function applyCatalogOverrides(products: CatalogProduct[], categorySlug?: 
     return [applyOverrideToProduct(product, override)];
   });
 
+  const filtered = await Promise.all(filteredBase.map(applyVariantOverrides));
+
   if (!categorySlug) return filtered;
 
-  const movedIn = getCuratedProducts().flatMap((product) => {
+  const movedInBase = getCuratedProducts().flatMap((product) => {
     if (seen.has(product.slug)) return [];
     const override = overrides.get(product.slug);
     if (!override || override.hidden || override.merged_into_slug || override.category_slug !== categorySlug) return [];
     seen.add(product.slug);
     return [applyOverrideToProduct(product, override)];
   });
+  const movedIn = await Promise.all(movedInBase.map(applyVariantOverrides));
 
   return [...filtered, ...movedIn];
 }
@@ -865,7 +912,8 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   const extensionSlugs = ["tape-in-extensions", "weft-extensions", "utip-extensions"];
   if (extensionSlugs.includes(slug)) {
     const product = getBiziLuxeExtensionProducts().find((p) => p.slug === slug) || null;
-    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
+    const withOverrides = product ? await applyVariantOverrides(applyOverrideToProduct(product, override)) : null;
+    return mergeAdminImages(withOverrides);
   }
   const brushSlugs = ["mini-travel-brush", "vent-brush", "wooden-paddle-brush", "detangling-brush", "edge-brush-comb", "wide-tint-brush", "celle", "biziluxe-styling-combs", "hameln", "luebeck", "biziluxe-professional-combs"];
   if (brushSlugs.includes(slug)) {
@@ -875,7 +923,8 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   const biziHairSlugs = ["bizihair-weft-extensions", "bizihair-tape-in-extensions", "bizihair-keratin-extensions"];
   if (biziHairSlugs.includes(slug)) {
     const product = getBiziHairProducts().find((p) => p.slug === slug) || null;
-    return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
+    const withOverrides = product ? await applyVariantOverrides(applyOverrideToProduct(product, override)) : null;
+    return mergeAdminImages(withOverrides);
   }
   const accessorySlugs = ["slip-on-bonnet", "tie-up-bonnet", "sectioning-clips", "gator-grip-clips", "fine-mist-spray-bottle", "hair-extension-thread", "hair-weaving-needles", "dortmund", "bocholt", "neuschwanstein", "drachenfels", "berghain", "eisenach", "taunus", "mannheim", "speicherstadt", "hamburger-hafen"];
   if (accessorySlugs.includes(slug)) {
@@ -894,7 +943,8 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
   }
   const products = await getCatalogProducts();
   const product = products.find((item) => item.slug === slug) || getLocalPublicProductBySlug(slug);
-  return mergeAdminImages(product ? applyOverrideToProduct(product, override) : null);
+  const withOverrides = product ? await applyVariantOverrides(applyOverrideToProduct(product, override)) : null;
+  return mergeAdminImages(withOverrides);
 }
 
 async function mergeAdminImages(product: CatalogProduct | null): Promise<CatalogProduct | null> {

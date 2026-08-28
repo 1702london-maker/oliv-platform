@@ -118,7 +118,7 @@ export function ProductDescriptionEditor({
           </label>
         </div>
         <p style={{ margin: "10px 0 0", fontSize: 11, color: "#9b8878" }}>
-          Leave blank to keep existing prices. For products with multiple lengths/variants, this sets the starting price and all length increments are preserved.
+          Leave blank to keep existing prices. Hair products with colour and length prices can be edited in the price table below.
         </p>
       </div>
 
