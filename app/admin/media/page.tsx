@@ -30,14 +30,19 @@ export type MediaProduct = {
 export default async function MediaPage() {
   const admin = createSupabaseAdminClient();
 
-  const [{ data: dbRows }, catalogData] = await Promise.all([
-    admin
-      .from("product_images")
-      .select("id, url, label, hidden, is_catalog, category, created_at, product_slug")
-      .neq("hidden", true)
-      .order("created_at", { ascending: false }),
+  const dbRowsPromise = admin
+    .from("product_images")
+    .select("id, url, label, hidden, is_catalog, category, created_at, product_slug")
+    .neq("hidden", true)
+    .order("created_at", { ascending: false });
+
+  const [dbResult, catalogResult] = await Promise.allSettled([
+    dbRowsPromise,
     getAdminCatalogData(),
   ]);
+
+  const dbRows = dbResult.status === "fulfilled" ? dbResult.value.data : null;
+  const catalogData = catalogResult.status === "fulfilled" ? catalogResult.value : { images: [], products: [] };
 
   const rows = dbRows || [];
 
