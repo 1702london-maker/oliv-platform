@@ -164,7 +164,7 @@ function approvalHtml(title: string, email: string) {
 }
 
 // POST handler — called from the admin UI inline buttons (returns JSON, not HTML)
-// action: "approve" (default) or "reject"
+// action: "approve" (default), "reject", or "delete"
 export async function POST(request: Request) {
   const { getCurrentProfile } = await import("@/lib/auth/session");
   const profile = await getCurrentProfile();
@@ -174,15 +174,25 @@ export async function POST(request: Request) {
   const { type, id, action } = await request.json();
   if (!id || !type) return NextResponse.json({ error: "missing_type_or_id" }, { status: 400 });
 
+  const tableMap: Record<string, string> = { affiliate: "affiliates", wholesale: "wholesale_accounts", training: "training_applications" };
+  const table = tableMap[type];
+  if (!table) return NextResponse.json({ error: "invalid_type" }, { status: 400 });
+
+  if (action === "delete") {
+    const { createSupabaseAdminClient } = await import("@/lib/supabase/admin");
+    const admin = createSupabaseAdminClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (admin.from(table) as any).delete().eq("id", id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: true });
+  }
+
   if (action === "reject") {
     // Inline reject logic (was /api/admin/applications/reject)
     const { createSupabaseAdminClient } = await import("@/lib/supabase/admin");
     const { sendApplicationRejectionEmail } = await import("@/lib/email/resend");
     const admin = createSupabaseAdminClient();
-    const tableMap: Record<string, string> = { affiliate: "affiliates", wholesale: "wholesale_accounts", training: "training_applications" };
     const nameField: Record<string, string> = { affiliate: "display_name", wholesale: "business_name", training: "full_name" };
-    const table = tableMap[type];
-    if (!table) return NextResponse.json({ error: "invalid_type" }, { status: 400 });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data: rec } = await (admin.from(table) as any).select(`email,status,${nameField[type]}`).eq("id", id).maybeSingle() as { data: Record<string, string> | null };
     if (!rec) return NextResponse.json({ error: "not_found" }, { status: 404 });

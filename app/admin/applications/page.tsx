@@ -45,9 +45,7 @@ export default async function ApplicationsPage() {
               <span style={row.status === "approved" ? badgeGreen : row.status === "rejected" ? badgeRed : badgeGold}>
                 {row.status}
               </span>
-              {row.status === "pending" && (
-                <ApplicationActions type="affiliate" id={row.id} />
-              )}
+              <ApplicationActions type="affiliate" id={row.id} status={row.status} />
             </div>
           </div>
         ))}
@@ -68,9 +66,7 @@ export default async function ApplicationsPage() {
               <span style={row.status === "approved" ? badgeGreen : row.status === "rejected" ? badgeRed : badgeGold}>
                 {row.status}
               </span>
-              {row.status === "pending" && (
-                <ApplicationActions type="wholesale" id={row.id} />
-              )}
+              <ApplicationActions type="wholesale" id={row.id} status={row.status} />
             </div>
           </div>
         ))}
@@ -91,9 +87,7 @@ export default async function ApplicationsPage() {
               <span style={row.status === "approved" ? badgeGreen : row.status === "rejected" ? badgeRed : badgeGold}>
                 {row.status}
               </span>
-              {row.status === "pending" && (
-                <ApplicationActions type="training" id={row.id} />
-              )}
+              <ApplicationActions type="training" id={row.id} status={row.status} />
             </div>
           </div>
         ))}

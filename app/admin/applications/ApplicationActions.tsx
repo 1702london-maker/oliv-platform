@@ -3,15 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Props = { type: "affiliate" | "wholesale" | "training"; id: string };
+type Props = { type: "affiliate" | "wholesale" | "training"; id: string; status?: string };
 
-export function ApplicationActions({ type, id }: Props) {
+export function ApplicationActions({ type, id, status }: Props) {
   const router = useRouter();
-  const [loading, setLoading] = useState<"approve" | "reject" | null>(null);
+  const [loading, setLoading] = useState<"approve" | "reject" | "delete" | null>(null);
   const [error, setError] = useState("");
-  const [done, setDone] = useState<"approved" | "rejected" | null>(null);
+  const [done, setDone] = useState<"approved" | "rejected" | "deleted" | null>(null);
 
-  async function act(action: "approve" | "reject") {
+  async function act(action: "approve" | "reject" | "delete") {
+    if (action === "delete" && !confirm("Permanently delete this application?")) return;
     setLoading(action);
     setError("");
     try {
@@ -24,7 +25,7 @@ export function ApplicationActions({ type, id }: Props) {
       if (!res.ok) {
         setError(j.error || "Failed");
       } else {
-        setDone(action === "approve" ? "approved" : "rejected");
+        setDone(action === "approve" ? "approved" : action === "reject" ? "rejected" : "deleted");
         router.refresh();
       }
     } catch {
@@ -46,19 +47,30 @@ export function ApplicationActions({ type, id }: Props) {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
       {error && <span style={{ fontSize: 10, color: "#8b3535" }}>{error}</span>}
       <div style={{ display: "flex", gap: 8 }}>
+        {status === "pending" && (
+          <>
+            <button
+              onClick={() => act("approve")}
+              disabled={!!loading}
+              style={{ ...approveBtn, opacity: loading ? 0.6 : 1 }}
+            >
+              {loading === "approve" ? "…" : "Approve"}
+            </button>
+            <button
+              onClick={() => act("reject")}
+              disabled={!!loading}
+              style={{ ...rejectBtn, opacity: loading ? 0.6 : 1 }}
+            >
+              {loading === "reject" ? "…" : "Reject"}
+            </button>
+          </>
+        )}
         <button
-          onClick={() => act("approve")}
+          onClick={() => act("delete")}
           disabled={!!loading}
-          style={{ ...approveBtn, opacity: loading ? 0.6 : 1 }}
+          style={{ ...deleteBtn, opacity: loading ? 0.6 : 1 }}
         >
-          {loading === "approve" ? "…" : "Approve"}
-        </button>
-        <button
-          onClick={() => act("reject")}
-          disabled={!!loading}
-          style={{ ...rejectBtn, opacity: loading ? 0.6 : 1 }}
-        >
-          {loading === "reject" ? "…" : "Reject"}
+          {loading === "delete" ? "…" : "Delete"}
         </button>
       </div>
     </div>
@@ -71,3 +83,4 @@ const badgeRed: React.CSSProperties = { ...badgeBase, background: "#f4e4e0", col
 const btnBase: React.CSSProperties = { border: "none", padding: "8px 14px", fontSize: 10, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", cursor: "pointer" };
 const approveBtn: React.CSSProperties = { ...btnBase, background: "#2b2620", color: "#fff" };
 const rejectBtn: React.CSSProperties = { ...btnBase, background: "#fff", color: "#8b3535", border: "1px solid #8b3535" };
+const deleteBtn: React.CSSProperties = { ...btnBase, background: "#f4e4e0", color: "#8b3535", border: "1px solid #d8aaa0" };

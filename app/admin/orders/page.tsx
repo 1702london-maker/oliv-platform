@@ -1,18 +1,5 @@
-import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-
-async function markShipped(formData: FormData) {
-  "use server";
-  const orderId = formData.get("orderId") as string;
-  if (!orderId) return;
-  const admin = createSupabaseAdminClient();
-  await admin
-    .from("orders")
-    .update({ status: "shipped", updated_at: new Date().toISOString() })
-    .eq("id", orderId)
-    .eq("status", "paid");
-  revalidatePath("/admin/orders");
-}
+import { OrderActions } from "./OrderActions";
 
 export default async function OrdersPage() {
   const admin = createSupabaseAdminClient();
@@ -84,14 +71,7 @@ export default async function OrdersPage() {
                   <td style={td}>{o.affiliate_code || "—"}</td>
                   <td style={td}>{new Date(o.created_at).toLocaleString("en-GB")}</td>
                   <td style={td}>
-                    {o.status === "paid" && (
-                      <form action={markShipped}>
-                        <input type="hidden" name="orderId" value={o.id} />
-                        <button type="submit" style={shipBtn}>
-                          Mark Shipped
-                        </button>
-                      </form>
-                    )}
+                    <OrderActions id={o.id} status={o.status} />
                   </td>
                 </tr>
               ))}
@@ -122,4 +102,3 @@ const badgeGold: React.CSSProperties = { ...badgeBase, background: "#fdf3e0", co
 const badgeGreen: React.CSSProperties = { ...badgeBase, background: "#e4eddf", color: "#315f38" };
 const badgeBlue: React.CSSProperties = { ...badgeBase, background: "#e0eaf8", color: "#1a3f7a" };
 const badgeRed: React.CSSProperties = { ...badgeBase, background: "#f4e4e0", color: "#8b3535" };
-const shipBtn: React.CSSProperties = { background: "#1a3f7a", color: "#fff", border: "none", padding: "7px 13px", fontSize: 9.5, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", cursor: "pointer" };
