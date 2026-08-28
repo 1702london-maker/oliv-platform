@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { AffiliateTracker } from "@/components/affiliate/AffiliateTracker";
 import { TranslationClient } from "@/components/TranslationClient";
 import { FloatingChatWidget } from "@/components/FloatingChatWidget";
@@ -56,10 +55,9 @@ export const metadata: Metadata = {
   category: "beauty"
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = (await cookies()).get("ohs_locale")?.value || "de";
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={locale === "de" ? "de" : "en"}>
+    <html lang="de">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function AppointmentCancelPage() {
+function AppointmentCancelContent() {
   const params = useSearchParams();
   const bookingId = params.get("booking") || "";
   const email = params.get("email") || "";
@@ -76,5 +76,13 @@ export default function AppointmentCancelPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function AppointmentCancelPage() {
+  return (
+    <Suspense>
+      <AppointmentCancelContent />
+    </Suspense>
   );
 }
