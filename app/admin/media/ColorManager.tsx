@@ -176,7 +176,7 @@ export function ColorManager({ productSlug, images = EMPTY_IMAGES, fallbackColor
   return (
     <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid #f0e8dc" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-        <p style={eyebrow}>Colour Variants ({colors.length})</p>
+        <p style={eyebrow}>Customer Colour Options ({colors.length})</p>
         <button onClick={() => setAdding(!adding)} style={addBtn}>
           {adding ? "Cancel" : "+ Add Colour"}
         </button>
@@ -229,7 +229,7 @@ export function ColorManager({ productSlug, images = EMPTY_IMAGES, fallbackColor
       )}
 
       {colors.length === 0 && !adding && (
-        <p style={{ fontSize: 12, color: "#b4a090", fontStyle: "italic", marginBottom: 12 }}>No colour variants yet. Click "+ Add Colour" to create one.</p>
+        <p style={{ fontSize: 12, color: "#b4a090", fontStyle: "italic", marginBottom: 12 }}>No customer colour options yet. Click "+ Add Colour" to create one.</p>
       )}
 
       {/* Add form */}
@@ -264,7 +264,7 @@ export function ColorManager({ productSlug, images = EMPTY_IMAGES, fallbackColor
       )}
 
       <p style={{ fontSize: 10, color: "#b4a090", margin: 0 }}>
-        Colours appear as clickable swatches on the live product page. Mark "OOS" to show a colour as out of stock.
+        Use this when one product has several colours at the same price. Each colour appears as a selectable swatch on the live product page and is saved with the cart order.
       </p>
     </div>
   );

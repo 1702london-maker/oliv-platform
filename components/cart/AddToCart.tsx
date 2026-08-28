@@ -26,6 +26,7 @@ type AddToCartProps = {
   currency?: string;
   colourHexMap?: Record<string, string>;
   selectedColour?: string;
+  selectedColourImage?: string | null;
   hideColourOptions?: boolean;
   onImageChange?: (imageUrl: string | null) => void;
   onPriceChange?: (priceCents: number) => void;
@@ -52,6 +53,7 @@ export function AddToCart({
   currency = "EUR",
   colourHexMap,
   selectedColour,
+  selectedColourImage,
   hideColourOptions = false,
   onImageChange,
   onPriceChange
@@ -71,13 +73,15 @@ export function AddToCart({
   }, [optionValues.colours, optionValues.lengths, optionValues.textures]);
 
   useEffect(() => {
-    if (selectedColour && optionValues.colours.includes(selectedColour)) {
+    if (selectedColour && (hideColourOptions || optionValues.colours.includes(selectedColour))) {
       setColour(selectedColour);
     }
-  }, [optionValues.colours, selectedColour]);
+  }, [hideColourOptions, optionValues.colours, selectedColour]);
+
+  const effectiveColour = hideColourOptions && selectedColour ? selectedColour : colour;
 
   const selected =
-    findBestVariant(variants, { colour, length, texture, variantId }) ||
+    findBestVariant(variants, { colour: effectiveColour, length, texture, variantId }) ||
     variants.find((variant) => variant.id === variantId) ||
     variants[0];
 
@@ -87,7 +91,11 @@ export function AddToCart({
       : selected.retail_price_cents
     : 0;
 
-  const selectedImage = selected?.image_url || imageForColour(variants, colour) || product.image_url;
+  const selectedImage =
+    (hideColourOptions && selectedColour ? selectedColourImage : null) ||
+    selected?.image_url ||
+    imageForColour(variants, effectiveColour) ||
+    product.image_url;
   const usesStructuredOptions = Boolean((!hideColourOptions && optionValues.colours.length) || optionValues.lengths.length || optionValues.textures.length);
 
   useEffect(() => {
@@ -102,7 +110,7 @@ export function AddToCart({
 
   function buildCartItem() {
     if (!selected) return null;
-    const optionTitle = optionLabel(selected, { colour, length, texture });
+    const optionTitle = optionLabel(selected, { colour: effectiveColour, length, texture });
     const cartKey = `${selected.id}:${optionTitle}`;
     return { cartKey, optionTitle };
   }

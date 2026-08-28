@@ -38,7 +38,9 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
   const [variantImage, setVariantImage] = useState<string | null>(null);
   const [selectedPrice, setSelectedPrice] = useState(initialPrice);
   const [selectedColor, setSelectedColor] = useState<string | null>(effectiveColors.length > 0 ? effectiveColors[0].id : null);
-  const selectedColorName = effectiveColors.find((c) => c.id === selectedColor)?.name || "";
+  const selectedColorData = effectiveColors.find((c) => c.id === selectedColor) || null;
+  const selectedColorName = selectedColorData?.name || "";
+  const selectedColorImage = selectedColorData?.imageUrl || null;
 
   const displayedImage = variantImage || selectedThumb;
 
@@ -138,6 +140,7 @@ export function ProductDetailView({ product, isWholesale, currency, colors = [] 
           currency={currency}
           colourHexMap={colourHexMap}
           selectedColour={selectedColorName}
+          selectedColourImage={selectedColorImage}
           hideColourOptions={effectiveColors.length > 0}
           onImageChange={handleImageChange}
           onPriceChange={handlePriceChange}
