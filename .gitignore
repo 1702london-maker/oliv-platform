@@ -12,3 +12,4 @@ dist
 dev.log
 local-*.html
 supabase/.temp
+.env*

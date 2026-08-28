@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { env } from "@/lib/env";
 import { getCurrentProfile } from "@/lib/auth/session";
+import { getCatalogProducts } from "@/lib/catalog/products";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe";
 
@@ -41,12 +42,17 @@ export async function POST(request: Request) {
   const country = (await cookies()).get("ohs_country")?.value;
   const checkoutCurrency = country === "GB" ? "gbp" : country === "US" ? "usd" : "eur";
   const variantIds = parsed.data.items.map((item) => item.variantId);
-  const { data: variants, error: variantsError } = await supabase
-    .from("product_variants")
-    .select("id,title,sku,retail_price_cents,wholesale_price_cents,product_id,products(id,title)")
-    .in("id", variantIds);
+  const catalogProducts = await getCatalogProducts();
+  const catalogVariants = catalogProducts.flatMap((product) =>
+    product.variants.map((variant) => ({
+      ...variant,
+      product_id: product.id,
+      productTitle: product.title
+    }))
+  );
+  const variants = catalogVariants.filter((variant) => variantIds.includes(variant.id));
 
-  if (variantsError || !variants?.length) {
+  if (variants.length !== variantIds.length) {
     return NextResponse.json({ error: "Products are not available for checkout." }, { status: 400 });
   }
 
@@ -63,11 +69,10 @@ export async function POST(request: Request) {
   const items = parsed.data.items.map((item) => {
     const variant = variants.find((current) => current.id === item.variantId);
     if (!variant) throw new Error("Cart variant was not found.");
-    const product = Array.isArray(variant.products) ? variant.products[0] : variant.products;
     return {
       ...item,
       productId: variant.product_id,
-      title: product?.title || item.title,
+      title: variant.productTitle || item.title,
       variantTitle: variant.title,
       sku: variant.sku,
       priceCents: convertCurrencyCents(
@@ -110,8 +115,8 @@ export async function POST(request: Request) {
   const { error: itemsError } = await supabase.from("order_items").insert(
     items.map((item) => ({
       order_id: order.id,
-      product_id: item.productId,
-      variant_id: item.variantId,
+      product_id: isUuid(item.productId) ? item.productId : null,
+      variant_id: isUuid(item.variantId) ? item.variantId : null,
       title: `${item.title} - ${item.variantTitle}`,
       sku: item.sku,
       quantity: item.quantity,
@@ -172,4 +177,11 @@ function convertCurrencyCents(eurCents: number, currency: string) {
   };
 
   return Math.max(0, Math.round(eurCents * (rates[currency] || 1)));
+}
+
+function isUuid(value: string | null | undefined) {
+  return Boolean(
+    value &&
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
+  );
 }
