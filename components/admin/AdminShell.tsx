@@ -19,7 +19,7 @@ export function AdminShell({ children }: { pathname?: string; children: React.Re
   return (
     <div style={{ display: "flex", minHeight: "100vh", fontFamily: "Montserrat, Arial, sans-serif" }}>
       {/* Sidebar */}
-      <aside style={{
+      <aside className="ohs-admin-sidebar" style={{
         width: 220, flexShrink: 0, background: "#0f0f0f",
         display: "flex", flexDirection: "column",
         position: "sticky", top: 0, height: "100vh", overflowY: "auto",

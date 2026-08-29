@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  .no-print,
+  .ohs-admin-sidebar,
+  .ohs-floating-chat,
+  .ohs-whatsapp-float {
+    display: none !important;
+  }
+}
+
 :root {
   color: #251f19;
   background: #fbf7f1;

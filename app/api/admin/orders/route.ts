@@ -24,6 +24,7 @@ export async function POST(request: Request) {
   }
 
   if (action === "delete") {
+    await admin.from("order_items").delete().eq("order_id", id);
     const { error } = await admin.from("orders").delete().eq("id", id);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ ok: true });

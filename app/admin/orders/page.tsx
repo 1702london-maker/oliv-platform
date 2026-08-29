@@ -6,7 +6,7 @@ export default async function OrdersPage() {
 
   const { data: orders } = await admin
     .from("orders")
-    .select("id,status,total_cents,affiliate_code,created_at,stripe_payment_intent_id,email")
+    .select("id,status,total_cents,currency,affiliate_code,created_at,stripe_payment_intent_id,email")
     .order("created_at", { ascending: false })
     .limit(150);
 
@@ -14,8 +14,11 @@ export default async function OrdersPage() {
     .filter(o => o.status === "paid" || o.status === "shipped")
     .reduce((sum, o) => sum + (o.total_cents || 0), 0);
 
-  function fmt(cents: number) {
-    return `€${(cents / 100).toFixed(2)}`;
+  function fmt(cents: number, currency = "eur") {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: String(currency || "eur").toUpperCase()
+    }).format(cents / 100);
   }
 
   return (
@@ -27,7 +30,7 @@ export default async function OrdersPage() {
         <Stat label="Total Orders" value={String((orders || []).length)} />
         <Stat label="Paid" value={String((orders || []).filter(o => o.status === "paid").length)} />
         <Stat label="Shipped" value={String((orders || []).filter(o => o.status === "shipped").length)} />
-        <Stat label="Revenue" value={fmt(totalRevenueCents)} />
+        <Stat label="Revenue" value={fmt(totalRevenueCents, "eur")} />
         <Stat label="Affiliate Orders" value={String((orders || []).filter(o => o.affiliate_code).length)} />
       </div>
 
@@ -67,7 +70,7 @@ export default async function OrdersPage() {
                       {o.status}
                     </span>
                   </td>
-                  <td style={td}>{o.total_cents ? fmt(o.total_cents) : "—"}</td>
+                  <td style={td}>{o.total_cents ? fmt(o.total_cents, o.currency || "eur") : "—"}</td>
                   <td style={td}>{o.affiliate_code || "—"}</td>
                   <td style={td}>{new Date(o.created_at).toLocaleString("en-GB")}</td>
                   <td style={td}>
