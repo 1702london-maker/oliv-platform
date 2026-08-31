@@ -14,7 +14,12 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "missing_date" }, { status: 400 });
   }
 
-  const slots = Array.from({ length: 10 }, (_, index) => `${String(index + 9).padStart(2, "0")}:00`);
+  const slots = Array.from({ length: 21 }, (_, index) => {
+    const totalMinutes = 9 * 60 + index * 30;
+    const hour = Math.floor(totalMinutes / 60);
+    const minute = totalMinutes % 60;
+    return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+  });
   const dayOfWeek = new Date(`${date}T00:00:00.000Z`).getUTCDay();
   if (dayOfWeek === 0 || isStoreBBlackout(locationName, date)) {
     return NextResponse.json({
@@ -70,10 +75,8 @@ export async function GET(request: Request) {
     const startIso = localIso(date, time);
     const candidateStart = new Date(startIso);
     const candidateEnd = new Date(candidateStart.getTime() + durationMinutes * 60_000);
-    const closingTime = new Date(localIso(date, "19:00"));
-    const outsideHours = candidateEnd > closingTime;
     const overlaps = bookings.some((booking) => candidateStart < booking.end && candidateEnd > booking.start);
-    if (outsideHours || overlaps) full.push(time);
+    if (overlaps) full.push(time);
   }
 
   return NextResponse.json({

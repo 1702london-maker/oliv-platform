@@ -15,6 +15,115 @@
   }
 }
 
+.ohs-admin-mobile-header,
+.ohs-admin-mobile-nav {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .ohs-admin-shell {
+    display: block !important;
+    min-height: 100vh;
+    padding-top: 112px;
+  }
+
+  .ohs-admin-sidebar {
+    display: none !important;
+  }
+
+  .ohs-admin-mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 58px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(201,169,110,.24);
+    background: #0f0f0f;
+    color: #fff;
+    box-sizing: border-box;
+  }
+
+  .ohs-admin-mobile-brand {
+    display: block;
+    color: #c9a96e;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+  }
+
+  .ohs-admin-mobile-title {
+    display: block;
+    margin-top: 3px;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .ohs-admin-mobile-site {
+    flex: 0 0 auto;
+    border: 1px solid rgba(201,169,110,.42);
+    color: #c9a96e;
+    padding: 9px 11px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .ohs-admin-mobile-nav {
+    position: fixed;
+    top: 58px;
+    left: 0;
+    right: 0;
+    z-index: 79;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 9px 12px 10px;
+    border-bottom: 1px solid #e3d6c5;
+    background: #f5f0e8;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+  }
+
+  .ohs-admin-mobile-nav a {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 34px;
+    border: 1px solid #dfceb5;
+    background: #fffaf4;
+    color: #6b5c4e;
+    padding: 0 11px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .11em;
+    font-size: 9px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .ohs-admin-mobile-nav a.active {
+    border-color: #2b2620;
+    background: #2b2620;
+    color: #fffaf4;
+  }
+
+  .ohs-admin-main {
+    width: 100%;
+    overflow-x: auto !important;
+  }
+}
+
 :root {
   color: #251f19;
   background: #fbf7f1;

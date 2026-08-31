@@ -67,10 +67,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "store_b_blackout" }, { status: 409 });
     }
 
-    if (runsPastBerlinClosing(String(endsAt))) {
-      return NextResponse.json({ error: "outside_opening_hours" }, { status: 409 });
-    }
-
     const supabase = createSupabaseAdminClient();
 
     let dbServiceId = serviceId;
@@ -236,17 +232,6 @@ function isBerlinSunday(iso: string) {
     weekday: "short",
   }).format(new Date(iso));
   return day === "Sun";
-}
-
-function runsPastBerlinClosing(iso: string) {
-  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Europe/Berlin",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).formatToParts(new Date(iso)).map((part) => [part.type, part.value]));
-  const minutes = Number(parts.hour || 0) * 60 + Number(parts.minute || 0);
-  return minutes > 19 * 60;
 }
 
 function isStoreBBlackout(locationName: string, iso: string) {

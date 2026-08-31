@@ -3299,7 +3299,7 @@ var OAPPT_STYLISTS = [
   }
 ];
 
-var OAPPT_ALL_SLOTS = ['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+var OAPPT_ALL_SLOTS = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00'];
 
 var oapptState = {
   currentStep: 1,
@@ -4418,14 +4418,14 @@ function oapptMinutesToTime(totalMinutes) {
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }
 function oapptSlotRunsPastClosing(slot) {
-  return oapptTimeToMinutes(slot) + oapptServiceDurationMinutes() > (19 * 60);
+  return false;
 }
 function oapptIsStoreBBlackout(dateStr) {
   return oapptState.location === 'b' && dateStr < '2026-09-15';
 }
 function oapptSelectedTimeLabel() {
   if (!oapptState.selectedTime) return '';
-  return oapptState.selectedTime + ' - ' + oapptMinutesToTime(oapptTimeToMinutes(oapptState.selectedTime) + oapptServiceDurationMinutes());
+  return oapptState.selectedTime;
 }
 function oapptStoreName() {
   var loc = OAPPT_STORE_LABELS[oapptState.location] || OAPPT_STORE_LABELS.a;
@@ -4725,18 +4725,17 @@ function oapptRenderSlotsFromCounts() {
   if (!grid) return;
   var html = '';
   OAPPT_ALL_SLOTS.forEach(function(slot) {
-    var isClosed = oapptSlotRunsPastClosing(slot);
-    var isBooked = isClosed || !!(oapptState.slotFull && oapptState.slotFull[slot]);
+    var isBooked = !!(oapptState.slotFull && oapptState.slotFull[slot]);
     var isSel = oapptState.selectedTime === slot;
     var cls = 'oappt-slot' + (isBooked ? ' booked' : '') + (isSel ? ' selected' : '');
-    if (isBooked) html += '<div class="' + cls + '">' + slot + '<br><small>' + (isClosed ? (oapptLang() === 'de' ? 'Geschlossen' : 'Closed') : (oapptLang() === 'de' ? 'Voll' : 'Full')) + '</small></div>';
-    else html += '<div class="' + cls + '" onclick="oapptSelectTime(\'' + slot + '\')">' + slot + '<br><small>' + oapptMinutesToTime(oapptTimeToMinutes(slot) + oapptServiceDurationMinutes()) + '</small></div>';
+    if (isBooked) html += '<div class="' + cls + '">' + slot + '<br><small>' + (oapptLang() === 'de' ? 'Voll' : 'Full') + '</small></div>';
+    else html += '<div class="' + cls + '" onclick="oapptSelectTime(\'' + slot + '\')">' + slot + '</div>';
   });
   grid.innerHTML = html;
 }
 
 function oapptSelectTime(slot) {
-  if ((oapptState.slotFull && oapptState.slotFull[slot]) || oapptSlotRunsPastClosing(slot)) return;
+  if (oapptState.slotFull && oapptState.slotFull[slot]) return;
   oapptState.selectedTime = slot;
   oapptRenderSlots();
   oapptUpdateSummary();

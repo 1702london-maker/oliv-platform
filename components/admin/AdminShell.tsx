@@ -17,7 +17,25 @@ const NAV = [
 export function AdminShell({ children }: { pathname?: string; children: React.ReactNode }) {
   const pathname = usePathname();
   return (
-    <div style={{ display: "flex", minHeight: "100vh", fontFamily: "Montserrat, Arial, sans-serif" }}>
+    <div className="ohs-admin-shell" style={{ display: "flex", minHeight: "100vh", fontFamily: "Montserrat, Arial, sans-serif" }}>
+      <header className="ohs-admin-mobile-header">
+        <div>
+          <span className="ohs-admin-mobile-brand">OlivHairSupply</span>
+          <span className="ohs-admin-mobile-title">Admin</span>
+        </div>
+        <a href="https://www.olivhairsupply.de" target="_blank" rel="noopener noreferrer" className="ohs-admin-mobile-site">View Site</a>
+      </header>
+      <nav className="ohs-admin-mobile-nav">
+        {NAV.map(({ href, label, icon }) => {
+          const active = href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
+          return (
+            <Link key={href} href={href} className={active ? "active" : ""}>
+              <span>{icon}</span>
+              {label}
+            </Link>
+          );
+        })}
+      </nav>
       {/* Sidebar */}
       <aside className="ohs-admin-sidebar" style={{
         width: 220, flexShrink: 0, background: "#0f0f0f",
@@ -59,7 +77,7 @@ export function AdminShell({ children }: { pathname?: string; children: React.Re
       </aside>
 
       {/* Content */}
-      <main style={{ flex: 1, minWidth: 0, background: "#f5f0e8", overflowX: "hidden" }}>
+      <main className="ohs-admin-main" style={{ flex: 1, minWidth: 0, background: "#f5f0e8", overflowX: "hidden" }}>
         {children}
       </main>
     </div>
