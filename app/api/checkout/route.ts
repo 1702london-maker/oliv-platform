@@ -73,7 +73,7 @@ export async function POST(request: Request) {
       ...item,
       productId: variant.product_id,
       title: variant.productTitle || item.title,
-      variantTitle: variant.title,
+      variantTitle: item.variantTitle || variant.title,
       sku: variant.sku,
       priceCents: convertCurrencyCents(
         isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents,

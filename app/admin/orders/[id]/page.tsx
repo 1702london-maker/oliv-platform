@@ -22,7 +22,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
 
   const { data: order } = await admin
     .from("orders")
-    .select("id,status,email,currency,subtotal_cents,discount_cents,total_cents,affiliate_code,stripe_checkout_session_id,stripe_payment_intent_id,created_at,updated_at")
+    .select("id,status,email,currency,subtotal_cents,discount_cents,total_cents,affiliate_code,created_at,updated_at")
     .eq("id", id)
     .maybeSingle();
 
@@ -60,8 +60,6 @@ export default async function AdminOrderDetailPage({ params }: Props) {
         <div style={infoGrid}>
           <InfoBlock label="Customer" value={order.email || "No email captured"} />
           <InfoBlock label="Order ID" value={order.id} mono />
-          <InfoBlock label="Stripe Session" value={order.stripe_checkout_session_id || "Not available"} mono />
-          <InfoBlock label="Payment Intent" value={order.stripe_payment_intent_id || "Not available"} mono />
           <InfoBlock label="Affiliate Code" value={order.affiliate_code || "None"} />
           <InfoBlock label="Currency" value={currency} />
         </div>
@@ -79,7 +77,10 @@ export default async function AdminOrderDetailPage({ params }: Props) {
           <tbody>
             {orderItems.length ? orderItems.map((item) => (
               <tr key={item.id} style={{ borderBottom: "1px solid #eadfce" }}>
-                <td style={td}>{item.title || "Untitled product"}</td>
+                <td style={td}>
+                  <div style={{ fontWeight: 600 }}>{productName(item.title)}</div>
+                  <ItemOptions title={item.title} />
+                </td>
                 <td style={td}><code style={code}>{item.sku || "-"}</code></td>
                 <td style={{ ...td, textAlign: "right" }}>{item.quantity || 0}</td>
                 <td style={{ ...td, textAlign: "right" }}>{money(item.unit_price_cents || 0, currency)}</td>
@@ -108,6 +109,35 @@ export default async function AdminOrderDetailPage({ params }: Props) {
       </article>
     </section>
   );
+}
+
+function ItemOptions({ title }: { title: string | null }) {
+  const options = parseItemOptions(title);
+  if (!options.length) return null;
+  return (
+    <div style={optionList}>
+      {options.map((option) => (
+        <span key={option.label} style={optionPill}>
+          <strong>{option.label}:</strong> {option.value}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function productName(title: string | null) {
+  return String(title || "Untitled product").split(" - ")[0] || "Untitled product";
+}
+
+function parseItemOptions(title: string | null) {
+  const [, rawOptions = ""] = String(title || "").split(" - ");
+  if (!rawOptions) return [];
+  const parts = rawOptions.split("/").map((part) => part.trim()).filter(Boolean);
+  return parts.map((part) => {
+    if (/^\d+\s*cm$/i.test(part)) return { label: "Length", value: part };
+    if (/^\d+\s*(inch|inches|in)$/i.test(part)) return { label: "Length", value: part };
+    return { label: "Colour", value: part };
+  });
 }
 
 function InfoBlock({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
@@ -149,7 +179,7 @@ const invoiceHeader: React.CSSProperties = { display: "flex", justifyContent: "s
 const eyebrow: React.CSSProperties = { color: "#b68a45", fontSize: 10, fontWeight: 700, letterSpacing: ".26em", textTransform: "uppercase", margin: 0 };
 const title: React.CSSProperties = { fontFamily: "Georgia, serif", fontSize: 42, fontWeight: 300, margin: "8px 0" };
 const muted: React.CSSProperties = { color: "#8f7d6c", fontSize: 12, margin: 0 };
-const infoGrid: React.CSSProperties = { display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 12, marginBottom: 28 };
+const infoGrid: React.CSSProperties = { display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 12, marginBottom: 28 };
 const infoBlock: React.CSSProperties = { background: "#fbf7f1", border: "1px solid #eadfce", padding: 14, minWidth: 0 };
 const infoLabel: React.CSSProperties = { color: "#b68a45", fontSize: 9, fontWeight: 700, letterSpacing: ".18em", textTransform: "uppercase", margin: "0 0 7px" };
 const infoValue: React.CSSProperties = { color: "#2b2620", fontSize: 12, lineHeight: 1.5, margin: 0, wordBreak: "break-word" };
@@ -157,6 +187,8 @@ const table: React.CSSProperties = { width: "100%", borderCollapse: "collapse", 
 const th: React.CSSProperties = { background: "#2b2620", color: "#fff", padding: "11px 12px", textAlign: "left", fontSize: 9.5, fontWeight: 700, letterSpacing: ".18em", textTransform: "uppercase" };
 const td: React.CSSProperties = { padding: "13px 12px", verticalAlign: "top" };
 const code: React.CSSProperties = { fontSize: 11, color: "#6b5c4e" };
+const optionList: React.CSSProperties = { display: "flex", flexWrap: "wrap", gap: 7, marginTop: 8 };
+const optionPill: React.CSSProperties = { display: "inline-flex", gap: 4, border: "1px solid #eadfce", background: "#fbf7f1", color: "#6b5c4e", padding: "5px 7px", fontSize: 10, lineHeight: 1.2 };
 const totals: React.CSSProperties = { width: "min(360px, 100%)", marginLeft: "auto", marginTop: 24, border: "1px solid #e2d5c0" };
 const totalRow: React.CSSProperties = { display: "flex", justifyContent: "space-between", gap: 18, padding: "13px 16px", borderBottom: "1px solid #eadfce", fontSize: 13 };
 const footer: React.CSSProperties = { marginTop: 34, borderTop: "1px solid #e2d5c0", paddingTop: 18, color: "#8f7d6c", fontSize: 11, lineHeight: 1.7 };
