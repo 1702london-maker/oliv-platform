@@ -4,6 +4,7 @@ import { z } from "zod";
 import { env } from "@/lib/env";
 import { getCurrentProfile } from "@/lib/auth/session";
 import { getCatalogProducts } from "@/lib/catalog/products";
+import { checkRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe";
 
@@ -24,6 +25,18 @@ const checkoutSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const rateLimit = await checkRateLimit({
+    key: "ip",
+    value: getClientIp(request),
+    endpoint: "checkout",
+    limit: 30,
+    windowSecs: 3600
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
   const parsed = checkoutSchema.safeParse(await request.json());
   if (!parsed.success) {
     return NextResponse.json({ error: "Cart is invalid." }, { status: 400 });

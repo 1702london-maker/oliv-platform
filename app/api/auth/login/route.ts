@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { APP_SESSION_COOKIE, createAppSessionCookie } from "@/lib/auth/app-session";
 import { ensureProfile } from "@/lib/auth/ensure-profile";
+import { checkFormRateLimit, getClientIp, rateLimitResponse } from "@/lib/security/rate-limit";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 const loginSchema = z.object({
@@ -17,6 +18,19 @@ export async function POST(request: Request) {
   }
 
   const email = parsed.data.email.trim().toLowerCase();
+  const rateLimit = await checkFormRateLimit({
+    ip: getClientIp(request),
+    email,
+    endpoint: "auth-login",
+    ipLimit: 20,
+    emailLimit: 8,
+    windowSecs: 900
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
   const next = parsed.data.next?.startsWith("/") && !parsed.data.next.startsWith("//") ? parsed.data.next : "/account";
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.signInWithPassword({

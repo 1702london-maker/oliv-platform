@@ -1,4 +1,9 @@
 import { redirect } from "next/navigation";
+import { checkFormRateLimit, getClientIp } from "@/lib/security/rate-limit";
+
+export async function GET() {
+  redirect("/pages/contact");
+}
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -16,6 +21,19 @@ export async function POST(request: Request) {
     (formData.get("contact[Full Name]") as string | null);
   const body = formData.get("contact[body]") as string | null;
   const formType = formData.get("form_type") as string | null;
+
+  const rateLimit = await checkFormRateLimit({
+    ip: getClientIp(request),
+    email: email ?? undefined,
+    endpoint: "legacy-contact",
+    ipLimit: 10,
+    emailLimit: 3,
+    windowSecs: 3600
+  });
+
+  if (!rateLimit.allowed) {
+    redirect(`${returnPath}?form=rate-limit`);
+  }
 
   console.info("Contact/newsletter form submission", { email, name, body, formType });
 

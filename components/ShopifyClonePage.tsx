@@ -132,6 +132,8 @@ function normalizeShopifyHtml(rawHtml: string, page: string) {
     html = injectTurnstile(html);
   }
 
+  html = html.replace(/<script\b[^>]*src=["']\/checkouts\/internal\/preloads\.js["'][^>]*>\s*<\/script>/gi, "");
+
   // Strip floating WhatsApp / iMessage chat widget scraped from Shopify
   html = html.replace(/<style>\s*\.ohs-chat[\s\S]*?<\/style>\s*<div class="ohs-chat-wrap"[\s\S]*?<\/div>/g, '');
 

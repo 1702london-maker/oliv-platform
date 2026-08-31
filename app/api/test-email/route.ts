@@ -26,7 +26,8 @@ export async function GET(request: Request) {
   });
 
   if (error) {
-    return NextResponse.json({ error, from, apiKeyPrefix: apiKey.slice(0, 8) + "..." }, { status: 500 });
+    console.error("[test-email] send failed:", error);
+    return NextResponse.json({ error: "email_send_failed", from }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true, data, from });

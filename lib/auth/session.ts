@@ -6,12 +6,23 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import type { Profile, UserRole } from "@/lib/auth/types";
 
 export const getCurrentUser = cache(async () => {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data, error } = await supabase.auth.getUser();
 
-  return user;
+    if (error) {
+      console.warn("[session] auth user lookup failed:", error.message);
+      return null;
+    }
+
+    return data.user;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (!message.includes("Dynamic server usage")) {
+      console.warn("[session] auth user lookup failed:", message);
+    }
+    return null;
+  }
 });
 
 export const getCurrentProfile = cache(async (): Promise<Profile | null> => {

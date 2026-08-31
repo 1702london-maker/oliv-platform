@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { APP_SESSION_COOKIE, createAppSessionCookie } from "@/lib/auth/app-session";
 import { ensureProfile } from "@/lib/auth/ensure-profile";
+import { checkFormRateLimit, getClientIp } from "@/lib/security/rate-limit";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
@@ -13,6 +14,19 @@ export async function POST(request: Request) {
 
   if (!email || !password) {
     return NextResponse.redirect(`${origin}/login?error=missing&next=${encodeURIComponent(next)}`, 303);
+  }
+
+  const rateLimit = await checkFormRateLimit({
+    ip: getClientIp(request),
+    email,
+    endpoint: "auth-login-form",
+    ipLimit: 20,
+    emailLimit: 8,
+    windowSecs: 900
+  });
+
+  if (!rateLimit.allowed) {
+    return NextResponse.redirect(`${origin}/login?error=rate-limit&next=${encodeURIComponent(next)}`, 303);
   }
 
   const supabase = await createSupabaseServerClient();
