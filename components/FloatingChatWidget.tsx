@@ -255,10 +255,11 @@ export function FloatingChatWidget() {
   return (
     <>
       {/* ── Floating buttons ── */}
-      <div style={wrapStyle} aria-label="Contact us">
+      <div className="ohs-floating-chat" style={wrapStyle} aria-label="Contact us">
 
         {/* WhatsApp — restored exactly as original */}
         <a
+          className="ohs-whatsapp-float"
           href="https://wa.me/4915786283439"
           target="_blank"
           rel="noopener noreferrer"
@@ -283,7 +284,7 @@ export function FloatingChatWidget() {
 
       {/* ── Chat window ── */}
       {open && (
-        <div style={windowStyle} role="dialog" aria-label="Chat with Oliv Hair Supply">
+        <div className="ohs-floating-chat" style={windowStyle} role="dialog" aria-label="Chat with Oliv Hair Supply">
 
           {/* Header */}
           <div style={{ background: "#2B2620", color: "#fff", padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>

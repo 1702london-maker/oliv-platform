@@ -143,6 +143,11 @@ export async function POST(request: Request) {
     success_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
     customer_email: profile?.email,
+    billing_address_collection: "required",
+    phone_number_collection: { enabled: true },
+    shipping_address_collection: {
+      allowed_countries: ["DE", "AT", "BE", "CH", "ES", "FR", "GB", "IT", "NL", "US"]
+    },
     discounts: coupon ? [{ coupon: coupon.id }] : undefined,
     line_items: items.map((item) => ({
       quantity: item.quantity,

@@ -16,13 +16,22 @@ type OrderItem = {
   total_cents: number | null;
 };
 
+type Address = {
+  line1?: string;
+  line2?: string;
+  city?: string;
+  state?: string;
+  postal_code?: string;
+  country?: string;
+};
+
 export default async function AdminOrderDetailPage({ params }: Props) {
   const { id } = await params;
   const admin = createSupabaseAdminClient();
 
   const { data: order } = await admin
     .from("orders")
-    .select("id,status,email,currency,subtotal_cents,discount_cents,total_cents,affiliate_code,created_at,updated_at")
+    .select("id,status,email,currency,subtotal_cents,discount_cents,total_cents,affiliate_code,customer_name,customer_phone,billing_address,shipping_address,created_at,updated_at")
     .eq("id", id)
     .maybeSingle();
 
@@ -36,6 +45,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
 
   const orderItems = (items || []) as OrderItem[];
   const currency = String(order.currency || "eur").toUpperCase();
+  const deliveryAddress = formatAddress((order.shipping_address || order.billing_address) as Address | null);
 
   return (
     <section style={{ maxWidth: 1040, margin: "0 auto", padding: "42px 24px" }}>
@@ -58,16 +68,19 @@ export default async function AdminOrderDetailPage({ params }: Props) {
         </header>
 
         <div style={infoGrid}>
-          <InfoBlock label="Customer" value={order.email || "No email captured"} />
+          <InfoBlock label="Customer Name" value={order.customer_name || "No name captured"} />
+          <InfoBlock label="Email" value={order.email || "No email captured"} />
+          <InfoBlock label="Phone Number" value={order.customer_phone || "No phone captured"} />
+          <InfoBlock label="Address" value={deliveryAddress} />
           <InfoBlock label="Order ID" value={order.id} mono />
           <InfoBlock label="Affiliate Code" value={order.affiliate_code || "None"} />
-          <InfoBlock label="Currency" value={currency} />
         </div>
 
         <table style={table}>
           <thead>
             <tr>
               <th style={th}>Product Ordered</th>
+              <th style={th}>Colour / Options</th>
               <th style={th}>SKU</th>
               <th style={{ ...th, textAlign: "right" }}>Qty</th>
               <th style={{ ...th, textAlign: "right" }}>Unit</th>
@@ -79,8 +92,8 @@ export default async function AdminOrderDetailPage({ params }: Props) {
               <tr key={item.id} style={{ borderBottom: "1px solid #eadfce" }}>
                 <td style={td}>
                   <div style={{ fontWeight: 600 }}>{productName(item.title)}</div>
-                  <ItemOptions title={item.title} />
                 </td>
+                <td style={td}><ItemOptions title={item.title} /></td>
                 <td style={td}><code style={code}>{item.sku || "-"}</code></td>
                 <td style={{ ...td, textAlign: "right" }}>{item.quantity || 0}</td>
                 <td style={{ ...td, textAlign: "right" }}>{money(item.unit_price_cents || 0, currency)}</td>
@@ -88,7 +101,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
               </tr>
             )) : (
               <tr>
-                <td colSpan={5} style={{ ...td, color: "#9b8878", fontStyle: "italic" }}>
+                <td colSpan={6} style={{ ...td, color: "#9b8878", fontStyle: "italic" }}>
                   No item rows were found for this order.
                 </td>
               </tr>
@@ -113,7 +126,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
 
 function ItemOptions({ title }: { title: string | null }) {
   const options = parseItemOptions(title);
-  if (!options.length) return null;
+  if (!options.length) return <span style={mutedSmall}>No colour or option captured</span>;
   return (
     <div style={optionList}>
       {options.map((option) => (
@@ -130,7 +143,7 @@ function productName(title: string | null) {
 }
 
 function parseItemOptions(title: string | null) {
-  const [, rawOptions = ""] = String(title || "").split(" - ");
+  const rawOptions = String(title || "").split(" - ").slice(1).join(" - ");
   if (!rawOptions) return [];
   const parts = rawOptions.split("/").map((part) => part.trim()).filter(Boolean);
   return parts.map((part) => {
@@ -138,6 +151,14 @@ function parseItemOptions(title: string | null) {
     if (/^\d+\s*(inch|inches|in)$/i.test(part)) return { label: "Length", value: part };
     return { label: "Colour", value: part };
   });
+}
+
+function formatAddress(address: Address | null | undefined) {
+  if (!address) return "No address captured";
+  const first = [address.line1, address.line2].filter(Boolean).join(", ");
+  const second = [address.postal_code, address.city].filter(Boolean).join(" ");
+  const third = [address.state, address.country].filter(Boolean).join(", ");
+  return [first, second, third].filter(Boolean).join("\n") || "No address captured";
 }
 
 function InfoBlock({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
@@ -189,6 +210,7 @@ const td: React.CSSProperties = { padding: "13px 12px", verticalAlign: "top" };
 const code: React.CSSProperties = { fontSize: 11, color: "#6b5c4e" };
 const optionList: React.CSSProperties = { display: "flex", flexWrap: "wrap", gap: 7, marginTop: 8 };
 const optionPill: React.CSSProperties = { display: "inline-flex", gap: 4, border: "1px solid #eadfce", background: "#fbf7f1", color: "#6b5c4e", padding: "5px 7px", fontSize: 10, lineHeight: 1.2 };
+const mutedSmall: React.CSSProperties = { color: "#9b8878", fontSize: 11, fontStyle: "italic" };
 const totals: React.CSSProperties = { width: "min(360px, 100%)", marginLeft: "auto", marginTop: 24, border: "1px solid #e2d5c0" };
 const totalRow: React.CSSProperties = { display: "flex", justifyContent: "space-between", gap: 18, padding: "13px 16px", borderBottom: "1px solid #eadfce", fontSize: 13 };
 const footer: React.CSSProperties = { marginTop: 34, borderTop: "1px solid #e2d5c0", paddingTop: 18, color: "#8f7d6c", fontSize: 11, lineHeight: 1.7 };

@@ -118,6 +118,10 @@ async function completeCheckout(session: Stripe.Checkout.Session) {
 
   const supabase = createSupabaseAdminClient();
   const customerEmail = session.customer_details?.email || session.customer_email || undefined;
+  const customerName = session.shipping_details?.name || session.customer_details?.name || undefined;
+  const customerPhone = session.customer_details?.phone || undefined;
+  const billingAddress = normalizeAddress(session.customer_details?.address);
+  const shippingAddress = normalizeAddress(session.shipping_details?.address) || billingAddress;
 
   const { data: order } = await supabase
     .from("orders")
@@ -132,6 +136,10 @@ async function completeCheckout(session: Stripe.Checkout.Session) {
     .update({
       status: "paid",
       email: customerEmail || undefined,
+      customer_name: customerName,
+      customer_phone: customerPhone,
+      billing_address: billingAddress,
+      shipping_address: shippingAddress,
       stripe_payment_intent_id:
         typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
       updated_at: new Date().toISOString()
@@ -145,6 +153,18 @@ async function completeCheckout(session: Stripe.Checkout.Session) {
   if (order.affiliate_code) {
     await updateAffiliateCommission(order.affiliate_code, order.id, Number(order.subtotal_cents || order.total_cents || 0));
   }
+}
+
+function normalizeAddress(address: Stripe.Address | null | undefined) {
+  if (!address) return null;
+  return {
+    line1: address.line1 || "",
+    line2: address.line2 || "",
+    city: address.city || "",
+    state: address.state || "",
+    postal_code: address.postal_code || "",
+    country: address.country || ""
+  };
 }
 
 async function updateWholesaleSpend(profileId: string, orderTotalCents: number) {
