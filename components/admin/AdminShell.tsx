@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const NAV = [
@@ -17,6 +17,7 @@ const NAV = [
 
 export function AdminShell({ children }: { pathname?: string; children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [lang, setLang] = useState<"en" | "de">("de");
 
   useEffect(() => {
@@ -35,9 +36,11 @@ export function AdminShell({ children }: { pathname?: string; children: React.Re
       document.cookie = `ohs_lang=${next}; path=/; max-age=31536000; samesite=lax`;
       document.body.dataset.ohsLang = next;
       document.body.dataset.globalLang = next;
+      window.dispatchEvent(new CustomEvent("ohs-language-change", { detail: { lang: next } }));
     } catch {
       // Ignore browser storage restrictions; the current view still updates.
     }
+    router.refresh();
   }
 
   const copy = ADMIN_COPY[lang];

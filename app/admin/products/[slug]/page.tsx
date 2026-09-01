@@ -23,7 +23,7 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
       .order("position", { ascending: true }),
     admin
       .from("product_overrides")
-      .select("title, description, retail_price_cents, wholesale_price_cents")
+      .select("title, description, description_en, description_de, retail_price_cents, wholesale_price_cents")
       .eq("slug", slug)
       .maybeSingle(),
   ]);
@@ -49,6 +49,8 @@ export default async function AdminProductPage({ params }: { params: Promise<{ s
         slug={product.slug}
         initialTitle={override?.title || product.title}
         initialDescription={override?.description || product.description || ""}
+        initialDescriptionEn={override?.description_en || override?.description || product.description || ""}
+        initialDescriptionDe={override?.description_de || override?.description || product.description || ""}
         initialRetailCents={override?.retail_price_cents ?? null}
         initialWholesaleCents={override?.wholesale_price_cents ?? null}
         baseRetailCents={baseVariant?.retail_price_cents ?? 0}

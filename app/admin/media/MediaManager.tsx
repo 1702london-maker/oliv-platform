@@ -9,6 +9,8 @@ type Product = MediaProduct;
 type Override = {
   title?: string | null;
   description?: string | null;
+  description_en?: string | null;
+  description_de?: string | null;
   retail_price_cents?: number | null;
   wholesale_price_cents?: number | null;
   category_slug?: string | null;
@@ -44,7 +46,8 @@ export function MediaManager({
   const [editorSlug, setEditorSlug] = useState("");
   const [override, setOverride] = useState<Override>(null);
   const [editorTitle, setEditorTitle] = useState("");
-  const [editorDesc, setEditorDesc] = useState("");
+  const [editorDescEn, setEditorDescEn] = useState("");
+  const [editorDescDe, setEditorDescDe] = useState("");
   const [editorRetail, setEditorRetail] = useState("");
   const [editorWholesale, setEditorWholesale] = useState("");
   const [editorCategory, setEditorCategory] = useState("");
@@ -118,7 +121,7 @@ export function MediaManager({
   async function handleSelectProduct(slug: string) {
     setEditorSlug(slug);
     setEditingKey(null); setMovingKey(null); setAssigningKey(null);
-    if (!slug) { setOverride(null); setEditorTitle(""); setEditorDesc(""); setEditorRetail(""); setEditorWholesale(""); setEditorCategory(""); setEditorHidden(false); setEditorMergedInto(""); setMergeTarget(""); return; }
+    if (!slug) { setOverride(null); setEditorTitle(""); setEditorDescEn(""); setEditorDescDe(""); setEditorRetail(""); setEditorWholesale(""); setEditorCategory(""); setEditorHidden(false); setEditorMergedInto(""); setMergeTarget(""); return; }
     setEditorLoading(true);
     try {
       const product = products.find((p) => p.slug === slug);
@@ -127,7 +130,8 @@ export function MediaManager({
       const ov: Override = json.override;
       setOverride(ov);
       setEditorTitle(ov?.title ?? product?.title ?? "");
-      setEditorDesc(ov?.description ?? product?.description ?? "");
+      setEditorDescEn(ov?.description_en ?? ov?.description ?? product?.description ?? "");
+      setEditorDescDe(ov?.description_de ?? ov?.description ?? product?.description ?? "");
       setEditorRetail(formatPriceInput(ov?.retail_price_cents ?? product?.retailPriceCents));
       setEditorWholesale(formatPriceInput(ov?.wholesale_price_cents ?? product?.wholesalePriceCents));
       setEditorCategory(ov?.category_slug || "");
@@ -141,7 +145,15 @@ export function MediaManager({
   async function handleSaveProduct() {
     if (!editorSlug) return;
     setEditorSaving(true);
-    const body: Record<string, unknown> = { slug: editorSlug, title: editorTitle, description: editorDesc, category_slug: editorCategory || null, hidden: editorHidden };
+    const body: Record<string, unknown> = {
+      slug: editorSlug,
+      title: editorTitle,
+      description: editorDescEn || editorDescDe,
+      description_en: editorDescEn,
+      description_de: editorDescDe,
+      category_slug: editorCategory || null,
+      hidden: editorHidden,
+    };
     if (editorRetail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(editorRetail) * 100);
     if (editorWholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(editorWholesale) * 100);
     try {
@@ -319,10 +331,16 @@ export function MediaManager({
                     </div>
                   </label>
                 </div>
-                <label style={{ ...labelStyle, marginBottom: 16 }}>
-                  Description
-                  <textarea value={editorDesc} onChange={(e) => setEditorDesc(e.target.value)} rows={4} placeholder="Enter product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
-                </label>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 14, marginBottom: 16 }}>
+                  <label style={labelStyle}>
+                    English Description
+                    <textarea value={editorDescEn} onChange={(e) => setEditorDescEn(e.target.value)} rows={4} placeholder="English product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
+                  </label>
+                  <label style={labelStyle}>
+                    German Description
+                    <textarea value={editorDescDe} onChange={(e) => setEditorDescDe(e.target.value)} rows={4} placeholder="German product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
+                  </label>
+                </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, margin: "0 0 16px" }}>
                   <label style={labelStyle}>
                     Live Category

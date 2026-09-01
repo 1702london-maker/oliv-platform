@@ -32,6 +32,8 @@ type ProductOverride = {
   slug: string;
   title: string | null;
   description: string | null;
+  description_en?: string | null;
+  description_de?: string | null;
   retail_price_cents: number | null;
   wholesale_price_cents: number | null;
   category_slug: string | null;
@@ -683,7 +685,7 @@ async function fetchProductOverrides(): Promise<Map<string, ProductOverride>> {
     const supabase = await createSupabaseServerClient();
     const { data } = await supabase
       .from("product_overrides")
-      .select("slug,title,description,retail_price_cents,wholesale_price_cents,category_slug,hidden,merged_into_slug");
+      .select("slug,title,description,description_en,description_de,retail_price_cents,wholesale_price_cents,category_slug,hidden,merged_into_slug");
     return new Map((data || []).map((row) => [row.slug, row as ProductOverride]));
   } catch {
     return new Map();
@@ -695,7 +697,7 @@ async function fetchProductOverride(slug: string): Promise<ProductOverride | nul
     const supabase = await createSupabaseServerClient();
     const { data } = await supabase
       .from("product_overrides")
-      .select("slug,title,description,retail_price_cents,wholesale_price_cents,category_slug,hidden,merged_into_slug")
+      .select("slug,title,description,description_en,description_de,retail_price_cents,wholesale_price_cents,category_slug,hidden,merged_into_slug")
       .eq("slug", slug)
       .maybeSingle();
     return (data as ProductOverride | null) || null;
@@ -725,7 +727,7 @@ function applyOverrideToProduct(product: CatalogProduct, override?: ProductOverr
   return normalizeCatalogProductImages({
     ...product,
     title: override.title || product.title,
-    description: override.description || product.description,
+    description: override.description || override.description_en || override.description_de || product.description,
     variants,
   });
 }

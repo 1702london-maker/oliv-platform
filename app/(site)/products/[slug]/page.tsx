@@ -18,7 +18,9 @@ export default async function ProductPage({ params }: PageProps) {
   const [product, profile] = await Promise.all([getCatalogProductBySlug(slug), getCurrentProfile()]);
   if (!product) notFound();
   const isWholesale = Boolean(profile?.roles.includes("wholesale"));
-  const country = (await cookies()).get("ohs_country")?.value;
+  const cookieStore = await cookies();
+  const country = cookieStore.get("ohs_country")?.value;
+  const lang = cookieStore.get("ohs-lang")?.value === "en" ? "en" : "de";
   const currency = country === "GB" ? "GBP" : country === "US" ? "USD" : "EUR";
 
   // Query DB: hidden images, uploaded images, description/title overrides
@@ -31,7 +33,7 @@ export default async function ProductPage({ params }: PageProps) {
       .order("position", { ascending: true }),
     admin
       .from("product_overrides")
-      .select("title, description, retail_price_cents, wholesale_price_cents, hidden, merged_into_slug")
+      .select("title, description, description_en, description_de, retail_price_cents, wholesale_price_cents, hidden, merged_into_slug")
       .eq("slug", slug)
       .maybeSingle(),
     admin
@@ -85,7 +87,7 @@ export default async function ProductPage({ params }: PageProps) {
   const productWithMergedGallery = {
     ...product,
     title: override?.title || product.title,
-    description: override?.description || product.description,
+    description: localizedDescription(override, product.description, lang),
     image_url: mergedGallery[0] || product.image_url,
     gallery: mergedGallery.length > 0 ? mergedGallery : product.gallery,
     variants,
@@ -107,6 +109,16 @@ export default async function ProductPage({ params }: PageProps) {
       <div dangerouslySetInnerHTML={{ __html: after }} />
     </>
   );
+}
+
+function localizedDescription(
+  override: { description?: string | null; description_en?: string | null; description_de?: string | null } | null,
+  fallback: string | null,
+  lang: "en" | "de"
+) {
+  if (!override) return fallback;
+  if (lang === "en") return override.description_en || override.description || override.description_de || fallback;
+  return override.description_de || override.description || override.description_en || fallback;
 }
 
 function fixShellReturnTo(html: string, path: string) {

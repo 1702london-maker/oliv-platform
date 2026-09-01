@@ -6,6 +6,8 @@ export function ProductDescriptionEditor({
   slug,
   initialTitle,
   initialDescription,
+  initialDescriptionEn,
+  initialDescriptionDe,
   initialRetailCents,
   initialWholesaleCents,
   baseRetailCents,
@@ -14,13 +16,16 @@ export function ProductDescriptionEditor({
   slug: string;
   initialTitle: string;
   initialDescription: string;
+  initialDescriptionEn: string;
+  initialDescriptionDe: string;
   initialRetailCents: number | null;
   initialWholesaleCents: number | null;
   baseRetailCents: number;
   baseWholesaleCents: number | null;
 }) {
   const [title, setTitle] = useState(initialTitle);
-  const [description, setDescription] = useState(initialDescription);
+  const [descriptionEn, setDescriptionEn] = useState(initialDescriptionEn || initialDescription);
+  const [descriptionDe, setDescriptionDe] = useState(initialDescriptionDe || initialDescription);
   const [retail, setRetail] = useState(
     initialRetailCents != null ? (initialRetailCents / 100).toFixed(2) : ""
   );
@@ -33,7 +38,13 @@ export function ProductDescriptionEditor({
   async function save() {
     setSaving(true);
     setMsg(null);
-    const body: Record<string, unknown> = { slug, title, description };
+    const body: Record<string, unknown> = {
+      slug,
+      title,
+      description: descriptionEn || descriptionDe,
+      description_en: descriptionEn,
+      description_de: descriptionDe,
+    };
     if (retail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(retail) * 100);
     if (wholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(wholesale) * 100);
     try {
@@ -63,16 +74,28 @@ export function ProductDescriptionEditor({
         <input value={title} onChange={(e) => setTitle(e.target.value)} style={inputStyle} />
       </label>
 
-      <label style={{ ...labelStyle, marginTop: 16 }}>
-        Description
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={6}
-          placeholder="Enter product description here — this appears on the live product page."
-          style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit" }}
-        />
-      </label>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 16, marginTop: 16 }}>
+        <label style={labelStyle}>
+          English Description
+          <textarea
+            value={descriptionEn}
+            onChange={(e) => setDescriptionEn(e.target.value)}
+            rows={6}
+            placeholder="English product description for the English site."
+            style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }}
+          />
+        </label>
+        <label style={labelStyle}>
+          German Description
+          <textarea
+            value={descriptionDe}
+            onChange={(e) => setDescriptionDe(e.target.value)}
+            rows={6}
+            placeholder="German product description for the German site."
+            style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }}
+          />
+        </label>
+      </div>
 
       {/* Pricing */}
       <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid #f0e8dc" }}>
