@@ -48,6 +48,9 @@ export function MediaManager({
   const [editorTitle, setEditorTitle] = useState("");
   const [editorDescEn, setEditorDescEn] = useState("");
   const [editorDescDe, setEditorDescDe] = useState("");
+  const [initialEditorDescEn, setInitialEditorDescEn] = useState("");
+  const [initialEditorDescDe, setInitialEditorDescDe] = useState("");
+  const [lastEditedDescLang, setLastEditedDescLang] = useState<"en" | "de">("en");
   const [editorRetail, setEditorRetail] = useState("");
   const [editorWholesale, setEditorWholesale] = useState("");
   const [editorCategory, setEditorCategory] = useState("");
@@ -121,7 +124,7 @@ export function MediaManager({
   async function handleSelectProduct(slug: string) {
     setEditorSlug(slug);
     setEditingKey(null); setMovingKey(null); setAssigningKey(null);
-    if (!slug) { setOverride(null); setEditorTitle(""); setEditorDescEn(""); setEditorDescDe(""); setEditorRetail(""); setEditorWholesale(""); setEditorCategory(""); setEditorHidden(false); setEditorMergedInto(""); setMergeTarget(""); return; }
+    if (!slug) { setOverride(null); setEditorTitle(""); setEditorDescEn(""); setEditorDescDe(""); setInitialEditorDescEn(""); setInitialEditorDescDe(""); setEditorRetail(""); setEditorWholesale(""); setEditorCategory(""); setEditorHidden(false); setEditorMergedInto(""); setMergeTarget(""); return; }
     setEditorLoading(true);
     try {
       const product = products.find((p) => p.slug === slug);
@@ -130,8 +133,12 @@ export function MediaManager({
       const ov: Override = json.override;
       setOverride(ov);
       setEditorTitle(ov?.title ?? product?.title ?? "");
-      setEditorDescEn(ov?.description_en ?? ov?.description ?? product?.description ?? "");
-      setEditorDescDe(ov?.description_de ?? ov?.description ?? product?.description ?? "");
+      const nextDescEn = ov?.description_en ?? ov?.description ?? product?.description ?? "";
+      const nextDescDe = ov?.description_de ?? ov?.description ?? product?.description ?? "";
+      setEditorDescEn(nextDescEn);
+      setEditorDescDe(nextDescDe);
+      setInitialEditorDescEn(nextDescEn);
+      setInitialEditorDescDe(nextDescDe);
       setEditorRetail(formatPriceInput(ov?.retail_price_cents ?? product?.retailPriceCents));
       setEditorWholesale(formatPriceInput(ov?.wholesale_price_cents ?? product?.wholesalePriceCents));
       setEditorCategory(ov?.category_slug || "");
@@ -145,18 +152,27 @@ export function MediaManager({
   async function handleSaveProduct() {
     if (!editorSlug) return;
     setEditorSaving(true);
-    const body: Record<string, unknown> = {
-      slug: editorSlug,
-      title: editorTitle,
-      description: editorDescEn || editorDescDe,
-      description_en: editorDescEn,
-      description_de: editorDescDe,
-      category_slug: editorCategory || null,
-      hidden: editorHidden,
-    };
-    if (editorRetail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(editorRetail) * 100);
-    if (editorWholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(editorWholesale) * 100);
     try {
+      const nextDescriptions = await completeTranslations({
+        descriptionEn: editorDescEn,
+        descriptionDe: editorDescDe,
+        initialDescriptionEn: initialEditorDescEn,
+        initialDescriptionDe: initialEditorDescDe,
+        lastEditedLang: lastEditedDescLang,
+      });
+      if (nextDescriptions.descriptionEn !== editorDescEn) setEditorDescEn(nextDescriptions.descriptionEn);
+      if (nextDescriptions.descriptionDe !== editorDescDe) setEditorDescDe(nextDescriptions.descriptionDe);
+      const body: Record<string, unknown> = {
+        slug: editorSlug,
+        title: editorTitle,
+        description: nextDescriptions.descriptionEn || nextDescriptions.descriptionDe,
+        description_en: nextDescriptions.descriptionEn,
+        description_de: nextDescriptions.descriptionDe,
+        category_slug: editorCategory || null,
+        hidden: editorHidden,
+      };
+      if (editorRetail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(editorRetail) * 100);
+      if (editorWholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(editorWholesale) * 100);
       const res = await fetch("/api/admin/products/images", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       if (res.ok) flash("ok", "Saved — live on site immediately.");
       else { const j = await res.json(); flash("err", j.error || "Save failed"); }
@@ -334,11 +350,11 @@ export function MediaManager({
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 14, marginBottom: 16 }}>
                   <label style={labelStyle}>
                     English Description
-                    <textarea value={editorDescEn} onChange={(e) => setEditorDescEn(e.target.value)} rows={4} placeholder="English product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
+                    <textarea value={editorDescEn} onChange={(e) => { setEditorDescEn(e.target.value); setLastEditedDescLang("en"); }} rows={4} placeholder="English product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
                   </label>
                   <label style={labelStyle}>
                     German Description
-                    <textarea value={editorDescDe} onChange={(e) => setEditorDescDe(e.target.value)} rows={4} placeholder="German product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
+                    <textarea value={editorDescDe} onChange={(e) => { setEditorDescDe(e.target.value); setLastEditedDescLang("de"); }} rows={4} placeholder="German product description…" style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }} />
                   </label>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, margin: "0 0 16px" }}>
@@ -765,6 +781,44 @@ function productFromImages(slug: string, images: ManagedImage[]): Product {
     retailPriceCents: first?.retailPriceCents ?? null,
     wholesalePriceCents: first?.wholesalePriceCents ?? null,
   };
+}
+
+async function completeTranslations({
+  descriptionEn,
+  descriptionDe,
+  initialDescriptionEn,
+  initialDescriptionDe,
+  lastEditedLang,
+}: {
+  descriptionEn: string;
+  descriptionDe: string;
+  initialDescriptionEn: string;
+  initialDescriptionDe: string;
+  lastEditedLang: "en" | "de";
+}) {
+  const en = descriptionEn.trim();
+  const de = descriptionDe.trim();
+  const shouldTranslateDe = lastEditedLang === "en" && en && (!de || de === initialDescriptionDe.trim());
+  const shouldTranslateEn = lastEditedLang === "de" && de && (!en || en === initialDescriptionEn.trim());
+
+  if (shouldTranslateDe) {
+    return { descriptionEn, descriptionDe: await translateDescription(en, "de") };
+  }
+  if (shouldTranslateEn) {
+    return { descriptionEn: await translateDescription(de, "en"), descriptionDe };
+  }
+  return { descriptionEn, descriptionDe };
+}
+
+async function translateDescription(text: string, targetLang: "en" | "de") {
+  const res = await fetch("/api/admin/products/translate-description", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, targetLang }),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json.error || "Translation failed");
+  return String(json.translatedText || "");
 }
 
 const grid: React.CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 };

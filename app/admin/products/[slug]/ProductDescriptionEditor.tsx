@@ -26,6 +26,7 @@ export function ProductDescriptionEditor({
   const [title, setTitle] = useState(initialTitle);
   const [descriptionEn, setDescriptionEn] = useState(initialDescriptionEn || initialDescription);
   const [descriptionDe, setDescriptionDe] = useState(initialDescriptionDe || initialDescription);
+  const [lastEditedLang, setLastEditedLang] = useState<"en" | "de">("en");
   const [retail, setRetail] = useState(
     initialRetailCents != null ? (initialRetailCents / 100).toFixed(2) : ""
   );
@@ -38,16 +39,25 @@ export function ProductDescriptionEditor({
   async function save() {
     setSaving(true);
     setMsg(null);
-    const body: Record<string, unknown> = {
-      slug,
-      title,
-      description: descriptionEn || descriptionDe,
-      description_en: descriptionEn,
-      description_de: descriptionDe,
-    };
-    if (retail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(retail) * 100);
-    if (wholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(wholesale) * 100);
     try {
+      const nextDescriptions = await completeTranslations({
+        descriptionEn,
+        descriptionDe,
+        initialDescriptionEn,
+        initialDescriptionDe,
+        lastEditedLang,
+      });
+      if (nextDescriptions.descriptionEn !== descriptionEn) setDescriptionEn(nextDescriptions.descriptionEn);
+      if (nextDescriptions.descriptionDe !== descriptionDe) setDescriptionDe(nextDescriptions.descriptionDe);
+      const body: Record<string, unknown> = {
+        slug,
+        title,
+        description: nextDescriptions.descriptionEn || nextDescriptions.descriptionDe,
+        description_en: nextDescriptions.descriptionEn,
+        description_de: nextDescriptions.descriptionDe,
+      };
+      if (retail.trim() !== "") body.retail_price_cents = Math.round(parseFloat(retail) * 100);
+      if (wholesale.trim() !== "") body.wholesale_price_cents = Math.round(parseFloat(wholesale) * 100);
       const res = await fetch("/api/admin/products/images", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -79,7 +89,7 @@ export function ProductDescriptionEditor({
           English Description
           <textarea
             value={descriptionEn}
-            onChange={(e) => setDescriptionEn(e.target.value)}
+            onChange={(e) => { setDescriptionEn(e.target.value); setLastEditedLang("en"); }}
             rows={6}
             placeholder="English product description for the English site."
             style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }}
@@ -89,7 +99,7 @@ export function ProductDescriptionEditor({
           German Description
           <textarea
             value={descriptionDe}
-            onChange={(e) => setDescriptionDe(e.target.value)}
+            onChange={(e) => { setDescriptionDe(e.target.value); setLastEditedLang("de"); }}
             rows={6}
             placeholder="German product description for the German site."
             style={{ ...inputStyle, resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }}
@@ -168,6 +178,44 @@ export function ProductDescriptionEditor({
       </button>
     </div>
   );
+}
+
+async function completeTranslations({
+  descriptionEn,
+  descriptionDe,
+  initialDescriptionEn,
+  initialDescriptionDe,
+  lastEditedLang,
+}: {
+  descriptionEn: string;
+  descriptionDe: string;
+  initialDescriptionEn: string;
+  initialDescriptionDe: string;
+  lastEditedLang: "en" | "de";
+}) {
+  const en = descriptionEn.trim();
+  const de = descriptionDe.trim();
+  const shouldTranslateDe = lastEditedLang === "en" && en && (!de || de === initialDescriptionDe.trim());
+  const shouldTranslateEn = lastEditedLang === "de" && de && (!en || en === initialDescriptionEn.trim());
+
+  if (shouldTranslateDe) {
+    return { descriptionEn, descriptionDe: await translateDescription(en, "de") };
+  }
+  if (shouldTranslateEn) {
+    return { descriptionEn: await translateDescription(de, "en"), descriptionDe };
+  }
+  return { descriptionEn, descriptionDe };
+}
+
+async function translateDescription(text: string, targetLang: "en" | "de") {
+  const res = await fetch("/api/admin/products/translate-description", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, targetLang }),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json.error || "Translation failed");
+  return String(json.translatedText || "");
 }
 
 const labelStyle: React.CSSProperties = {
