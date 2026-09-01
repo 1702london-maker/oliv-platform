@@ -150,35 +150,41 @@ export async function POST(request: Request) {
       })
     : null;
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    payment_method_types: ["card", "paypal"],
-    success_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
-    customer_email: profile?.email,
-    billing_address_collection: "required",
-    phone_number_collection: { enabled: true },
-    shipping_address_collection: {
-      allowed_countries: ["DE", "AT", "BE", "CH", "ES", "FR", "GB", "IT", "NL", "US"]
-    },
-    discounts: coupon ? [{ coupon: coupon.id }] : undefined,
-    line_items: items.map((item) => ({
-      quantity: item.quantity,
-      price_data: {
-        currency: checkoutCurrency,
-        unit_amount: item.priceCents,
-        product_data: {
-          name: item.title,
-          description: item.variantTitle
+  let session;
+  try {
+    session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      success_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
+      customer_email: profile?.email,
+      billing_address_collection: "required",
+      phone_number_collection: { enabled: true },
+      shipping_address_collection: {
+        allowed_countries: ["DE", "AT", "BE", "CH", "ES", "FR", "GB", "IT", "NL", "US"]
+      },
+      discounts: coupon ? [{ coupon: coupon.id }] : undefined,
+      line_items: items.map((item) => ({
+        quantity: item.quantity,
+        price_data: {
+          currency: checkoutCurrency,
+          unit_amount: item.priceCents,
+          product_data: {
+            name: item.title,
+            description: item.variantTitle
+          }
         }
+      })),
+      metadata: {
+        order_id: order.id,
+        affiliate_code: affiliate?.code || "",
+        affiliate_id: affiliate?.id || ""
       }
-    })),
-    metadata: {
-      order_id: order.id,
-      affiliate_code: affiliate?.code || "",
-      affiliate_id: affiliate?.id || ""
-    }
-  });
+    });
+  } catch (error) {
+    console.error("[checkout] Stripe session create failed:", error);
+    return NextResponse.json({ error: "Checkout could not be started. Please try again or contact OlivHairSupply." }, { status: 502 });
+  }
 
   await supabase
     .from("orders")
