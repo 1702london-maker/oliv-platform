@@ -188,7 +188,6 @@ export function CartView() {
             <div className="ohs-cart-payments">
               <span>Visa</span>
               <span>Mastercard</span>
-              <span>PayPal</span>
               <span>Klarna</span>
               <span>Apple Pay</span>
               <span>Google Pay</span>

@@ -13,6 +13,7 @@ const checkoutSchema = z.object({
     .array(
       z.object({
         variantId: z.string(),
+        productId: z.string().optional(),
         title: z.string(),
         variantTitle: z.string(),
         priceCents: z.number().int().nonnegative(),
@@ -54,20 +55,15 @@ export async function POST(request: Request) {
   const profile = await getCurrentProfile();
   const country = (await cookies()).get("ohs_country")?.value;
   const checkoutCurrency = country === "GB" ? "gbp" : country === "US" ? "usd" : "eur";
-  const variantIds = parsed.data.items.map((item) => item.variantId);
   const catalogProducts = await getCheckoutCatalogProducts();
   const catalogVariants = catalogProducts.flatMap((product) =>
     product.variants.map((variant) => ({
       ...variant,
       product_id: product.id,
+      productSlug: product.slug,
       productTitle: product.title
     }))
   );
-  const variants = catalogVariants.filter((variant) => variantIds.includes(variant.id));
-
-  if (variants.length !== variantIds.length) {
-    return NextResponse.json({ error: "Products are not available for checkout." }, { status: 400 });
-  }
 
   const affiliateCode = parsed.data.affiliateCode?.toUpperCase();
   const isWholesale = Boolean(profile?.roles.includes("wholesale"));
@@ -80,13 +76,15 @@ export async function POST(request: Request) {
     : { data: null };
 
   const items = parsed.data.items.map((item) => {
-    const variant = variants.find((current) => current.id === item.variantId);
-    if (!variant) throw new Error("Cart variant was not found.");
+    const variant = resolveCartVariant(catalogVariants, item);
+    if (!variant) return null;
+    const variantTitle = item.variantTitle || variant.title;
     return {
       ...item,
       productId: variant.product_id,
       title: variant.productTitle || item.title,
-      variantTitle: item.variantTitle || variant.title,
+      variantTitle,
+      variantId: variant.id,
       sku: variant.sku,
       priceCents: convertCurrencyCents(
         isWholesale ? variant.wholesale_price_cents || variant.retail_price_cents : variant.retail_price_cents,
@@ -98,7 +96,11 @@ export async function POST(request: Request) {
           checkoutCurrency
         ) * item.quantity
     };
-  });
+  }).filter(isResolvedCheckoutItem);
+
+  if (items.length !== parsed.data.items.length) {
+    return NextResponse.json({ error: "One or more products in your cart need to be reselected before checkout." }, { status: 400 });
+  }
 
   const subtotalCents = items.reduce((total, item) => total + item.totalCents, 0);
   const discountRate = affiliate ? Number(affiliate.discount_rate || 5) : 0;
@@ -154,7 +156,7 @@ export async function POST(request: Request) {
   try {
     session = await stripe.checkout.sessions.create({
       mode: "payment",
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "klarna"],
       success_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
       customer_email: profile?.email,
@@ -209,6 +211,57 @@ function isUuid(value: string | null | undefined) {
     value &&
       /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
   );
+}
+
+type CheckoutCatalogVariant = Awaited<ReturnType<typeof getCheckoutCatalogProducts>>[number]["variants"][number] & {
+  product_id: string;
+  productSlug: string;
+  productTitle: string;
+};
+
+type CheckoutCartItem = z.infer<typeof checkoutSchema>["items"][number];
+
+function resolveCartVariant(variants: CheckoutCatalogVariant[], item: CheckoutCartItem) {
+  const exact = variants.find((variant) => variant.id === item.variantId);
+  if (exact) return exact;
+
+  const productSlugFromId = item.variantId.replace(/-(?:colour-)?(?:highlights-)?[0-9a-z/-]+-\d+cm$/i, "");
+  const cartProduct = normalizeText(item.title);
+  const cartOption = normalizeOption(item.variantTitle);
+
+  return variants.find((variant) => {
+    const sameProduct =
+      variant.productSlug === productSlugFromId ||
+      normalizeText(variant.productTitle) === cartProduct ||
+      normalizeText(variant.product_id) === normalizeText(item.productId);
+    if (!sameProduct) return false;
+    return normalizeOption(variant.title) === cartOption;
+  }) || null;
+}
+
+function isResolvedCheckoutItem<T>(item: T | null): item is T {
+  return item !== null;
+}
+
+function normalizeOption(value: string | null | undefined) {
+  return normalizeText(value)
+    .replace(/\b(colou?r|farbe)\b/g, "")
+    .replace(/\bhighlights?\b/g, "")
+    .replace(/\bmittelbraun\b/g, "medium brown")
+    .replace(/\bschwarz\b/g, "black")
+    .replace(/\s*\/\s*/g, "/")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeText(value: string | null | undefined) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[–—]/g, "-")
+    .replace(/[^a-z0-9/]+/g, " ")
+    .trim();
 }
 
 async function getCheckoutCatalogProducts() {
