@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { z } from "zod";
+import type Stripe from "stripe";
 import { env } from "@/lib/env";
 import { getCurrentProfile } from "@/lib/auth/session";
 import { getCatalogProducts } from "@/lib/catalog/products";
@@ -152,37 +153,39 @@ export async function POST(request: Request) {
       })
     : null;
 
-  let session;
-  try {
-    session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      payment_method_types: ["card", "klarna"],
-      success_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
-      customer_email: profile?.email,
-      billing_address_collection: "required",
-      phone_number_collection: { enabled: true },
-      shipping_address_collection: {
-        allowed_countries: ["DE", "AT", "BE", "CH", "ES", "FR", "GB", "IT", "NL", "US"]
-      },
-      discounts: coupon ? [{ coupon: coupon.id }] : undefined,
-      line_items: items.map((item) => ({
-        quantity: item.quantity,
-        price_data: {
-          currency: checkoutCurrency,
-          unit_amount: item.priceCents,
-          product_data: {
-            name: item.title,
-            description: item.variantTitle
-          }
+  const sessionParams: Stripe.Checkout.SessionCreateParams = {
+    mode: "payment",
+    payment_method_types: ["card", "klarna", "paypal"],
+    success_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
+    customer_email: profile?.email,
+    billing_address_collection: "required",
+    phone_number_collection: { enabled: true },
+    shipping_address_collection: {
+      allowed_countries: ["DE", "AT", "BE", "CH", "ES", "FR", "GB", "IT", "NL", "US"]
+    },
+    discounts: coupon ? [{ coupon: coupon.id }] : undefined,
+    line_items: items.map((item) => ({
+      quantity: item.quantity,
+      price_data: {
+        currency: checkoutCurrency,
+        unit_amount: item.priceCents,
+        product_data: {
+          name: item.title,
+          description: item.variantTitle
         }
-      })),
-      metadata: {
-        order_id: order.id,
-        affiliate_code: affiliate?.code || "",
-        affiliate_id: affiliate?.id || ""
       }
-    });
+    })),
+    metadata: {
+      order_id: order.id,
+      affiliate_code: affiliate?.code || "",
+      affiliate_id: affiliate?.id || ""
+    }
+  };
+
+  let session: Stripe.Checkout.Session;
+  try {
+    session = await createCheckoutSessionWithPaymentFallback(stripe, sessionParams);
   } catch (error) {
     console.error("[checkout] Stripe session create failed:", error);
     return NextResponse.json({ error: "Checkout could not be started. Please try again or contact OlivHairSupply." }, { status: 502 });
@@ -211,6 +214,31 @@ function isUuid(value: string | null | undefined) {
     value &&
       /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
   );
+}
+
+async function createCheckoutSessionWithPaymentFallback(
+  stripe: Stripe,
+  params: Stripe.Checkout.SessionCreateParams
+) {
+  try {
+    return await stripe.checkout.sessions.create(params);
+  } catch (error) {
+    if (!isUnsupportedPaymentMethodError(error, "paypal")) throw error;
+
+    console.warn("[checkout] PayPal is not accepted by Stripe Checkout for this account yet. Retrying without PayPal.");
+    return stripe.checkout.sessions.create({
+      ...params,
+      payment_method_types: (params.payment_method_types || []).filter((method) => method !== "paypal")
+    });
+  }
+}
+
+function isUnsupportedPaymentMethodError(error: unknown, method: string) {
+  if (!error || typeof error !== "object") return false;
+  const maybeStripeError = error as { param?: string; message?: string; raw?: { message?: string; param?: string } };
+  const message = `${maybeStripeError.message || ""} ${maybeStripeError.raw?.message || ""}`.toLowerCase();
+  const param = maybeStripeError.param || maybeStripeError.raw?.param;
+  return param === "payment_method_types" && message.includes(method.toLowerCase());
 }
 
 type CheckoutCatalogVariant = Awaited<ReturnType<typeof getCheckoutCatalogProducts>>[number]["variants"][number] & {
