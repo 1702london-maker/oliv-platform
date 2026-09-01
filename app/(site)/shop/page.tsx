@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getShopCategories } from "@/lib/catalog/categories";
 import { formatMoney, getCatalogProducts } from "@/lib/catalog/products";
@@ -8,18 +9,65 @@ import { HairProductCard } from "@/components/shop/HairProductCard";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
-  title: "Echthaar Extensions online kaufen — BiziLuxe Shop | OlivHairSupply Berlin",
-  description: "Echthaar Extensions, Clip-In Haarverlängerungen, Stylingwerkzeug & Zubehör aus der BiziLuxe Kollektion kaufen. 100 % Remy Echthaar. Schnelle EU-Lieferung aus Berlin. Jetzt shoppen.",
-  keywords: ["Echthaar Extensions online kaufen", "BiziLuxe Extensions Shop", "Remy Haarverlängerung kaufen", "Clip In Extensions Echthaar kaufen", "Tape Extensions kaufen Deutschland", "Haarverlängerung Zubehör kaufen"],
-  openGraph: {
-    title: "Echthaar Extensions kaufen — BiziLuxe Shop | OlivHairSupply",
-    description: "Echthaar Extensions, Clip-Ins, Stylingwerkzeug & Zubehör. 100 % Remy-Qualität aus Berlin.",
-    url: "https://olivhairsupply.de/shop",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "BiziLuxe Echthaar Extensions Shop Berlin" }]
-  },
-  alternates: { canonical: "https://olivhairsupply.de/shop" }
+type ShopPageProps = {
+  searchParams: Promise<{ category?: string; view?: string }>
 };
+
+const categorySeo: Record<string, { title: string; description: string; keywords: string[] }> = {
+  "bizihair-extensions": {
+    title: "BiziHair Echthaar Extensions kaufen - Tape-In, Weft & Keratin",
+    description: "BiziHair Echthaar Extensions bei OlivHairSupply Berlin kaufen: Tape-In, Genius Weft und Keratin Bondings in mehreren Farben und Längen.",
+    keywords: ["BiziHair Extensions", "Echthaar Extensions kaufen", "Tape Extensions Berlin", "Keratin Bondings Berlin", "Genius Weft Extensions"],
+  },
+  "biziluxe-extensions": {
+    title: "BiziLuxe Extensions kaufen - Premium Remy Echthaar",
+    description: "BiziLuxe Premium Remy Echthaar Extensions online kaufen. Luxuriöse Haarverlängerungen, Clip-Ins, Tape-Ins und professionelle Salonqualität aus Berlin.",
+    keywords: ["BiziLuxe Extensions", "Remy Echthaar Extensions", "Human Hair Extensions Germany", "Clip In Extensions Echthaar"],
+  },
+  "biziluxe-accessoires": {
+    title: "BiziLuxe Zubehör kaufen - Bonnets, Clips & Hair Care",
+    description: "BiziLuxe Accessoires für Extensions und Haarpflege kaufen: Satin Bonnets, Sectioning Clips, Pflegezubehör und Beauty Essentials.",
+    keywords: ["Extensions Zubehör kaufen", "Satin Bonnet kaufen", "Hair Care Zubehör", "BiziLuxe Accessoires"],
+  },
+  "biziluxe-stylinggeraete": {
+    title: "BiziLuxe Styling Tools kaufen - Profi Glätteisen & Föhn",
+    description: "Professionelle BiziLuxe Stylinggeräte online kaufen: Glätteisen, Haartrockner, Lockenstab und Salon-Tools für Premium Styling.",
+    keywords: ["Profi Glätteisen kaufen", "Profi Haartrockner", "Friseurgeräte online", "BiziLuxe Styling Tools"],
+  },
+  "buersten-und-kaemme": {
+    title: "Bürsten & Kämme kaufen - Extension-sichere Haarpflege",
+    description: "Extension-sichere Bürsten und Kämme von OlivHairSupply kaufen. Schonende Pflege für Echthaar Extensions, Styling und Salonalltag.",
+    keywords: ["Bürsten und Kämme kaufen", "Extensions Bürste", "Friseurkamm", "Detangling Brush"],
+  },
+  "profi-friseurbedarf": {
+    title: "Profi Friseurbedarf Berlin online kaufen - Salonbedarf",
+    description: "Professioneller Friseurbedarf für Salons und Stylisten: Extension Tools, Salonbedarf, Zangen, Entferner, Zubehör und Arbeitsmaterial.",
+    keywords: ["Friseurbedarf Berlin", "Friseurbedarf online kaufen", "Salonbedarf", "Extension Tools", "Friseurzubehör"],
+  },
+};
+
+export async function generateMetadata({ searchParams }: ShopPageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const category = params.category;
+  const seo = category ? categorySeo[category] : null;
+  const title = seo?.title ?? "Echthaar Extensions online kaufen - BiziLuxe Shop";
+  const description = seo?.description ?? "Echthaar Extensions, Tape-Ins, Keratin Bondings, Stylingwerkzeug und Zubehör aus der BiziLuxe Kollektion kaufen. Schnelle EU-Lieferung aus Berlin.";
+  const url = category ? `https://olivhairsupply.de/shop?category=${category}` : "https://olivhairsupply.de/shop";
+
+  return {
+    title,
+    description,
+    keywords: seo?.keywords ?? ["Echthaar Extensions online kaufen", "BiziLuxe Extensions Shop", "Remy Haarverlängerung kaufen", "Clip In Extensions Echthaar kaufen", "Tape Extensions kaufen Deutschland", "Haarverlängerung Zubehör kaufen"],
+    openGraph: {
+      title,
+      description,
+      url,
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "BiziLuxe Echthaar Extensions Shop Berlin" }],
+    },
+    alternates: { canonical: url },
+    robots: { index: true, follow: true },
+  };
+}
 
 const shopCollections = [
   {
@@ -95,22 +143,27 @@ const featuredProducts = [
 
 export default async function ShopPage({
   searchParams
-}: {
-  searchParams: Promise<{ category?: string; view?: string }>
-}) {
+}: ShopPageProps) {
 const params = await searchParams;
 const categorySlug = params.category;
 const viewAll = params.view === "all";
 
-// Load admin image overrides for shop and collections pages
-const admin = createSupabaseAdminClient();
-const { data: overrideRows } = await admin
-  .from("page_images")
-  .select("original_src, replacement_url")
-  .in("page_key", ["shop", "collections"]);
+// Load admin image overrides for shop and collections pages.
+// The storefront must still render if admin/Supabase env is temporarily unavailable.
+let overrideRows: Array<{ original_src: string; replacement_url: string }> = [];
+try {
+  const admin = createSupabaseAdminClient();
+  const { data } = await admin
+    .from("page_images")
+    .select("original_src, replacement_url")
+    .in("page_key", ["shop", "collections"]);
+  overrideRows = data || [];
+} catch {
+  overrideRows = [];
+}
 
 const overrideMap: Record<string, string> = {};
-for (const row of overrideRows || []) {
+for (const row of overrideRows) {
   overrideMap[row.original_src] = row.replacement_url;
   overrideMap[normalizedSrcKey(row.original_src)] = row.replacement_url;
 }
@@ -143,7 +196,13 @@ if (!categorySlug && !viewAll) {
 }
 
   const { before, after } = getShopShellHtml(applyImageOverrides);
-  const [products, categories] = await Promise.all([getCatalogProducts(categorySlug), getShopCategories()]);
+  const categories = await getShopCategories();
+  let products: Awaited<ReturnType<typeof getCatalogProducts>> = [];
+  try {
+    products = await getCatalogProducts(categorySlug);
+  } catch {
+    products = [];
+  }
   const activeCategory = categories.find((category) => category.slug === categorySlug);
   const country = (await cookies()).get("ohs_country")?.value;
   const currency = country === "GB" ? "GBP" : country === "US" ? "USD" : "EUR";

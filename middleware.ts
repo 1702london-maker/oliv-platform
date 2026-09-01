@@ -2,6 +2,11 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 export async function middleware(request: NextRequest) {
+  const legacyRedirect = getLegacyRedirect(request);
+  if (legacyRedirect) {
+    return NextResponse.redirect(legacyRedirect, 301);
+  }
+
   let response = NextResponse.next({
     request
   });
@@ -53,6 +58,77 @@ export async function middleware(request: NextRequest) {
 
   return response;
 }
+
+function getLegacyRedirect(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const normalizedPath = pathname.replace(/\/+$/, "") || "/";
+  const target = LEGACY_REDIRECTS[normalizedPath];
+
+  if (target) {
+    const url = request.nextUrl.clone();
+    url.pathname = target.pathname;
+    url.search = target.search ?? "";
+    return url;
+  }
+
+  if (normalizedPath.startsWith("/produkt-kategorie/")) {
+    const parts = normalizedPath.split("/").filter(Boolean);
+    const legacyCategory = parts[1] ?? "";
+    const category = LEGACY_CATEGORY_SLUGS[legacyCategory];
+    const url = request.nextUrl.clone();
+    url.pathname = "/shop";
+    url.search = category ? `?category=${category}` : "";
+    return url;
+  }
+
+  if (normalizedPath.startsWith("/produkt/")) {
+    const parts = normalizedPath.split("/").filter(Boolean);
+    const product = LEGACY_PRODUCT_SLUGS[parts[1] ?? ""];
+    const url = request.nextUrl.clone();
+    if (product) {
+      url.pathname = `/products/${product}`;
+      url.search = "";
+    } else {
+      url.pathname = "/shop";
+      url.search = "";
+    }
+    return url;
+  }
+
+  return null;
+}
+
+const LEGACY_REDIRECTS: Record<string, { pathname: string; search?: string }> = {
+  "/shop/page/2": { pathname: "/shop", search: "?view=all" },
+  "/collections": { pathname: "/shop" },
+  "/pages/training": { pathname: "/training" },
+  "/blogs/journal": { pathname: "/" },
+};
+
+const LEGACY_CATEGORY_SLUGS: Record<string, string> = {
+  haarverlangerung: "bizihair-extensions",
+  haarverlaengerung: "bizihair-extensions",
+  "echthaar-extensions": "bizihair-extensions",
+  "keratin-bondings-1": "bizihair-extensions",
+  "tape-extensions": "bizihair-extensions",
+  "clip-in-extensions": "biziluxe-extensions",
+  "biziluxe-extensions": "biziluxe-extensions",
+  perucken: "biziluxe-extensions",
+  wigs: "biziluxe-extensions",
+  zubehor: "biziluxe-accessoires",
+  "friseurbedarf": "profi-friseurbedarf",
+  "styling-tools": "biziluxe-stylinggeraete",
+  "buersten-und-kaemme": "buersten-und-kaemme",
+};
+
+const LEGACY_PRODUCT_SLUGS: Record<string, string> = {
+  "tape-in-extensions": "bizihair-tape-in-extensions",
+  "keratin-bondings": "bizihair-keratin-extensions",
+  "genius-weft": "bizihair-weft-extensions",
+  "weft-extensions": "bizihair-weft-extensions",
+  "slip-on-bonnet": "slip-on-bonnet",
+  "tie-up-bonnet": "tie-up-bonnet",
+};
 
 function applySecurityHeaders(response: NextResponse) {
   response.headers.set("X-Frame-Options", "SAMEORIGIN");

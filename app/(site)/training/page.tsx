@@ -1,7 +1,28 @@
+import type { Metadata } from "next";
 import { ShopifyClonePage } from "@/components/ShopifyClonePage";
 
 type Props = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export const metadata: Metadata = {
+  title: "Extensions Schulung Berlin - Haarverlängerung Kurs | OlivHairSupply Academy",
+  description: "Professionelle Extensions Schulung in Berlin: Tape-In, Weft, Keratin Bondings und Salon-Business Training mit OlivHairSupply. Jetzt als Stylist bewerben.",
+  keywords: [
+    "Extensions Schulung Berlin",
+    "Haarverlängerung Kurs Berlin",
+    "Tape Extensions Schulung",
+    "Keratin Bondings Schulung",
+    "Friseur Weiterbildung Extensions",
+    "BiziLuxe Training Academy",
+  ],
+  openGraph: {
+    title: "Extensions Schulung Berlin - OlivHairSupply Academy",
+    description: "Lerne professionelle Haarverlängerung mit BiziLuxe Methoden, Salonpraxis und Business Training in Berlin.",
+    url: "https://olivhairsupply.de/training",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "OlivHairSupply Extensions Schulung Berlin" }],
+  },
+  alternates: { canonical: "https://olivhairsupply.de/training" },
 };
 
 export default async function TrainingPage({ searchParams }: Props) {

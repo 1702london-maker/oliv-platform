@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { ProductDetailView } from "@/components/product/ProductDetailView";
@@ -13,6 +14,44 @@ type PageProps = {
 
 export const dynamic = "force-dynamic";
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getCatalogProductBySlug(slug);
+  if (!product) return {};
+
+  const colours = uniqueValues(product.variants.map((variant) => variant.color).filter(Boolean) as string[]);
+  const lengths = uniqueValues(product.variants.map((variant) => String(variant.attributes?.length || "")).filter(Boolean));
+  const options = [
+    colours.length ? `${colours.length} Farben` : "",
+    lengths.length ? `Längen ${lengths.join(", ")}` : "",
+  ].filter(Boolean).join(" | ");
+  const title = `${product.title} kaufen${colours.length ? ` - ${colours.length} Farben` : ""} | OlivHairSupply Berlin`;
+  const description = buildProductMetaDescription(product.description, product.title, options);
+  const image = product.image_url || product.gallery?.[0] || "/og-image.jpg";
+
+  return {
+    title,
+    description,
+    keywords: [
+      product.title,
+      "Echthaar Extensions kaufen",
+      "Haarverlängerung Berlin",
+      "BiziLuxe",
+      "OlivHairSupply",
+      ...colours.map((colour) => `${product.title} ${colour}`),
+    ],
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: `https://olivhairsupply.de/products/${product.slug}`,
+      images: [{ url: image, width: 1200, height: 1200, alt: product.title }],
+    },
+    alternates: { canonical: `https://olivhairsupply.de/products/${product.slug}` },
+    robots: { index: true, follow: true },
+  };
+}
+
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
   const [product, profile] = await Promise.all([getCatalogProductBySlug(slug), getCurrentProfile()]);
@@ -23,25 +62,48 @@ export default async function ProductPage({ params }: PageProps) {
   const lang = cookieStore.get("ohs-lang")?.value === "en" ? "en" : "de";
   const currency = country === "GB" ? "GBP" : country === "US" ? "USD" : "EUR";
 
-  // Query DB: hidden images, uploaded images, description/title overrides
-  const admin = createSupabaseAdminClient();
-  const [{ data: dbImages }, { data: override }, { data: colorsData }] = await Promise.all([
-    admin
-      .from("product_images")
-      .select("url, hidden, product_id, is_catalog, product_slug")
-      .or(`product_id.eq.${product.id},is_catalog.eq.true,product_slug.eq.${slug}`)
-      .order("position", { ascending: true }),
-    admin
-      .from("product_overrides")
-      .select("title, description, description_en, description_de, retail_price_cents, wholesale_price_cents, hidden, merged_into_slug")
-      .eq("slug", slug)
-      .maybeSingle(),
-    admin
-      .from("product_colors")
-      .select("id, name, hex, image_url, in_stock, position")
-      .eq("product_slug", slug)
-      .order("position", { ascending: true }),
-  ]);
+  // Query DB: hidden images, uploaded images, description/title overrides.
+  // If admin env is unavailable, keep the public product page live with static catalog data.
+  let dbImages: Array<{ url: string; hidden: boolean | null; product_id: string | null; is_catalog: boolean | null; product_slug: string | null }> = [];
+  let override: {
+    title: string | null;
+    description: string | null;
+    description_en: string | null;
+    description_de: string | null;
+    retail_price_cents: number | null;
+    wholesale_price_cents: number | null;
+    hidden: boolean | null;
+    merged_into_slug: string | null;
+  } | null = null;
+  let colorsData: Array<{ id: string; name: string; hex: string; image_url: string | null; in_stock: boolean; position: number | null }> = [];
+
+  try {
+    const admin = createSupabaseAdminClient();
+    const [imagesResult, overrideResult, colorsResult] = await Promise.all([
+      admin
+        .from("product_images")
+        .select("url, hidden, product_id, is_catalog, product_slug")
+        .or(`product_id.eq.${product.id},is_catalog.eq.true,product_slug.eq.${slug}`)
+        .order("position", { ascending: true }),
+      admin
+        .from("product_overrides")
+        .select("title, description, description_en, description_de, retail_price_cents, wholesale_price_cents, hidden, merged_into_slug")
+        .eq("slug", slug)
+        .maybeSingle(),
+      admin
+        .from("product_colors")
+        .select("id, name, hex, image_url, in_stock, position")
+        .eq("product_slug", slug)
+        .order("position", { ascending: true }),
+    ]);
+    dbImages = imagesResult.data || [];
+    override = overrideResult.data || null;
+    colorsData = colorsResult.data || [];
+  } catch {
+    dbImages = [];
+    override = null;
+    colorsData = [];
+  }
 
   if (override?.merged_into_slug && override.merged_into_slug !== slug) {
     redirect(`/products/${override.merged_into_slug}`);
@@ -104,11 +166,73 @@ export default async function ProductPage({ params }: PageProps) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductSchema(productWithMergedGallery, currency)) }}
+      />
       <div dangerouslySetInnerHTML={{ __html: before }} />
       <ProductDetailView product={productWithMergedGallery} isWholesale={isWholesale} currency={currency} colors={colors} />
       <div dangerouslySetInnerHTML={{ __html: after }} />
     </>
   );
+}
+
+function buildProductMetaDescription(description: string | null, title: string, options: string) {
+  const cleanDescription = stripHtml(description || "").replace(/\s+/g, " ").trim();
+  const base = cleanDescription || `${title} von OlivHairSupply Berlin. Premium Haarprodukte, Extensions und professionelles Zubehör.`;
+  const suffix = options ? ` Verfügbare Optionen: ${options}.` : "";
+  return `${base}${suffix}`.slice(0, 158);
+}
+
+function stripHtml(value: string) {
+  return value.replace(/<[^>]*>/g, "");
+}
+
+function uniqueValues(values: string[]) {
+  return Array.from(new Set(values.filter(Boolean)));
+}
+
+function buildProductSchema(
+  product: Awaited<ReturnType<typeof getCatalogProductBySlug>> extends infer P ? NonNullable<P> : never,
+  currency: string
+) {
+  const images = Array.from(new Set([product.image_url, ...(product.gallery || [])].filter(Boolean))) as string[];
+  const variants = product.variants.length ? product.variants : [];
+  const lowPrice = Math.min(...variants.map((variant) => variant.retail_price_cents || 0).filter(Boolean));
+  const highPrice = Math.max(...variants.map((variant) => variant.retail_price_cents || 0).filter(Boolean));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `https://olivhairsupply.de/products/${product.slug}#product`,
+    name: product.title,
+    description: stripHtml(product.description || ""),
+    image: images.map((image) => image.startsWith("http") ? image : `https://olivhairsupply.de${image}`),
+    brand: { "@type": "Brand", name: "OlivHairSupply" },
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: currency,
+      lowPrice: lowPrice ? (lowPrice / 100).toFixed(2) : undefined,
+      highPrice: highPrice ? (highPrice / 100).toFixed(2) : undefined,
+      offerCount: variants.length || 1,
+      availability: "https://schema.org/InStock",
+      url: `https://olivhairsupply.de/products/${product.slug}`,
+    },
+    hasVariant: variants.slice(0, 25).map((variant) => ({
+      "@type": "Product",
+      name: `${product.title} - ${variant.title}`,
+      sku: variant.sku || variant.id,
+      color: variant.color || undefined,
+      image: variant.image_url?.startsWith("http") ? variant.image_url : variant.image_url ? `https://olivhairsupply.de${variant.image_url}` : undefined,
+      offers: {
+        "@type": "Offer",
+        priceCurrency: currency,
+        price: (variant.retail_price_cents / 100).toFixed(2),
+        availability: variant.inventory_quantity > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        url: `https://olivhairsupply.de/products/${product.slug}`,
+      },
+    })),
+  };
 }
 
 function localizedDescription(
