@@ -1,9 +1,9 @@
 "use client";
 
-export function PrintInvoiceButton() {
+export function PrintInvoiceButton({ label = "Print Invoice" }: { label?: string }) {
   return (
     <button type="button" onClick={() => window.print()} style={printBtn}>
-      Print Invoice
+      {label}
     </button>
   );
 }

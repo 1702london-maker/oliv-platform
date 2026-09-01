@@ -3,21 +3,95 @@
 @tailwind utilities;
 
 @media print {
+  @page {
+    margin: 12mm;
+  }
+
   body {
     background: #fff !important;
   }
 
   .no-print,
   .ohs-admin-sidebar,
+  .ohs-admin-mobile-header,
+  .ohs-admin-mobile-nav,
+  .ohs-admin-lang,
   .ohs-floating-chat,
   .ohs-whatsapp-float {
     display: none !important;
+  }
+
+  body:has(.ohs-print-invoice) * {
+    visibility: hidden !important;
+  }
+
+  body:has(.ohs-print-invoice) .ohs-print-invoice,
+  body:has(.ohs-print-invoice) .ohs-print-invoice * {
+    visibility: visible !important;
+  }
+
+  body:has(.ohs-print-invoice) .ohs-admin-shell,
+  body:has(.ohs-print-invoice) .ohs-admin-main,
+  body:has(.ohs-print-invoice) .ohs-invoice-page {
+    display: block !important;
+    min-height: 0 !important;
+    background: #fff !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body:has(.ohs-print-invoice) .ohs-print-invoice {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    border: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
   }
 }
 
 .ohs-admin-mobile-header,
 .ohs-admin-mobile-nav {
   display: none;
+}
+
+.ohs-admin-lang {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 14px;
+  color: #9b8878;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.ohs-admin-lang select {
+  min-width: 58px;
+  height: 32px;
+  border: 1px solid rgba(201,169,110,.38);
+  border-radius: 0;
+  background: #171411;
+  color: #c9a96e;
+  font: inherit;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 0 9px;
+  outline: none;
+}
+
+.ohs-admin-lang select:focus {
+  border-color: #c9a96e;
+  box-shadow: 0 0 0 2px rgba(201,169,110,.16);
+}
+
+.ohs-admin-mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 @media (max-width: 760px) {
@@ -76,6 +150,20 @@
     letter-spacing: .14em;
     font-size: 9px;
     font-weight: 700;
+  }
+
+  .ohs-admin-mobile-actions .ohs-admin-lang {
+    margin-top: 0;
+  }
+
+  .ohs-admin-mobile-actions .ohs-admin-lang span {
+    display: none;
+  }
+
+  .ohs-admin-mobile-actions .ohs-admin-lang select {
+    min-width: 54px;
+    height: 34px;
+    background: #0f0f0f;
   }
 
   .ohs-admin-mobile-nav {

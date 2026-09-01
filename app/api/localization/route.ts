@@ -14,5 +14,10 @@ export async function POST(req: NextRequest) {
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
+  res.cookies.set("ohs-lang", lang, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
   return res;
 }
