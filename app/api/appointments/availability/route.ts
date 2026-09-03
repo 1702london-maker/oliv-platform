@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
   });
   const dayOfWeek = new Date(`${date}T00:00:00.000Z`).getUTCDay();
-  if (dayOfWeek === 0 || isStoreBBlackout(locationName, date)) {
+  if (dayOfWeek === 0 || isKudammBeforeOpening(locationName, date)) {
     return NextResponse.json({
       date,
       locationName,
@@ -107,6 +107,10 @@ function lastSunday(year: number, monthIndex: number) {
   return date.getUTCDate();
 }
 
-function isStoreBBlackout(locationName: string, date: string) {
-  return /store\s*b/i.test(locationName) && date >= "2026-06-11" && date <= "2026-08-03";
+function isKudammBeforeOpening(locationName: string, date: string) {
+  return isKudammLocation(locationName) && date < "2026-10-01";
+}
+
+function isKudammLocation(locationName: string) {
+  return /(?:store|salon)\s*b|ku'?damm|kudamm|kurf[uü]rstendamm|halensee/i.test(locationName);
 }

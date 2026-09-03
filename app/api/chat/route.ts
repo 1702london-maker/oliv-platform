@@ -174,7 +174,7 @@ Store A — OlivHairSupply Store A
 Store B — OlivHairSupply Store B
   Address: Kurfürstendamm 115B, 10711 Berlin, Halensee
   Hours: Monday–Saturday, 09:00–18:00
-  ⚠️ Store B is currently closed for renovation until 3 August 2026. Not available for booking.
+  ⚠️ Store B / Ku'damm opens on 1 October 2026. Do not offer or accept Store B bookings before 1 October 2026.
 
 Both stores are closed on Sundays.
 
@@ -275,7 +275,7 @@ Step 4 — Ask which store they prefer:
 
   ✦ 1 — Store A — Winterfeldtstrasse 7, 10781 Berlin, Schöneberg
 
-  ✦ 2 — Store B — Kurfürstendamm 115B, 10711 Berlin, Halensee ⚠️ (closed until 3 Aug 2026 — unavailable)
+  ✦ 2 — Store B — Kurfürstendamm 115B, 10711 Berlin, Halensee ⚠️ (opens 1 October 2026 — unavailable before that date)
 
 Step 5 — Ask which stylist they prefer:
 

@@ -63,8 +63,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "sunday_closed" }, { status: 409 });
     }
 
-    if (isStoreBBlackout(String(locationName || ""), String(startsAt))) {
-      return NextResponse.json({ error: "store_b_blackout" }, { status: 409 });
+    if (isKudammBeforeOpening(String(locationName || ""), String(startsAt))) {
+      return NextResponse.json({ error: "kudamm_not_open_yet" }, { status: 409 });
     }
 
     const supabase = createSupabaseAdminClient();
@@ -234,9 +234,13 @@ function isBerlinSunday(iso: string) {
   return day === "Sun";
 }
 
-function isStoreBBlackout(locationName: string, iso: string) {
+function isKudammBeforeOpening(locationName: string, iso: string) {
   const date = berlinDate(iso);
-  return /store\s*b/i.test(locationName) && date <= "2026-08-03";
+  return isKudammLocation(locationName) && date < "2026-10-01";
+}
+
+function isKudammLocation(locationName: string) {
+  return /(?:store|salon)\s*b|ku'?damm|kudamm|kurf[uü]rstendamm|halensee/i.test(locationName);
 }
 
 function berlinDate(iso: string) {

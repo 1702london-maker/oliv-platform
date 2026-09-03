@@ -2949,7 +2949,7 @@ first.parentNode.insertBefore(script, first);
                   Mo–Sa · 10:00–19:00
                 </div>
                 <div id="oappt-store-b-closed" style="margin-top:12px;background:#eef6ee;border:1px solid #a8d5a8;padding:8px 10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#2e6b2e;">
-                  Opening 15th September 2026
+                  Opening 1st October 2026
                 </div>
               </div>
             </div>
@@ -3630,7 +3630,7 @@ function oapptRenderCalendar() {
     var isPast  = date < today;
     var isMonToSat = dow >= 1 && dow <= 6;
     var isWorkDay  = isMonToSat;
-    var isBlackout = location === 'b' && dateStr < '2026-09-15';
+    var isBlackout = location === 'b' && dateStr < '2026-10-01';
     var isAvailable = !isPast && isWorkDay && !isBlackout;
     var isSel = oapptState.selectedDate === dateStr;
     var isToday = date.toDateString() === today.toDateString();
@@ -4024,11 +4024,11 @@ function oapptSubmitBooking(event) {
         err6.textContent = 'That time has just become fully booked. Please choose another time.';
         err6.classList.add('visible');
       }
-    } else if (err && err.message === 'store_b_blackout') {
+    } else if (err && (err.message === 'store_b_blackout' || err.message === 'kudamm_not_open_yet')) {
       oapptGoStep(1);
       var err1 = document.getElementById('oappt-err-1');
       if (err1) {
-        err1.textContent = 'Salon B (Kurfürstendamm) opens 15th September 2026. Please select a date from September 15th onwards, or book at Salon A (Winterfeldtstrasse).';
+        err1.textContent = 'Salon B (Kurfürstendamm) opens 1st October 2026. Please select a date from October 1st onwards, or book at Salon A (Winterfeldtstrasse).';
         err1.classList.add('visible');
       }
     } else if (err && err.message === 'sunday_closed') {
@@ -4421,7 +4421,7 @@ function oapptSlotRunsPastClosing(slot) {
   return false;
 }
 function oapptIsStoreBBlackout(dateStr) {
-  return oapptState.location === 'b' && dateStr < '2026-09-15';
+  return oapptState.location === 'b' && dateStr < '2026-10-01';
 }
 function oapptSelectedTimeLabel() {
   if (!oapptState.selectedTime) return '';
@@ -5010,7 +5010,7 @@ function oapptTranslateUI() {
 
   // Store B opening banner — translate to German
   var storeBBanner = document.getElementById('oappt-store-b-closed');
-  if (storeBBanner) storeBBanner.textContent = 'Opening 15th September 2026';
+  if (storeBBanner) storeBBanner.textContent = 'Opening 1st October 2026';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
