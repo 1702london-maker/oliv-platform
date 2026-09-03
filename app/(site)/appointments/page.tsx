@@ -15,6 +15,12 @@ const STORE_B_REOPEN_SCRIPT = `<script>
 (function(){
   var reopenDate=new Date('2026-10-01T00:00:00+02:00');
   if(new Date()>=reopenDate){
+    var card=document.getElementById('oappt-store-b-card');
+    if(card){
+      card.classList.remove('oappt-location-card--locked');
+      card.removeAttribute('aria-disabled');
+      card.setAttribute('onclick',"oapptSelectLocation('b')");
+    }
     var banner=document.getElementById('oappt-store-b-closed');
     if(banner)banner.remove();
   }

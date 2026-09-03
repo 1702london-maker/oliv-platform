@@ -2037,6 +2037,17 @@ first.parentNode.insertBefore(script, first);
 .oappt-location-card:hover::before { transform: scaleX(1); }
 .oappt-location-card.selected { border-color: #2B2620; background: #EDE5D8; }
 .oappt-location-card.selected::before { transform: scaleX(1); background: #2B2620; }
+.oappt-location-card--locked {
+  cursor: default;
+  background: #F7F1E8;
+  border-color: #D8C7AF;
+}
+.oappt-location-card--locked:hover {
+  border-color: #D8C7AF;
+}
+.oappt-location-card--locked:hover::before {
+  transform: scaleX(0);
+}
 .oappt-location-eyebrow {
   font-family: 'Montserrat', sans-serif;
   font-size: 9px;
@@ -2959,7 +2970,7 @@ first.parentNode.insertBefore(script, first);
                   Mo–Sa · 10:00–19:00
                 </div>
               </div>
-              <div id="oappt-store-b-card" class="oappt-location-card oappt-location-card--opening-soon" data-loc="b" onclick="oapptSelectLocation('b')">
+              <div id="oappt-store-b-card" class="oappt-location-card oappt-location-card--opening-soon oappt-location-card--locked" data-loc="b" aria-disabled="true">
                 <div class="oappt-location-tick"></div>
                 <span class="oappt-location-eyebrow">Salon B</span>
                 <div class="oappt-location-name">OlivHairSupply Salon B</div>
@@ -3489,6 +3500,7 @@ function oapptNext(step) {
 function oapptBack(step) { oapptGoStep(step - 1); }
 
 function oapptSelectLocation(loc) {
+  if (loc === 'b' && new Date() < new Date('2026-10-01T00:00:00+02:00')) return;
   oapptState.location = loc;
   oapptState.selectedService = null;
   oapptState.serviceOption = '';
@@ -4549,6 +4561,7 @@ function oapptBuildServices() {
 }
 
 function oapptSelectLocation(loc) {
+  if (loc === 'b' && new Date() < new Date('2026-10-01T00:00:00+02:00')) return;
   oapptState.location = loc;
   oapptState.selectedService = null;
   oapptState.serviceOption = '';
