@@ -2019,7 +2019,7 @@ first.parentNode.insertBefore(script, first);
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   text-align: center;
 }
 .oappt-location-card::before {
@@ -2082,6 +2082,27 @@ first.parentNode.insertBefore(script, first);
   border-right: 2px solid #F6F1E8;
   border-bottom: 2px solid #F6F1E8;
   transform: rotate(45deg) translate(-1px, -1px);
+}
+.oappt-store-opening-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 10px 16px;
+  border: 1px solid #B68A45;
+  background: #F8F1E5;
+  color: #2B2620;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.oappt-location-card.selected .oappt-store-opening-badge {
+  background: #2B2620;
+  border-color: #2B2620;
+  color: #F6F1E8;
 }
 
 /* SERVICE CATEGORY CARDS */
@@ -2938,7 +2959,7 @@ first.parentNode.insertBefore(script, first);
                   Mo–Sa · 10:00–19:00
                 </div>
               </div>
-              <div id="oappt-store-b-card" class="oappt-location-card" data-loc="b" onclick="oapptSelectLocation('b')">
+              <div id="oappt-store-b-card" class="oappt-location-card oappt-location-card--opening-soon" data-loc="b" onclick="oapptSelectLocation('b')">
                 <div class="oappt-location-tick"></div>
                 <span class="oappt-location-eyebrow">Salon B</span>
                 <div class="oappt-location-name">OlivHairSupply Salon B</div>
@@ -2948,8 +2969,8 @@ first.parentNode.insertBefore(script, first);
                   10711 Berlin, Halensee<br>
                   Mo–Sa · 10:00–19:00
                 </div>
-                <div id="oappt-store-b-closed" style="margin-top:12px;background:#eef6ee;border:1px solid #a8d5a8;padding:8px 10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#2e6b2e;">
-                  Opening 1st October 2026
+                <div id="oappt-store-b-closed" class="oappt-store-opening-badge">
+                  Available from 1 October 2026
                 </div>
               </div>
             </div>
@@ -3349,7 +3370,10 @@ function oapptUpdateSummary() {
   var lines = [];
   if (oapptState.location) {
     lines.push({ label: 'Salon', val: oapptState.location === 'a' ? 'Salon A' : 'Salon B' });
-    if (oapptState.location === 'b') lines.push({ label: 'Location Surcharge', val: '+&euro;20' });
+    if (oapptState.location === 'b') {
+      lines.push({ label: 'Available From', val: '1 October 2026' });
+      lines.push({ label: 'Location Surcharge', val: '+&euro;20' });
+    }
   }
   if (oapptState.selectedService) lines.push({ label: 'Service', val: oapptState.selectedService.name });
   if (oapptState.serviceOption && oapptState.serviceOptionPrice > 0) {
@@ -4477,7 +4501,10 @@ function oapptUpdateSummary() {
   var lines = [];
   if (oapptState.location) {
     lines.push({ label: 'Salon', val: oapptStoreName() });
-    if (oapptState.location === 'b') lines.push({ label: oapptLang() === 'de' ? 'Luxury-Zuschlag' : 'Luxury Surcharge', val: '+&euro;' + OAPPT_STORE_B_SURCHARGE });
+    if (oapptState.location === 'b') {
+      lines.push({ label: oapptLang() === 'de' ? 'Verfuegbar ab' : 'Available From', val: oapptLang() === 'de' ? '1. Oktober 2026' : '1 October 2026' });
+      lines.push({ label: oapptLang() === 'de' ? 'Luxury-Zuschlag' : 'Luxury Surcharge', val: '+&euro;' + OAPPT_STORE_B_SURCHARGE });
+    }
   }
   if (oapptState.selectedService) lines.push({ label: 'Service', val: oapptText(oapptState.selectedService, 'name') });
   if (oapptState.serviceOption && oapptState.serviceOptionPrice > 0) {
@@ -5010,7 +5037,7 @@ function oapptTranslateUI() {
 
   // Store B opening banner — translate to German
   var storeBBanner = document.getElementById('oappt-store-b-closed');
-  if (storeBBanner) storeBBanner.textContent = 'Opening 1st October 2026';
+  if (storeBBanner) storeBBanner.textContent = 'Verfügbar ab 1. Oktober 2026';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
